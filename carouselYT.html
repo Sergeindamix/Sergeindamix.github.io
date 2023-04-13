@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+</head>
+<body>
+<div>
+    
+    <p>Number of videos: <span id="num-videos"></span></p>
+    <label for="playlist-input">Playlist ID:</label>
+    <input type="text" id="playlist-input" value="PLk6yrJCXLVNGytButDoxFtBRPrT59b5kB">
+    <button id="update-button">Actualizar</button>
+</div>
+<div id="youtube-carousel"></div>
+        
+<script>
+    const apiKey = "AIzaSyCyYq3aWzXK-sE8surQuxZxCI2bZTzZtZA";     
+
+    const playlistInput = document.getElementById('playlist-input');
+    const updateButton = document.getElementById('update-button');
+    const videoCountElement = document.getElementById('video-count');
+    const carouselElement = document.getElementById('youtube-carousel')
+
+
+    const playlistId = "PLk6yrJCXLVNGytButDoxFtBRPrT59b5kB";
+    
+    
+    function updatePlaylist() {
+        const playlistId = playlistInput.value;
+        const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=${playlistId}&key=${apiKey}`;
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const videos = data.items.map(item => {
+                    const videoId = item.snippet.resourceId.videoId;
+                    const videoTitle = item.snippet.title;
+                    const videoThumbnail = item.snippet.thumbnails.medium.url;
+                    return { id: videoId, title: videoTitle, thumbnail: videoThumbnail };
+                });
+                refreshYoutubeCarousel(videos);
+                videoCountElement.textContent = `Número de videos: ${videos.length}`;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    
+    function refreshYoutubeCarousel(videos) {
+        // Limpia los elementos anteriores del carrusel
+        $(carouselElement).slick('unslick');
+        carouselElement.innerHTML = '';
+
+        // Crea un elemento HTML para cada video y agrega al carrusel
+        videos.forEach(video => {
+            const videoElement = document.createElement('div');
+            videoElement.innerHTML = `
+              <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank">
+                <img src="${video.thumbnail}" alt="${video.title}">
+                <h3>${video.title}</h3>
+              </a>
+            `;
+            carouselElement.appendChild(videoElement);
+        });
+
+        // Inicializa el carrusel utilizando la biblioteca slick
+        $(carouselElement).slick({
+    dots: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  });
+}
+
+    function loadYoutubePlaylist(playlistId, apiKey) {
+  // Crea la URL de la API para obtener la lista de reproducción
+  const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=${playlistId}&key=${apiKey}`;
+  
+  // Realiza una petición GET a la API de YouTube
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+    // Procesa los datos de la lista de reproducción
+    const videos = data.items.map(item => {
+      const videoId = item.snippet.resourceId.videoId;
+      const videoTitle = item.snippet.title;
+      const videoThumbnail = item.snippet.thumbnails.medium.url;
+      return { id: videoId, title: videoTitle, thumbnail: videoThumbnail };
+    });
+    
+    // Actualiza el número de videos en el nuevo elemento HTML
+    const numVideosElement = document.getElementById('num-videos');
+    numVideosElement.innerText = videos.length;
+    
+    // Llama a la función para crear el carrusel
+    createYoutubeCarousel(videos);
+})
+
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+function createYoutubeCarousel(videos) {
+  // Crea un elemento HTML para cada video y agrega al carrusel
+  const carouselElement = document.getElementById('youtube-carousel');
+  videos.forEach(video => {
+    const videoElement = document.createElement('div');
+    videoElement.innerHTML = `
+      <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank">
+        <img src="${video.thumbnail}" alt="${video.title}">
+        <h3>${video.title}</h3>
+      </a>
+    `;
+    carouselElement.appendChild(videoElement);
+  });
+  
+  // Inicializa el carrusel utilizando la biblioteca slick
+  $(carouselElement).slick({
+    dots: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  });
+}
+
+
+
+loadYoutubePlaylist(playlistId, apiKey);
+
+
+
+
+function clearCarousel() {
+    $(carouselElement).find('.slick-slide').remove();
+
+}
+
+function loadNewPlaylist() {
+  clearCarousel();
+  const playlistId = playlistInput.value;
+  updatePlaylist(playlistId, apiKey);
+}
+
+playlistInput.addEventListener('change', loadNewPlaylist);
+
+function extractPlaylistId(playlistInput) {
+  let playlistId = '';
+  // Verifica si la entrada es una URL de playlist de YouTube
+  if (playlistInput.includes('youtube.com/playlist?list=')) {
+    playlistId = playlistInput.split('list=')[1];
+  // Verifica si la entrada es un ID de playlist de YouTube
+  } else if (playlistInput.startsWith('PL') && playlistInput.length === 24) {
+    playlistId = playlistInput;
+  }
+  return playlistId;
+}
+
+function getPlaylistId(url) {
+  // Expresión regular para buscar el ID de la playlist
+  const playlistRegex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:playlist|watch)\?(?:.*&)?list=([\w-]+)/;
+  const match = url.match(playlistRegex);
+  if (match) {
+    // El ID de la playlist se encuentra en el grupo 1 de la expresión regular
+    return match[1];
+  } else {
+    return null;
+  }
+}
+
+updateButton.addEventListener('click', () => {
+  // Aquí se pueden poner las acciones que se deseen realizar al hacer clic en el botón
+
+// Ejemplo de uso:
+const playlistUrl = "https://www.youtube.com/playlist?list=PLk6yrJCXLVNGmBSuxb-_jIV4kosC6iAEX";
+const playlistId = getPlaylistId(playlistUrl);
+console.log(playlistId); // Imprime "PLk6yrJCXLVNGytButDoxFtBRPrT59b5kB"
+
+});
+</script>
+</body>
+</html>
