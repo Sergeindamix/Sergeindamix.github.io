@@ -1,0 +1,68 @@
+<html>
+<head>
+  <style>
+  body {
+    overflow: hidden;
+  }
+  #contenedorImagen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+  </style>
+</head>
+<body>
+  <select id="selectLista">
+    <option value="">Selecciona una imagen</option>
+  </select>
+  
+  <div id="contenedorImagen"></div>
+  
+  <script>
+    
+    // Cargar texto desde una URL
+    fetch('imgs.txt')
+      .then(response => response.text())
+      .then(text => {
+        const selectLista = document.getElementById('selectLista');
+        const contenedorImagen = document.getElementById('contenedorImagen');
+        const lines = text.split('\n');
+        
+        lines.forEach((line, index) => {
+          const match = line.match(/\/d\/([-\w]+)/);
+          if (match) {
+            const imgId = match[1];
+            console.log(`Añadiendo imagen con ID: ${imgId}`);
+            const option = document.createElement('option');
+            option.value = index;
+            option.text = `Imagen ${index + 1}`;
+            selectLista.appendChild(option);
+            
+            const video = document.createElement('iframe');
+            video.setAttribute('src', `https://drive.google.com/file/d/${imgId}/preview`);
+            video.setAttribute('width', '240');
+            video.setAttribute('height', '320');
+            contenedorImagen.appendChild(video);
+          }
+        });
+        
+        // Escuchar el evento de cambio en el select
+        selectLista.addEventListener('change', () => {
+          const selectedOption = selectLista.options[selectLista.selectedIndex];
+          contenedorImagen.childNodes.forEach((node, index) => {
+            node.style.display = index === parseInt(selectedOption.value) ? 'block' : 'none';
+          });
+        });
+      });
+  </script>
+  
+
+</div>
+</div>
+</body>
+</html>
+
+
+
