@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Descargar y reproducir videos de una playlist de YouTube</title>
+</head>
+<body>
+	<h1>Descargar y reproducir videos de una playlist de YouTube</h1>
+	<p>Ingresa el ID de la playlist de YouTube:</p>
+	<input type="text" id="playlist-id" placeholder="ID de la playlist">
+	<button id="btn-download-playlist">Descargar playlist</button>
+
+	<div id="playlist-videos"></div>
+
+	<script>
+		const playlistVideos = document.getElementById('playlist-videos');
+		const btnDownloadPlaylist = document.getElementById('btn-download-playlist');
+		const playlistIdInput = document.getElementById('playlist-id');
+		const apiKey = 'AIzaSyCyYq3aWzXK-sE8surQuxZxCI2bZTzZtZA'; // Reemplaza TU_API_KEY con tu clave de API de YouTube
+
+		btnDownloadPlaylist.addEventListener('click', () => {
+			const playlistId = playlistIdInput.value;
+			const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${apiKey}`;
+
+			fetch(apiUrl)
+				.then(response => response.json())
+				.then(data => {
+					const videos = data.items.map(item => {
+						const videoId = item.snippet.resourceId.videoId;
+						const videoTitle = item.snippet.title;
+						const videoThumbnail = item.snippet.thumbnails.medium.url;
+						return { id: videoId, title: videoTitle, thumbnail: videoThumbnail };
+					});
+					displayVideos(videos);
+				})
+				.catch(error => console.error(error));
+		});
+
+		function displayVideos(videos) {
+			playlistVideos.innerHTML = '';
+
+			videos.forEach(video => {
+				const videoElement = document.createElement('div');
+				videoElement.innerHTML = `
+					<h2>${video.title}</h2>
+					<video width="320" height="240" controls autoplay>
+						<source src="https://www.youtube.com/watch?v=${video.id}&amp;autoplay=1" type="video/mp4">
+						Tu navegador no admite la etiqueta de video.
+					</video>
+				`;
+				playlistVideos.appendChild(videoElement);
+			});
+		}
+	</script>
+</body>
+</html>
