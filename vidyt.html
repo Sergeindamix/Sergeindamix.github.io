@@ -9,12 +9,21 @@
     <input type="text" id="videoLinkInput" placeholder="Ingresa el enlace de un video de YouTube">
     <button id="updateButton">Actualizar video</button>
     <p id="errorMessage" style="color: red; display: none;">El enlace ingresado no es válido</p>
+    <button id="playlistButton">Agregar lista de reproducción</button>
+    <select id="videoList"></select>
+    
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
 </body>
 <script>
     let player;
+    let videoLinkInput = document.getElementById('videoLinkInput');
+let updateButton = document.getElementById('updateButton');
+let playlistButton = document.getElementById('playlistButton');
+let errorMessage = document.getElementById('errorMessage');
+    let videoList = document.getElementById('videoList');
+ 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
             height: '360',
@@ -39,14 +48,82 @@
     }
 
     function onPlayerStateChange(event) {
-        if (event.data === YT.PlayerState.ENDED) {
-            player.playVideo();
-        }
+    if (event.data === YT.PlayerState.ENDED) {
+        let currentVideoIndex = player.getPlaylistIndex();
+        let nextVideoIndex = currentVideoIndex + 1;
+        player.playVideoAt(nextVideoIndex);
     }
+}
 
-    let videoLinkInput = document.getElementById('videoLinkInput');
-let updateButton = document.getElementById('updateButton');
-let errorMessage = document.getElementById('errorMessage');
+playlistButton.addEventListener('click', () => {
+
+    let playlistLink = prompt('Ingrese el enlace de la lista de reproducción:');
+    let playlistId = getPlaylistIdFromLink(playlistLink);
+
+    if (playlistId) {
+        getPlaylistVideos(playlistId);
+        errorMessage.style.display = 'none';
+    } else {
+        errorMessage.style.display = 'block';
+    }
+});
+
+function getPlaylistIdFromLink(link) {
+
+    let playlistId;
+    if (link.includes('list=')) {
+
+        playlistId = link.split('list=')[1];
+
+        } else {
+
+            return null;
+        }
+        if (playlistId.includes('&')) {
+
+            playlistId = playlistId.split('&')[0];
+        }
+
+        return playlistId;
+}
+
+function getPlaylistVideos(playlistId) {
+    fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=AIzaSyCyYq3aWzXK-sE8surQuxZxCI2bZTzZtZA`)
+    .then(response => response.json())
+    .then(data => {
+
+        let videos = data.items.map(item => {
+
+            let videoId = item.snippet.resourceId.videoId;
+            let videoTitle = item.snippet.title;
+
+            return { id: videoId, title: videoTitle };
+
+            });
+
+
+            updateVideoList(videos);
+
+            })
+
+            .catch(error => console.error(error));
+}
+
+function updateVideoList(videos) {
+    videoList.innerHTML = '';
+    videos.forEach(video => {
+        let option = document.createElement('option');
+        option.value = video.id;
+        option.text = video.title;
+        videoList.appendChild(option);
+        });
+        videoList.addEventListener('change', () => {
+            let selectedIndex = videoList.selectedIndex;
+            let selectedOption = videoList.options[selectedIndex];
+            let videoId = selectedOption.value;
+            player.loadVideoById(videoId);
+        });
+}
 
 updateButton.addEventListener('click', () => {
     let videoLink = videoLinkInput.value;
@@ -54,11 +131,17 @@ updateButton.addEventListener('click', () => {
 
     if (videoId) {
         player.loadVideoById(videoId);
+        let option = document.createElement('option');
+        option.text = videoLink;
+        option.value = videoId;
+        videoList.add(option);
         errorMessage.style.display = 'none';
     } else {
         errorMessage.style.display = 'block';
     }
 });
+
+
 
 function getVideoIdFromLink(link) {
     let videoId;
@@ -77,6 +160,17 @@ function getVideoIdFromLink(link) {
     return videoId;
 }
 
+videoList.addEventListener('change', () => {
+    let selectedIndex = videoList.selectedIndex;
+    let selectedOption = videoList.options[selectedIndex];
+let videoId = selectedOption.value;
+player.loadVideoById(videoId);
+});
+
+
+let videoLinks = [];
+
+
 </script>
-    
+
 </html>
