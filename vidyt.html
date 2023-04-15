@@ -121,7 +121,9 @@ function updateVideoList(videos) {
             let selectedIndex = videoList.selectedIndex;
             let selectedOption = videoList.options[selectedIndex];
             let videoId = selectedOption.value;
-            player.loadVideoById(videoId);
+            player.clearVideo(); // Borra el video actualmente en reproducción
+            player.loadVideoById(videoId); // Carga el nuevo video
+
         });
 }
 
