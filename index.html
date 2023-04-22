@@ -331,10 +331,10 @@
         <h2 class="logotipo">SERGEINDAMIX</h2>
         <nav>
           <a href="#" class="activo">Inicio</a>
-          <a href="vidyt.html">Programas</a>
-          <a href="ytplaylists.html">Películas</a>
-          <a href="carousel.html">Más Recientes</a>
-          <a href="carouselYT.html">Mi lista</a>
+          <a href="shadertoy.html">Programas</a>
+          <a href="echo.html">Películas</a>
+          <a href="halftone.html">Más Recientes</a>
+          <a href="changeImage.html">Mi lista</a>
         </nav>
       </div>
     </header>
@@ -493,16 +493,13 @@
           .then((response) => response.json())
           .then((data) => {
             let videos = data.items.map((item) => {
-              let videoId = item.snippet.resourceId.videoId;
-              let videoTitle = item.snippet.title;
-              let videoDescription = item.snippet.description;
-
               return {
-                id: videoId,
-                title: videoTitle,
-                description: videoDescription,
-              };
-            });
+                    id: item.id,
+                    title: item.snippet.title,
+                    thumbnailUrl: item.snippet.thumbnails.default.url,
+                    url: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
+                };
+                });
 
             updateVideoList(videos);
           })
@@ -531,10 +528,10 @@
       }
 
       updateButton.addEventListener("click", () => {
-        getJSONVideos("playlist_0.json");
+        
         let videoLink = videoLinkInput.value;
         let videoId = getVideoIdFromLink(videoLink);
-
+        
         if (videoId) {
           player.loadVideoById(videoId);
           let option = document.createElement("option");
@@ -781,33 +778,55 @@
         }
 
         //Creamos un listener para el evento focus
-		input.addEventListener("focus", () => {
-			//Obtenemos el contenido del portapapeles
-			navigator.clipboard.readText()
-				.then((text) => {
-					//Si el contenido es un enlace de YouTube, lo agregamos al input y actualizamos video
-					if (text.includes("youtube.com") || text.includes("youtu.be")) {
-						videoLinkInput.value = text;
-                        getJSONVideos("playlist_0.json");
-                        let videoLink = videoLinkInput.value;
-                        let videoId = getVideoIdFromLink(videoLink);
+        input.addEventListener("focus", () => {
+          //Obtenemos el contenido del portapapeles
+          navigator.clipboard.readText()
+          .then((text) => {
+            //Si el contenido es un enlace de YouTube, lo agregamos al input y actualizamos video
+            if (text.includes("youtube.com") || text.includes("youtu.be")) {
+              videoLinkInput.value = text;
+              
+              let videoLink = videoLinkInput.value;
+              let videoId = getVideoIdFromLink(videoLink);
 
-                        if (videoId) {
-                        player.loadVideoById(videoId);
-                        let option = document.createElement("option");
-                        option.text = videoLink;
-                        option.value = videoId;
-                        videoList.add(option);
-                        errorMessage.style.display = "none";
-                        } else {
-                        errorMessage.style.display = "block";
-                        }
-					}
-				})
-				.catch((err) => {
-					console.error(err);
-				});
-		});
+              if (videoId) {
+              player.loadVideoById(videoId);
+              let option = document.createElement("option");
+              option.text = videoLink;
+              option.value = videoId;
+              videoList.add(option);
+              errorMessage.style.display = "none";
+              } else {
+              errorMessage.style.display = "block";
+              }
+            }
+
+            if (text.includes("list=")) {
+                  const url = videoLinkInput.value.trim();
+                  const playlistId = getPlaylistIdFromUrl(url);
+                  if (playlistId) {
+                    getPlaylistVideos(playlistId);
+                  } else {
+                    clearPlaylist();
+                  }
+                  errorMessage.style.display = "none";
+                  } else {
+                  errorMessage.style.display = "block";
+                  }
+                
+            
+            
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+        });
+
+        function getPlaylistIdFromUrl(url) {
+  const params = new URLSearchParams(new URL(url).search);
+  return params.get("list");
+}
+    
       </script>
       
   </body>
