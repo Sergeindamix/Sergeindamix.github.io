@@ -531,7 +531,7 @@
       }
 
       updateButton.addEventListener("click", () => {
-        getJSONVideos("playlist_0.json");
+        getJSONVideos("playlist_10.json");
         let videoLink = videoLinkInput.value;
         let videoId = getVideoIdFromLink(videoLink);
 
@@ -808,6 +808,12 @@
 					console.error(err);
 				});
 		});
+	    
+	    // Cargar lista de videos desde archivo JSON al iniciar la página
+		document.addEventListener("DOMContentLoaded", function () {
+		  getJSONVideos("playlist_10.json");
+		});
+
       </script>
       
   </body>
