@@ -367,7 +367,7 @@
             selección de videos y disfruta de una experiencia de visualización
             sin molestias!
           </p>
-          <input type="file" id="inputFile" accept=".txt" />
+          <input type="file" id="inputFile" accept=".txt, .json" />
           <button id="loadButton">Cargar videos</button>
           <input
             type="text"
@@ -574,20 +574,23 @@
       });
 
       function getJSONVideos(jsonFile) {
+        const videos = [];
         fetch(jsonFile)
           .then((response) => response.json())
           .then((data) => {
-            let videos = [];
-            data.forEach((item) => {
+            data.items.forEach((item) => {
               let videoUrl = item.url;
               let videoTitle = item.title;
               let videoId = videoUrl.split("=")[1]; // Obtener el ID del video de la URL
               videos.push({ id: videoId, title: videoTitle });
             });
+            console.log(videos);
             updateVideoList(videos);
           })
           .catch((error) => console.error(error));
       }
+
+
 
       /////////////////////////////////////////////
 
@@ -680,7 +683,7 @@
 
     <script>
       const loadButton = document.getElementById("loadButton");
-      const inputFile = document.getElementById("inputFile");
+      let inputFile = document.getElementById("inputFile");
       const videosContainer = document.getElementById("videosContainer");
       const iFile = document.querySelector("iframe");
 
@@ -937,6 +940,18 @@
     document.title = "YouTube Playlist";
     playlist.innerHTML = "";
   }
+
+  // Cargar lista de videos desde archivo JSON al iniciar la página  
+    document.addEventListener("DOMContentLoaded", function() {
+    const loadButton = document.getElementById("loadButton");
+    const inputFile = "playlist_10.json";
+    getJSONVideos(inputFile);
+    //loadButton.click();
+});
+
+
+
+
   </script>
       
   </body>
