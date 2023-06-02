@@ -690,6 +690,7 @@
       loadButton.addEventListener("click", () => {
         const file = inputFile.files[0];
         if (!file) {
+          let fileName = file ? file.name : "driveVids.txt";
           console.error("Archivo no seleccionado");
           return;
         }
@@ -697,10 +698,10 @@
         loadVideos();
       });
 
+
       // Función para cargar las imágenes y los videos en la página
       function loadVideos() {
-        let inputFile = document.getElementById("inputFile");
-        inputFile = "driveVids.txt"
+        const inputFile = document.getElementById("inputFile");        
         const videosContainer = document.getElementById("videosContainer");
 
         if (inputFile.files[0].type === "application/json") {
