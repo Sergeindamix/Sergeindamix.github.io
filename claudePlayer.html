@@ -15,6 +15,8 @@
     // ID de los primeros 3 videos
     const videoIds = ['3yiVDrX6vG0', 'CrzGdIOqOJM', 'cmpRLQZkTb8']; 
     let currentVideoIndex = 0;
+    // URL de la playlist
+    const playlistUrl = 'https://www.youtube.com/playlist?list=PLk6yrJCXLVNGubc2vSTn85x4wxf2DNo0J&key=AIzaSyABAbMEP_2fcPg3m5ULfk51Unf_SmaHl3w';
     
     function createPlayer() {
       player = document.createElement('iframe');
@@ -23,26 +25,32 @@
       player.src = 'https://www.youtube.com/embed/' + videoIds[currentVideoIndex];
       document.body.appendChild(player);
     }
-    
-  
-    // URL de la playlist
-    const playlistUrl = 'https://www.youtube.com/playlist?list=PLk6yrJCXLVNGubc2vSTn85x4wxf2DNo0J&key=AIzaSyABAbMEP_2fcPg3m5ULfk51Unf_SmaHl3w';
-    
-    
-    
-    
-    
+      
     // Carga el primer video en el reproductor
     loadVideo(videoIds[currentVideoIndex]); 
 
     // Reproduce el siguiente video cuando termina el actual
-    player.onended = playNextVideo;
+    player.onended = function() {
 
-    function playNextVideo() {
-      currentVideoIndex++;
-      loadVideo(videoIds[currentVideoIndex]);
+      showCountdown(); // muestra 5,4,3,2,1
+    
+      loadNextVideo();
+    
+      playVideo();
+    
     }
 
+    function playVideo() {
+      player.play();
+    }
+
+    function loadNextVideo() {
+      // obtén siguiente video
+      currentVideoIndex++;
+      // asigna siguiente video a player
+      loadVideo(videoIds[currentVideoIndex]);
+    }
+    
     function loadVideo(videoId) {
       if (player) {
         player.remove(); 
