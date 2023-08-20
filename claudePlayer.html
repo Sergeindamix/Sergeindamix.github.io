@@ -20,7 +20,7 @@
       player = document.createElement('iframe');
       player.width = 560;
       player.height = 315;
-      player.src = 'https://www.youtube.com/embed/' + videoIdsvideoIds[currentVideoIndex];
+      player.src = 'https://www.youtube.com/embed/' + videoIds[currentVideoIndex];
       document.body.appendChild(player);
     }
     
@@ -36,7 +36,7 @@
     loadVideo(videoIds[currentVideoIndex]); 
 
     // Reproduce el siguiente video cuando termina el actual
-    videoPlayer.onended = playNextVideo;
+    player.onended = playNextVideo;
 
     function playNextVideo() {
       currentVideoIndex++;
@@ -48,7 +48,7 @@
         player.remove(); 
       }
     
-      createPlayer(videoIds[0]);
+      createPlayer(videoIds[currentVideoIndex]);
       
       videoIds.shift();
 
