@@ -12,12 +12,15 @@
   <script>
     // Crea el elemento iframe
     let player; 
+    // ID de los primeros 3 videos
+    const videoIds = ['3yiVDrX6vG0', 'CrzGdIOqOJM', 'cmpRLQZkTb8']; 
+    let currentVideoIndex = 0;
     
     function createPlayer() {
       player = document.createElement('iframe');
       player.width = 560;
       player.height = 315;
-      player.src = 'https://www.youtube.com/embed/' + videoId;
+      player.src = 'https://www.youtube.com/embed/' + videoIdsvideoIds[currentVideoIndex];
       document.body.appendChild(player);
     }
     
@@ -25,10 +28,9 @@
     // URL de la playlist
     const playlistUrl = 'https://www.youtube.com/playlist?list=PLk6yrJCXLVNGubc2vSTn85x4wxf2DNo0J&key=AIzaSyABAbMEP_2fcPg3m5ULfk51Unf_SmaHl3w';
     
-    // ID de los primeros 3 videos
-    const videoIds = ['3yiVDrX6vG0', 'CrzGdIOqOJM', 'cmpRLQZkTb8']; 
     
-    let currentVideoIndex = 0;
+    
+    
     
     // Carga el primer video en el reproductor
     loadVideo(videoIds[currentVideoIndex]); 
