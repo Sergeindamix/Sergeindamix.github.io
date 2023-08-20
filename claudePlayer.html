@@ -59,20 +59,6 @@
       createPlayer(videoIds[currentVideoIndex]);
       
       videoIds.shift();
-
-      
-
-      // Obtiene el siguiente video con JSONP
-      getNextVideo(playlistUrl, function(data) {
-        const nextVideoId = data.videoIds[0];
-        videoIds.push(nextVideoId);
-      });
-    }
-
-    function getNextVideo(url, callback) {
-      const script = document.createElement('script');
-      script.src = url + '&callback=callback';
-      document.body.appendChild(script);
     }
   </script>
 
