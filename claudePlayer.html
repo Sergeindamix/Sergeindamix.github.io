@@ -46,6 +46,12 @@
         videoIds.push(nextVideoId);
       });
     }
+
+    function getNextVideo(url, callback) {
+      const script = document.createElement('script');
+      script.src = url + '&callback=callback';
+      document.body.appendChild(script);
+    }
   </script>
 
 </body>
