@@ -36,6 +36,8 @@
       // Verifica si el video está reproduciéndose 
       if(player.currentTime === 0  || player.paused) {
         clearInterval(checkVideoInterval);
+        console.log('Iniciando intervalo'); 
+        console.log(checkVideoInterval);
         loadNextVideo();
       }
 
@@ -52,6 +54,8 @@
       loadVideo(videoIds[currentVideoIndex]);
       // Reinicia el timer
       checkVideoInterval = setInterval(checkVideoPlaying, 2000);
+      console.log('Iniciando intervalo'); 
+      console.log(checkVideoInterval);
     }
     
     function loadVideo(videoId) {
@@ -63,6 +67,8 @@
 
       // Inicia el timer
       checkVideoInterval = setInterval(checkVideoPlaying, 2000);
+      console.log('Iniciando intervalo'); 
+      console.log(checkVideoInterval);
     }
   </script>
 
