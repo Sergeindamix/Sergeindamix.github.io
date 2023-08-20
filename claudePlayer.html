@@ -59,37 +59,7 @@
         player.remove(); 
       }
     
-      createPlayer();
-      
-      //videoIds.shift();
-      
-      //playVideo(videoId); // reproduce video actual
-      
-      nextVideo = loadNextVideo(); // obtiene el siguiente video
-
-      preloadVideo(nextVideo); // precarga en caché
-    
-      
-    }
-
-    function preloadVideo(video) {
-
-      let request = new XMLHttpRequest();
-      request.open('GET', video.url);
-      request.responseType = 'blob';
-    
-      request.onload = function() {
-        cacheVideo(video, request.response); 
-      }
-    
-      request.send();
-    
-    }
-
-    function cacheVideo(video, data) {
-      caches.open('video-cache').then(cache => {
-        cache.put(video.url, new Response(data));
-      });
+      createPlayer(); 
     }
   </script>
 
