@@ -21,14 +21,7 @@
       document.body.appendChild(player);
     }
     
-    // Destruye el reproductor existente y crea uno nuevo
-    function loadVideo(id) {
-      if (player) {
-        player.remove(); 
-      }
-    
-      createPlayer(id);
-    }
+  
     // URL de la playlist
     const playlistUrl = 'https://www.youtube.com/playlist?list=PLk6yrJCXLVNGubc2vSTn85x4wxf2DNo0J&key=AIzaSyABAbMEP_2fcPg3m5ULfk51Unf_SmaHl3w';
     
@@ -49,6 +42,11 @@
     }
 
     function loadVideo(videoId) {
+      if (player) {
+        player.remove(); 
+      }
+    
+      createPlayer(id);
       // Carga el video desde YouTube
       const videoUrl = 'https://www.youtube.com/watch?v=' + videoId;
 
