@@ -27,18 +27,16 @@
       document.body.appendChild(player);
     }
       
-    // Carga el primer video en el reproductor
-    loadVideo(videoIds[currentVideoIndex]); 
+    let checkVideoInterval;
 
-    // Reproduce el siguiente video cuando termina el actual
-    player.onended = function() {
+    function checkVideoPlaying() {
 
-      setTimeout(function() {
-        
+      // Verifica si el video está reproduciéndose 
+      if(player.currentTime === 0  || player.paused) {
+        clearInterval(checkVideoInterval);
         loadNextVideo();
-      
-      }, 6000); 
-    
+      }
+
     }
 
     /*function playVideo() {
@@ -50,6 +48,8 @@
       currentVideoIndex++;
       // asigna siguiente video a player
       loadVideo(videoIds[currentVideoIndex]);
+      // Reinicia el timer
+      checkVideoInterval = setInterval(checkVideoPlaying, 2000);
     }
     
     function loadVideo(videoId) {
@@ -58,6 +58,9 @@
       }
     
       createPlayer(); 
+
+      // Inicia el timer
+      checkVideoInterval = setInterval(checkVideoPlaying, 2000);
     }
   </script>
 
