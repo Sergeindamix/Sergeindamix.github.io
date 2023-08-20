@@ -38,13 +38,7 @@
       // Elimina el primer video de la lista
       videoIds.shift();
 
-      // Agrega un nuevo video al final de la lista
-      fetch(playlistUrl)
-        .then(response => response.json())
-        .then(data => {
-          const nextVideoId = data.items[2].snippet.resourceId.videoId;
-          videoIds.push(nextVideoId);
-        });
+      
 
       // Obtiene el siguiente video con JSONP
       getNextVideo(playlistUrl, function(data) {
