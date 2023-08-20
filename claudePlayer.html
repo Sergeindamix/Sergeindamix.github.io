@@ -17,6 +17,7 @@
     let currentVideoIndex = 0;
     // URL de la playlist
     const playlistUrl = 'https://www.youtube.com/playlist?list=PLk6yrJCXLVNGubc2vSTn85x4wxf2DNo0J&key=AIzaSyABAbMEP_2fcPg3m5ULfk51Unf_SmaHl3w';
+    let nextVideo;
     
     function createPlayer() {
       player = document.createElement('iframe');
@@ -54,13 +55,40 @@
     }
     
     function loadVideo(videoId) {
-      if (player) {
+      /*if (player) {
         player.remove(); 
       }
     
       createPlayer(videoIds[currentVideoIndex]);
       
       videoIds.shift();
+      */
+      
+      nextVideo = getNextVideo(); // obtiene el siguiente video
+
+      preloadVideo(nextVideo); // precarga en caché
+    
+      playVideo(videoId); // reproduce video actual
+    }
+
+    function preloadVideo(video) {
+
+      let request = new XMLHttpRequest();
+      request.open('GET', video.url);
+      request.responseType = 'blob';
+    
+      request.onload = function() {
+        cacheVideo(video, request.response); 
+      }
+    
+      request.send();
+    
+    }
+
+    function cacheVideo(video, data) {
+      caches.open('video-cache').then(cache => {
+        cache.put(video.url, new Response(data));
+      });
     }
   </script>
 
