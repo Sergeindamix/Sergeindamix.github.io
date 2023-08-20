@@ -10,6 +10,25 @@
   </video>
 
   <script>
+    // Crea el elemento iframe
+    let player; 
+    
+    function createPlayer() {
+      player = document.createElement('iframe');
+      player.width = 560;
+      player.height = 315;
+      player.src = 'https://www.youtube.com/embed/' + videoId;
+      document.body.appendChild(player);
+    }
+    
+    // Destruye el reproductor existente y crea uno nuevo
+    function loadVideo(id) {
+      if (player) {
+        player.remove(); 
+      }
+    
+      createPlayer(id);
+    }
     // URL de la playlist
     const playlistUrl = 'https://www.youtube.com/playlist?list=PLk6yrJCXLVNGubc2vSTn85x4wxf2DNo0J&key=AIzaSyABAbMEP_2fcPg3m5ULfk51Unf_SmaHl3w';
     
