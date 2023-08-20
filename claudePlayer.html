@@ -45,6 +45,12 @@
           const nextVideoId = data.items[2].snippet.resourceId.videoId;
           videoIds.push(nextVideoId);
         });
+
+      // Obtiene el siguiente video con JSONP
+      getNextVideo(playlistUrl, function(data) {
+        const nextVideoId = data.videoIds[0];
+        videoIds.push(nextVideoId);
+      });
     }
   </script>
 
