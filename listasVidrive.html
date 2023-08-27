@@ -18,6 +18,8 @@
     </select>
     <br>
 
+    <iframe id="videoFrame" width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
     <script>
         document.getElementById("jsonFile").addEventListener("change", function(event) {
             const file = event.target.files[0];
@@ -28,6 +30,7 @@
                     const videos = JSON.parse(jsonContent);
 
                     const videoSelect = document.getElementById("videoSelect");
+                    const videoFrame = document.getElementById("videoFrame");
 
                     videoSelect.innerHTML = '<option value="" selected>None</option>';
                     videos.forEach(video => {
@@ -41,7 +44,10 @@
                         const selectedOption = videoSelect.options[videoSelect.selectedIndex];
                         const videoLink = selectedOption.value;
                         if (videoLink) {
-                            window.open(videoLink);
+                            const embedLink = videoLink.replace("/view", "/preview");
+                            videoFrame.src = embedLink;
+                        } else {
+                            videoFrame.src = "";
                         }
                     });
                 };
