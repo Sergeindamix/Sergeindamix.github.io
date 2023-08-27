@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+</head>
+<body>
+    <h1>Video Player</h1>
+
+    <label for="jsonFile">Cargar videos.json:</label>
+    <input type="file" id="jsonFile">
+    <br>
+
+    <label for="videoSelect">Selecciona un video:</label>
+    <select id="videoSelect">
+        <option value="" selected>None</option>
+    </select>
+    <br>
+
+    <script>
+        document.getElementById("jsonFile").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const jsonContent = e.target.result;
+                    const videos = JSON.parse(jsonContent);
+
+                    const videoSelect = document.getElementById("videoSelect");
+
+                    videoSelect.innerHTML = '<option value="" selected>None</option>';
+                    videos.forEach(video => {
+                        const option = document.createElement("option");
+                        option.value = video.link;
+                        option.text = video.name;
+                        videoSelect.appendChild(option);
+                    });
+
+                    videoSelect.addEventListener("change", () => {
+                        const selectedOption = videoSelect.options[videoSelect.selectedIndex];
+                        const videoLink = selectedOption.value;
+                        if (videoLink) {
+                            window.open(videoLink);
+                        }
+                    });
+                };
+                reader.readAsText(file);
+            }
+        });
+    </script>
+</body>
+</html>
