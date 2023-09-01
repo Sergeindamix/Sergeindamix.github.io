@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Archivos HTML</title>
+</head>
+<body>
+    <h1>Archivos HTML en la Raíz</h1>
+    <ul id="lista-archivos">
+    </ul>
+
+    <script>
+        // Función para cargar la lista de archivos HTML
+        function cargarListaArchivos() {
+            var listaArchivos = document.getElementById("lista-archivos");
+
+            // Ruta a la raíz del directorio
+            var rutaRaiz = "/"; // Cambia esto a la ruta deseada
+
+            // Array de extensiones permitidas
+            var extensionesPermitidas = [".html"];
+
+            // Realizar una petición AJAX para obtener la lista de archivos en la raíz
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", rutaRaiz, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var archivos = xhr.responseText.split("\n");
+                    archivos.forEach(function(archivo) {
+                        if (extensionesPermitidas.includes(archivo.slice(-5))) {
+                            var enlace = document.createElement("a");
+                            enlace.href = archivo;
+                            enlace.textContent = archivo;
+                            var listItem = document.createElement("li");
+                            listItem.appendChild(enlace);
+                            listaArchivos.appendChild(listItem);
+                        }
+                    });
+                }
+            };
+            xhr.send();
+        }
+
+        // Cargar la lista de archivos cuando se carga la página
+        window.onload = cargarListaArchivos;
+    </script>
+</body>
+</html>
