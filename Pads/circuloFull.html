@@ -1,0 +1,36 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+/* image desde sitio random */
+var img = document.createElement('img');
+img.src = 'https://source.unsplash.com/random/' + Math.random();
+document.body.appendChild(img);
+/* cortar en circulo */
+img.style.borderRadius = '50%';
+/* circulo prefecto */
+img.style.width = '100vmin';
+img.style.height = '100vmin';
+/* sin perder aspecto de imagen */
+img.style.objectFit = 'cover';
+/* centrado en pantalla */
+img.style.position = 'absolute';
+img.style.top = '50%';
+img.style.left = '50%';
+img.style.transform = 'translate(-50%, -50%)';
+/* cambiar imagen cada segundo */
+setInterval(function() {
+  img.src = 'https://source.unsplash.com/random/' + Math.random();
+}, 1000);
+/* el fondo tiene otra imagen random cada segundo */
+document.body.style.backgroundImage = 'url(https://source.unsplash.com/random/' + Math.random() + ')';
+setInterval(function() {
+  document.body.style.backgroundImage = 'url(https://source.unsplash.com/random/' + Math.random() + ')';
+}, 1000);
+});
+        </script>
+    </head>
+   
+</html>

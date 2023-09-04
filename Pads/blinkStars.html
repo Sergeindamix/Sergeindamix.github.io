@@ -1,0 +1,93 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+/* black */
+document.body.style.backgroundColor = 'black';
+/* stars */
+var stars = document.createElement('div');
+stars.style.position = 'absolute';
+stars.style.top = '0';
+stars.style.left = '0';
+stars.style.width = '100%';
+stars.style.height = '100%';
+stars.style.zIndex = '-1';
+document.body.appendChild(stars);
+var starCount = 100;
+var starSize = 2;
+var starSpeed = 100;
+var starOpacity = 0.5;
+var star = function() {
+  var star = document.createElement('div');
+  star.style.position = 'absolute';
+  star.style.top = Math.random() * 100 + '%';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.width = starSize + 'px';
+  star.style.height = starSize + 'px';
+  star.style.backgroundColor = 'white';
+  star.style.opacity = starOpacity;
+  star.style.borderRadius = '50%';
+  star.style.transition = 'top ' + starSpeed + 'ms linear, left ' + starSpeed + 'ms linear';
+  stars.appendChild(star);
+  setTimeout(function() {
+    star.style.top = Math.random() * 100 + '%';
+    star.style.left = Math.random() * 100 + '%';
+  }, Math.random() * starSpeed);
+};
+for (var i = 0; i < starCount; i++) {
+  star();
+}
+/* rocket moves random */
+var rocket = document.createElement('div');
+rocket.style.position = 'absolute';
+rocket.style.top = '50%';
+rocket.style.left = '50%';
+rocket.style.width = '100px';
+rocket.style.height = '100px';
+rocket.style.marginTop = '-50px';
+rocket.style.marginLeft = '-50px';
+rocket.style.backgroundColor = 'white';
+rocket.style.borderRadius = '50%';
+rocket.style.transition = 'top 1s linear, left 1s linear';
+document.body.appendChild(rocket);
+var move = function() {
+  rocket.style.top = Math.random() * 100 + '%';
+  rocket.style.left = Math.random() * 100 + '%';
+};
+setInterval(move, 1000);
+/* blink fast */
+var blink = function() {
+  rocket.style.opacity = rocket.style.opacity == 1 ? 0 : 1;
+};
+setInterval(blink, 100);
+/* cada que cambia de dirección el radio se agranda o reduce randomly */
+var grow = function() {
+  var size = parseInt(rocket.style.width);
+  rocket.style.width = (Math.random() > 0.5 ? size + 10 : size - 10) + 'px';
+  rocket.style.height = (Math.random() > 0.5 ? size + 10 : size - 10) + 'px';
+  rocket.style.marginTop = '-' + (size / 2) + 'px';
+  rocket.style.marginLeft = '-' + (size / 2) + 'px';
+};
+setInterval(grow, 1000);
+/* efecto scanline */
+var scanline = document.createElement('div');
+scanline.style.position = 'absolute';
+scanline.style.top = '0';
+scanline.style.left = '0';
+scanline.style.width = '100%';
+scanline.style.height = '100%';
+scanline.style.backgroundImage = 'linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px)';
+scanline.style.backgroundSize = '100% 100px';
+document.body.appendChild(scanline);
+/* scroll faster the scanlines */
+var scroll = function() {
+  scanline.style.backgroundPosition = '0 ' + (parseInt(scanline.style.backgroundPosition.split(' ')[1]) + 1) + 'px';
+};
+setInterval(scroll, 10);
+});
+        </script>
+    </head>
+    
+</html>
