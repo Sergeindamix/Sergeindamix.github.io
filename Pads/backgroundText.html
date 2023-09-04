@@ -1,0 +1,198 @@
+
+<!-- saved from url=(0050)file:///C:/Users/tech-/Downloads/index%20(29).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><style>/* 
+  Based from this article from Divya Manian - 
+  http://nimbupani.com/using-background-clip-for-text-with-css-fallback.html
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+:before,
+:after {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Oswald', sans-serif;
+    color: #fff;
+    background-color: #000;
+}
+
+.wrapper {
+    text-align: center;
+}
+
+.title {
+    font-size: 2em;
+    position: relative;
+    margin: 0 auto 1em;
+    padding: 1em 1em .25em 1em;
+    text-align: center;
+    text-transform: uppercase;
+}
+.title:after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 240px;
+    height: 4px;
+    margin-left: -120px;
+    content: '';
+    background-color: #fff;
+}
+
+/* Clip text element */
+.clip-text {
+    font-size: 6em;
+    font-weight: bold;
+    line-height: 1;
+    position: relative;
+    display: inline-block;
+    margin: .25em;
+    padding: .5em .75em;
+    text-align: center;
+    /* Color fallback */
+    color: #fff;
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+.clip-text:before,
+.clip-text:after {
+    position: absolute;
+    content: '';
+}
+
+/* Background */
+.clip-text:before {
+    z-index: -2;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: inherit;
+}
+
+/* Text Background (black zone) */
+.clip-text:after {
+    position: absolute;
+    z-index: -1;
+    top: .125em;
+    right: .125em;
+    bottom: .125em;
+    left: .125em;
+    background-color: #000;
+}
+
+/* Change the background position to display letter when the black zone isn't here */
+.clip-text--no-textzone:before {
+    background-position: -.75em 0;
+}
+
+.clip-text--no-textzone:after {
+    content: none;
+}
+
+/* Use Background-size cover for photo background and no-repeat background */
+.clip-text--cover,
+.clip-text--cover:before {
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+            background-size: cover;
+  background-position: 50% 50%;
+}
+
+/* Background image from http://thepatternlibrary.com/ and http://lorempixel.com */
+.clip-text_one {
+    background-image: url(https://picsum.photos/480/200?random);
+}
+
+.clip-text_two {
+    background-image: url(https://picsum.photos/480/200?grayscale);
+}
+
+.clip-text_tree {
+    background-image: url(https://picsum.photos/480/200?grayscale&random=2);
+}
+
+.clip-text_four {
+    background-image: url(https://picsum.photos/480/200?grayscale&blur=3);
+}
+
+.clip-text_five {
+    background-image: url(https://picsum.photos/480/200?grayscale);
+}
+
+.clip-text_six {
+    background-image: url(https://picsum.photos/480/200?random=3);
+}
+
+.clip-text_seven {
+    background-image: url(https://picsum.photos/480/200?random=4);
+}
+
+.clip-text_eight {
+    background-image: url(https://picsum.photos/480/200?random=6);
+}
+
+.clip-text_nine {
+    background-image: url(https://picsum.photos/480/200?random=5);
+}
+
+.clip-text_ten {
+    background-image: url(https://picsum.photos/480/200?random=7);
+}
+
+.clip-text_eleven {
+    background-image: url(https://picsum.photos/480/200?random=8);
+    background-size: cover;
+}
+
+.clip-text_twelve {
+    background-image: url(https://picsum.photos/480/200?random=9);
+}
+
+.clip-text_thirteen {
+    background-image: url(https://picsum.photos/480/200?random=10);
+}
+
+.clip-text_fourteen {
+    background-image: url(https://picsum.photos/480/200?random=11);
+}
+
+.clip-text_fifteen {
+    background-image: url(https://picsum.photos/480/200?random=12);
+}
+</style></head><body><div class="wrapper">
+      <p class="title">Play with background-clip text</p>
+      <div class="clip-text clip-text_one">TECHNO</div>
+  <div class="clip-text clip-text_fifteen clip-text--no-textzone">TECHNO</div>
+      <div class="clip-text clip-text_twelve clip-text--cover">TECHNO</div>
+  <div class="clip-text clip-text_tree clip-text--no-textzone">TECHNO</div>
+      <div class="clip-text clip-text_two">TECHNO</div>
+      <div class="clip-text clip-text_fourteen clip-text--cover">TECHNO</div>
+      <div class="clip-text clip-text_tree">TECHNO</div>
+      <div class="clip-text clip-text_eleven clip-text--cover">TECHNO</div>
+      <div class="clip-text clip-text_four">TECHNO</div>
+      <div class="clip-text clip-text_five">TECHNO</div>
+      <div class="clip-text clip-text_six">TECHNO</div>
+      <div class="clip-text clip-text_seven">TECHNO</div>
+      <div class="clip-text clip-text_eight">TECHNO</div>
+      
+      <div class="clip-text clip-text_nine">TECHNO</div>
+      <div class="clip-text clip-text_ten">TECHNO</div>
+      <div class="clip-text clip-text_thirteen clip-text--cover">TECHNO</div>
+  </div><script>var helloWorld = document.getElementById('helloWorld');
+helloWorld.innerHTML = 'Hello World';</script></body></html>

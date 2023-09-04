@@ -1,0 +1,60 @@
+
+<!-- saved from url=(0050)file:///C:/Users/tech-/Downloads/index%20(13).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><style>@import "compass/css3";
+
+@import url(https://fonts.googleapis.com/css?family=Finger+Paint);
+
+body {
+  background: black;
+  overflow: hidden;
+  font: 5vw/100vh "Finger Paint";
+  text-align: center;
+  color: transparent;
+  backface-visibility: hidden;
+}
+
+span {
+  display: inline-block;
+  text-shadow: 0 0 0 whitesmoke;
+  animation: smoky 5s 3s both;
+}
+
+span:nth-child(even){
+  animation-name: smoky-mirror;
+}
+
+@keyframes smoky {
+  60% {
+    text-shadow: 0 0 40px whitesmoke;
+  }
+  to {
+    transform:
+      translate3d(15rem,-8rem,0)
+      rotate(-40deg)
+      skewX(70deg)
+      scale(1.5);
+    text-shadow: 0 0 20px whitesmoke;
+    opacity: 0;
+  }
+}
+
+@keyframes smoky-mirror {
+  60% {
+    text-shadow: 0 0 40px whitesmoke; }
+  to {
+    transform:
+      translate3d(18rem,-8rem,0)
+      rotate(-40deg) 
+      skewX(-70deg)
+      scale(2);
+     text-shadow: 0 0 20px whitesmoke;
+    opacity: 0;
+  }
+}
+
+@for $item from 1 through 21 {
+  span:nth-of-type(#{$item}){ 
+    animation-delay: #{(3 + ($item/10))}s; 
+  }
+} </style></head><body><span>T</span><span>E</span><span>C</span><span>N</span><span>O</span><span>&nbsp;</span><span>M</span><span>U</span><span>S</span><span>I</span><span>C</span><span>&nbsp;</span><span>I</span><span>S</span><span>&nbsp;</span><span>T</span><span>H</span><span>E</span><span>&nbsp;</span><span>T</span><span>R</span><span>I</span><span>P</span><span>
+<script></script></body></html>

@@ -1,0 +1,45 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+
+
+/* css */
+var css = document.createElement('style');
+css.innerHTML = 'body { background-color: #000; color: #fff; }';
+document.body.appendChild(css);
+/* 5 rects de tamaño, posicion y color random */
+var rects = [];
+for (var i = 0; i < 15; i++) {
+  var rect = document.createElement('div');
+  rect.style.position = 'absolute';
+  rect.style.width = Math.random() * 100 + 'px';
+  rect.style.height = Math.random() * 100 + 'px';
+  rect.style.left = Math.random() * window.innerWidth + 'px';
+  rect.style.top = Math.random() * window.innerHeight + 'px';
+  rect.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  document.body.appendChild(rect);
+  rects.push(rect);
+}
+/* animar pixels */
+var animar = function() {
+  for (var i = 0; i < rects.length; i++) {
+    var rect = rects[i];
+    rect.style.left = parseInt(rect.style.left) + Math.random() * 10 - 5 + 'px';
+    rect.style.top = parseInt(rect.style.top) + Math.random() * 10 - 5 + 'px';
+  }
+  setTimeout(animar, 100);
+};
+animar();
+/* rects con sombra */
+for (var i = 0; i < rects.length; i++) {
+  var rect = rects[i];
+  rect.style.boxShadow = '0 0 10px #fff';
+}
+});
+        </script>
+    </head>
+    
+</html>

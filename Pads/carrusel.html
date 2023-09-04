@@ -1,0 +1,130 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+/* circulo, mover solo horizontalmente en posicion x de mouse si bool mover es verdad */
+var circulo = document.createElement('div');
+circulo.style.width = '100px';
+circulo.style.height = '100px';
+circulo.style.backgroundColor = 'red';
+circulo.style.borderRadius = '50%';
+circulo.style.position = 'absolute';
+circulo.style.top = '50%';
+circulo.style.left = '50%';
+circulo.style.marginLeft = '-50px';
+circulo.style.marginTop = '-50px';
+//document.body.appendChild(circulo);
+var mover = false;
+document.body.addEventListener('mousemove', function(e) {
+  if (mover) {
+    carousel.scrollLeft = e.clientX;//circulo.style.left = e.clientX + 'px';
+  }
+});
+document.body.addEventListener('mousedown', function(e) {
+  mover = true;
+});
+document.body.addEventListener('mouseup', function(e) {
+  mover = false;
+});
+/* mover es verdadero mientras este pulsado el boton izquierdo del mouse */
+var mover = false;
+document.body.addEventListener('mousedown', function(e) {
+  if (e.button === 0) {
+    mover = true;
+  }
+});
+document.body.addEventListener('mouseup', function(e) {
+  if (e.button === 0) {
+    mover = false;
+  }
+});
+/* logo netflix sin perder aspecto */
+var logo = document.createElement('img');
+logo.src = 'https://fontmeme.com/permalink/220606/c8e82d1346d9497d09f6c57b3ed63d4b.png';
+logo.style.width = '100%';
+document.body.appendChild(logo);
+
+/* css */
+var css = document.createElement('style');
+css.innerHTML = 'body { background-color: #000; color: #fff; }';
+document.body.appendChild(css);
+
+/* nueva div "carousel" auto y 250 blanco */
+var carousel = document.createElement('div');
+carousel.style.width = 'auto';
+carousel.style.height = '260px';
+carousel.style.backgroundColor = '#fff';
+document.body.appendChild(carousel);
+/* en corousel imagen random alto 250 ancho auto y pading 5 */
+var img = document.createElement('img');
+img.src = 'https://source.unsplash.com/random/' + Math.random();
+img.style.width = 'auto';
+img.style.height = '250px';
+img.style.padding = '5px';
+carousel.appendChild(img);
+/* otra imagen random */
+var img = document.createElement('img');
+img.src = 'https://source.unsplash.com/random/' + Math.random();
+img.style.width = 'auto';
+img.style.height = '250px';
+img.style.padding = '5px';
+carousel.appendChild(img);
+/* repetir 8 veces */
+for (var i = 0; i < 80; i++) {
+  var img = document.createElement('img');
+  img.src = 'https://source.unsplash.com/random/' + Math.random();
+  img.style.width = 'auto';
+  img.style.height = '250px';
+  img.style.padding = '5px';
+  carousel.appendChild(img);
+}
+/* ajustar solo en horizontal y ocultar las que escapen de carousel */
+carousel.style.overflowX = 'scroll';
+carousel.style.overflowY = 'hidden';
+/* barra deslizadora horizontal para mostrar imagenes */
+carousel.style.whiteSpace = 'nowrap';
+/* boton <, mueve imagenes a la izquierda smooth */
+var left = document.createElement('button');
+left.innerHTML = '<';
+left.style.position = 'absolute';
+left.style.left = '0';
+left.style.top = '50%';
+left.style.transform = 'translateY(-50%)';
+left.style.fontSize = '30px';
+left.style.backgroundColor = '#fff';
+left.style.border = 'none';
+left.style.padding = '10px';
+left.style.cursor = 'pointer';
+document.body.appendChild(left);
+/* boton >, mueve imagenes a la derecha smooth */
+var right = document.createElement('button');
+right.innerHTML = '>';
+right.style.position = 'absolute';
+right.style.right = '0';
+right.style.top = '50%';
+right.style.transform = 'translateY(-50%)';
+right.style.fontSize = '30px';
+right.style.backgroundColor = '#fff';
+right.style.border = 'none';
+right.style.padding = '10px';
+right.style.cursor = 'pointer';
+document.body.appendChild(right);
+/* altura de ambos igual a rect */
+left.style.height = carousel.getBoundingClientRect().height + 'px';
+right.style.height = carousel.getBoundingClientRect().height + 'px';
+/* izquierda mueve suavemente a izquierda */
+left.addEventListener('click', function() {
+  carousel.scrollLeft -= carousel.getBoundingClientRect().width;
+});
+/* derecha mueve smooth a derecha */
+right.addEventListener('click', function() {
+  carousel.scrollLeft += carousel.getBoundingClientRect().width;
+});
+
+});
+        </script>
+    </head>
+    
+</html>

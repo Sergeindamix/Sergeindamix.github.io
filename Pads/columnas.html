@@ -1,0 +1,82 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+/* tabla de 5 columnas en una fila */
+var tabla = document.createElement('table');
+var fila = document.createElement('tr');
+var columna = document.createElement('td');
+var columna2 = document.createElement('td');
+var columna3 = document.createElement('td');
+var columna4 = document.createElement('td');
+var columna5 = document.createElement('td');
+columna.innerHTML = '1';
+columna2.innerHTML = '2';
+columna3.innerHTML = '3';
+columna4.innerHTML = '4';
+columna5.innerHTML = '5';
+fila.appendChild(columna);
+fila.appendChild(columna2);
+fila.appendChild(columna3);
+fila.appendChild(columna4);
+fila.appendChild(columna5);
+tabla.appendChild(fila);
+document.body.appendChild(tabla);
+/* escalar a tamaño de pantalla */
+tabla.style.width = '100%';
+/* esconder texto */
+tabla.style.color = 'transparent';
+/* cada columna es de color neon random */
+columna.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+columna2.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+columna3.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+columna4.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+columna5.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+/* alargar hasta bottom */
+tabla.style.height = '100%';
+/* cambiar color cada segundo */
+setInterval(function() {
+  columna.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  columna2.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  columna3.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  columna4.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  columna5.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+}, 1000);
+/* separar cada columna */
+columna.style.borderRight = '1px solid black';
+columna2.style.borderRight = '1px solid black';
+columna3.style.borderRight = '1px solid black';
+columna4.style.borderRight = '1px solid black';
+/* escala cada columna random y aplica blur random por 10 a cada columna */
+setInterval(function() {
+  columna.style.transform = 'scale(' + Math.random() + ')';
+  columna2.style.transform = 'scale(' + Math.random() + ')';
+  columna3.style.transform = 'scale(' + Math.random() + ')';
+  columna4.style.transform = 'scale(' + Math.random() + ')';
+  columna5.style.transform = 'scale(' + Math.random() + ')';
+  columna.style.filter = 'blur(' + Math.random() * 10 + 'px)';
+  columna2.style.filter = 'blur(' + Math.random() * 10 + 'px)';
+  columna3.style.filter = 'blur(' + Math.random() * 10 + 'px)';
+  columna4.style.filter = 'blur(' + Math.random() * 10 + 'px)';
+  columna5.style.filter = 'blur(' + Math.random() * 10 + 'px)';
+}, 1000);
+/* cambiar velocidad a .1 segundos */
+setInterval(function() {
+  columna.style.transform = 'scale(' + Math.random() + ')';
+  columna2.style.transform = 'scale(' + Math.random() + ')';
+  columna3.style.transform = 'scale(' + Math.random() + ')';
+  columna4.style.transform = 'scale(' + Math.random() + ')';
+  columna5.style.transform = 'scale(' + Math.random() + ')';
+  columna.style.filter = 'blur(' + Math.random() * 10 + 'px)';
+  columna2.style.filter = 'blur(' + Math.random() * 10 + 'px)';
+  columna3.style.filter = 'blur(' + Math.random() * 10 + 'px)';
+  columna4.style.filter = 'blur(' + Math.random() * 10 + 'px)';
+  columna5.style.filter = 'blur(' + Math.random() * 10 + 'px)';
+}, 100);
+});
+        </script>
+    </head>
+    
+</html>
