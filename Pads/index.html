@@ -1,78 +1,7 @@
 
 <html>
     <head>
-        <script>
-        document.addEventListener("DOMContentLoaded", function() {
-
-/* fondo negro */
-document.body.style.backgroundColor = 'black';
-/* container */
-var container = document.createElement('div');
-container.style.width = '100%';
-container.style.height = '100%';
-container.style.position = 'absolute';
-container.style.top = '0';
-container.style.left = '0';
-container.style.backgroundColor = 'black';
-document.body.appendChild(container);
-/* div flex-row en container */
-var flexRow = document.createElement('div');
-flexRow.style.display = 'flex';
-flexRow.style.flexDirection = 'row';
-flexRow.style.width = '100%';
-flexRow.style.height = '100%';
-container.appendChild(flexRow);
-/* div class col en row */
-var col = document.createElement('div');
-col.style.width = '50%';
-col.style.height = '100%';
-col.style.backgroundColor = 'white';
-flexRow.appendChild(col);
-/* dividir col en grid 16x16 */
-var grid = document.createElement('div');
-grid.style.display = 'grid';
-grid.style.gridTemplateColumns = 'repeat(8, 1fr)';
-grid.style.gridTemplateRows = 'repeat(8, 1fr)';
-grid.style.width = '100%';
-grid.style.height = '100%';
-col.appendChild(grid);
-/* mostrar bordes */
-grid.style.border = '1px solid black';
-/* cada celda tiene quad color random */
-for (var i = 0; i < 256; i++) {
-  var quad = document.createElement('div');
-  quad.style.backgroundColor = 'rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
-  grid.appendChild(quad);
-}
-/* los colores son neon */
-var quads = document.getElementsByTagName('div');
-for (var i = 0; i < quads.length; i++) {
-  quads[i].style.backgroundColor = 'rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
-}
-/* separados por 1px */
-grid.style.border = '10px solid black';
-
-/* sombra grande 3d */
-for (var i = 0; i < quads.length; i++) {
-  quads[i].style.boxShadow = '0px 0px 10px 10px rgba(0,0,0,0.5)';
-}
-/* cada quad se ilumina al pulsar sobre el */
-for (var i = 0; i < quads.length; i++) {
-  quads[i].addEventListener('click', function() {
-    this.style.boxShadow = '0 0 20px white';
-  });
-}
-/* cada quad tiene esquinas redondeadas en 5px */
-for (var i = 0; i < quads.length; i++) {
-  quads[i].style.borderRadius = '15px';
-}
-/* solo dejar la primera columna de todas las celdas */
-for (var i = 0; i < quads.length; i++) {
-  //quads[i].style.gridColumn = '1';
-}
-
-});
-        </script>
+        
     </head>
     <body style="margin: 0;">
         <ul>
@@ -134,5 +63,77 @@ for (var i = 0; i < quads.length; i++) {
             <li><a href="3dText2.html">3dText2.html</a></li>
             <li><a href="fuentes.html">fuentes.html</a></li>
         </ul>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+    
+            /* fondo negro */
+            document.body.style.backgroundColor = 'black';
+            /* container */
+            var container = document.createElement('div');
+            container.style.width = '100%';
+            container.style.height = '100%';
+            container.style.position = 'absolute';
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.backgroundColor = 'black';
+            document.body.appendChild(container);
+            /* div flex-row en container */
+            var flexRow = document.createElement('div');
+            flexRow.style.display = 'flex';
+            flexRow.style.flexDirection = 'row';
+            flexRow.style.width = '100%';
+            flexRow.style.height = '100%';
+            container.appendChild(flexRow);
+            /* div class col en row */
+            var col = document.createElement('div');
+            col.style.width = '50%';
+            col.style.height = '100%';
+            col.style.backgroundColor = 'white';
+            flexRow.appendChild(col);
+            /* dividir col en grid 16x16 */
+            var grid = document.createElement('div');
+            grid.style.display = 'grid';
+            grid.style.gridTemplateColumns = 'repeat(8, 1fr)';
+            grid.style.gridTemplateRows = 'repeat(8, 1fr)';
+            grid.style.width = '100%';
+            grid.style.height = '100%';
+            col.appendChild(grid);
+            /* mostrar bordes */
+            grid.style.border = '1px solid black';
+            /* cada celda tiene quad color random */
+            for (var i = 0; i < 256; i++) {
+              var quad = document.createElement('div');
+              quad.style.backgroundColor = 'rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
+              grid.appendChild(quad);
+            }
+            /* los colores son neon */
+            var quads = document.getElementsByTagName('div');
+            for (var i = 0; i < quads.length; i++) {
+              quads[i].style.backgroundColor = 'rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
+            }
+            /* separados por 1px */
+            grid.style.border = '10px solid black';
+            
+            /* sombra grande 3d */
+            for (var i = 0; i < quads.length; i++) {
+              quads[i].style.boxShadow = '0px 0px 10px 10px rgba(0,0,0,0.5)';
+            }
+            /* cada quad se ilumina al pulsar sobre el */
+            for (var i = 0; i < quads.length; i++) {
+              quads[i].addEventListener('click', function() {
+                this.style.boxShadow = '0 0 20px white';
+              });
+            }
+            /* cada quad tiene esquinas redondeadas en 5px */
+            for (var i = 0; i < quads.length; i++) {
+              quads[i].style.borderRadius = '15px';
+            }
+            /* solo dejar la primera columna de todas las celdas */
+            for (var i = 0; i < quads.length; i++) {
+              //quads[i].style.gridColumn = '1';
+            }
+            
+            });
+        </script>
     </body>
 </html>
