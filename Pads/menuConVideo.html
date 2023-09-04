@@ -1,0 +1,249 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+/* css */
+var css = document.createElement('style');
+css.innerHTML = 'body { background-color: #000; color: #fff; }';
+document.body.appendChild(css);
+/* rect */
+var rect = document.createElement('div');
+rect.style.width = '100px';
+rect.style.height = '100px';
+rect.style.backgroundColor = '#fff';
+document.body.appendChild(rect);
+/* menu centrado en rect */
+var menu = document.createElement('div');
+menu.innerHTML = '&#9776;';
+menu.style.fontSize = '30px';
+menu.style.float = 'left';
+menu.style.position = 'relative';
+menu.style.left = '-35px';
+menu.style.top = '25px';
+rect.appendChild(menu);
+/* ambos a la derecha */
+rect.style.float = 'right';
+menu.style.float = 'right';
+/* menu en fuente negra */
+menu.style.color = '#000';
+/* mouse over rect escaleambos a  .75 ambos */
+rect.onmouseover = function() {
+  rect.style.transform = 'scale(.75)';
+  //menu.style.transform = 'scale(.75)';
+};
+/* else mantener aspecto */
+rect.onmouseout = function() {
+  rect.style.transform = 'scale(1)';
+  //menu.style.transform = 'scale(1)';
+};
+/* smooth */
+rect.style.transition = 'transform .5s';
+menu.style.transition = 'transform .5s';
+/* al pulsar rect desplegar lista con 3 links */
+var lista = document.createElement('ul');
+lista.style.display = 'none';
+lista.style.listStyleType = 'none';
+lista.style.padding = '0';
+lista.style.margin = '0';
+lista.style.backgroundColor = '#fff';
+lista.style.position = 'absolute';
+lista.style.top = '0';
+lista.style.left = '0';
+lista.style.width = '100%';
+lista.style.height = '100%';
+lista.style.zIndex = '1';
+rect.appendChild(lista);
+var link1 = document.createElement('li');
+link1.innerHTML = '<a href="http://www.google.com">Google</a>';
+link1.style.textAlign = 'center';
+link1.style.padding = '20px';
+link1.style.fontSize = '20px';
+link1.style.borderBottom = '1px solid #000';
+lista.appendChild(link1);
+var link2 = document.createElement('li');
+link2.innerHTML = '<a href="http://www.yahoo.com">Yahoo</a>';
+link2.style.textAlign = 'center';
+link2.style.padding = '20px';
+link2.style.fontSize = '20px';
+link2.style.borderBottom = '1px solid #000';
+lista.appendChild(link2);
+var link3 = document.createElement('li');
+link3.innerHTML = '<a href="http://www.bing.com">Bing</a>';
+link3.style.textAlign = 'center';
+link3.style.padding = '20px';
+link3.style.fontSize = '20px';
+link3.style.borderBottom = '1px solid #000';
+lista.appendChild(link3);
+rect.onclick = function() {
+  if (lista.style.display == 'none') {
+    lista.style.display = 'block';
+  } else {
+    lista.style.display = 'none';
+	video.style.display = 'block';
+	
+  }
+};
+/* los links tienen fondo blanco */
+link1.style.backgroundColor = '#fff';
+link2.style.backgroundColor = '#fff';
+link3.style.backgroundColor = '#fff';
+/* agregar boton cerrar a lista */
+var cerrar = document.createElement('li');
+cerrar.innerHTML = 'Cerrar';
+cerrar.style.textAlign = 'center';
+cerrar.style.padding = '20px';
+cerrar.style.fontSize = '20px';
+cerrar.style.borderBottom = '1px solid #000';
+cerrar.style.textShadow = '0 0 10px #000';
+lista.appendChild(cerrar);
+
+/* array 5 imagenes */
+var images = [
+  'https://source.unsplash.com/random/' + Math.random(),
+  'https://source.unsplash.com/random/' + Math.random(),
+  'https://source.unsplash.com/random/' + Math.random(),
+  'https://source.unsplash.com/random/' + Math.random(),
+  'https://source.unsplash.com/random/' + Math.random()
+];
+/* document.body.style.backgroundimage random images */
+document.body.style.backgroundImage = 'url(' + images[Math.floor(Math.random() * images.length)] + ')';
+document.body.style.backgroundSize = 'cover';
+
+/* simbolo de reproducchion */
+var play = document.createElement('div');
+play.innerHTML = '&#9658;';
+play.style.fontSize = '100px';
+play.style.position = 'absolute';
+play.style.top = '50%';
+play.style.left = '50%';
+play.style.marginLeft = '-50px';
+play.style.marginTop = '-50px';
+play.style.cursor = 'pointer';
+play.style.fontSize = '50px';
+document.body.appendChild(play);
+/* rotar 45 grados */
+play.style.transform = 'rotate(90deg)';
+/* smothh */
+play.style.transition = 'all 0.5s';
+/* bajar */
+play.style.top = '70%';
+/* regresar */
+play.style.top = '50%';
+/* crear bucle */
+var loop = function() {
+  play.style.top = '99%';
+  setTimeout(function() {
+    play.style.top = '95%';
+    setTimeout(loop, 500);
+  }, 500);
+};
+loop();
+/* play a la izquierda y abajo */
+play.style.left = '225';
+play.style.right = 'auto';
+play.style.bottom = 'auto';
+/* al pulsar play backgroundimage es un elemwento random de images */
+play.addEventListener('click', function() {
+  });
+
+/* hola */
+var hola = document.createElement('div');
+hola.innerHTML = 'Click to explore';
+hola.style.position = 'fixed';
+hola.style.top = '0';
+hola.style.left = '0';
+hola.style.fontSize = '1em';
+hola.style.cursor = 'pointer';
+document.body.appendChild(hola);
+hola.style.right = 'auto';
+hola.style.left = '75';
+hola.style.bottom = '50';
+hola.style.top = 'auto';
+/* div2 con imagen de fondo */
+var div2 = document.createElement('div');
+div2.style.backgroundImage = 'url(' + images[Math.floor(Math.random() * images.length)] + ')';
+div2.style.width = '100%';
+div2.style.height = '100%';
+div2.style.position = 'absolute';
+div2.style.top = '0';
+div2.style.left = '0';
+div2.style.zIndex = '-1';
+div2.style.backgroundSize = 'cover';
+div2.style.opacity = '1';
+document.body.appendChild(div2);
+
+/* al pulsar play div2 slide up */
+hola.addEventListener('click', function() {
+  div2.style.backgroundImage = document.body.style.backgroundImage;
+  div2.style.transition = 'all .0s';  
+  div2.style.top = '0%';
+  text.style.opacity = 0;
+/* esperar 1 segundo y bajar */
+setTimeout(function() {
+  document.body.style.backgroundImage = 'url(' + images[Math.floor(Math.random() * images.length)] + ')';
+  //div2.style.backgroundImage = 'url(' + images[Math.floor(Math.random() * images.length)] + ')';
+  text.style.transition = 'all 01s';
+  text.innerHTML = '<h1>' + Math.random() + '</h1>';
+  text.style.opacity = 1;
+  div2.style.transition = 'all .5s';
+  div2.style.top = '-100%';
+  /* fondo de texto traslucido */
+  text.style.background = 'rgba(0,0,0, 0.25)';
+  
+}, 1000);
+});
+/* texto */
+var text = document.createElement('div');
+text.innerHTML = '<h1>Hello World</h1>';
+text.style.position = 'absolute';
+text.style.top = '50%';
+text.style.left = '50%';
+text.style.marginLeft = '-150px';
+text.style.marginTop = '-50px';
+document.body.appendChild(text);
+
+/* al cargar video reproducir en fondo */
+/* ocultar al finalizar */
+/* reproducir carpeta de videos */
+/* ocultar boton al cargar archivos y mostrar al terminar de reproducilsos */
+/* mostrar boton al termino de la reproduccion */
+var video = document.createElement('input');
+video.type = 'file';
+video.accept = 'video/*';
+video.webkitdirectory = true;
+video.addEventListener('change', function(e) {
+  var files = e.target.files;
+  var i = 0;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var url = e.target.result;
+    var video = document.createElement('video');
+    video.src = url;
+    video.autoplay = true;
+    video.style.width = '100%';
+    video.style.height = '100%';
+    video.style.position = 'absolute';
+    video.style.top = '0';
+    video.style.left = '0';
+    video.style.zIndex = '-1';
+    video.style.objectFit = 'cover';
+    document.body.appendChild(video);
+    video.addEventListener('ended', function() {
+      document.body.removeChild(video);
+      i++;
+      if (i < files.length) {
+        reader.readAsDataURL(files[i]);
+      }
+    });
+  };
+  reader.readAsDataURL(files[i]);
+  video.style.display = 'none';
+});
+document.body.appendChild(video);
+video.style.display = 'block';
+});
+        </script>
+    </head>
+    
+</html>
