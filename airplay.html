@@ -43,17 +43,15 @@
             airplayButton.style.display = 'none';
         }
 
-        // Agrega un botón para activar el modo PiP.
+        // Agrega un botón para activar el modo PiP después de la interacción del usuario.
         const pipButton = document.getElementById('pipButton');
         pipButton.addEventListener('click', () => {
-            if (document.pictureInPictureElement) {
-                // Salir del modo PiP si ya está activo.
-                document.exitPictureInPicture();
-            } else if (videoPlayer.readyState >= 2) {
+            if (videoPlayer.readyState >= 2) {
                 // Entrar en el modo PiP si el video está listo.
                 videoPlayer.requestPictureInPicture();
             }
         });
+
 
         // Obtén una referencia a los botones de avanzar y retroceder.
         const forwardButton = document.getElementById('forwardButton');
