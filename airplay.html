@@ -12,12 +12,11 @@
     </video>
 
     <button id="airplayButton">AirPlay</button>
+    <button id="pipButton">Modo PiP</button>
+    <button id="forwardButton">Avanzar 10s</button>
+    <button id="backwardButton">Retroceder 10s</button>
 
     <script>
-        // Obtén una referencia al reproductor de video y al botón de AirPlay.
-        const videoPlayer = document.getElementById('videoPlayer');
-        const airplayButton = document.getElementById('airplayButton');
-
         // Verifica si AirPlay es compatible en este navegador.
         if (window.WebKitPlaybackTargetAvailabilityEvent) {
             // Registra un evento para detectar la disponibilidad de AirPlay.
@@ -43,9 +42,6 @@
             // AirPlay no es compatible en este navegador, oculta el botón de AirPlay.
             airplayButton.style.display = 'none';
         }
-
-        // Obtén una referencia al video.
-        const videoPlayer = document.getElementById('videoPlayer');
 
         // Agrega un botón para activar el modo PiP.
         const pipButton = document.getElementById('pipButton');
