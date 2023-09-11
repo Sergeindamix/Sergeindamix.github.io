@@ -67,5 +67,38 @@
         });
 
     </script>
+
+    <!-- Código para la lista de reproducción -->
+    <script>
+        const videoList = document.getElementById("videoList");
+        const videoFrame = document.getElementById("videoIframe");
+
+        // Precargar videos.json al cargar la página
+        fetch("videos.json")
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(video => {
+                    let option = document.createElement("option");
+                    option.value = video.link;
+                    option.textContent = video.name;
+                    videoList.appendChild(option);
+                });
+            })
+            .catch(error => console.error(error));
+
+            videoList.addEventListener("change", () => {
+            const selectedOption = videoList.options[videoList.selectedIndex];
+            const videoLink = selectedOption.value;
+            if (videoLink) {
+                const embedLink = videoLink.replace("/view", "/preview");
+                videoPlayer.src = embedLink; // Actualiza la fuente del videoPlayer
+                videoPlayer.load(); // Recarga el videoPlayer con la nueva fuente
+                videoPlayer.play(); // Inicia la reproducción automáticamente (opcional)
+            } else {
+                videoPlayer.src = ""; // Si no se selecciona un video, detén la reproducción
+            }
+        });
+
+    </script>
 </body>
 </html>
