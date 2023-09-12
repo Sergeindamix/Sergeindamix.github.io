@@ -15,34 +15,66 @@
     <iframe id="videoIframe" width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
     <script>
-        const videoList = document.getElementById("videoList");
-        const videoFrame = document.getElementById("videoIframe");
-        
-        // Precargar videos.json al cargar la página
-        fetch("videos.json")
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(video => {
-                    let option = document.createElement("option");
-                    option.value = video.link;
-                    option.textContent = video.name;
-                    videoList.appendChild(option);
-                });
-            })
-            .catch(error => console.error(error));
-        
-        videoList.addEventListener("change", () => {
-            const selectedOption = videoList.options[videoList.selectedIndex];
-            const videoLink = selectedOption.value;
-            if (videoLink) {
-                const embedLink = videoLink.replace("/view", "/preview");
-                videoFrame.src = embedLink;
-            } else {
-                videoFrame.src = "";
-            }
-        });
+    const videoList = document.getElementById("videoList");
+    const videoFrame = document.getElementById("videoIframe");
+    const jsonFileInput = document.getElementById("jsonFileInput");
+    const loadJsonButton = document.getElementById("loadJsonButton");
 
-        
-    </script>
+    // Función para cargar el contenido del archivo JSON seleccionado
+    function loadJsonFile(file) {
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            const jsonData = JSON.parse(event.target.result);
+            jsonData.forEach(video => {
+                let option = document.createElement("option");
+                option.value = video.link;
+                option.textContent = video.name;
+                videoList.appendChild(option);
+            });
+        };
+
+        reader.readAsText(file);
+    }
+
+    // Escucha el evento de cambio en el campo de entrada de archivo
+    jsonFileInput.addEventListener("change", function () {
+        const selectedFile = jsonFileInput.files[0];
+        if (selectedFile) {
+            loadJsonFile(selectedFile);
+            jsonFileInput.value = ""; // Limpia el campo de entrada de archivo
+        }
+    });
+
+    // Precargar el primer archivo videos.json al cargar la página
+    fetch("videos.json")
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(video => {
+                let option = document.createElement("option");
+                option.value = video.link;
+                option.textContent = video.name;
+                videoList.appendChild(option);
+            });
+        })
+        .catch(error => console.error(error));
+
+    videoList.addEventListener("change", () => {
+        const selectedOption = videoList.options[videoList.selectedIndex];
+        const videoLink = selectedOption.value;
+        if (videoLink) {
+            const embedLink = videoLink.replace("/view", "/preview");
+            videoFrame.src = embedLink;
+        } else {
+            videoFrame.src = "";
+        }
+    });
+
+    // Agrega un botón para cargar JSON desde archivo
+    loadJsonButton.addEventListener("click", () => {
+        jsonFileInput.click();
+    });
+</script>
+
 </body>
 </html>
