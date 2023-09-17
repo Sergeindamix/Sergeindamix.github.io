@@ -1,0 +1,71 @@
+
+<html>
+    <head>
+        <!-- include the three.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- create a div element for the renderer -->
+<div id="container"></div>
+<script>
+// create a scene
+var scene = new THREE.Scene();
+// create a camera
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+// create a renderer
+var renderer = new THREE.WebGLRenderer();
+// set the size of the renderer
+renderer.setSize(window.innerWidth, window.innerHeight);
+// add the renderer to the document body
+document.body.appendChild(renderer.domElement);
+// create a texture loader
+var loader = new THREE.TextureLoader();
+// load the texture
+var texture = loader.load('https://source.unsplash.com/random/' + Math.random());
+// create a buffer geometry
+var geometry = new THREE.BufferGeometry();
+// create an array to store the positions of the particles
+var positions = [];
+// create a variable to store the number of particles
+var n = 1000;
+// loop n times
+for (var i = 0; i < n; i++) {
+  // create a random position
+  var x = Math.random() * 200 - 100;
+  var y = Math.random() * 200 - 100;
+  var z = Math.random() * 200 - 100;
+  // push the position to the array
+  positions.push(x, y, z);
+}
+// create a buffer attribute for the positions
+var positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
+// add the attribute to the geometry
+geometry.setAttribute('position', positionAttribute);
+// create a points material with the texture
+var material = new THREE.PointsMaterial({map: texture, size: 1, transparent: true});
+// create a points system
+var particles = new THREE.Points(geometry, material);
+// add the points system to the scene
+scene.add(particles);
+// set the position of the camera
+camera.position.z = 100;
+// create a function to animate the scene
+function animate() {
+  // request the next animation frame
+  requestAnimationFrame(animate);
+  // rotate the particles
+  particles.rotation.x += 0.01;
+  particles.rotation.y += 0.01;
+  // render the scene
+  renderer.render(scene, camera);
+}
+// call the animate function
+animate();
+</script>
+    </head>
+    
+</html>
+
+
+
+
+
+

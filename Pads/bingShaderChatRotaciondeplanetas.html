@@ -1,0 +1,143 @@
+
+<html>
+    <head>
+        <!-- include the three.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- create a div element for the renderer -->
+<div id="container"></div>
+<script>
+// create a scene
+var scene = new THREE.Scene();
+// create a camera
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+// create a renderer
+var renderer = new THREE.WebGLRenderer();
+// set the size of the renderer
+renderer.setSize(window.innerWidth, window.innerHeight);
+// add the renderer to the document body
+document.body.appendChild(renderer.domElement);
+// create a texture loader
+var loader = new THREE.TextureLoader();
+// create a function to create a planet
+function createPlanet(radius, texture, distance, speed) {
+  // create a sphere geometry
+  var geometry = new THREE.SphereGeometry(radius, 32, 32);
+  // create a basic material with the texture
+  var material = new THREE.MeshBasicMaterial({map: loader.load(texture)});
+  // create a mesh
+  var planet = new THREE.Mesh(geometry, material);
+  // set the position of the planet
+  planet.position.x = distance;
+  // create a group for the planet and its moon
+  var group = new THREE.Group();
+  // add the planet to the group
+  group.add(planet);
+  // return an object with the group, the planet, and the speed
+  return {group: group, planet: planet, speed: speed};
+}
+// create a function to create a moon
+function createMoon(radius, texture, distance, speed, planet) {
+  // create a sphere geometry
+  var geometry = new THREE.SphereGeometry(radius, 32, 32);
+  // create a basic material with the texture
+  var material = new THREE.MeshBasicMaterial({map: loader.load(texture)});
+  // create a mesh
+  var moon = new THREE.Mesh(geometry, material);
+  // set the position of the moon
+  moon.position.x = distance;
+  // add the moon to the planet group
+  planet.group.add(moon);
+  // return an object with the moon and the speed
+  return {moon: moon, speed: speed};
+}
+// create the sun
+var sun = createPlanet(5, 'https://source.unsplash.com/random/' + Math.random(), 0, 0);
+// create the mercury
+var mercury = createPlanet(0.5, 'https://source.unsplash.com/random/' + Math.random(), 10, 0.02);
+// create the venus
+var venus = createPlanet(1, 'https://source.unsplash.com/random/' + Math.random(), 15, 0.01);
+// create the earth
+var earth = createPlanet(1, 'https://source.unsplash.com/random/' + Math.random(), 20, 0.005);
+// create the moon
+var moon = createMoon(0.2, 'https://source.unsplash.com/random/' + Math.random(), 2, 0.01, earth);
+// create the mars
+var mars = createPlanet(0.8, 'https://source.unsplash.com/random/' + Math.random(), 25, 0.004);
+// create the jupiter
+var jupiter = createPlanet(2, 'https://source.unsplash.com/random/' + Math.random(), 30, 0.003);
+// create the saturn
+var saturn = createPlanet(1.5, 'https://source.unsplash.com/random/' + Math.random(), 35, 0.002);
+// create the uranus
+var uranus = createPlanet(1.2, 'https://source.unsplash.com/random/' + Math.random(), 40, 0.001);
+// create the neptune
+var neptune = createPlanet(1.1, 'https://source.unsplash.com/random/' + Math.random(), 45, 0.0005);
+// create a group for the solar system
+var solarSystem = new THREE.Group();
+// add the sun to the solar system
+solarSystem.add(sun.planet);
+// add the planets to the solar system
+solarSystem.add(mercury.group);
+solarSystem.add(venus.group);
+solarSystem.add(earth.group);
+solarSystem.add(mars.group);
+solarSystem.add(jupiter.group);
+solarSystem.add(saturn.group);
+solarSystem.add(uranus.group);
+solarSystem.add(neptune.group);
+// add the solar system to the scene
+scene.add(solarSystem);
+// create an ambient light
+var ambientLight = new THREE.AmbientLight(0x404040);
+// add the ambient light to the scene
+scene.add(ambientLight);
+// create a directional light
+var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+// set the position of the directional light
+directionalLight.position.set(1, 1, 1);
+// add the directional light to the scene
+scene.add(directionalLight);
+// set the position of the camera
+camera.position.z = 50;
+// create a function to animate the scene
+function animate() {
+  // request the next animation frame
+  requestAnimationFrame(animate);
+  // rotate the sun
+  sun.planet.rotation.y += 0.01;
+  // rotate the planets
+  mercury.planet.rotation.y += 0.01;
+  venus.planet.rotation.y += 0.01;
+  earth.planet.rotation.y += 0.01;
+  mars.planet.rotation.y += 0.01;
+  jupiter.planet.rotation.y += 0.01;
+  saturn.planet.rotation.y += 0.01;
+  uranus.planet.rotation.y += 0.01;
+  neptune.planet.rotation.y += 0.01;
+  // rotate the moon
+  moon.moon.rotation.y += 0.01;
+  // orbit the planets
+  mercury.group.rotation.y += mercury.speed;
+  venus.group.rotation.y += venus.speed;
+  earth.group.rotation.y += earth.speed;
+  mars.group.rotation.y += mars.speed;
+  jupiter.group.rotation.y += jupiter.speed;
+  saturn.group.rotation.y += saturn.speed;
+  uranus.group.rotation.y += uranus.speed;
+  neptune.group.rotation.y += neptune.speed;
+  // orbit the moon
+  moon.moon.position.x = Math.cos(moon.speed) * 2;
+  moon.moon.position.z = Math.sin(moon.speed) * 2;
+  // render the scene
+  renderer.render(scene, camera);
+}
+// call the animate function
+animate();
+</script>
+    </head>
+    
+</html>
+
+
+
+
+
+

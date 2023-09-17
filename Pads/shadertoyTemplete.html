@@ -1,0 +1,306 @@
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+var canvas = document.createElement('canvas');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+document.body.appendChild(canvas);
+var gl = canvas.getContext('webgl');
+var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+gl.shaderSource(vertexShader, `
+  attribute vec2 position;
+  varying vec2 uv;
+  void main() {
+    uv = position.xy * 0.5 + 0.5;
+    gl_Position = vec4(position, 0, 1);
+  }
+`);
+gl.compileShader(vertexShader);
+var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+gl.shaderSource(fragmentShader, `
+  precision highp float;
+  uniform vec2 mouse;
+  uniform sampler2D texture;
+  uniform sampler2D texture2;
+  uniform sampler2D texture3;
+  uniform sampler2D texture4;
+  varying vec2 uv;
+  uniform vec2 resolution;
+  uniform float time;
+  float random (in vec2 _st) {
+    return fract(sin(dot(_st.xy,
+                         vec2(12.9898,78.233)))*
+        43758.5453123);
+}
+#define SHADOW_ANGLE -50.0
+#define SHADOW_COLOR vec3(1, 0, 0);
+#define LIGHT_DIR vec2(1, 1)
+#define LIGHT_INTENSITY 0.3
+#define EPS 0.01
+#define ITER 30
+#define iTime time
+#define texture(a,b) texture2D(a,b)
+#define iChannel0 texture
+#define iChannel1 texture2
+#define iChannel2 texture3
+#define iChannel3 texture4
+#define iResolution resolution
+#define fragCoord gl_FragCoord
+#define PI 3.1415926
+
+
+
+uniform float intensity;
+
+
+
+
+
+
+vec4 spark(vec2 uv) {
+    vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
+    vec2 c = vec2(sin(time * 0.1), cos(time * 0.1)) * 0.5;
+    float n = sin(length(p - c) * 10.0 + sin(time));
+    vec3 color = vec3(1.0, 0.5, 0.2);
+    color *= sin(n * 3.14159);
+    color *= pow(max(0.0, 1.0 - length(p - c) * 2.0), 2.0);
+    return vec4(color, 1.0);
+}
+
+
+
+
+vec3 plasma(vec2 uv) {
+    float c1 = sin(time / 2.0);
+    float c2 = cos(time / 2.0);
+    float c3 = sin(time / 3.0);
+    float c4 = cos(time / 3.0);
+    vec2 p = uv * vec2(resolution.x / resolution.y, 1);
+    float value = sin(sqrt(p.x * p.x + p.y * p.y) + c1 + c2 + c3 + c4);
+    return vec3(value, value * 0.5, value * 0.25);
+}
+
+
+
+
+float blip(float u, float v, float intensity) {
+    float newVal = sin(u * intensity + fract(time) * 5.0) + cos(v * intensity + fract(time) * 5.0);
+    return newVal;
+}
+
+void main() {
+    
+    gl_FragColor += spark(uv);
+    vec3 col = plasma(uv);
+    gl_FragColor += vec4(col, 1.0);
+
+
+    float newVal = blip(uv.x, uv.y, 0.75);
+    gl_FragColor += texture2D(texture2, 1.-uv);
+    gl_FragColor.rgb += newVal * 0.5;
+    
+}
+`);
+gl.compileShader(fragmentShader);
+var program = gl.createProgram();
+gl.attachShader(program, vertexShader);
+gl.attachShader(program, fragmentShader);
+gl.linkProgram(program);
+gl.useProgram(program);
+var positionLocation = gl.getAttribLocation(program, 'position');
+var resolutionLocation = gl.getUniformLocation(program, 'resolution');
+var timeLocation = gl.getUniformLocation(program, 'time');
+var buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+  -1.0, -1.0,
+  1.0, -1.0,
+  -1.0, 1.0,
+  -1.0, 1.0,
+  1.0, -1.0,
+  1.0, 1.0
+]), gl.STATIC_DRAW);
+gl.enableVertexAttribArray(positionLocation);
+gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+var startTime = Date.now();
+
+var texture = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, texture);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+var image = new Image();
+image.onload = function() {
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+};
+image.crossOrigin = "anonymous";
+image.src = 'https://source.unsplash.com/random/' + Math.random();
+function render(time) {
+  time *= 0.001;
+  gl.uniform1f(timeLocation, (Date.now() - startTime) * 0.001);
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+/* overflow hid */
+document.body.style.overflow = 'hidden';
+
+
+/*
+// Create textures
+const textures = [];
+
+// Load images
+const images = [
+"https://i.postimg.cc/jSXQ2nht/00467-3687866067-Get-ready-to-dance-the-night-away-with-this-vibrant-and-dynamic-image-featuring-bo.png",
+"https://i.postimg.cc/jSXQ2nht/00467-3687866067-Get-ready-to-dance-the-night-away-with-this-vibrant-and-dynamic-image-featuring-bo.png",
+"https://i.postimg.cc/jSXQ2nht/00467-3687866067-Get-ready-to-dance-the-night-away-with-this-vibrant-and-dynamic-image-featuring-bo.png",
+"https://i.postimg.cc/jSXQ2nht/00467-3687866067-Get-ready-to-dance-the-night-away-with-this-vibrant-and-dynamic-image-featuring-bo.png"
+
+    
+];
+
+images.forEach((imageSrc, i) => {
+    //const image = new Image();
+    image.src = imageSrc;
+    image.crossOrigin = "anonymous";
+    image.onload = function() {
+        const texture = gl.createTexture();
+        textures.push(texture);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        //gl.generateMipmap(gl.TEXTURE_2D);
+    }
+});
+
+// Get uniform// Get uniform locations
+const uTex1 = gl.getUniformLocation(program, "uTex1");
+const uTex2 = gl.getUniformLocation(program, "uTex2");
+const uTex3 = gl.getUniformLocation(program, "uTex3");
+const uTex4 = gl.getUniformLocation(program, "uTex4");
+
+// Set active texture and bind texture
+for (let i = 0; i < 4; i++) {
+    gl.activeTexture(gl.TEXTURE0 + i);
+    gl.bindTexture(gl.TEXTURE_2D, textures[i]);
+}
+
+// Set uniform values
+gl.uniform1i(uTex1, 0);
+gl.uniform1i(uTex2, 1);
+gl.uniform1i(uTex3, 2);
+gl.uniform1i(uTex4, 3);
+
+*/
+// Creating four textures
+const tex1 = gl.createTexture();
+const tex2 = gl.createTexture();
+const tex3 = gl.createTexture();
+const tex4 = gl.createTexture();
+
+// Loading images from unsplash.com
+const img1 = new Image();
+img1.crossOrigin = "anonymous";
+img1.src = "https://source.unsplash.com/random/";
+img1.onload = function() {
+    gl.bindTexture(gl.TEXTURE_2D, tex1);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img1);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+}
+
+const img2 = new Image();
+img2.crossOrigin = "anonymous";
+img2.src = "https://source.unsplash.com/random/";
+img2.onload = function() {
+    gl.bindTexture(gl.TEXTURE_2D, tex2);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img2);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+}
+
+const img3 = new Image();
+img3.crossOrigin = "anonymous";
+img3.src = "https://source.unsplash.com/random/";
+img3.onload = function() {
+    gl.bindTexture(gl.TEXTURE_2D, tex3);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img3);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+}
+
+const img4 = new Image();
+img4.crossOrigin = "anonymous";
+img4.src = "https://source.unsplash.com/random/";
+img4.onload = function() {
+    gl.bindTexture(gl.TEXTURE_2D, tex4);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img4);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+}
+/* cambiar texture cada segundo *//*
+setInterval(function() {
+  var image = new Image();
+  image.onload = function() {
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+  };
+  image.crossOrigin = "anonymous";
+  image.src = 'https://source.unsplash.com/random/' + Math.random();
+}, 1000);*/
+/* var que guarda posicion de puntero del mouse */
+var mousePos = {
+  x: 0,
+  y: 0
+};
+/* actualizar */
+document.addEventListener('mousemove', function(event) {
+  mousePos.x = event.clientX;
+  mousePos.y = event.clientY;
+});
+/* mostrar variables */
+var mousePosText = document.createElement('div');
+document.body.appendChild(mousePosText);
+setInterval(function() {
+  mousePosText.innerHTML = 'x: ' + mousePos.x + '<br>y: ' + mousePos.y;
+}, 1000 / 60);
+/* variables siempre encima de elementos */
+var mousePosText = document.createElement('div');
+mousePosText.style.position = 'fixed';
+mousePosText.style.top = 0;
+mousePosText.style.left = 0;
+document.body.appendChild(mousePosText);
+/* actualizar mouse a mousePos */
+var mouseLocation = gl.getUniformLocation(program, 'mouse');
+setInterval(function() {
+  gl.uniform2f(mouseLocation, mousePos.x, mousePos.y);
+}, 1000 / 60);
+
+});
+        </script>
+    </head>
+    
+</html>
+
+
+
+
+
+
