@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles.css">	
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+	<link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
+  	<script src="https://vjs.zencdn.net/7.14.3/video.js"></script> 
+	<title>My video</title>
+</head>
+<style>
+    :root {
+	--rojo: #E50914;
+	--fondo: #141414;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: var(--fondo);
+	font-family: 'Open Sans', sans-serif;
+}
+
+.contenedor {
+	width: 90%;
+	margin: auto;
+}
+
+header {
+	padding: 30px 0;
+}
+
+header .contenedor {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+header .logotipo {
+	font-family: 'Bebas Neue', cursive;
+	font-weight: normal;
+	color: var(--rojo);
+	font-size: 40px;
+}
+
+header nav a {
+	color: #AAA;
+	text-decoration: none;
+	margin-right: 20px;
+}
+
+header nav a:hover,
+header nav a.activo {
+	color: #FFF;
+}
+
+/* ---- ----- ----- Pelicula Principal ----- ----- ----- */
+.pelicula-principal {
+	font-size: 16px;
+	min-height: 40.62em;
+	color: #fff;
+	background: linear-gradient(rgba(0, 0, 0, .50) 0%, rgba(0,0,0,.50) 100%), url(../img/backdrop.jpg);
+	background-position: center center;
+	background-size: cover;
+	margin-bottom: 3.12em;
+	display: flex;
+	align-items: end;
+}
+
+.pelicula-principal .contenedor {
+	margin: 0 auto;
+	margin-bottom: 6.25em;
+}
+
+.pelicula-principal .titulo {
+	font-weight: 600;
+	font-size: 3.12em;
+	margin-bottom: 0.4em;
+}
+
+.pelicula-principal .descripcion {
+	font-weight: normal;
+	font-size: 1em;
+	line-height: 1.75em;
+	max-width: 50%;
+	margin-bottom: 1.25em;
+}
+
+.pelicula-principal .boton {
+	background: rgba(0,0,0, 0.5);
+	border: none;
+	border-radius: 0.31em;
+	padding: 0.93em 1.87em;
+	color: #fff;
+	margin-right: 1.25em;
+	cursor: pointer;
+	transition: .3s ease all;
+	font-size: 1.12em;
+}
+
+.pelicula-principal .boton:hover {
+	background: #fff;
+	color: #000;
+}
+
+.pelicula-principal .boton i {
+	margin-right: 1.25em;
+}
+
+/* ---- ----- ----- Contenedor Titulo y controles    ----- ----- ----- */
+
+.contenedor-titulo-controles {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.contenedor-titulo-controles h3 {
+    color: #ffffff;
+    font-size: 30px;
+}
+.contenedor-titulo-controles .indicadores button {
+    background: white;
+    height: 3px;
+    width: 10px;
+    cursor: pointer;
+    border: none;
+    margin-right: 2px;
+}
+
+.contenedor-titulo-controles .indicadores button:hover,
+.contenedor-titulo-controles .indicadores button.activo {
+    background: red;
+}
+
+
+
+
+/* ---- ----- ----- Contenedor principal y flechas    ----- ----- ----- */
+
+.peliculas-recomendadas {
+    margin-bottom: 70px;
+}
+
+.peliculas-recomendadas .contenedor-principal {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.peliculas-recomendadas .contenedor-principal .flecha-izquierda,
+.peliculas-recomendadas .contenedor-principal .flecha-derecha {
+    position: absolute;
+    border: none;
+    background: rgba(0, 0, 0, .3);
+    font-size: 40px;
+    height: 50%;
+    top: calc(50% -25%);
+    line-height: 40px;
+    width: 50px;
+    color: #FFF;
+    cursor: pointer;
+    z-index: 500;
+    transition: .2 ease all;
+}
+
+.peliculas-recomendadas .contenedor-principal .flecha-izquierda:hover,
+.peliculas-recomendadas .contenedor-principal .flecha-derecha:hover{
+    background: rgba(0, 0, 0, .9);
+}
+
+.peliculas-recomendadas .contenedor-principal .flecha-izquierda {
+    left: 0;
+}
+.peliculas-recomendadas .contenedor-principal .flecha-derecha {
+    right: 0;
+}
+
+/* ---- ----- ----- Carrusel    ----- ----- ----- */
+
+.peliculas-recomendadas .contenedor-carousel {
+    width: 100%;
+    padding: 20px 0;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.peliculas-recomendadas .contenedor-carousel .carousel {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.peliculas-recomendadas .contenedor-carousel .carousel .pelicula {
+    min-width: 20%; /*FIX SIZE IMGS 5 PICS*/
+    transition: .3 ease all;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
+}
+
+.peliculas-recomendadas .contenedor-carousel .carousel .pelicula.hover {
+    transform: scale(1.2);
+    transform-origin: center;
+}
+
+.peliculas-recomendadas .contenedor-carousel .carousel .pelicula img {
+    width: 100%;
+    vertical-align: top;
+}
+
+/* ---- ----- ----- Media Queries ----- ----- ----- */
+@media screen and (max-width: 800px) {
+	header .logotipo {
+		margin-bottom: 10px;
+		font-size: 30px;
+	}
+
+	header .contenedor {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.pelicula-principal {
+		font-size: 14px;
+	}
+
+	.pelicula-principal .descripcion {
+		max-width: 100%;
+	}
+
+    .peliculas-recomendadas .contenedor-carousel {
+        overflow: visible;
+    }
+
+    .peliculas-recomendadas .contenedor-carousel .carousel {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .peliculas-recomendadas .indicadores,
+    .peliculas-recomendadas .flecha-derecha,
+    .peliculas-recomendadas .flecha-izquierda,
+	.pelicula-principal .flecha-derecha,
+    .pelicula-principal .flecha-izquierda {
+        display: none;
+    }
+}
+</style>
+<style>
+    .peliculas-recomendadas .contenedor-carousel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    .peliculas-recomendadas .contenedor-carousel .carousel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-x: auto;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    .peliculas-recomendadas .contenedor-carousel .carousel .pelicula {
+        min-width: 20%; /*FIX SIZE IMGS 5 PICS*/
+        transition: .3 ease all;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
+        margin: 0 5px;
+    }
+	.peliculas-recomendadas .contenedor-carousel .carousel .pelicula.hover {
+    transform: scale(0.8);
+    transform-origin: center;
+}
+
+    .peliculas-recomendadas .contenedor-carousel .carousel .pelicula img {
+    width: 100%;
+    max-width: 100%;
+    vertical-align: top;
+}
+
+</style>
+<body>
+	<header>
+		<div class="contenedor">
+			<h2 class="logotipo">FalconMasters</h2>
+			<nav>
+				<a href="#" class="activo">Inicio</a>
+				<a href="#">Programas</a>
+				<a href="#">Películas</a>
+				<a href="#">Más Recientes</a>
+				<a href="#">Mi lista</a>
+			</nav>
+		</div>
+	</header>
+
+	<main>
+        <div class="pelicula-principal">
+			<div class="contenedor">
+				<h3 class="titulo">Interestellar</h3>
+				<iframe width="560" height="315" src="https://drive.google.com/file/d/13gHCp2eLZIC_j3pLeM6lbGlRs0eBfENC/preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				<p class="descripcion">
+					Narra las aventuras de un grupo de exploradores que hacen uso de un agujero de gusano recientemente descubierto para superar las limitaciones de los viajes espaciales tripulados y vencer las inmensas distancias que tiene un viaje interestelar.
+				</p>
+				<input type="file" id="inputFile" accept=".txt">
+    			<button id="loadButton">Cargar videos</button>
+				<button role="button" class="boton"><i class="fas fa-play"></i>Reproducir</button>
+				<button role="button" class="boton"><i class="fas fa-info-circle"></i>Más información</button>
+			</div>
+		</div>
+
+		<div class="peliculas-recomendadas contenedor">
+			<div class="contenedor-titulo-controles">
+				<h3>Películas Recomendadas</h3>
+				<div class="indicadores"></div>                
+			</div>
+
+			<div class="contenedor-principal">
+				<button role="button" id="flecha-izquierda" class="flecha-izquierda"><i class="fas fa-angle-left"></i></button>
+
+				<div id="videosContainer" class="contenedor-carousel"></div>
+
+				<button role="button" id="flecha-derecha" class="flecha-derecha"><i class="fas fa-angle-right"></i></button>
+			</div>
+		</div>
+
+		<button onclick="convertirUrls()">Convertir</button>
+
+		<p>Resultado:</p>
+		<pre id="resultado"></pre>
+
+		<a id="descargar" style="display: none;">Descargar JSON</a>
+
+		<button onclick="extraerIds()">Extraer IDs</button>
+
+		
+		<video id="my-video" class="video-js" controls autoplay>
+			<source src="1.mp4" type="video/mp4">
+		</video>
+
+	</main>
+	
+	<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+	<script>
+        const fila = document.querySelector('.contenedor-carousel');
+const peliculas = document.querySelectorAll('.pelicula');
+
+const flechaIzquierda = document.getElementById('flecha-izquierda');
+const flechaDerecha = document.getElementById('flecha-derecha');
+
+// ? ----- ----- Event Listener para la flecha derecha. ----- -----
+flechaDerecha.addEventListener('click', () => {
+	fila.scrollLeft += fila.offsetWidth;
+
+	const indicadorActivo = document.querySelector('.indicadores .activo');
+	if(indicadorActivo.nextSibling){
+		indicadorActivo.nextSibling.classList.add('activo');
+		indicadorActivo.classList.remove('activo');
+	}
+});
+
+// ? ----- ----- Event Listener para la flecha izquierda. ----- -----
+flechaIzquierda.addEventListener('click', () => {
+	fila.scrollLeft -= fila.offsetWidth;
+
+	const indicadorActivo = document.querySelector('.indicadores .activo');
+	if(indicadorActivo.previousSibling){
+		indicadorActivo.previousSibling.classList.add('activo');
+		indicadorActivo.classList.remove('activo');
+	}
+});
+
+// ? ----- ----- Paginacion ----- -----
+const numeroPaginas = Math.ceil(peliculas.length / 5);
+for(let i = 0; i < numeroPaginas; i++){
+	const indicador = document.createElement('button');
+
+	if(i === 0){
+		indicador.classList.add('activo');
+	}
+
+	document.querySelector('.indicadores').appendChild(indicador);
+	indicador.addEventListener('click', (e) => {
+		fila.scrollLeft = i * fila.offsetWidth;
+
+		document.querySelector('.indicadores .activo').classList.remove('activo');
+		e.target.classList.add('activo');
+	});
+}
+
+// ? ----- ----- Hover ----- -----
+peliculas.forEach((pelicula) => {
+  pelicula.addEventListener('mouseenter', (e) => {
+    const id = e.target.id;
+    console.log(`Nuevo id de video: ${id}`);
+    iFile.src = `https://drive.google.com/file/d/${id}/preview`;
+    const elemento = e.currentTarget;
+    
+    iFile.id = id;
+  });
+});
+
+
+
+
+fila.addEventListener('mouseleave', () => {
+	peliculas.forEach(pelicula => pelicula.classList.remove('hover'));
+});
+    </script>
+	
+	<script>
+		const loadButton = document.getElementById('loadButton');
+const inputFile = document.getElementById('inputFile');
+const videosContainer = document.getElementById('videosContainer');
+const iFile = document.querySelector('iframe');
+
+loadButton.addEventListener('click', () => {
+  const file = inputFile.files[0];
+  if (!file) {
+    console.error('Archivo no seleccionado');
+    return;
+  }
+
+  loadVideos();
+});
+
+
+
+// Función para cargar las imágenes y los videos en la página
+function loadVideos() {
+  const inputFile = document.getElementById("inputFile");
+  const videosContainer = document.getElementById("videosContainer");
+  const reader = new FileReader();
+  reader.readAsText(inputFile.files[0]);
+  reader.onload = (event) => {
+    const content = event.target.result;
+    const videos = content.split("\n");
+    for (let video of videos) {
+      const match = video.match(/\/d\/([-\w]+)/);
+      if (match) {
+        const videoId = match[1];
+        const playlist = `
+          <div class="pelicula">
+            <a href="#">
+              <img id="${videoId}" src="https://drive.google.com/thumbnail?id=${videoId}&sz=w600-h338" alt="" title="${videoId}">
+            </a>
+          </div>
+        `;
+        videosContainer.innerHTML += playlist;
+      } else {
+        console.error(`El enlace ${video} no es válido.`);
+      }
+    }
+    // Seleccionar la primera imagen por defecto
+    const firstImg = document.querySelector(".pelicula img");
+    firstImg.classList.add("hover");
+    iFile.src = `https://drive.google.com/file/d/${firstImg.id}/preview`;
+    iFile.id = firstImg.id;
+  };
+}
+
+
+	  </script>
+	  <script>
+		urls = [			
+			"https://drive.google.com/file/d/1-6bfKyEIkMIFDNCHAJQRadRBblkYpHzi/view?usp=sharing",
+			"https://drive.google.com/file/d/1-BwcAy847DbMWEk1Dmah_WKEZkIZyjCD/view?usp=sharing",
+			"https://drive.google.com/file/d/1-Dq8pkLk3vuaL3ppNuI8B-hGjRvmvWDD/view?usp=sharing",
+			"https://drive.google.com/file/d/1-FM_TPFgVZ78WPzWika7giqiu3aqf2Tl/view?usp=sharing",
+			"https://drive.google.com/file/d/1-QLjOE339DPcclOBUQuYKzOjtn2QyWdm/view?usp=sharing",
+			"https://drive.google.com/file/d/1-QkZMBU0AdgdIkwU0--pToxW0RsToCFK/view?usp=sharing",
+			"https://drive.google.com/file/d/1-VZi2rWwSIY4rkPTO-LVH3g33QVpnCF3/view?usp=sharing",
+			"https://drive.google.com/file/d/1-eZXOUHp6SE0apdrHlev0KBRocNNGdf-/view?usp=sharing",
+			"https://drive.google.com/file/d/1-gVNI1RvpdyMH2WZGCjWkw0MsnzTwFB6/view?usp=sharing",
+			"https://drive.google.com/file/d/1-hf_j2qreYr8rZnp0GI2r4FqFRC4cw7v/view?usp=sharing",
+			"https://drive.google.com/file/d/1-id5Df18kFzSXLXZzG91oITNMa_atitK/view?usp=sharing",
+			"https://drive.google.com/file/d/1-o-tD8PTDltAvnv0hf8kMXt5Vah7oS05/view?usp=sharing",
+			"https://drive.google.com/file/d/1-pSmiqrAMytWf5tiXB5L2ksiikWQQKY1/view?usp=sharing",
+			"https://drive.google.com/file/d/1-qpq_cPzwlJ7b_jTZF_kqZbmN88L-Hn3/view?usp=sharing",
+			"https://drive.google.com/file/d/1-uoNVTY9Ps1VmpH_1rXU1B3SBA8NcptW/view?usp=sharing",
+			"https://drive.google.com/file/d/1-w37NvGiJ6sRwQ9miwg1xgU3WrhLIfXk/view?usp=sharing",
+			"https://drive.google.com/file/d/1-wyfvT-2dIkRBzHDUGUS13igbNYeMs2y/view?usp=sharing",
+			"https://drive.google.com/file/d/1-ySv3xhwmjoXnRWDxFO8VS_xhnf_KIQm/view?usp=sharing",
+			"https://drive.google.com/file/d/101poUkCIc_53tMweTYOiITiftsAe6_8P/view?usp=sharing",
+			"https://drive.google.com/file/d/10J2d1QZjuYYNFcF7hgX-2PlMpdIKhsur/view?usp=sharing",
+			"https://drive.google.com/file/d/10OQ61MEoPGC-0Zfv0DGHt0d7cWvi-Ehn/view?usp=sharing",
+			"https://drive.google.com/file/d/10QK1C4wW_oWMaRtDNykbIxyw9hof-C0V/view?usp=sharing",
+			"https://drive.google.com/file/d/10_2z_TviyUG3u3PP0OxsWJp367on-V7X/view?usp=sharing",
+			"https://drive.google.com/file/d/10_Hxwd1qaMe0RQGpIXfIGFo2bJtaOI4F/view?usp=sharing",
+			"https://drive.google.com/file/d/10bpCbZ9BTp9oUC8jaH_XaIgce88Hlx20/view?usp=sharing",
+			"https://drive.google.com/file/d/10cGYGBv1KhOQgQE8rb53ANjiMFy1lHu3/view?usp=sharing",
+			"https://drive.google.com/file/d/10cMIJnV1Q4IIW-DjTcqYANx5kPM3XNg0/view?usp=sharing",
+			"https://drive.google.com/file/d/10cizoAVCLV_u6cgu7C79UJ1IaS8n5qZx/view?usp=sharing",
+			"https://drive.google.com/file/d/10iP0k9nEmclEQyHAsL4HgN4hT6Re7w3W/view?usp=sharing",
+			"https://drive.google.com/file/d/10jKJViFNRglxW-tiyC7ByUgnnqpDnl9H/view?usp=sharing",
+			"https://drive.google.com/file/d/10sM8TdXoub4NfHYRCCaPfih06FVehyEX/view?usp=sharing",
+			"https://drive.google.com/file/d/10vEOPqbd9OjV2k8tiqqUG8oiO3I1SQ_B/view?usp=sharing",
+			"https://drive.google.com/file/d/110ySQsDo1uPtzCnvM3rIwImZp_0BpzaR/view?usp=sharing",
+			"https://drive.google.com/file/d/112NrgaehylrIvoa6npvoFeZSgH-CjNMm/view?usp=sharing",
+			"https://drive.google.com/file/d/117nrMEQeuVtV6ynxbdvMHcXJ-_CeA29K/view?usp=sharing",
+			"https://drive.google.com/file/d/11Dys96mAPbjgjaWPGZq07E3U8DB11cN5/view?usp=sharing",
+			"https://drive.google.com/file/d/11ECEEZ1V27gkCKwe_VIqkwna9iRji3qe/view?usp=sharing",
+			"https://drive.google.com/file/d/11Ef0SgpGOPIZgJQQXkkDwT8nixnfQVbs/view?usp=sharing",
+			"https://drive.google.com/file/d/11IEQoTEoyx50bwLlpxhKCLF6Bth-K-WH/view?usp=sharing",
+			"https://drive.google.com/file/d/11K8FecGu2fteUPavWbgfOontRyCv9IJB/view?usp=sharing",
+			"https://drive.google.com/file/d/11MHKdjuxwUFhZ5B0j_nFE2SqS1uZ8Vbx/view?usp=sharing",
+			"https://drive.google.com/file/d/11RX3RXjqI1CQGY9O5M3OtHxPlqf4hxFl/view?usp=sharing",
+			"https://drive.google.com/file/d/11ShFwPPKK4s4BMoV82uwNzP8ZnBp0YXG/view?usp=sharing",
+			"https://drive.google.com/file/d/11TOOliQaiJU1Cw2z2YR9AfWwx42nLg9U/view?usp=sharing",
+			"https://drive.google.com/file/d/11UjcRfoqwAsixJMu_5xS7SBijQZcxEAU/view?usp=sharing",
+			"https://drive.google.com/file/d/11Xwnmw8mK3tYgwxk7mMEf3i13xVSNvLs/view?usp=sharing",
+			"https://drive.google.com/file/d/11ZZJEuTPS_ap_JtqW3QI1yQT9aW06ALD/view?usp=sharing",
+			"https://drive.google.com/file/d/11cKt94Ab3LnwBxGiDKBLroZwqxdVgxjm/view?usp=sharing",
+
+			"https://drive.google.com/file/d/1-3hCXAPBm2ppLv4_S0aw9_p_jjQHRgic/view?usp=drive_link",
+			"https://drive.google.com/file/d/1-BUbAmfn5fgwJdWvq52SzKCywoNXR40v/view?usp=sharing",
+		
+
+			"https://drive.google.com/file/d/11cthiWOWmrAQ97U-6RB8mN0Gk-Mn9jwU/view?usp=sharing",
+			"https://drive.google.com/file/d/11eNrNMmoSRqJPmosQsMR5E0N9MuIPfi0/view?usp=sharing",
+			"https://drive.google.com/file/d/11gWCtjhpvPT4c06JYDAJO6pE_0tv2vGI/view?usp=sharing",
+			"https://drive.google.com/file/d/11iLC_1I1nYgPPNF0hokfklBO4B-It7XK/view?usp=sharing",
+			"https://drive.google.com/file/d/11sA1Si8bwzolhiKVzVntLVpVAk2S_Jqt/view?usp=sharing",
+			"https://drive.google.com/file/d/11sKeyESxsyXDpiTQwgva-RXQmu-gN8lp/view?usp=sharing",
+			"https://drive.google.com/file/d/11uCBk3822ASdRcqs06RWLMPfgJ2gAHlX/view?usp=sharing",
+			"https://drive.google.com/file/d/11y252pC7S_w2B2D_AX9HVR2qD-udvjvX/view?usp=sharing",
+			"https://drive.google.com/file/d/12-Ck93aomUUT6ZEYdAEO5eOSQMUOQ0nE/view?usp=sharing",
+			"https://drive.google.com/file/d/126xkYpe7z8b4IE3znz6rXV4bFljMX03M/view?usp=sharing",
+			"https://drive.google.com/file/d/129Vtqyda8V5T07-ndFfJFbj03IG_Z6ss/view?usp=sharing",
+			"https://drive.google.com/file/d/12Ek4C9rrqH2XNgN-jJxuxuFSVxYQtuJS/view?usp=sharing",
+			"https://drive.google.com/file/d/12KDKDi7vQRRjI6kAJ_c2AyJMiJXBNR7F/view?usp=sharing",
+			"https://drive.google.com/file/d/12Nw-9ZO9dBDkBJyA1FkjlwOWm6v0eIAw/view?usp=sharing",
+			"https://drive.google.com/file/d/12bsLvvUtIIoWjkef9UQP6Km7UV8y5J7e/view?usp=sharing",
+			"https://drive.google.com/file/d/12dl2Q3lmXSEk7iTsBGYBi6NEg2-WN4W6/view?usp=sharing",
+			"https://drive.google.com/file/d/12g-wMNeLbdSDZDWf7ayA90WLGOqv2V3v/view?usp=sharing",
+			"https://drive.google.com/file/d/12lRhsMVr6bmvUforWj4E7dyPVITsMNeC/view?usp=sharing",
+			"https://drive.google.com/file/d/12nNjmPoHUGExTtpOlc6Kn9L3W6TR7YjA/view?usp=sharing",
+			"https://drive.google.com/file/d/12qLnTqfxEvRIuCsT25QMfY4piihIYcFh/view?usp=sharing",
+			"https://drive.google.com/file/d/12wcICGTolq2D_K8sy_5F6gfNbuAoQTK6/view?usp=sharing",
+			"https://drive.google.com/file/d/12xGtJIkCNOQcX32yJd0itKJb6uI6SOxu/view?usp=sharing",
+			"https://drive.google.com/file/d/13F0YTIjeDfyaPLEJnPsPhHa-GP6iwQNE/view?usp=sharing",
+			"https://drive.google.com/file/d/13Fn6oxOjiiqeegMbnk-H_-OCzsapYDcu/view?usp=sharing",
+			"https://drive.google.com/file/d/13Gx6gxg9Od7rVh8ktjjwKq3HTow9MXRa/view?usp=sharing",
+			"https://drive.google.com/file/d/13LEAHB-hd_ulJOjbw9LwHth6W6IXlKGx/view?usp=sharing",
+			"https://drive.google.com/file/d/13OMU_4B3_upO9VbkjHjhuPNe_mQxMCnE/view?usp=sharing",
+			"https://drive.google.com/file/d/13Pv0dS-cVW6EFVnMHMnraG1ad9_w804I/view?usp=sharing",
+			"https://drive.google.com/file/d/13eOo0-LMVCCWBYdi6V9HVcqFqT0vm6BT/view?usp=sharing",
+			"https://drive.google.com/file/d/13ie0-DGF92wGlIN-ogHsn6YzTM46LUnF/view?usp=sharing",
+			"https://drive.google.com/file/d/13wdJcJlCn3h6CbpQ8HEbmyhMVvg2tmTH/view?usp=sharing",
+			"https://drive.google.com/file/d/13wjPs6P4K2Cj-q6ND-oPAIL1HqKBhvLm/view?usp=sharing",
+			"https://drive.google.com/file/d/13xT8zNsqfAmi44-0zhO_nU_0qc4U2j_m/view?usp=sharing",
+			"https://drive.google.com/file/d/13zWq-qpO-XUP-Z9K4MUHSdZ5ylVY_mXZ/view?usp=sharing",
+			"https://drive.google.com/file/d/14-aH10ZJP8mfvbAeJEi86Y0R3KRnHdkW/view?usp=sharing",
+			"https://drive.google.com/file/d/143lELKlDErVsPh0ko9VGCywiIT7IlGwS/view?usp=sharing",
+			"https://drive.google.com/file/d/14BxKoYF32pACQB4uC_2M14bRUbvaENOD/view?usp=sharing",
+			"https://drive.google.com/file/d/14DFzSiXutVLC7coCCU16dQTYOpPKsOSm/view?usp=sharing",
+			"https://drive.google.com/file/d/14F6_xb0V8GXQ6TsaNXsHHVtYHuLlkSoI/view?usp=sharing",
+			"https://drive.google.com/file/d/14OE01qp7T22-EZCXFNJDSDfNrMWhRcCS/view?usp=sharing",
+			"https://drive.google.com/file/d/14P4gYuu9rW2HfUqxDiexv-bN3iPkQ7to/view?usp=sharing",
+			"https://drive.google.com/file/d/14UksA2P0nhaHQRHYamp6rEVVtOdWAOhQ/view?usp=sharing",
+			"https://drive.google.com/file/d/14YMeaaq9dEaWGdhZJrWsoDEXiZXN_2_f/view?usp=sharing",
+			"https://drive.google.com/file/d/14YkvUVhOJbpsi6yeSzyQ6nWQEc9ApJPA/view?usp=sharing",
+			"https://drive.google.com/file/d/14_Bdrq-AHeHtdbwj_hhyqrLng-otoX8V/view?usp=sharing",
+			"https://drive.google.com/file/d/14dc1dN-8bYoosr8QXEaUYmaqvnXKs3g8/view?usp=sharing",
+			"https://drive.google.com/file/d/14f_SW5ZUCw7vmCciR0himh03dwQ_dwmz/view?usp=sharing",
+			"https://drive.google.com/file/d/14mafcCsgecNZiP-PYyrKDnvZWVSwXLT-/view?usp=sharing",
+			"https://drive.google.com/file/d/14tk5GhfgwecJXcNXi2978C4x8P-cYus8/view?usp=sharing",
+		];
+
+		var json = [];
+
+        function convertirUrls() {
+            for (var i = 0; i < urls.length; i++) {
+                var url = urls[i];
+                var fileId = url.match(/\/d\/(.+?)\//)[1];
+                var jsonItem = { "id": fileId, "url": url };
+                json.push(jsonItem);
+            }
+
+            var jsonString = JSON.stringify(json, null, 2);
+            //document.getElementById("resultado").innerText = jsonString;
+
+            var dataUri = "data:text/json;charset=utf-8," + encodeURIComponent(jsonString);
+            var descargarElemento = document.getElementById("descargar");
+            descargarElemento.setAttribute("href", dataUri);
+            descargarElemento.setAttribute("download", "urls.json");
+            descargarElemento.style.display = "inline";
+        }
+
+		function extraerIds() {
+            var idsAndUrls = json.map(function(item) {
+                return [item.id, item.url];
+            });
+
+            actualizarListaReproduccion(idsAndUrls);
+        }
+
+		var myPlayer = videojs('my-video');
+
+		function actualizarListaReproduccion(idsAndUrls) {
+		var videosContainer = document.getElementById("videosContainer");
+		videosContainer.innerHTML = "";
+		
+
+		for (var i = 0; i < idsAndUrls.length; i++) {
+			var videoId = idsAndUrls[i][0];
+			var videoUrl = idsAndUrls[i][1];
+			
+			// Hacer una solicitud GET a la URL de metadatos del archivo
+			fetch('https://www.googleapis.com/drive/v3/files/' + videoId + '?fields=name&key=AIzaSyCyYq3aWzXK-sE8surQuxZxCI2bZTzZtZA')
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(data) {
+				var videoName = data.name;
+				console.log(videoName); // El nombre del archivo extraído
+				
+				
+			})
+			.catch(function(error) {
+				console.log('Error al obtener el nombre del archivo:', error);
+			});
+
+			var playlist = `
+			<div class="pelicula">						
+				<a href="#" class="play-video-link" data-video-url="${videoUrl}">${videoId}
+				<img id="${videoId}" src="https://drive.google.com/thumbnail?id=${videoId}&sz=w600-h338" alt="" title="${videoId}">
+				</a>
+			</div>
+			`;
+
+			videosContainer.innerHTML += playlist;
+			
+		}
+
+		var playVideoLinks = document.getElementsByClassName('play-video-link');
+		for (var j = 0; j < playVideoLinks.length; j++) {
+			playVideoLinks[j].addEventListener('click', function(event) {
+			event.preventDefault(); // Prevent the default link behavior
+			var videoUrl = this.getAttribute('data-video-url');
+			var myVideo = document.getElementById('my-video');
+
+			myVideo.src = videoUrl;
+			
+
+			// Seleccionar la primera imagen por defecto
+			var firstImg = this.querySelector("img");
+			firstImg.classList.add("hover");
+			iFile.src = `https://drive.google.com/file/d/${firstImg.id}/preview`;
+			iFile.id = firstImg.id;
+			console.log(videoUrl, firstImg, iFile.src, iFile.id);
+
+			
+			});
+		}
+		}
+
+		window.addEventListener('scroll', function(event) {
+		// Your scroll event handling code here
+		}, { passive: true });
+
+    </script>
+</body>
+</html>

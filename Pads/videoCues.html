@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reproducir video</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+        }
+
+        .grid-item {
+            text-align: center;
+        }
+
+        .neon-button {
+            display: inline-block;
+            border: none;
+            background-color: black;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .neon-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .neon-button:active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes neon-glow {
+            0% {
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.4), 0 0 80px rgba(0, 255, 255, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .neon-button:active {
+            animation: neon-glow 0.5s;
+        }
+
+        .delete-button {
+            display: inline-block;
+            border: none;
+            background-color: black;
+            color: white;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 50%;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin-left: 5px;
+        }
+
+        .delete-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .delete-button:active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <video id="videoPlayer" width="640" height="480" controls>
+        <source src="1.mp4" type="video/mp4">
+    </video>
+
+    <div class="grid-container">
+        <div class="grid-item">
+            <button id="button0" class="neon-button" onclick="toggleStartPoint(0)">Botón 1</button>
+            <button class="delete-button" onclick="deleteStartPoint(0)">X</button>
+        </div>
+        <div class="grid-item">
+            <button id="button1" class="neon-button" onclick="toggleStartPoint(1)">Botón 2</button>
+            <button class="delete-button" onclick="deleteStartPoint(1)">X</button>
+        </div>
+        <div class="grid-item">
+            <button id="button2" class="neon-button" onclick="toggleStartPoint(2)">Botón 3</button>
+            <button class="delete-button" onclick="deleteStartPoint(2)">X</button>
+        </div>
+        <div class="grid-item">
+            <button id="button3" class="neon-button" onclick="toggleStartPoint(3)">Botón 4</button>
+            <button class="delete-button" onclick="deleteStartPoint(3)">X</button>
+        </div>
+        <div class="grid-item">
+            <button id="button4" class="neon-button" onclick="toggleStartPoint(4)">Botón 5</button>
+            <button class="delete-button" onclick="deleteStartPoint(4)">X</button>
+        </div>
+        <div class="grid-item">
+            <button id="button5" class="neon-button" onclick="toggleStartPoint(5)">Botón 6</button>
+            <button class="delete-button" onclick="deleteStartPoint(5)">X</button>
+        </div>
+        <div class="grid-item">
+            <button id="button6" class="neon-button" onclick="toggleStartPoint(6)">Botón 7</button>
+            <button class="delete-button" onclick="deleteStartPoint(6)">X</button>
+        </div>
+        <div class="grid-item">
+            <button id="button7" class="neon-button" onclick="toggleStartPoint(7)">Botón 8</button>
+            <button class="delete-button" onclick="deleteStartPoint(7)">X</button>
+        </div>
+    </div>
+
+    <script>
+        var video = document.getElementById("videoPlayer");
+        var startPoints = [];
+
+        function toggleStartPoint(index) {
+            if (typeof startPoints[index] === "undefined") {
+                startPoints[index] = video.currentTime;
+                document.getElementById("button" + index).innerHTML = formatTime(video.currentTime);
+            } else {
+                video.currentTime = startPoints[index];
+                video.play();
+            }
+        }
+
+        function deleteStartPoint(index) {
+            delete startPoints[index];
+            document.getElementById("button" + index).innerHTML = "Botón " + (index + 1);
+        }
+
+        function formatTime(time) {
+            var minutes = Math.floor(time / 60);
+            var seconds = Math.floor(time % 60);
+            return padTime(minutes) + ":" + padTime(seconds);
+        }
+
+        function padTime(time) {
+            return (time < 10 ? "0" : "") + time;
+        }
+    </script>
+</body>
+</html>

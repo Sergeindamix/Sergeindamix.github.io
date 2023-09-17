@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reproductor de Videos</title>
+</head>
+<body>
+  <h1>Reproductor de Videos</h1>
+  
+  <div id="player">
+    <iframe width="640" height="360" frameborder="0" src="https://mega.nz/embed/dfBD2YoY#VEjUKzYzC1szEFWHj0uX3XI4krZG3NGfAs37Ef4HE58" allowfullscreen></iframe>
+    <select id="playlist">
+      <option value="">Selecciona un video</option>
+      <option value="https://mega.nz/embed/dfBD2YoY#VEjUKzYzC1szEFWHj0uX3XI4krZG3NGfAs37Ef4HE58">The National Anthem</option>
+      <option value="https://mega.nz/embed/JTRwla5D#fAqZseXizKwjXJ6ZbvQjWJ-cxgxZh3yU6X76EfbKP5Y">Fifteen Million Merits</option>
+      <option value="https://mega.nz/embed/hLJwjIhK#ZJQ4IZC7J55lSfLswnq5PUzT9dY8R3kNzpV-zuVkZBk">The Entire History of You</option>
+      <!-- Agrega más opciones de video aquí -->
+    </select>
+  </div>
+
+  <script>
+    // Obtener la referencia al reproductor y el desplegable de la playlist
+    const player = document.getElementById('player');
+    const playlist = document.getElementById('playlist');
+
+    // Cargar la lista de videos desde el arreglo
+    const videos = [
+    "https://mega.nz/embed/dfBD2YoY#VEjUKzYzC1szEFWHj0uX3XI4krZG3NGfAs37Ef4HE58",
+    "https://mega.nz/embed/JTRwla5D#fAqZseXizKwjXJ6ZbvQjWJ-cxgxZh3yU6X76EfbKP5Y",
+    "https://mega.nz/embed/hLJwjIhK#ZJQ4IZC7J55lSfLswnq5PUzT9dY8R3kNzpV-zuVkZBk",
+    "https://mega.nz/embed/oCZiRa6J#Wuw-WzdGFY5fM98hJXg0HqvnKvqo9Nwv27NnQQlXwJc",
+    "https://mega.nz/embed/AeQmHAjY#KJRDAxWvahObDSiCiGHCGPnw7idf80TtRZG5eMLeYFE",
+    "https://mega.nz/embed/1LB0gYqI#5oDzW-AZJrz4UKgMo_OquHP1Fkz2os8zCJ0-YYugYc0",
+    "https://mega.nz/embed/FeYgRILB#--uPuoUd18YEuMwsms-2yoSMPnCJbvyVZXuEWqqUEVQ",
+    "https://mega.nz/embed/1aAkiQpA#xPu-vOupdhLS1zm3AXV_0bZV2tudHyqem8Cg7iPdivY",
+    "https://mega.nz/embed/1fZgQYrB#G_X8IHDM3_gYDUUEGCSdVyhiy0gSNQfkfEPA48JcL0g",
+    "https://mega.nz/embed/RTAWHaQJ#r2a0Co9wHK2kT2oGjiVqYOFnbDfJ1vSZRz4ca6doQ18",
+    "https://mega.nz/embed/4aR0maxB#D-NKdJcldModz1JZmAAZi8qiNAUIQg6Gfy3DSScDz9E",
+    "https://mega.nz/embed/dWAAGS4S#H0PmKNs9fTfbQvSmjJghi4shWVTCkyL4TucCaaHqrIc",
+    "https://mega.nz/embed/4PJwVCoK#zC-5OoECnvY8xJtUVI6Bv_MJdWlL1VmudUGDxOThWXk",
+    "https://mega.nz/embed/ADZATIqZ#WtbdHxWa1pqeaK6o8iEFzTfdSnmJ7xgihjoMPMgPlXE",
+    "https://mega.nz/embed/FbJUiSqI#CQgxLKuIcY4v4B39bJMmx4Sbukghj3DXHxdkcyQMvQc",
+    "https://mega.nz/embed/NTRwTSDS#95XzU4fMklYSILcvJR0JWQBGRW8dNrQQBmiKypttuXg",
+    "https://mega.nz/embed/QKZwSaaR#3SbvAkUW0qvZfJ2wgg4DGdTnJVaiSE_hTd39xyqRNdc",
+    "https://mega.nz/embed/APYyGQSb#V-Ks_NZ2iruOLbNf_nP3xBcT7aTnS_Un4zWtDb7CHDc",
+    "https://mega.nz/embed/pCRQnKYI#zr1lUbch7yFkhyrf77EmIsKacZm1l7PEMLOPgh4WsBw",
+    "https://mega.nz/embed/xPIEWKLS#AtBOnlPjK55J-n5PNsBpeMor-tU_Dzlo87ofudyR5kk"
+];
+
+    // Agregar opciones de video a la lista desplegable
+    videos.forEach((video, index) => {
+      const option = document.createElement('option');
+      option.value = video;
+      option.textContent = `Video ${index + 1}`;
+      playlist.appendChild(option);
+    });
+
+    // Evento change para cargar el video seleccionado
+    playlist.addEventListener('change', () => {
+      const selectedVideoUrl = playlist.value;
+      loadVideo(selectedVideoUrl);
+    });
+
+    // Función para cargar un video en el reproductor
+    function loadVideo(videoUrl) {
+      // Reemplazar el contenido del reproductor con el nuevo video
+      player.innerHTML = `
+      <div id="player">
+        <iframe width="640" height="360" frameborder="0" src="${videoUrl}" allowfullscreen></iframe>
+        <select id="playlist">
+          <option value="">Selecciona un video</option>
+          <option value="https://mega.nz/embed/dfBD2YoY#VEjUKzYzC1szEFWHj0uX3XI4krZG3NGfAs37Ef4HE58">The National Anthem</option>
+          <option value="https://mega.nz/embed/JTRwla5D#fAqZseXizKwjXJ6ZbvQjWJ-cxgxZh3yU6X76EfbKP5Y">Fifteen Million Merits</option>
+          <option value="https://mega.nz/embed/hLJwjIhK#ZJQ4IZC7J55lSfLswnq5PUzT9dY8R3kNzpV-zuVkZBk">The Entire History of You</option>
+          <!-- Agrega más opciones de video aquí -->
+        </select>
+      </div>`; 
+      // Actualizar y mostrar la lista de reproducción
+      refreshPlaylist(videoUrl);     
+    }
+   
+
+    // Función para actualizar y mostrar la lista de reproducción
+    function refreshPlaylist(selectedVideoUrl) {
+      playlist.innerHTML = ''; // Limpiar la lista desplegable
+      
+      videos.forEach((video, index) => {
+        const option = document.createElement('option');
+        option.value = video;
+        option.textContent = `Video ${index + 1}`;
+        playlist.appendChild(option);
+      });
+      
+      // Seleccionar el video cargado en el reproductor
+      playlist.value = selectedVideoUrl;
+    }
+
+  </script>
+</body>
+</html>
