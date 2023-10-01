@@ -13,12 +13,20 @@
         iframe.allowFullscreen = true;
         document.body.appendChild(iframe);
 
+        var soundButton = document.createElement('button');
+        soundButton.textContent = 'Activar Sonido';
+        soundButton.style.position = 'absolute';
+        soundButton.style.top = '10px';
+        soundButton.style.right = '10px';
+        //document.body.appendChild(soundButton);
+
+        var soundEnabled = true;
+
         // Leer el archivo enlaces.txt y crear una lista de IDs
         var shaderLinks = [];
         fetch('enlaces.txt')
             .then(response => response.text())
             .then(data => {
-                // Dividir el contenido del archivo por líneas
                 shaderLinks = data.trim().split('\n');
 
                 var currentIndex = 0;
@@ -36,7 +44,8 @@
                 function changeShader() {
                     var shaderID = extractShaderID(shaderLinks[currentIndex]);
                     if (shaderID) {
-                        iframe.src = `https://www.shadertoy.com/embed/${shaderID}?gui=true&t=10&paused=false&muted=false`;
+                        // Agregar o quitar el parámetro "muted" para controlar el sonido
+                        iframe.src = `https://www.shadertoy.com/embed/${shaderID}?gui=true&t=10&paused=false&muted=${soundEnabled}`;
                     }
                     currentIndex = (currentIndex + 1) % shaderLinks.length;
                 }
@@ -45,7 +54,13 @@
                 changeShader();
 
                 // Establecer un temporizador para cambiar el shader cada minuto
-                setInterval(changeShader, 60000); // 60000 milisegundos = 1 minuto
+                setInterval(changeShader, 60000);
+
+                // Agregar un evento al botón para cambiar el estado del sonido
+                soundButton.addEventListener('click', function() {
+                    soundEnabled = !soundEnabled;
+                    soundButton.textContent = soundEnabled ? 'Desactivar Sonido' : 'Activar Sonido';
+                });
             })
             .catch(error => console.error(error));
     });
