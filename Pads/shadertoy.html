@@ -4,28 +4,50 @@
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         var iframe = document.createElement('iframe');
-        iframe.src = 'https://www.shadertoy.com/embed/cdcyWX?gui=true&t=10&paused=false&muted=false';
-        iframe.width = '100%'; // Cambiamos el ancho al 100% para llenar la pantalla
-        iframe.height = '100%'; // Cambiamos el alto al 100% para llenar la pantalla
+        iframe.width = '100%';
+        iframe.height = '100%';
         iframe.style.position = 'fixed';
         iframe.style.top = '0';
         iframe.style.left = '0';
         iframe.style.border = 'none';
         iframe.allowFullscreen = true;
         document.body.appendChild(iframe);
-        
-        // Función para activar pantalla completa cuando se haga clic en el iframe
-        iframe.addEventListener('click', function() {
-            if (iframe.requestFullscreen) {
-                iframe.requestFullscreen();
-            } else if (iframe.mozRequestFullScreen) { // Firefox
-                iframe.mozRequestFullScreen();
-            } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari y Opera
-                iframe.webkitRequestFullscreen();
-            } else if (iframe.msRequestFullscreen) { // IE/Edge
-                iframe.msRequestFullscreen();
-            }
-        });
+
+        // Leer el archivo enlaces.txt y crear una lista de IDs
+        var shaderLinks = [];
+        fetch('enlaces.txt')
+            .then(response => response.text())
+            .then(data => {
+                // Dividir el contenido del archivo por líneas
+                shaderLinks = data.trim().split('\n');
+
+                var currentIndex = 0;
+
+                // Función para extraer el ID de un enlace dado
+                function extractShaderID(link) {
+                    var match = link.match(/\/view\/(\w+)/);
+                    if (match && match[1]) {
+                        return match[1];
+                    }
+                    return null;
+                }
+
+                // Función para cambiar el shader cada minuto
+                function changeShader() {
+                    var shaderID = extractShaderID(shaderLinks[currentIndex]);
+                    if (shaderID) {
+                        iframe.src = `https://www.shadertoy.com/embed/${shaderID}?gui=true&t=10&paused=false&muted=false`;
+                    }
+                    currentIndex = (currentIndex + 1) % shaderLinks.length;
+                }
+
+                // Cambiar el shader inicial
+                changeShader();
+
+                // Establecer un temporizador para cambiar el shader cada minuto
+                setInterval(changeShader, 60000); // 60000 milisegundos = 1 minuto
+            })
+            .catch(error => console.error(error));
     });
     </script>
 </head>
