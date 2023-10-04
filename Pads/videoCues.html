@@ -1,8 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reproducir video</title>
+    <title>Reproducir video en el fondo</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #videoBackground {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1; /* Coloca el video detrás de otros elementos */
+        }
+
+        .content {
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 20px;
+            flex: 1; /* El contenido ocupa todo el espacio disponible */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Mueve los botones a la parte inferior */
+            align-items: center; /* Centra los elementos horizontalmente */
+        }
+
+        h1, p {
+            margin: 10px 0;
+        }
+
         .grid-container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -73,110 +110,72 @@
         .delete-button:active {
             background-color: rgba(255, 255, 255, 0.3);
         }
-
-        .active {
-            background-color: green; /* Cambia el color de fondo cuando el bucle esté activado */
-            box-shadow: 0 0 5px rgba(0, 255, 0, 0.3); /* Cambia el sombreado del botón cuando el bucle esté activado */
-        }
-
     </style>
 </head>
 <body>
-    <video id="videoPlayer" width="640" height="480" controls>
+    <video autoplay loop muted id="videoBackground">
         <source src="1 (1).mp4" type="video/mp4">
     </video>
+    
+    <div class="content">
 
-    <input type="file" id="videoInput" accept="video/*">
+        <div class="grid-container">
+            <div class="grid-item">
+                <button id="button0" class="neon-button" onclick="toggleStartPoint(0)">Botón 1</button>
+                <button class="delete-button" onclick="deleteStartPoint(0)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button1" class="neon-button" onclick="toggleStartPoint(1)">Botón 2</button>
+                <button class="delete-button" onclick="deleteStartPoint(1)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button2" class="neon-button" onclick="toggleStartPoint(2)">Botón 3</button>
+                <button class="delete-button" onclick="deleteStartPoint(2)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button3" class="neon-button" onclick="toggleStartPoint(3)">Botón 4</button>
+                <button class="delete-button" onclick="deleteStartPoint(3)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button4" class="neon-button" onclick="toggleStartPoint(4)">Botón 5</button>
+                <button class="delete-button" onclick="deleteStartPoint(4)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button5" class="neon-button" onclick="toggleStartPoint(5)">Botón 6</button>
+                <button class="delete-button" onclick="deleteStartPoint(5)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button6" class="neon-button" onclick="toggleStartPoint(6)">Botón 7</button>
+                <button class="delete-button" onclick="deleteStartPoint(6)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button7" class="neon-button" onclick="toggleStartPoint(7)">Botón 8</button>
+                <button class="delete-button" onclick="deleteStartPoint(7)">X</button>
+            </div>
+        </div>
+        <!-- Agregar el input de archivo para reemplazar el video de fondo -->
+        <input type="file" id="videoInput" accept="video/*">
+        <button id="replaceButton" class="neon-button" onclick="replaceVideo()">Reemplazar Video</button>
+        <!-- Botón para activar/desactivar el sonido -->
+        <button id="soundButton" class="neon-button" onclick="toggleSound()">Activar Sonido</button>
 
-    <button id="loopButton" class="neon-button" onclick="toggleLoop()">Loop</button>
-
-    <div class="grid-container">
-        <div class="grid-item">
-            <button id="button0" class="neon-button" onclick="toggleStartPoint(0)">Botón 1</button>
-            <button class="delete-button" onclick="deleteStartPoint(0)">X</button>
-        </div>
-        <div class="grid-item">
-            <button id="button1" class="neon-button" onclick="toggleStartPoint(1)">Botón 2</button>
-            <button class="delete-button" onclick="deleteStartPoint(1)">X</button>
-        </div>
-        <div class="grid-item">
-            <button id="button2" class="neon-button" onclick="toggleStartPoint(2)">Botón 3</button>
-            <button class="delete-button" onclick="deleteStartPoint(2)">X</button>
-        </div>
-        <div class="grid-item">
-            <button id="button3" class="neon-button" onclick="toggleStartPoint(3)">Botón 4</button>
-            <button class="delete-button" onclick="deleteStartPoint(3)">X</button>
-        </div>
-        <div class="grid-item">
-            <button id="button4" class="neon-button" onclick="toggleStartPoint(4)">Botón 5</button>
-            <button class="delete-button" onclick="deleteStartPoint(4)">X</button>
-        </div>
-        <div class="grid-item">
-            <button id="button5" class="neon-button" onclick="toggleStartPoint(5)">Botón 6</button>
-            <button class="delete-button" onclick="deleteStartPoint(5)">X</button>
-        </div>
-        <div class="grid-item">
-            <button id="button6" class="neon-button" onclick="toggleStartPoint(6)">Botón 7</button>
-            <button class="delete-button" onclick="deleteStartPoint(6)">X</button>
-        </div>
-        <div class="grid-item">
-            <button id="button7" class="neon-button" onclick="toggleStartPoint(7)">Botón 8</button>
-            <button class="delete-button" onclick="deleteStartPoint(7)">X</button>
-        </div>
     </div>
 
     <script>
-        var video = document.getElementById("videoPlayer");
         var startPoints = [];
-        var loopEnabled = false; // Variable para rastrear el estado del bucle
-
-        function toggleLoop() {
-            loopEnabled = !loopEnabled; // Cambiar el estado del bucle
-            
-            if (loopEnabled) {
-                video.loop = true; // Habilitar el bucle
-                document.getElementById("loopButton").classList.add("active"); // Agregar una clase para resaltar el botón activo
-            } else {
-                video.loop = false; // Deshabilitar el bucle
-                document.getElementById("loopButton").classList.remove("active"); // Eliminar la clase activa del botón
-            }
-        }
+        var videoBackground = document.getElementById("videoBackground");
+        var soundEnabled = false; // Variable para rastrear el estado del sonido
 
 
         function toggleStartPoint(index) {
-            var videoInput = document.getElementById("videoInput");
-            var video = document.getElementById("videoPlayer");
-            
             if (typeof startPoints[index] === "undefined") {
-                startPoints[index] = video.currentTime;
-                document.getElementById("button" + index).innerHTML = formatTime(video.currentTime);
+                startPoints[index] = videoBackground.currentTime;
+                document.getElementById("button" + index).innerHTML = formatTime(videoBackground.currentTime);
             } else {
-                video.currentTime = startPoints[index];
-                video.play();
+                videoBackground.currentTime = startPoints[index];
+                videoBackground.play();
             }
         }
-
-        document.getElementById("videoInput").addEventListener("change", function () {
-            var videoInput = document.getElementById("videoInput");
-            var videoPlayer = document.getElementById("videoPlayer");
-            
-            if (videoInput.files.length > 0) {
-                var file = videoInput.files[0];
-                var objectURL = URL.createObjectURL(file);
-                
-                videoPlayer.src = objectURL;
-                videoPlayer.load();
-                
-                // Limpiar los puntos de inicio previos
-                startPoints = [];
-                
-                // Restablecer los nombres de los botones
-                for (var i = 0; i < 8; i++) {
-                    document.getElementById("button" + i).innerHTML = "Botón " + (i + 1);
-                }
-            }
-        });
-
 
         function deleteStartPoint(index) {
             delete startPoints[index];
@@ -191,6 +190,40 @@
 
         function padTime(time) {
             return (time < 10 ? "0" : "") + time;
+        }
+
+        // Función para reemplazar el video de fondo y resetear hotcues
+        function replaceVideo() {
+            var videoInput = document.getElementById("videoInput");
+            
+            if (videoInput.files.length > 0) {
+                var file = videoInput.files[0];
+                var objectURL = URL.createObjectURL(file);
+                
+                videoBackground.src = objectURL;
+                videoBackground.load();
+                
+                // Limpiar los puntos de inicio previos (hotcues)
+                startPoints = [];
+
+                // Restablecer los nombres de los botones
+                for (var i = 0; i < 8; i++) {
+                    document.getElementById("button" + i).innerHTML = "Botón " + (i + 1);
+                }
+            }
+        }
+
+        // Función para activar/desactivar el sonido
+        function toggleSound() {
+            soundEnabled = !soundEnabled; // Cambiar el estado del sonido
+            
+            if (soundEnabled) {
+                videoBackground.muted = false; // Activar el sonido
+                document.getElementById("soundButton").innerHTML = "Desactivar Sonido";
+            } else {
+                videoBackground.muted = true; // Desactivar el sonido
+                document.getElementById("soundButton").innerHTML = "Activar Sonido";
+            }
         }
     </script>
 </body>
