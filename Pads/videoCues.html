@@ -73,12 +73,22 @@
         .delete-button:active {
             background-color: rgba(255, 255, 255, 0.3);
         }
+
+        .active {
+            background-color: green; /* Cambia el color de fondo cuando el bucle esté activado */
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.3); /* Cambia el sombreado del botón cuando el bucle esté activado */
+        }
+
     </style>
 </head>
 <body>
     <video id="videoPlayer" width="640" height="480" controls>
         <source src="1 (1).mp4" type="video/mp4">
     </video>
+
+    <input type="file" id="videoInput" accept="video/*">
+
+    <button id="loopButton" class="neon-button" onclick="toggleLoop()">Loop</button>
 
     <div class="grid-container">
         <div class="grid-item">
@@ -118,8 +128,25 @@
     <script>
         var video = document.getElementById("videoPlayer");
         var startPoints = [];
+        var loopEnabled = false; // Variable para rastrear el estado del bucle
+
+        function toggleLoop() {
+            loopEnabled = !loopEnabled; // Cambiar el estado del bucle
+            
+            if (loopEnabled) {
+                video.loop = true; // Habilitar el bucle
+                document.getElementById("loopButton").classList.add("active"); // Agregar una clase para resaltar el botón activo
+            } else {
+                video.loop = false; // Deshabilitar el bucle
+                document.getElementById("loopButton").classList.remove("active"); // Eliminar la clase activa del botón
+            }
+        }
+
 
         function toggleStartPoint(index) {
+            var videoInput = document.getElementById("videoInput");
+            var video = document.getElementById("videoPlayer");
+            
             if (typeof startPoints[index] === "undefined") {
                 startPoints[index] = video.currentTime;
                 document.getElementById("button" + index).innerHTML = formatTime(video.currentTime);
@@ -128,6 +155,28 @@
                 video.play();
             }
         }
+
+        document.getElementById("videoInput").addEventListener("change", function () {
+            var videoInput = document.getElementById("videoInput");
+            var videoPlayer = document.getElementById("videoPlayer");
+            
+            if (videoInput.files.length > 0) {
+                var file = videoInput.files[0];
+                var objectURL = URL.createObjectURL(file);
+                
+                videoPlayer.src = objectURL;
+                videoPlayer.load();
+                
+                // Limpiar los puntos de inicio previos
+                startPoints = [];
+                
+                // Restablecer los nombres de los botones
+                for (var i = 0; i < 8; i++) {
+                    document.getElementById("button" + i).innerHTML = "Botón " + (i + 1);
+                }
+            }
+        });
+
 
         function deleteStartPoint(index) {
             delete startPoints[index];
