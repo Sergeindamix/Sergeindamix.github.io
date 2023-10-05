@@ -110,15 +110,60 @@
         .delete-button:active {
             background-color: rgba(255, 255, 255, 0.3);
         }
+
+        /* Estilos CSS para el contenedor del slider */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+            position: relative; /* Agrega posición relativa para el tooltip */
+        }
+
+        /* Estilos CSS para el slider */
+        #pitchSlider {
+            flex-grow: 1;
+            width: auto;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            background: #ddd;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        /* Estilos CSS para el label */
+        label[for="pitchSlider"] {
+            margin-left: 10px;
+        }
+
+        /* Estilos CSS para el tooltip */
+        .slider-tooltip {
+            position: absolute;
+            top: -25px; /* Posición por encima del slider */
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            pointer-events: none; /* Evita que el tooltip interfiera con el puntero del mouse */
+            opacity: 0; /* Inicialmente oculto */
+            transition: opacity 0.2s;
+        }
+
     </style>
 </head>
 <body>
     <video autoplay loop muted id="videoBackground">
-        <source src="1 (1).mp4" type="video/mp4">
+        <source src="1.mp4" type="video/mp4">
     </video>
     
     <div class="content">
-
+        <div class="slider-container">
+            <input type="range" id="pitchSlider" min="-20" max="20" value="0" step="0.1" oninput="updatePitchLabel()">
+            <label id="pitchLabel" for="pitchSlider">Pitch</label>
+        </div>
+        
         <div class="grid-container">
             <div class="grid-item">
                 <button id="button0" class="neon-button" onclick="toggleStartPoint(0)">Botón 1</button>
@@ -225,6 +270,43 @@
                 document.getElementById("soundButton").innerHTML = "Activar Sonido";
             }
         }
+
+        var pitchSlider = document.getElementById("pitchSlider");
+        var videoBackground = document.getElementById("videoBackground");
+        var pitchLabel = document.getElementById("pitchLabel");
+
+        var isDraggingSlider = false; // Variable para rastrear si se está arrastrando el slider
+
+        function updatePitchLabel() {
+            var pitchValue = parseFloat(pitchSlider.value);
+            var playbackRate = 1 + (pitchValue / 100); // Calcula la velocidad de reproducción en función del pitch
+
+            // Actualiza el texto del label en tiempo real mientras se arrastra
+            pitchLabel.innerHTML = Math.round(pitchValue) + "%";
+
+            // Cambia la velocidad de reproducción del video en tiempo real mientras se arrastra
+            videoBackground.playbackRate = playbackRate;
+
+            if (!isDraggingSlider) {
+                // Restaura el label "Pitch" cuando se suelta
+                pitchLabel.innerHTML = "Pitch";
+            }
+        }
+
+        // Maneja el evento cuando se presiona el slider
+        pitchSlider.addEventListener("mousedown", function() {
+            isDraggingSlider = true;
+            // Muestra el porcentaje en tiempo real mientras se arrastra
+            pitchLabel.innerHTML = Math.round(parseFloat(pitchSlider.value)) + "%";
+        });
+
+        // Maneja el evento cuando se suelta el slider
+        pitchSlider.addEventListener("mouseup", function() {
+            isDraggingSlider = false;
+            // Restaura el label "Pitch" cuando se suelta
+            pitchLabel.innerHTML = "Pitch";
+        });
+
     </script>
 </body>
 </html>
