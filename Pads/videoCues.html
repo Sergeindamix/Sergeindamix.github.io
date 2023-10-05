@@ -22,7 +22,7 @@
             bottom: 0;
             min-width: 100%;
             min-height: 100%;
-            z-index: -1; /* Coloca el video detrás de otros elementos */
+            z-index: 1; /* Coloca el video detrás de otros elementos */
         }
 
         .content {
@@ -34,7 +34,30 @@
             flex-direction: column;
             justify-content: flex-end; /* Mueve los botones a la parte inferior */
             align-items: center; /* Centra los elementos horizontalmente */
+            z-index: 2; /* Coloca el contenido al frente del video */
+            position: relative;
+        }        
+
+        /* Estilos CSS para el botón de alternar z-index */
+        .toggle-button {
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para indicar visibilidad */
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2; /* Coloca el botón al frente del video y el contenido */
+            padding: 5px 10px; /* Añade un poco de espacio alrededor del texto */
+            border-radius: 50%; /* Hace que el botón sea redondo */
         }
+
+        /* Estilos CSS para el contenido cuando está minimizado */
+        .minimized {
+            display: none;
+        }
+
 
         h1, p {
             margin: 10px 0;
@@ -151,11 +174,23 @@
             transition: opacity 0.2s;
         }
 
+        /* Estilos CSS para el botón de minimizar */
+        .minimize-button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
     </style>
 </head>
 <body>
+    
     <video autoplay loop muted id="videoBackground">
-        <source src="1 (1).mp4" type="video/mp4">
+        <source src="1.mp4" type="video/mp4">
     </video>
     
     <div class="content">
@@ -163,7 +198,7 @@
             <input type="range" id="pitchSlider" min="-20" max="20" value="0" step="0.1" oninput="updatePitchLabel()">
             <label id="pitchLabel" for="pitchSlider">Pitch</label>
         </div>
-        
+
         <div class="grid-container">
             <div class="grid-item">
                 <button id="button0" class="neon-button" onclick="toggleStartPoint(0)">Cue 1</button>
@@ -203,14 +238,15 @@
         <button id="replaceButton" class="neon-button" onclick="replaceVideo()">Reemplazar Video</button>
         <!-- Botón para activar/desactivar el sonido -->
         <button id="soundButton" class="neon-button" onclick="toggleSound()">Activar Sonido</button>
-
+        
     </div>
-
+    <div class="button-container">
+        <button id="toggleZIndexButton" class="toggle-button">X</button>
+    </div>
     <script>
         var startPoints = [];
         var videoBackground = document.getElementById("videoBackground");
         var soundEnabled = false; // Variable para rastrear el estado del sonido
-
 
         function toggleStartPoint(index) {
             if (typeof startPoints[index] === "undefined") {
@@ -240,14 +276,14 @@
         // Función para reemplazar el video de fondo y resetear hotcues
         function replaceVideo() {
             var videoInput = document.getElementById("videoInput");
-            
+
             if (videoInput.files.length > 0) {
                 var file = videoInput.files[0];
                 var objectURL = URL.createObjectURL(file);
-                
+
                 videoBackground.src = objectURL;
                 videoBackground.load();
-                
+
                 // Limpiar los puntos de inicio previos (hotcues)
                 startPoints = [];
 
@@ -261,7 +297,7 @@
         // Función para activar/desactivar el sonido
         function toggleSound() {
             soundEnabled = !soundEnabled; // Cambiar el estado del sonido
-            
+
             if (soundEnabled) {
                 videoBackground.muted = false; // Activar el sonido
                 document.getElementById("soundButton").innerHTML = "Desactivar Sonido";
@@ -272,7 +308,6 @@
         }
 
         var pitchSlider = document.getElementById("pitchSlider");
-        var videoBackground = document.getElementById("videoBackground");
         var pitchLabel = document.getElementById("pitchLabel");
 
         var isDraggingSlider = false; // Variable para rastrear si se está arrastrando el slider
@@ -306,6 +341,15 @@
             // Restaura el label "Pitch" cuando se suelta
             pitchLabel.innerHTML = "Pitch";
         });
+
+        var toggleButton = document.getElementById("toggleZIndexButton");
+        var contentContainer = document.querySelector(".content");
+
+        function toggleZIndex() {
+            contentContainer.classList.toggle("minimized");
+        }
+
+        toggleButton.addEventListener("click", toggleZIndex);
 
     </script>
 </body>
