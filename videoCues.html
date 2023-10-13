@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reproducir video en el fondo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #videoBackground {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: 1; /* Coloca el video detrás de otros elementos */
+        }
+
+        .content {
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 20px;
+            flex: 1; /* El contenido ocupa todo el espacio disponible */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Mueve los botones a la parte inferior */
+            align-items: center; /* Centra los elementos horizontalmente */
+            z-index: 2; /* Coloca el contenido al frente del video */
+            position: relative;
+        }        
+
+        /* Estilos CSS para el botón de alternar z-index */
+        .toggle-button {
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para indicar visibilidad */
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2; /* Coloca el botón al frente del video y el contenido */
+            padding: 5px 10px; /* Añade un poco de espacio alrededor del texto */
+            border-radius: 50%; /* Hace que el botón sea redondo */
+        }
+
+        /* Estilos CSS para el contenido cuando está minimizado */
+        .minimized {
+            display: none;
+        }
+
+
+        h1, p {
+            margin: 10px 0;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+        }
+
+        .grid-item {
+            text-align: center;
+        }
+
+        .neon-button {
+            display: inline-block;
+            border: none;
+            background-color: black;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .neon-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .neon-button:active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes neon-glow {
+            0% {
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.4), 0 0 80px rgba(0, 255, 255, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .neon-button:active {
+            animation: neon-glow 0.5s;
+        }
+
+        .delete-button {
+            display: inline-block;
+            border: none;
+            background-color: black;
+            color: white;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 50%;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin-left: 5px;
+        }
+
+        .delete-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .delete-button:active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Estilos CSS para el contenedor del slider */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+            position: relative; /* Agrega posición relativa para el tooltip */
+        }
+
+        /* Estilos CSS para el slider */
+        #pitchSlider {
+            flex-grow: 1;
+            width: auto;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            background: #ddd;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        /* Estilos CSS para el label */
+        label[for="pitchSlider"] {
+            margin-left: 10px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    
+    <video autoplay loop muted id="videoBackground">
+        <source src="1.mp4" type="video/mp4">
+    </video>
+    
+    <div class="content">
+        <div class="slider-container">
+            <input type="range" id="pitchSlider" min="-20" max="20" value="0" step="0.1" oninput="updatePitchLabel()">
+            <label id="pitchLabel" for="pitchSlider">Pitch</label>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-item">
+                <button id="button0" class="neon-button" onclick="toggleStartPoint(0)">Cue 1</button>
+                <button class="delete-button" onclick="deleteStartPoint(0)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button1" class="neon-button" onclick="toggleStartPoint(1)">Cue 2</button>
+                <button class="delete-button" onclick="deleteStartPoint(1)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button2" class="neon-button" onclick="toggleStartPoint(2)">Cue 3</button>
+                <button class="delete-button" onclick="deleteStartPoint(2)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button3" class="neon-button" onclick="toggleStartPoint(3)">Cue 4</button>
+                <button class="delete-button" onclick="deleteStartPoint(3)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button4" class="neon-button" onclick="toggleStartPoint(4)">Cue 5</button>
+                <button class="delete-button" onclick="deleteStartPoint(4)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button5" class="neon-button" onclick="toggleStartPoint(5)">Cue 6</button>
+                <button class="delete-button" onclick="deleteStartPoint(5)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button6" class="neon-button" onclick="toggleStartPoint(6)">Cue 7</button>
+                <button class="delete-button" onclick="deleteStartPoint(6)">X</button>
+            </div>
+            <div class="grid-item">
+                <button id="button7" class="neon-button" onclick="toggleStartPoint(7)">Cue 8</button>
+                <button class="delete-button" onclick="deleteStartPoint(7)">X</button>
+            </div>
+        </div>
+        <!-- Agregar el input de archivo para reemplazar el video de fondo -->
+        <input type="file" id="videoInput" accept="video/*">
+        <button id="replaceButton" class="neon-button" onclick="replaceVideo()">Reemplazar Video</button>
+        <!-- Botón para activar/desactivar el sonido -->
+        <button id="soundButton" class="neon-button" onclick="toggleSound()">Activar Sonido</button>
+        
+    </div>
+    <div class="button-container">
+        <button id="toggleZIndexButton" class="toggle-button">X</button>
+    </div>
+    <script>
+        var startPoints = [];
+        var videoBackground = document.getElementById("videoBackground");
+        var soundEnabled = false; // Variable para rastrear el estado del sonido
+
+        function toggleStartPoint(index) {
+            if (typeof startPoints[index] === "undefined") {
+                startPoints[index] = videoBackground.currentTime;
+                document.getElementById("button" + index).innerHTML = formatTime(videoBackground.currentTime);
+            } else {
+                videoBackground.currentTime = startPoints[index];
+                videoBackground.play();
+            }
+        }
+
+        function deleteStartPoint(index) {
+            delete startPoints[index];
+            document.getElementById("button" + index).innerHTML = "Cue " + (index + 1);
+        }
+
+        function formatTime(time) {
+            var minutes = Math.floor(time / 60);
+            var seconds = Math.floor(time % 60);
+            return padTime(minutes) + ":" + padTime(seconds);
+        }
+
+        function padTime(time) {
+            return (time < 10 ? "0" : "") + time;
+        }
+
+        // Función para reemplazar el video de fondo y resetear hotcues
+        function replaceVideo() {
+            var videoInput = document.getElementById("videoInput");
+
+            if (videoInput.files.length > 0) {
+                var file = videoInput.files[0];
+                var objectURL = URL.createObjectURL(file);
+
+                videoBackground.src = objectURL;
+                videoBackground.load();
+
+                // Limpiar los puntos de inicio previos (hotcues)
+                startPoints = [];
+
+                // Restablecer los nombres de los botones
+                for (var i = 0; i < 8; i++) {
+                    document.getElementById("button" + i).innerHTML = "Cue " + (i + 1);
+                }
+            }
+        }
+
+        // Función para activar/desactivar el sonido
+        function toggleSound() {
+            soundEnabled = !soundEnabled; // Cambiar el estado del sonido
+
+            if (soundEnabled) {
+                videoBackground.muted = false; // Activar el sonido
+                document.getElementById("soundButton").innerHTML = "Desactivar Sonido";
+            } else {
+                videoBackground.muted = true; // Desactivar el sonido
+                document.getElementById("soundButton").innerHTML = "Activar Sonido";
+            }
+        }
+
+        var pitchSlider = document.getElementById("pitchSlider");
+        var pitchLabel = document.getElementById("pitchLabel");
+
+        var isDraggingSlider = false; // Variable para rastrear si se está arrastrando el slider
+
+        function updatePitchLabel() {
+            var pitchValue = parseFloat(pitchSlider.value);
+            var playbackRate = 1 + (pitchValue / 100); // Calcula la velocidad de reproducción en función del pitch
+
+            // Actualiza el texto del label en tiempo real mientras se arrastra
+            pitchLabel.innerHTML = Math.round(pitchValue) + "%";
+
+            // Cambia la velocidad de reproducción del video en tiempo real mientras se arrastra
+            videoBackground.playbackRate = playbackRate;
+
+            if (!isDraggingSlider) {
+                // Restaura el label "Pitch" cuando se suelta
+                pitchLabel.innerHTML = "Pitch";
+            }
+        }
+
+        // Maneja el evento cuando se presiona el slider
+        pitchSlider.addEventListener("mousedown", function() {
+            isDraggingSlider = true;
+            // Muestra el porcentaje en tiempo real mientras se arrastra
+            pitchLabel.innerHTML = Math.round(parseFloat(pitchSlider.value)) + "%";
+        });
+
+        // Maneja el evento cuando se suelta el slider
+        pitchSlider.addEventListener("mouseup", function() {
+            isDraggingSlider = false;
+            // Restaura el label "Pitch" cuando se suelta
+            pitchLabel.innerHTML = "Pitch";
+        });
+
+        var toggleButton = document.getElementById("toggleZIndexButton");
+        var contentContainer = document.querySelector(".content");
+
+        function toggleZIndex() {
+            contentContainer.classList.toggle("minimized");
+        }
+
+        toggleButton.addEventListener("click", toggleZIndex);
+
+    </script>
+</body>
+</html>
