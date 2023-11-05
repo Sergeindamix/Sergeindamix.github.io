@@ -82,38 +82,37 @@ const playButton = document.getElementById("playButton");
 const pauseButton = document.getElementById("pauseButton");
 let currentIndex = 0;
 let sound;
+
+function playNextSong() {
+  currentIndex = (currentIndex + 1) % playlist.children.length;
+  playSong(currentIndex);
+}
+
 function playSong(index) {
-const songs = playlist.querySelectorAll("li");
-if (index >= 0 && index < songs.length) {
-const song = songs[index];
-const title = song.getAttribute("data-title");
-const src = song.getAttribute("data-src");
-if (sound) {
-sound.unload();
+  const songs = playlist.querySelectorAll("li");
+  if (index >= 0 && index < songs.length) {
+    const song = songs[index];
+    const title = song.getAttribute("data-title");
+    const src = song.getAttribute("data-src");
+    if (sound) {
+      sound.unload();
+    }
+    sound = new Howl({
+      src: [src],
+      html5: true,
+      onend: playNextSong, // Automatically play the next track when the current one finishes
+    });
+    sound.play();
+    currentIndex = index;
+  }
 }
-sound = new Howl({
-src: [src],
-html5: true
-});
-sound.play();
-currentIndex = index;
-}
-}
-playButton.addEventListener("click", () => {
+
+// Remove the playButton and pauseButton event listeners
+playButton.remove();
+pauseButton.remove();
+
 playSong(currentIndex);
-});
-pauseButton.addEventListener("click", () => {
-if (sound) {
-sound.pause();
-}
-});
-playlist.addEventListener("click", (event) => {
-if (event.target.tagName === "LI") {
-const clickedIndex = Array.from(playlist.querySelectorAll("li")).indexOf(event.target);
-playSong(clickedIndex);
-}
-});
-playSong(currentIndex);
+
 </script>
 </body>
 </html>
