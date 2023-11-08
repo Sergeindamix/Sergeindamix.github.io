@@ -1,0 +1,149 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+var boton = document.createElement('div');
+boton.innerHTML = '<input type="file" id="files" name="files[]" multiple />';
+document.body.appendChild(boton);
+
+var caja = document.createElement('div');
+caja.innerHTML = '<textarea id="texto" rows="4" cols="50"></textarea>';
+document.body.appendChild(caja);
+
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+function handleFileSelect(evt) {
+  var files = evt.target.files; // FileList object
+  var file = files[0];
+  var reader = new FileReader();
+  reader.onload = (function(theFile) {
+    return function(e) {
+      document.getElementById('texto').value = e.target.result;
+    };
+  })(file);
+  reader.readAsText(file);
+  
+}
+
+
+var boton2 = document.createElement('div');
+boton2.innerHTML = '<button id="generar">Generar</button>';
+document.body.appendChild(boton2);
+document.getElementById('generar').addEventListener('click', generar, false);
+function generar() {
+  ocultar();
+  var html = document.getElementById('texto').value;
+  var iframe = document.createElement('iframe');
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
+  iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+  document.body.appendChild(iframe);
+  limpiar();
+  
+}
+function ocultar() {
+  var boton2 = document.getElementById('generar');
+  boton2.style.display = 'none';
+}
+function limpiar() {
+  setTimeout(function() {
+    document.getElementById('texto').value = '';
+    var html = document.getElementById('texto').value;
+    var iframe = document.getElementsByTagName('iframe')[0];
+    iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+  }, 20000);
+}
+/* si ya se creo genero pagina, solo actualizar */
+var boton6 = document.createElement('div');
+boton6.innerHTML = '<button id="generar2">Generar2</button>';
+document.body.appendChild(boton6);
+document.getElementById('generar2').addEventListener('click', generar2, false);
+function generar2() {
+  var html = document.getElementById('texto').value;
+  var iframe = document.getElementsByTagName('iframe')[0];
+  limpiar();
+  if (iframe) {
+    iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+  } else {
+    var iframe = document.createElement('iframe');
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+    document.body.appendChild(iframe);
+  }
+}
+var boton3 = document.createElement('div');
+boton3.innerHTML = '<button id="actualizar">Actualizar</button>';
+document.body.appendChild(boton3);
+document.getElementById('actualizar').addEventListener('click', actualizar, false);
+function actualizar() {
+  var html = document.getElementById('texto').value;
+  var iframe = document.getElementsByTagName('iframe')[0];
+  iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+}
+var boton4 = document.createElement('div');
+boton4.innerHTML = '<button id="borrar">Borrar</button>';
+document.body.appendChild(boton4);
+document.getElementById('borrar').addEventListener('click', borrar, false);
+function borrar() {
+  var iframe = document.getElementsByTagName('iframe')[0];
+  iframe.parentNode.removeChild(iframe);
+}
+/* fade in en 2 segundos */
+var boton7 = document.createElement('div');
+boton7.innerHTML = '<button id="fadein">Fade In</button>';
+document.body.appendChild(boton7);
+document.getElementById('fadein').addEventListener('click', fadein, false);
+function fadein() {
+  var iframe = document.getElementsByTagName('iframe')[0];
+  iframe.style.opacity = 0;
+  var op = 0.1;
+  var timer = setInterval(function() {
+    if (op >= 1) {
+      clearInterval(timer);
+    }
+    iframe.style.opacity = op;
+    iframe.style.filter = 'alpha(opacity=' + op * 100 + ')';
+    op += op * 0.1;
+  }, 100);
+}
+/* fade out 2 segundos */
+var boton8 = document.createElement('div');
+boton8.innerHTML = '<button id="fadeout">Fade Out</button>';
+document.body.appendChild(boton8);
+document.getElementById('fadeout').addEventListener('click', fadeout, false);
+function fadeout() {
+  var iframe = document.getElementsByTagName('iframe')[0];
+  iframe.style.opacity = 1;
+  var op = 0.1;
+  var timer = setInterval(function() {
+    if (op >= 1) {
+      clearInterval(timer);
+    }
+    iframe.style.opacity = 1-op;
+    iframe.style.filter = 'alpha(opacity=' + op * 100 + ')';
+    op += op * 0.1;
+  }, 100);
+}
+/* cargar carpeta de archivos html */
+var boton11 = document.createElement('div');
+boton11.innerHTML = '<input type="file" id="files2" name="files[]" webkitdirectory directory multiple />';
+document.body.appendChild(boton11);
+document.getElementById('files2').addEventListener('change', handleFileSelect2, false);
+function handleFileSelect2(evt) {
+  var files = evt.target.files; // FileList object
+  var file = files[0];
+  var reader = new FileReader();
+  reader.onload = (function(theFile) {
+    return function(e) {
+      document.getElementById('texto').value = e.target.result;
+    };
+  })(file);
+  reader.readAsText(file);
+}
+});
+</script>
+    </head>
+    
+</html>

@@ -1,0 +1,305 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+/* circulo perfecto */
+var circulo = document.createElement('div');
+circulo.style.width = '100px';
+circulo.style.height = '100px';
+circulo.style.background = 'red';
+circulo.style.borderRadius = '50%';
+//document.body.appendChild(circulo);
+/* imagen de sitio random como color */
+var imagen = document.createElement('img');
+imagen.src = 'https://source.unsplash.com/random/' + Math.random();
+imagen.style.width = '100%';
+imagen.style.height = '100%';
+document.body.appendChild(imagen);
+/* el circulo se mueve random y rebota en bordes */
+var circulo = document.createElement('div');
+circulo.style.width = '100px';
+circulo.style.height = '100px';
+circulo.style.background = 'red';
+circulo.style.borderRadius = '50%';
+circulo.style.position = 'absolute';
+//document.body.appendChild(circulo);
+var x = 0;
+var y = 0;
+var xStep = 1;
+var yStep = 1;
+function moveCircle() {
+  x += xStep;
+  y += yStep;
+  if (x > window.innerWidth - 100) {
+    xStep = -1;
+  }
+  if (y > window.innerHeight - 100) {
+    yStep = -1;
+  }
+  if (x < 0) {
+    xStep = 1;
+  }
+  if (y < 0) {
+    yStep = 1;
+  }
+  circulo.style.left = x + 'px';
+  circulo.style.top = y + 'px';
+}
+setInterval(moveCircle, 10);
+/* cada que cambia de direccion shake camera y cambia imagen */
+var circulo = document.createElement('div');
+circulo.style.width = '100px';
+circulo.style.height = '100px';
+circulo.style.background = 'red';
+circulo.style.borderRadius = '50%';
+circulo.style.position = 'absolute';
+//document.body.appendChild(circulo);
+var x = 0;
+var y = 0;
+var xStep = 1;
+var yStep = 1;
+function moveCircle() {
+  x += xStep;
+  y += yStep;
+  if (x > window.innerWidth - 100) {
+    xStep = -1;
+    shakeCamera();
+    changeImage();
+  }
+  if (y > window.innerHeight - 100) {
+    yStep = -1;
+    shakeCamera();
+    changeImage();
+  }
+  if (x < 0) {
+    xStep = 1;
+    shakeCamera();
+    changeImage();
+  }
+  if (y < 0) {
+    yStep = 1;
+    shakeCamera();
+    changeImage();
+  }
+  circulo.style.left = x + 'px';
+  circulo.style.top = y + 'px';
+}
+function shakeCamera() {
+  document.body.style.transition = 'transform 0.1s';
+  document.body.style.transform = 'rotate(1deg)';
+  setTimeout(function() {
+    document.body.style.transform = 'rotate(-1deg)';
+  }, 50);
+  setTimeout(function() {
+    document.body.style.transform = 'rotate(0deg)';
+  }, 100);
+}
+function changeImage() {
+  imagen.src = 'https://source.unsplash.com/random/' + Math.random();
+}
+setInterval(moveCircle, 10);
+/* circulo con filtro multiply */
+var circulo = document.createElement('div');
+circulo.style.width = '100px';
+circulo.style.height = '100px';
+circulo.style.background = 'red';
+circulo.style.borderRadius = '50%';
+circulo.style.position = 'absolute';
+circulo.style.mixBlendMode = 'multiply';
+//document.body.appendChild(circulo);
+var x = 0;
+var y = 0;
+var xStep = 1;
+var yStep = 1;
+function moveCircle() {
+  x += xStep;
+  y += yStep;
+  if (x > window.innerWidth - 100) {
+    xStep = -1;
+    shakeCamera();
+    changeImage();
+  }
+  if (y > window.innerHeight - 100) {
+    yStep = -1;
+    shakeCamera();
+    changeImage();
+  }
+  if (x < 0) {
+    xStep = 1;
+    shakeCamera();
+    changeImage();
+  }
+  if (y < 0) {
+    yStep = 1;
+    shakeCamera();
+    changeImage();
+  }
+  circulo.style.left = x + 'px';
+  circulo.style.top = y + 'px';
+}
+function shakeCamera() {
+  document.body.style.transition = 'transform 0.1s';
+  document.body.style.transform = 'rotate(1deg)';
+  setTimeout(function() {
+    document.body.style.transform = 'rotate(-1deg)';
+  }, 50);
+  setTimeout(function() {
+    document.body.style.transform = 'rotate(0deg)';
+  }, 100);
+}
+function changeImage() {
+  imagen.src = 'https://source.unsplash.com/random/' + Math.random();
+}
+setInterval(moveCircle, 10);
+/* cada que cambia de direccion cambiar effect */
+var circulo = document.createElement('div');
+circulo.style.width = '100px';
+circulo.style.height = '100px';
+circulo.style.background = 'red';
+circulo.style.borderRadius = '50%';
+circulo.style.position = 'absolute';
+circulo.style.mixBlendMode = 'multiply';
+//document.body.appendChild(circulo);
+var x = 0;
+var y = 0;
+var xStep = 1;
+var yStep = 1;
+function moveCircle() {
+  x += xStep;
+  y += yStep;
+  if (x > window.innerWidth - 100) {
+    xStep = -1;
+    shakeCamera();
+    changeImage();
+    changeEffect();
+  }
+  if (y > window.innerHeight - 100) {
+    yStep = -1;
+    shakeCamera();
+    changeImage();
+    changeEffect();
+  }
+  if (x < 0) {
+    xStep = 1;
+    shakeCamera();
+    changeImage();
+    changeEffect();
+  }
+  if (y < 0) {
+    yStep = 1;
+    shakeCamera();
+    changeImage();
+    changeEffect();
+  }
+  circulo.style.left = x + 'px';
+  circulo.style.top = y + 'px';
+}
+function shakeCamera() {
+  document.body.style.transition = 'transform 0.1s';
+  document.body.style.transform = 'rotate(1deg)';
+  setTimeout(function() {
+    document.body.style.transform = 'rotate(-1deg)';
+  }, 50);
+  setTimeout(function() {
+    document.body.style.transform = 'rotate(0deg)';
+  }, 100);
+}
+function changeImage() {
+  imagen.src = 'https://source.unsplash.com/random/' + Math.random();
+}
+function changeEffect() {
+  var effects = ['multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'];
+  var effect = effects[Math.floor(Math.random() * effects.length)];
+  circulo.style.mixBlendMode = effect;
+}
+setInterval(moveCircle, 10);
+/* y deja fantasmas cada .1 segundos, se devanecen en .5 segundos y se eliminan en un segundo */
+var circulo = document.createElement('div');
+circulo.style.width = '100px';
+circulo.style.height = '100px';
+circulo.style.background = 'red';
+circulo.style.borderRadius = '50%';
+circulo.style.position = 'absolute';
+circulo.style.mixBlendMode = 'multiply';
+//document.body.appendChild(circulo);
+var x = 0;
+var y = 0;
+var xStep = 1;
+var yStep = 1;
+function moveCircle() {
+  x += xStep;
+  y += yStep;
+  if (x > window.innerWidth - 100) {
+    xStep = -1;
+    shakeCamera();
+    changeImage();
+    changeEffect();
+  }
+  if (y > window.innerHeight - 100) {
+    yStep = -1;
+    shakeCamera();
+    changeImage();
+    changeEffect();
+  }
+  if (x < 0) {
+    xStep = 1;
+    shakeCamera();
+    changeImage();
+    changeEffect();
+  }
+  if (y < 0) {
+    yStep = 1;
+    shakeCamera();
+    changeImage();
+    changeEffect();
+  }
+  circulo.style.left = x + 'px';
+  circulo.style.top = y + 'px';
+}
+function shakeCamera() {
+  document.body.style.transition = 'transform 0.1s';
+  document.body.style.transform = 'rotate(1deg)';
+  setTimeout(function() {
+    document.body.style.transform = 'rotate(-1deg)';
+  }, 50);
+  setTimeout(function() {
+    document.body.style.transform = 'rotate(0deg)';
+  }, 100);
+}
+function changeImage() {
+  imagen.src = 'https://source.unsplash.com/random/' + Math.random();
+}
+function changeEffect() {
+  var effects = ['multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'];
+  var effect = effects[Math.floor(Math.random() * effects.length)];
+  circulo.style.mixBlendMode = effect;
+}
+setInterval(moveCircle, 10);
+function createGhost() {
+  var ghost = document.createElement('div');
+  ghost.style.width = '100px';
+  ghost.style.height = '100px';
+  ghost.style.background = 'red';
+  ghost.style.borderRadius = '50%';
+  ghost.style.position = 'absolute';
+  ghost.style.mixBlendMode = 'multiply';
+  ghost.style.left = x + 'px';
+  ghost.style.top = y + 'px';
+  ghost.style.opacity = '1';
+  ghost.style.transition = 'opacity 0.5s';
+  document.body.appendChild(ghost);
+  setTimeout(function() {
+    ghost.style.opacity = '0';
+  }, 100);
+  setTimeout(function() {
+    document.body.removeChild(ghost);
+  }, 1000);
+}
+setInterval(createGhost, 100);
+});
+        </script>
+    </head>
+    
+</html>

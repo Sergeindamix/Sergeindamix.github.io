@@ -1,0 +1,231 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+/* css */
+var css = document.createElement('style');
+css.innerHTML = 'body { background-color: #000; color: #fff; }';
+document.body.appendChild(css);
+/* tranform x de div igual a ancho de pantalla entre valor de slider */
+var div1 = document.createElement('div');
+div1.style.position = 'absolute';
+div1.style.top = '0';
+div1.style.left = '0';
+div1.style.width = '100%';
+div1.style.height = '100%';
+div1.style.backgroundImage = 'url(https://source.unsplash.com/random/' + Math.random() + ')';
+div1.style.backgroundSize = 'cover';
+div1.style.backgroundPosition = 'center';
+div1.style.backgroundRepeat = 'no-repeat';
+div1.style.display = 'flex';
+div1.style.alignItems = 'center';
+div1.style.justifyContent = 'center';
+div1.style.transition = 'all 1s';
+div1.style.webkitTransition = 'all 1s';
+div1.style.mozTransition = 'all 1s';
+div1.style.oTransition = 'all 1s';
+div1.style.msTransition = 'all 1s';
+div1.style.opacity = '0';
+div1.style.transform = 'translateX(1000px)';
+div1.innerHTML = 'Hello World';
+document.body.appendChild(div1);
+setTimeout(function() {
+  div1.style.opacity = '1';
+  div1.style.transform = 'translateX(0)';
+}, 1000);
+
+
+var slider = document.createElement('input');
+slider.type = 'range';
+slider.min = 0;
+slider.max = 100;
+slider.value = 50;
+slider.style.width = '100%';
+slider.style.height = '100px';
+slider.style.position = 'fixed';
+slider.style.top = 0;
+slider.style.left = 0;
+slider.style.zIndex = 100;
+document.body.appendChild(slider);
+slider.oninput = function() {
+  div1.style.transform = 'translateX(' + (window.innerWidth / 100 * slider.value) + 'px)';
+  div1.innerHTML = this.value + 'px';
+};
+/* div2 rojo left igual a  ancho de pantalla */
+var div2 = document.createElement('div');
+div2.style.position = 'absolute';
+div2.style.top = '0';
+div2.style.left = '0';
+div2.style.width = '100%';
+div2.style.height = '100%';
+div2.style.backgroundImage = 'url(https://source.unsplash.com/random/' + Math.random() + ')';
+div2.style.backgroundSize = 'cover';
+div2.style.backgroundPosition = 'center';
+div2.style.backgroundRepeat = 'no-repeat';
+div2.style.display = 'flex';
+div2.style.alignItems = 'center';
+div2.style.justifyContent = 'center';
+div2.style.transition = 'all 1s';
+div2.style.webkitTransition = 'all 1s';
+div2.style.mozTransition = 'all 1s';
+div2.style.oTransition = 'all 1s';
+div2.style.msTransition = 'all 1s';
+div2.style.opacity = '0';
+div2.style.transform = 'translateX(1000px)';
+//div2.innerHTML = 'Hello World';
+document.body.appendChild(div2);
+setTimeout(function() {
+  div2.style.opacity = '1';
+  div2.style.transform = 'translateX(0)';
+}, 1000);
+
+/* div4 rojo left igual a  ancho de pantalla */
+/* div4 rojo left igual a  ancho de pantalla */
+var div4 = document.createElement('div');
+div4.style.position = 'absolute';
+div4.style.top = '0';
+div4.style.left = '0';
+div4.style.width = '100%';
+div4.style.height = '100%';
+div4.style.backgroundImage = 'url(https://source.unsplash.com/random/' + Math.random() + ')';
+div4.style.backgroundSize = 'cover';
+div4.style.backgroundPosition = 'center';
+div4.style.backgroundRepeat = 'no-repeat';
+div4.style.display = 'flex';
+div4.style.alignItems = 'center';
+div4.style.justifyContent = 'center';
+div4.style.transition = 'all 1s';
+div4.style.webkitTransition = 'all 1s';
+div4.style.mozTransition = 'all 1s';
+div4.style.oTransition = 'all 1s';
+div4.style.msTransition = 'all 1s';
+div4.style.opacity = '0';
+div4.style.transform = 'translateX(1000px)';
+//div4.innerHTML = 'Hello World';
+document.body.appendChild(div4);
+setTimeout(function() {
+  div4.style.opacity = '1';
+  div4.style.transform = 'translateX(0)';
+}, 1000);
+/* div3 opacidad 25 */
+var div3 = document.createElement('div');
+div3.style.position = 'absolute';
+div3.style.top = '0';
+div3.style.left = '0';
+div3.style.width = '100%';
+div3.style.height = '100%';
+div3.style.backgroundColor = '#f00';
+div3.style.color = '#fff';
+div3.style.display = 'flex';
+div3.style.alignItems = 'center';
+div3.style.justifyContent = 'center';
+div3.style.transition = 'all 1s';
+div3.style.webkitTransition = 'all 1s';
+div3.style.mozTransition = 'all 1s';
+div3.style.oTransition = 'all 1s';
+div3.style.msTransition = 'all 1s';
+div3.style.opacity = '0.25';
+document.body.appendChild(div3);
+slider.oninput = function() {
+	if(slider.value>25&&slider.value<75){
+	div2.style.transform = 'translateX(' + (window.innerWidth / 100 * slider.value) + 'px)';
+	div2.innerHTML = this.value + 'px';
+	div2.style.width = window.innerWidth / 100 * this.value + 'px';
+	div1.style.transform = 'translateX(' + (window.innerWidth / 100 * slider.value + div2.style.width) +'px)';
+	div1.style.width = window.innerWidth / 100 * this.value + 'px';
+    div3.style.transform = 'translateX(' + (window.innerWidth / 100 * slider.value * Math.random()) +'px)';
+	div3.style.width = window.innerWidth / 100 /2* this.value*Math.random() + 'px';
+	div4.style.transform = 'translateX(' + (window.innerWidth / 100 * slider.value) + 'px)';
+	div4.style.width = window.innerWidth / 100 * this.value + 'px';
+	}else
+	{
+	div2.style.transform -= 'translateY(' + (window.innerHeight / 100 * slider.value) + 'px)';
+	div4.style.transform += 'translateY(' + (window.innerHeight / 100 * slider.value) +'px)';
+	
+	}
+	
+
+};
+/* backgrounimage de sitio random */
+var backgroundImage = document.createElement('img');
+backgroundImage.src = 'https://source.unsplash.com/random/' + Math.random();
+backgroundImage.style.position = 'absolute';
+backgroundImage.style.top = '0';
+backgroundImage.style.left = '0';
+backgroundImage.style.width = '100%';
+backgroundImage.style.height = '100%';
+div1.appendChild(backgroundImage);
+/* sin perder aspecto */
+backgroundImage.style.objectFit = 'cover';
+
+/* importar fuente startrek y mostrar grande */
+var font = document.createElement('link');
+font.rel = 'stylesheet';
+font.href = 'https://fonts.googleapis.com/css?family=Orbitron';
+document.head.appendChild(font);
+var show = document.createElement('div');
+show.innerHTML = 'show';
+show.style.fontFamily = 'Orbitron';
+document.body.appendChild(show);
+show.style.fontSize = '100px';
+document.body.appendChild(css);
+/* add to imagen texto startrek grande */
+var startrek = document.createElement('div');
+startrek.innerHTML = 'startrek';
+startrek.style.fontFamily = 'Orbitron';
+startrek.style.fontSize = '100px';
+div1.appendChild(startrek);
+
+/* cada segundo cambia slider random */
+setInterval(function() {
+  
+  slider.value = Math.random() * 100;
+  slider.oninput();
+  
+}, 3000);
+setInterval(function() {
+	div2.style.backgroundImage = 'url(https://source.unsplash.com/random/' + Math.random() + ')';
+  
+}, 3000);
+setInterval(function() {
+	div4.style.backgroundImage = 'url(https://source.unsplash.com/random/' + Math.random() + ')';
+
+}, 5000);
+setInterval(function() {
+/* startrek bounceInRight */
+	startrek.innerHTML = 'Techno';
+	startrek.style.color = '#fff';
+	startrek.style.fontSize = '250px';
+	startrek.style.fontFamily = 'Orbitron';
+	startrek.style.textAlign = 'center';
+	startrek.style.position = 'absolute';
+	startrek.style.top = '50%';
+	startrek.style.left = '50%';
+	startrek.style.transform = 'translate(-50%, -50%)';
+	startrek.style.transition = 'all 1s';
+	startrek.style.webkitTransition = 'all 1s';
+	startrek.style.mozTransition = 'all 1s';
+	startrek.style.oTransition = 'all 1s';
+	startrek.style.msTransition = 'all 1s';
+	startrek.style.opacity = '0';
+	startrek.style.transform = 'translate(-50%, -50%) translateX(-1000px)';
+	backgroundImage.src = 'https://source.unsplash.com/random/' + Math.random();
+  
+setTimeout(function() {
+  startrek.style.opacity = '1';
+  startrek.style.transform = 'translate(-50%, -50%) translateX(0)';
+}, 1000);
+}, 8000);
+/* sin perder aspecto */
+backgroundImage.style.objectFit = 'cover';
+
+/* ocultar slider */
+slider.style.display = 'none';
+
+
+});
+        </script>
+    </head>
+    
+</html>

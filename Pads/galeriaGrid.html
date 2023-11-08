@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* Estilos de la página */
+      body {
+        background-color: #eee;
+        font-family: "Arial", sans-serif;
+      }
+      
+      /* Estilos para la galería */
+      .img-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+        margin: 20px;
+      }
+      
+      /* Estilos para las imágenes */
+      .img-box {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 1px 1px #333;
+        transition: all 0.3s ease;
+      }
+      
+      /* Estilos para las imágenes al pasar el cursor */
+      .img-box:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+      }
+      
+      /* Estilos para las imágenes dentro de los div */
+      .img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.3s ease;
+      }
+      
+      /* Estilos para las imágenes al pasar el cursor */
+      .img-box:hover img {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Galería de imágenes -->
+    <div class="img-grid">
+      <script>
+        // Obtener imágenes al azar de Unsplash
+        const gallery = [];
+        for (let i = 0; i < 9; i++) {
+          gallery.push(`https://source.unsplash.com/300x200/?nature,landscape,city`);
+        }
+        
+        // Mostrar imágenes en la página
+        for (let i = 0; i < gallery.length; i++) {
+          const imgBox = document.createElement("div");
+          imgBox.classList.add("img-box");
+          
+          const img = document.createElement("img");
+          img.src = gallery[i];
+          img.alt = `Image ${i + 1}`;
+          
+          imgBox.appendChild(img);
+          document.querySelector(".img-grid").appendChild(imgBox);
+        }
+      </script>
+    </div>
+  </body>
+</html>

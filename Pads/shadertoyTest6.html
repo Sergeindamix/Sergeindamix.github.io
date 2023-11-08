@@ -1,0 +1,175 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+var canvas = document.createElement('canvas');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+document.body.appendChild(canvas);
+var gl = canvas.getContext('webgl');
+var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+gl.shaderSource(vertexShader, `
+  attribute vec2 position;
+  varying vec2 uv;
+  void main() {
+    uv = position.xy * 0.5 + 0.5;
+    gl_Position = vec4(position, 0, 1);
+  }
+`);
+gl.compileShader(vertexShader);
+var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+gl.shaderSource(fragmentShader, `
+  precision highp float;
+  uniform sampler2D texture;
+  uniform sampler2D texture2;
+  uniform sampler2D texture3;
+  varying vec2 uv;
+  uniform vec2 resolution;
+  uniform float time;
+  float random (in vec2 _st) {
+    return fract(sin(dot(_st.xy,
+                         vec2(12.9898,78.233)))*
+        43758.5453123);
+}
+#define SHADOW_ANGLE -50.0
+#define SHADOW_COLOR vec3(1, 0, 0);
+#define LIGHT_DIR vec2(1, 1)
+#define LIGHT_INTENSITY 0.3
+#define EPS 0.01
+#define ITER 30
+#define iTime time
+#define texture(a,b) texture2D(a,b)
+#define iChannel0 texture
+#define iChannel1 texture2
+#define iChannel2 texture3
+#define iResolution resolution
+#define fragCoord gl_FragCoord
+#define fragColor gl_FragColor
+/*#define texture( texture2D(
+define col gl_FragColor.rgb*/
+//#define NO_DISTORT
+
+
+void main( )
+{
+	//uv no se podra modificar---error
+    gl_FragColor = texture2D(texture3, 1.-uv);
+    float ca = 0.0325; // Intensity
+	float cb = 0.110; // Freq
+	float gt = iTime;
+	float gtc = 4.5 + (gt * 0.10250);
+	float algo = 0.0;
+        	
+    algo += (2.23 * ca * 1.0) * tan(((1.0-uv.x) * 1.63 * gtc)*(uv.y * 0.87 * gtc) * 1.00 * cb);    
+	algo += (1.51 * ca * 1.0) * fract((uv.x * 0.241 * gtc)*(uv.y * 0.57 * gtc) * 3.00 * cb);
+	algo += (5.03 * ca * 1.0) * cos((uv.x * 0.16 * gtc)+(uv.y * 0.53 * gtc) * 4.00 * cb);
+	algo += (1.29 * ca * 21.0) * sin((uv.x * 0.140 * gtc)*(uv.y * 0.81 * gtc) * 4.00 * cb);
+	algo += (0.21 * ca * 1.0) * fract((uv.x * 0.06 * gtc)+((1.0 + uv.y) * 0.68 * gtc) * 2.00 * cb);
+	algo += (5.61 * ca * 1.0) * fract((uv.x * 0.54 * gtc)*(uv.y * 0.20 * gtc) * 1.00 * cb);
+	algo += (10.51 * ca * 1.0) * fract((uv.x * 0.39 * gtc)+(uv.y * 0.38 * gtc) * 2.00 * cb);
+	algo += (1.26 * ca * 1.0) * atan((uv.x * 0.22 * gtc)*((1.0-uv.y) * 0.238 * gtc) * 4.00 * cb);
+        
+    fragColor = vec4(algo, algo*0.7, algo*0.1, 1.0);
+    
+	//gl_FragColor = vec4(color, 1.0);
+    
+    gl_FragColor = vec4(fragColor.xyz, 1.0);   
+    
+    
+}
+  /*void main() {	
+    gl_FragColor = texture2D(texture, 1.-uv);
+	vec2 uv2 = (gl_FragCoord.xy -.5 * resolution)/resolution.y;
+	float d = smoothstep(.1,.01,length(uv2)-sin(time)*.25-.5);
+	gl_FragColor*=d;
+	vec2 q = vec2(0.);
+    q.x = uv.x + 0.5 + 0.5*sin(time*0.1);
+    q.y = uv.y + 0.5 + 0.5*cos(time*0.1);
+    gl_FragColor.rgb *= vec3(0.5+0.5*sin(time*.25-.5)*vec3(random(uv*q)));
+    //gl_FragColor.rgb += 0.05*vec3(random(uv*q));
+	// vignette
+    gl_FragColor.rgb -= smoothstep(0.5, 3.0, length(uv*q));
+  }*/
+`);
+gl.compileShader(fragmentShader);
+var program = gl.createProgram();
+gl.attachShader(program, vertexShader);
+gl.attachShader(program, fragmentShader);
+gl.linkProgram(program);
+gl.useProgram(program);
+var positionLocation = gl.getAttribLocation(program, 'position');
+var resolutionLocation = gl.getUniformLocation(program, 'resolution');
+var timeLocation = gl.getUniformLocation(program, 'time');
+var buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+  -1.0, -1.0,
+  1.0, -1.0,
+  -1.0, 1.0,
+  -1.0, 1.0,
+  1.0, -1.0,
+  1.0, 1.0
+]), gl.STATIC_DRAW);
+gl.enableVertexAttribArray(positionLocation);
+gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+var startTime = Date.now();
+var texture = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, texture);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+var image = new Image();
+image.onload = function() {
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+};
+image.crossOrigin = "anonymous";
+image.src = 'https://source.unsplash.com/random/' + Math.random();
+function render(time) {
+  time *= 0.001;
+  gl.uniform1f(timeLocation, (Date.now() - startTime) * 0.001);
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+/* overflow hid */
+document.body.style.overflow = 'hidden';
+/* y crear texture2 */
+var texture2 = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, texture2);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+var image2 = new Image();
+image2.onload = function() {
+  gl.bindTexture(gl.TEXTURE_2D, texture2);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image2);
+};
+image2.crossOrigin = "anonymous";
+image2.src = 'https://source.unsplash.com/random/2' + Math.random();
+/* agregar textura de video */
+var video = document.createElement('video');
+video.src = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+video.autoplay = true;
+video.loop = true;
+video.crossOrigin = 'anonymous';
+video.addEventListener('canplay', function() {
+  var texture3 = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture3);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
+});
+
+});
+        </script>
+    </head>
+    
+</html>

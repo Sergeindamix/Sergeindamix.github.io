@@ -1,0 +1,151 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+/* visor de html, css , javascript cargados desde una caja de texto por cada componente */
+var html = document.createElement('textarea');
+html.id = 'html';
+html.style.width = '100%';
+html.style.height = '50%';
+html.style.border = '1px solid black';
+html.style.margin = '0px';
+html.style.padding = '0px';
+html.style.resize = 'none';
+html.style.fontFamily = 'monospace';
+html.style.fontSize = '12px';
+html.style.lineHeight = '1.5em';
+html.style.overflow = 'auto';
+html.value = '<div id="helloWorld">Hello World</div>';
+document.body.appendChild(html);
+var css = document.createElement('textarea');
+css.id = 'css';
+css.style.width = '100%';
+css.style.height = '50%';
+css.style.border = '1px solid black';
+css.style.margin = '0px';
+css.style.padding = '0px';
+css.style.resize = 'none';
+css.style.fontFamily = 'monospace';
+css.style.fontSize = '12px';
+css.style.lineHeight = '1.5em';
+css.style.overflow = 'auto';
+css.value = '#helloWorld {\n  color: red;\n}';
+document.body.appendChild(css);
+var js = document.createElement('textarea');
+js.id = 'js';
+js.style.width = '100%';
+js.style.height = '50%';
+js.style.border = '1px solid black';
+js.style.margin = '0px';
+js.style.padding = '0px';
+js.style.resize = 'none';
+js.style.fontFamily = 'monospace';
+js.style.fontSize = '12px';
+js.style.lineHeight = '1.5em';
+js.style.overflow = 'auto';
+js.value = 'var helloWorld = document.getElementById(\'helloWorld\');\nhelloWorld.innerHTML = \'Hello World\';';
+document.body.appendChild(js);
+var button = document.createElement('button');
+button.innerHTML = 'Run';
+button.style.width = '100%';
+button.style.height = '50px';
+button.style.border = '1px solid black';
+button.style.margin = '0px';
+button.style.padding = '0px';
+button.style.fontFamily = 'monospace';
+button.style.fontSize = '12px';
+button.style.lineHeight = '1.5em';
+button.style.overflow = 'auto';
+button.onclick = function() {
+  var iframe = document.createElement('iframe');
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
+  iframe.style.border = '1px solid black';
+  iframe.style.margin = '0px';
+  iframe.style.padding = '0px';
+  document.body.appendChild(iframe);
+  var iframeDocument = iframe.contentDocument;
+  iframeDocument.open();
+  iframeDocument.write(html.value);
+  iframeDocument.close();
+  var style = iframeDocument.createElement('style');
+  style.innerHTML = css.value;
+  iframeDocument.head.appendChild(style);
+  var script = iframeDocument.createElement('script');
+  script.innerHTML = js.value;
+  iframeDocument.body.appendChild(script);
+};
+document.body.appendChild(button);
+/* acomodar las cajas de texto para que se vean todas en eje x */
+var html = document.getElementById('html');
+var css = document.getElementById('css');
+var js = document.getElementById('js');
+var button = document.getElementsByTagName('button')[0];
+html.style.width = '33%';
+css.style.width = '33%';
+js.style.width = '33%';
+button.style.width = '33%';
+/* centrar boton */
+var button = document.getElementsByTagName('button')[0];
+button.style.marginLeft = '33%';
+/* al pulsar el boton, si existe un render cerrarlo antes de renderizar */
+var button = document.getElementsByTagName('button')[0];
+button.onclick = function() {
+  var iframe = document.getElementsByTagName('iframe')[0];
+  if (iframe) {
+    document.body.removeChild(iframe);
+  }
+  var iframe = document.createElement('iframe');
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
+  iframe.style.border = '1px solid black';
+  iframe.style.margin = '0px';
+  iframe.style.padding = '0px';
+  document.body.appendChild(iframe);
+  var iframeDocument = iframe.contentDocument;
+  iframeDocument.open();
+  iframeDocument.write(html.value);
+  iframeDocument.close();
+  var style = iframeDocument.createElement('style');
+  style.innerHTML = css.value;
+  iframeDocument.head.appendChild(style);
+  var script = iframeDocument.createElement('script');
+  script.innerHTML = js.value;
+  /*var exportWindow = window.open('', '', 'width=800,height=600');
+  exportWindow.document.open();
+  exportWindow.document.write(html.value); 
+  exportWindow.head.appendChild(style);
+  exportWindow.body.appendChild(script);  
+  //exportWindow.document.close();*/
+  iframeDocument.body.appendChild(script);
+};
+/* boton exportar render */
+var button = document.createElement('button');
+button.innerHTML = 'Export';
+button.style.width = '100%';
+button.style.height = '50px';
+button.style.border = '1px solid black';
+button.style.margin = '0px';
+button.style.padding = '0px';
+button.style.fontFamily = 'monospace';
+button.style.fontSize = '12px';
+button.style.lineHeight = '1.5em';
+button.style.overflow = 'auto';
+button.onclick = function() {
+  var iframe = document.getElementsByTagName('iframe')[0];
+  if (iframe) {
+    var iframeDocument = iframe.contentDocument;
+    var html = iframeDocument.documentElement.outerHTML;
+    var a = document.createElement('a');
+    a.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+    a.download = 'index.html';
+    a.click();
+  }
+};
+document.body.appendChild(button);
+});
+        </script>
+    </head>
+    
+</html>

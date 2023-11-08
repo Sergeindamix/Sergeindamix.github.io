@@ -1,0 +1,77 @@
+
+<html>
+    <head>
+        <!-- include the three.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- create a div element for the renderer -->
+<div id="container"></div>
+<script>
+  // get the div element
+  var container = document.getElementById("container");
+  // create a scene
+  var scene = new THREE.Scene();
+  // create a camera
+  var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  // create a renderer
+  var renderer = new THREE.WebGLRenderer();
+  // set the renderer size
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  // append the renderer to the div element
+  container.appendChild(renderer.domElement);
+  // create a light
+  var light = new THREE.DirectionalLight(0xffffff, 1);
+  // set the light position
+  light.position.set(0, 1, 1);
+  // add the light to the scene
+  scene.add(light);
+
+
+  // create a box geometry
+var geometry = new THREE.BoxGeometry(5,5,5);
+// create a material
+var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+// create a mesh
+var cube = new THREE.Mesh(geometry, material);
+// add the mesh to the scene
+//scene.add(cube);
+
+// create an array of materials
+var materials = [];
+// load six textures from Unsplash
+var loader = new THREE.TextureLoader();
+materials.push(new THREE.MeshBasicMaterial({map: loader.load('https://source.unsplash.com/random/512' + Math.random())})); // right
+materials.push(new THREE.MeshBasicMaterial({map: loader.load('https://source.unsplash.com/random/513' + Math.random())})); // left
+materials.push(new THREE.MeshBasicMaterial({map: loader.load('https://source.unsplash.com/random/514' + Math.random())})); // top
+materials.push(new THREE.MeshBasicMaterial({map: loader.load('https://source.unsplash.com/random/515' + Math.random())})); // bottom
+materials.push(new THREE.MeshBasicMaterial({map: loader.load('https://source.unsplash.com/random/516' + Math.random())})); // front
+materials.push(new THREE.MeshBasicMaterial({map: loader.load('https://source.unsplash.com/random/517' + Math.random())})); // back
+// create a mesh
+var cube = new THREE.Mesh(geometry, materials);
+// add the mesh to the scene
+scene.add(cube);
+
+
+  // set the camera position
+  camera.position.z = 5;
+  // create an animation loop
+  function animate() {
+    // request the next frame
+    requestAnimationFrame(animate);
+    // rotate the cube
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    // render the scene
+    renderer.render(scene, camera);
+  }
+  // start the animation
+  animate();
+</script>
+    </head>
+    
+</html>
+
+
+
+
+
+

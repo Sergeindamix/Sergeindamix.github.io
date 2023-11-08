@@ -1,0 +1,93 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+/* var bpm */
+var bpm = 120;
+/* circle transform all smooth */
+var circulo = document.createElement('div');
+circulo.style.width = '100px';
+circulo.style.height = '100px';
+circulo.style.backgroundColor = 'white';
+circulo.style.borderRadius = '50%';
+circulo.style.transition = 'all 1s ease-in-out';
+document.body.appendChild(circulo);
+/* speed es un minuto / bpm */
+var speed = 60 / bpm;
+/* circulo efecto latido con tasa speed */
+var beat = function() {
+  circulo.style.transform = 'scale(2)';
+  setTimeout(function() {
+    circulo.style.transform = 'scale(1)';
+  }, speed * 1000 / 2);
+};
+/* all smooth */
+document.body.style.transition = 'all 1s ease-in-out';
+/* update function */
+var update = function() {
+  beat();
+  setTimeout(update, speed * 1000);
+};
+/* aplicar animacion */
+update();
+/* remplazar rojo con imagen de corazon */
+circulo.style.backgroundImage = 'url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/1024px-Heart_coraz%C3%B3n.svg.png)';
+/* centrar en pantalla */
+circulo.style.position = 'absolute';
+circulo.style.left = '50%';
+circulo.style.top = '50%';
+circulo.style.marginLeft = '-50px';
+circulo.style.marginTop = '-50px';
+/* div con imagen */
+var imagen = document.createElement('div');
+imagen.style.width = '100%';
+imagen.style.height = '100%';
+imagen.style.backgroundImage = 'url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/1024px-Heart_coraz%C3%B3n.svg.png)';
+imagen.style.backgroundSize = 'contain';
+imagen.style.backgroundRepeat = 'no-repeat';
+imagen.style.backgroundPosition = 'center';
+circulo.appendChild(imagen);
+/* mostrar solo imagen */
+circulo.style.backgroundImage = 'none';
+/* texto BPM: 140, Grande, en esquina izquierda */
+var texto = document.createElement('div');
+texto.style.position = 'absolute';
+texto.style.left = '0';
+texto.style.top = '0';
+texto.style.fontSize = '50px';
+texto.innerHTML = 'BPM: ' + bpm;
+document.body.appendChild(texto);
+/* boton -, resta 1 a bpm, boton + suma 1 */
+var botonMenos = document.createElement('button');
+botonMenos.innerHTML = '-';
+botonMenos.style.position = 'absolute';
+botonMenos.style.left = '0';
+botonMenos.style.top = '50px';
+botonMenos.style.fontSize = '50px';
+document.body.appendChild(botonMenos);
+var botonMas = document.createElement('button');
+botonMas.innerHTML = '+';
+botonMas.style.position = 'absolute';
+botonMas.style.left = '0';
+botonMas.style.top = '100px';
+botonMas.style.fontSize = '50px';
+document.body.appendChild(botonMas);
+/* + suma 1 a bpm */
+botonMas.addEventListener('click', function() {
+  bpm++;
+  texto.innerHTML = 'BPM: ' + bpm;
+  speed = 60 / bpm;
+});
+/* - resta */
+botonMenos.addEventListener('click', function() {
+  bpm--;
+  texto.innerHTML = 'BPM: ' + bpm;
+  speed = 60 / bpm;
+});
+});
+        </script>
+    </head>
+    
+</html>

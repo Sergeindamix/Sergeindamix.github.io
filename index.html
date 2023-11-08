@@ -1,816 +1,413 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <title>Reproductor de video de YouTube</title>
-  </head>
-  <style>
-    :root {
-      --rojo: #e50914;
-      --fondo: #141414;
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<style>
+/* Estilos del men� y barra de navegaci�n aqu�... */
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font: 400 15px/1.8 "Lato", sans-serif;
+    color: #777;
+}
+
+.bgimg-1, .bgimg-2, .bgimg-3 {
+    position: relative;
+    opacity: 0.65;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bgimg-1 {
+    background-image: url("https://ideogram.ai/api/images/direct/GYoGGT0GROSv4mD_jPnXVw");
+    min-height: 100%;
+}
+
+.bgimg-2 {
+    background-image: url("https://source.unsplash.com/random/2.jpg");
+    min-height: 400px;
+}
+
+.bgimg-3 {
+    background-image: url("https://source.unsplash.com/random/3.jpg");
+    min-height: 400px;
+}
+
+.caption {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+
+.caption span.border {
+    background-color: #111;
+    color: #fff;
+    padding: 18px;
+    font-size: 25px;
+    letter-spacing: 10px;
+}
+
+h3 {
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font: 20px "Lato", sans-serif;
+    color: #111;
+}
+
+
+
+
+.parallax-container {
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.parallax-block {
+    width: 33.33%;
+    min-height: 100vh; /* 100% del viewport height */
+    background-color: rgba(0, 0, 0, 0.5); /* Color de fondo con transparencia */
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+}
+
+.parallax-block:nth-child(2) {
+    background-color: rgba(0, 0, 0, 0.7); /* Color de fondo con transparencia */
+}
+
+/* Estilos para el navbar y otros estilos aqu�... */
+/* Estilos para el navbar */
+#navbar {
+	background-color: #333;
+	overflow: hidden;
+}
+
+#navbar a {
+	float: left;
+	font-size: 16px;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+#navbar a:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+#navbar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.content {
+  padding: 16px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
+}
+
+/* Estilos para la lista desplegable */
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+}
+
+.dropdown-content a {
+	float: none;
+	color: #333;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+}
+
+.dropdown-content a:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+/* Estilos para el bot�n del dropdown */
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+/* Estilos para la lista de archivos */
+#lista-archivos {
+	list-style: none;
+	padding: 0;
+}
+
+#lista-archivos li {
+	margin: 5px 0;
+}
+
+#lista-archivos a {
+	color: #333;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#lista-archivos a:hover {
+	color: #555;
+}
+
+/* Estilos para .box .inner */
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.box .inner {
+    width: 400px;
+    height: 200px;
+    line-height: 200px;
+    font-size: 4em;
+    font-family: sans-serif;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.box .inner:first-child {
+    transform-origin: right;
+    transform: perspective(100px) rotateY(-15deg);
+}
+
+.box .inner:last-child {
+    transform-origin: left;
+    transform: perspective(100px) rotateY(15deg);
+}
+
+.box .inner span {
+    position: absolute;
+    animation: marquee 5s linear infinite;
+}
+
+.box .inner:first-child span {
+    animation-delay: 2.5s;
+    left: -100%;
+}
+
+@keyframes marquee {
+    from {
+        left: 100%;
     }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    to {
+        left: -100%;
     }
+}
 
-    body {
-      background: var(--fondo);
-      font-family: "Open Sans", sans-serif;
-    }
+.icon-bar {
+  position: fixed;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
 
-    .contenedor {
-      width: 90%;
-      margin: auto;
-    }
+.icon-bar a {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 20px;
+}
 
-    header {
-      padding: 30px 0;
-    }
+.icon-bar a:hover {
+  background-color: #000;
+}
 
-    header .contenedor {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.facebook {
+  background: #3B5998;
+  color: white;
+}
 
-    header .logotipo {
-      font-family: "Bebas Neue", cursive;
-      font-weight: normal;
-      color: var(--rojo);
-      font-size: 40px;
-    }
+.twitter {
+  background: #55ACEE;
+  color: white;
+}
 
-    header nav a {
-      color: #aaa;
-      text-decoration: none;
-      margin-right: 20px;
-    }
+.google {
+  background: #dd4b39;
+  color: white;
+}
 
-    header nav a:hover,
-    header nav a.activo {
-      color: #fff;
-    }
+.linkedin {
+  background: #007bb5;
+  color: white;
+}
 
-    /* ---- ----- ----- Pelicula Principal ----- ----- ----- */
-    .pelicula-principal {
-      font-size: 16px;
-      min-height: 40.62em;
-      color: #fff;
-      background: linear-gradient(
-          rgba(0, 0, 0, 0.5) 0%,
-          rgba(0, 0, 0, 0.5) 100%
-        ),
+.youtube {
+  background: #bb0000;
+  color: white;
+}
 
-      background-position: center center;
-      background-size: cover;
-      margin-bottom: 3.12em;
-      display: flex;
-      align-items: end;
-    }
+.content {
+  margin-left: 75px;
+  font-size: 30px;
+}
+</style>
+</head>
+<body>
 
-    .pelicula-principal .contenedor {
-      margin: 0 auto;
-      margin-bottom: 6.25em;
-    }
+<div id="navbar">
+	<a class="active" href="javascript:void(0)">Inicio</a>
+	<div class="dropdown">
+		<a href="javascript:void(0)">Apps</a>
+		<div class="dropdown-content">
+			<ul id="lista-archivos">
+				<!-- Lista de archivos generada din�micamente -->
+			</ul>
+		</div>
+	</div>
+	<a href="javascript:void(0);" onclick="openPopup('https://sergeindamix.github.io/Pads/profileCard', 'Acerca de', 600, 400);">Acerca de</a>
+	<!-- Agrega m�s opciones de navbar si es necesario -->
+</div>
 
-    .pelicula-principal .titulo {
-      font-weight: 600;
-      font-size: 3.12em;
-      margin-bottom: 0.4em;
-    }
-
-    .pelicula-principal .descripcion {
-      font-weight: normal;
-      font-size: 1em;
-      line-height: 1.75em;
-      max-width: 50%;
-      margin-bottom: 1.25em;
-    }
-
-    .pelicula-principal .boton {
-      background: rgba(0, 0, 0, 0.5);
-      border: none;
-      border-radius: 0.31em;
-      padding: 0.93em 1.87em;
-      color: #fff;
-      margin-right: 1.25em;
-      cursor: pointer;
-      transition: 0.3s ease all;
-      font-size: 1.12em;
-    }
-
-    .pelicula-principal .boton:hover {
-      background: #fff;
-      color: #000;
-    }
-
-    .pelicula-principal .boton i {
-      margin-right: 1.25em;
-    }
-
-    /* ---- ----- ----- Contenedor Titulo y controles    ----- ----- ----- */
-
-    .contenedor-titulo-controles {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-    }
-
-    .contenedor-titulo-controles h3 {
-      color: #ffffff;
-      font-size: 30px;
-    }
-    .contenedor-titulo-controles .indicadores button {
-      background: white;
-      height: 3px;
-      width: 10px;
-      cursor: pointer;
-      border: none;
-      margin-right: 2px;
-    }
-
-    .contenedor-titulo-controles .indicadores button:hover,
-    .contenedor-titulo-controles .indicadores button.activo {
-      background: red;
-    }
-
-    /* ---- ----- ----- Contenedor principal y flechas    ----- ----- ----- */
-
-    .peliculas-recomendadas {
-      margin-bottom: 70px;
-    }
-
-    .peliculas-recomendadas .contenedor-principal {
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
-
-    .peliculas-recomendadas .contenedor-principal .flecha-izquierda,
-    .peliculas-recomendadas .contenedor-principal .flecha-derecha {
-      position: absolute;
-      border: none;
-      background: rgba(0, 0, 0, 0.3);
-      font-size: 40px;
-      height: 50%;
-      top: calc(50% -25%);
-      line-height: 40px;
-      width: 50px;
-      color: #fff;
-      cursor: pointer;
-      z-index: 500;
-      transition: 0.2 ease all;
-    }
-
-    .peliculas-recomendadas .contenedor-principal .flecha-izquierda:hover,
-    .peliculas-recomendadas .contenedor-principal .flecha-derecha:hover {
-      background: rgba(0, 0, 0, 0.9);
-    }
-
-    .peliculas-recomendadas .contenedor-principal .flecha-izquierda {
-      left: 0;
-    }
-    .peliculas-recomendadas .contenedor-principal .flecha-derecha {
-      right: 0;
-    }
-
-    /* ---- ----- ----- pelicula-principal y flechas    ----- ----- ----- */
-
-    .pelicula-principal .contenedor {
-      margin-bottom: 70px;
-    }
-
-    .pelicula-principal .contenedor  .contenedor-principal {
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
-
-    .pelicula-principal .contenedor  .contenedor-principal .flecha-izquierda,
-    .pelicula-principal .contenedor  .contenedor-principal .flecha-derecha {
-      position: absolute;
-      border: none;
-      background: rgba(0, 0, 0, 0.3);
-      font-size: 40px;
-      height: 50%;
-      top: calc(50% -25%);
-      line-height: 40px;
-      width: 50px;
-      color: #fff;
-      cursor: pointer;
-      z-index: 500;
-      transition: 0.2 ease all;
-    }
-
-    .pelicula-principal .contenedor  .contenedor-principal .flecha-izquierda:hover,
-    .pelicula-principal .contenedor  .contenedor-principal .flecha-derecha:hover {
-      background: rgba(0, 0, 0, 0.9);
-    }
-
-    .pelicula-principal .contenedor  .contenedor-principal .flecha-izquierda {
-      left: 0;
-    }
-    .pelicula-principal .contenedor  .contenedor-principal .flecha-derecha {
-      right: 0;
-    }
-
-    /* ---- ----- ----- Carrusel    ----- ----- ----- */
-
-    .peliculas-recomendadas .contenedor-carousel {
-      width: 100%;
-      padding: 20px 0;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-
-    .peliculas-recomendadas .contenedor-carousel .carousel {
-      display: flex;
-      flex-wrap: nowrap;
-    }
-
-    .peliculas-recomendadas .contenedor-carousel .carousel .pelicula {
-      min-width: 20%; /*FIX SIZE IMGS 5 PICS*/
-      transition: 0.3 ease all;
-      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .peliculas-recomendadas .contenedor-carousel .carousel .pelicula.hover {
-      transform: scale(1.2);
-      transform-origin: center;
-    }
-
-    .peliculas-recomendadas .contenedor-carousel .carousel .pelicula img {
-      width: 100%;
-      vertical-align: top;
-    }
-
-    /* ---- ----- ----- Media Queries ----- ----- ----- */
-    @media screen and (max-width: 800px) {
-      header .logotipo {
-        margin-bottom: 10px;
-        font-size: 30px;
-      }
-
-      header .contenedor {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .pelicula-principal {
-        font-size: 14px;
-      }
-
-      .pelicula-principal .descripcion {
-        max-width: 100%;
-      }
-
-      .peliculas-recomendadas .contenedor-carousel {
-        overflow: visible;
-      }
-
-      .peliculas-recomendadas .contenedor-carousel .carousel {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-      }
-
-      .peliculas-recomendadas .indicadores,
-      .peliculas-recomendadas .flecha-derecha,
-      .peliculas-recomendadas .flecha-izquierda {
-        display: none;
-      }
-    }
-  </style>
-  <style>
-    .peliculas-recomendadas .contenedor-carousel {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-    }
-    .peliculas-recomendadas .contenedor-carousel .carousel {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow-x: auto;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      -webkit-overflow-scrolling: touch;
-    }
-    .peliculas-recomendadas .contenedor-carousel .carousel .pelicula {
-      min-width: 20%; /*FIX SIZE IMGS 5 PICS*/
-      transition: 0.3 ease all;
-      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-      margin: 0 5px;
-    }
-    .peliculas-recomendadas .contenedor-carousel .carousel .pelicula.hover {
-      transform: scale(0.8);
-      transform-origin: center;
-    }
-
-    .peliculas-recomendadas .contenedor-carousel .carousel .pelicula img {
-      width: 100%;
-      max-width: 100%;
-      vertical-align: top;
-    }
-  </style>
-  <body>
-    <header>
-      <div class="contenedor">
-        <h2 class="logotipo">SERGEINDAMIX</h2>
-        <nav>
-          <a href="#" class="activo">Inicio</a>
-          <a href="shadertoy.html">Programas</a>
-          <a href="echo.html">Películas</a>
-          <a href="halftone.html">Más Recientes</a>
-          <a href="changeImage.html">Mi lista</a>
-        </nav>
+<div class="icon-bar">
+  <a href="https://www.facebook.com/SergeInDaMix/#" class="facebook"><i class="fa fa-facebook"></i></a> 
+  <a href="https://twitter.com/TechnosoK/#" class="twitter"><i class="fa fa-twitter"></i></a> 
+  <a href="#" class="google"><i class="fa fa-google"></i></a> 
+  <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+  <a href="https://www.youtube.com/channel/UCX4Dh6n-OTPoVApLy45f3Vw/#" class="youtube"><i class="fa fa-youtube"></i></a> 
+</div>
+<!-- Bloque 1 con Parallax -->
+<div class="bgimg-1">
+  <div class="caption">
+    <!-- Contenido del gr�fico -->
+    <div class="box">
+      <div class="inner">
+        <span>Sergeindamix</span>
       </div>
-    </header>
-
-    <main>
-      <div class="pelicula-principal">
-        <div class="contenedor">
-          <h3 class="titulo">¡Reproductor de videos commercial free!</h3>
-          <div class="contenedor-principal">
-            <button
-              role="button"
-              id="flecha-izquierda"
-              class="flecha-izquierda"
-            >
-              <i class="fas fa-angle-left"></i>
-            </button>
-
-            <div id="player"></div>
-
-            <button role="button" id="flecha-derecha" class="flecha-derecha">
-              <i class="fas fa-angle-right"></i>
-            </button>
-          </div>
-
-          <p id="description" class="descripcion">
-            ¿Cansado de los anuncios en tus videos favoritos? En nuestro
-            reproductor de videos, puedes disfrutar de todo el contenido que
-            quieras sin interrupciones comerciales. ¡Explora nuestra amplia
-            selección de videos y disfruta de una experiencia de visualización
-            sin molestias!
-          </p>
-          <input type="file" id="inputFile" accept=".txt" />
-          <button id="loadButton">Cargar videos</button>
-          <input
-            type="text"
-            id="videoLinkInput"
-            placeholder="Ingresa el enlace de un video de YouTube"
-          />
-          <button id="updateButton">Actualizar video</button>
-          <button onclick="detectarEnlace()">Detectar enlace</button>
-          <p id="errorMessage" style="color: red; display: none">
-            El enlace ingresado no es válido
-          </p>
-          <button id="playlistButton">Agregar lista de reproducción</button>
-          <select id="videoList"></select>
-
-          <button role="button" class="boton">
-            <i class="fas fa-play"></i>Reproducir
-          </button>
-          <button role="button" class="boton">
-            <i class="fas fa-info-circle"></i>Más información
-          </button>
-        </div>
+      <div class="inner">
+        <span>Sergeindamix</span>
       </div>
+    </div>
+  </div>
+</div>
 
-      <div class="peliculas-recomendadas contenedor">
-        <div class="contenedor-titulo-controles">
-          <h3>Videos Google Drive</h3>
-          <div class="indicadores"></div>
-        </div>
+<!-- Contenido intermedio aqu�... -->
+<div style="color: #777;background-color:white;text-align:center;padding:50px 80px;text-align: justify;">
+  <h1 style="text-align:center;">Sergeindamix</h1>
+	<h3>Bienvenidos a nuestra página web dedicada a explorar las increíbles aplicaciones de audio, video e imágenes creadas con inteligencia artificial.</h3>
 
-        <div class="contenedor-principal">
-          <button role="button" id="flecha-izquierda" class="flecha-izquierda">
-            <i class="fas fa-angle-left"></i>
-          </button>
+	<p>La IA ha revolucionado nuestra capacidad para generar contenido multimedia de alta calidad de forma rápida y eficiente.</p>
 
-          <div id="videosContainer" class="contenedor-carousel"></div>
+	<p>Desde asistentes de voz realistas hasta imágenes hiperrealistas, la IA está transformando la forma en que interactuamos con el audio, el video y las imágenes. En esta página, encontrará información sobre las últimas innovaciones en aplicaciones de audio generadas por IA como:</p>
 
-          <button role="button" id="flecha-derecha" class="flecha-derecha">
-            <i class="fas fa-angle-right"></i>
-          </button>
-        </div>
-      </div>
+	<ul>
+	<li>Lectura de textos</li>  
+	<li>Síntesis de voz</li>
+	<li>Eliminación de ruido</li>
+	</ul>
 
-    </main>
+	<p>También cubriremos fascinantes avances en video generado por IA, desde avatares digitales hasta efectos especiales de última generación. Asimismo, exploraremos cómo la IA está revolucionando la creación y edición de imágenes a través de técnicas como la generación automática de arte.</p>
 
-    <script
-      src="https://kit.fontawesome.com/2c36e9b7b1.js"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      let player;
-      let videoLinkInput = document.getElementById("videoLinkInput");
-      let updateButton = document.getElementById("updateButton");
-      let playlistButton = document.getElementById("playlistButton");
-      let errorMessage = document.getElementById("errorMessage");
-      let description = document.getElementById("description");
-      let videoList = document.getElementById("videoList");
-      let titulo = document.querySelector(".titulo");
+	<p>Nuestro objetivo es mantenerlo informado sobre cómo estas asombrosas tecnologías están cambiando los campos del audio, el video y la imagen.</p>
 
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player("player", {
-          height: "720",
-          width: "1024",
-          videoId: "Nl3-VlYkaV0",
-          playerVars: {
-            autoplay: 1,
-            controls: 1,
-            modestbranding: 1,
-            rel: 1,
-            showinfo: 1,
-          },
-          events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
-          },
-        });
-      }
+	<h2>Esperamos que disfrute aprendiendo sobre las increíbles posibilidades que la IA ofrece para crear contenido multimedia innovador. ¡Comencemos!</h2></div>
 
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
+<!-- Bloque 2 con Parallax -->
+<div class="bgimg-2">
+  <div class="caption">
+    <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">LESS HEIGHT</span>
+  </div>
+</div>
 
-      function onPlayerStateChange(event) {
-        if (event.data === YT.PlayerState.ENDED) {
-          let currentVideoIndex = player.getPlaylistIndex();
-          let nextVideoIndex = currentVideoIndex + 1;
-          player.playVideoAt(nextVideoIndex);
-        }
-      }
+<!-- Contenido intermedio aqu�... -->
 
-      playlistButton.addEventListener("click", () => {
-        let playlistLink = prompt(
-          "Ingrese el enlace de la lista de reproducción:"
-        );
-        let playlistId = getPlaylistIdFromLink(playlistLink);
+<!-- Bloque 3 con Parallax -->
+<div class="bgimg-3">
+  <div class="caption">
+    <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">SCROLL UP</span>
+  </div>
+</div>
 
-        if (playlistId) {
-          getPlaylistVideos(playlistId);
-          errorMessage.style.display = "none";
-        } else {
-          errorMessage.style.display = "block";
-        }
-      });
+<!-- Contenido intermedio aqu�... -->
 
-      function getPlaylistIdFromLink(link) {
-        let playlistId;
-        if (link.includes("list=")) {
-          playlistId = link.split("list=")[1];
-        } else {
-          return null;
-        }
-        if (playlistId.includes("&")) {
-          playlistId = playlistId.split("&")[0];
-        }
+<!-- Bloque 4 con Parallax -->
+<div class="bgimg-1">
+  <div class="caption">
+    <span class="border">COOL!</span>
+  </div>
+</div>
 
-        return playlistId;
-      }
+<script>
+// Funci�n para cargar la lista de archivos HTML
+function cargarListaArchivos() {
+    var listaArchivos = document.getElementById("lista-archivos");
 
-      function getPlaylistVideos(playlistId) {
-        fetch(
-          `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=AIzaSyCyYq3aWzXK-sE8surQuxZxCI2bZTzZtZA`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            let videos = data.items.map((item) => {
-              let videoId = item.snippet.resourceId.videoId;
-              let videoTitle = item.snippet.title;
-              let videoDescription = item.snippet.description;
+    // Ruta al repositorio GitHub
+    var repositorioURL = "https://api.github.com/repos/sergeindamix/sergeindamix.github.io/contents/";
 
-              return {
-                id: videoId,
-                title: videoTitle,
-                description: videoDescription,
-              };
+    // Realizar una solicitud a la API de GitHub para obtener la lista de archivos
+    fetch(repositorioURL)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(function(item) {
+                if (item.name.endsWith(".html")) {
+                    var enlace = document.createElement("a");
+                    enlace.href = "https://sergeindamix.github.io/" + item.name;
+                    enlace.target = "_blank"; // Abre en nueva ventana o pesta�a
+                    enlace.textContent = item.name.replace(".html", ""); // Quita la extensi�n
+                    var listItem = document.createElement("li");
+                    listItem.appendChild(enlace);
+                    listaArchivos.appendChild(listItem);
+                }
             });
+        })
+        .catch(error => console.error(error));
+}
 
-            updateVideoList(videos);
-          })
+function openPopup(url, title, width, height) {
+    // Calcula la posici�n del centro de la pantalla
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 2;
 
-          .catch((error) => console.error(error));
-      }
+    // Abre la ventana emergente con las dimensiones y posici�n especificadas
+    var popup = window.open(url, title, 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
 
-      function updateVideoList(videos) {
-        //videoList.innerHTML = '';
-        videos.forEach((video) => {
-          let option = document.createElement("option");
-          option.value = video.id;
-          option.text = video.description;
-          option.textContent = video.title;
-          videoList.appendChild(option);
-        });
-        videoList.addEventListener("change", () => {
-          let selectedIndex = videoList.selectedIndex;
-          let selectedOption = videoList.options[selectedIndex];
-          let videoId = selectedOption.value;
-          player.clearVideo(); // Borra el video actualmente en reproducción
-          player.loadVideoById(videoId); // Carga el nuevo video
-          description.textContent = selectedOption.text;
-          titulo.innerHTML = selectedOption.textContent;
-        });
-      }
+    // Enfoca la ventana emergente (�til si se bloquea por el navegador)
+    if (popup) {
+        popup.focus();
+    }
+}
 
-      updateButton.addEventListener("click", () => {
-        getJSONVideos("playlist_10.json");
-        let videoLink = videoLinkInput.value;
-        let videoId = getVideoIdFromLink(videoLink);
 
-        if (videoId) {
-          player.loadVideoById(videoId);
-          let option = document.createElement("option");
-          option.text = videoLink;
-          option.value = videoId;
-          videoList.add(option);
-          errorMessage.style.display = "none";
-        } else {
-          errorMessage.style.display = "block";
-        }
-      });
 
-      
-	  function getVideoIdFromLink(link) {
-	    let videoId;
-	    // Eliminar los prefijos "youtube.com/watch?v=" y "youtu.be/" si están presentes
-	    videoId = link.replace("youtube.com/watch?v=", "").replace("youtu.be/", "");
-	
-	    // Si el enlace contiene el carácter "&", se elimina el texto después de él
-	    if (videoId.includes("&")) {
-	      videoId = videoId.split("&")[0];
-	    }
-	
-	    return videoId;
-	  }
+// Cargar la lista de archivos cuando se carga la p�gina
+window.onload = cargarListaArchivos;
 
-      videoList.addEventListener("change", () => {
-        let selectedIndex = videoList.selectedIndex;
-        let selectedOption = videoList.options[selectedIndex];
-        let videoId = selectedOption.value;
-
-        player.loadVideoById(videoId);
-      });
-
-      function getJSONVideos(jsonFile) {
-        fetch(jsonFile)
-          .then((response) => response.json())
-          .then((data) => {
-            let videos = [];
-            data.forEach((item) => {
-              let videoUrl = item.url;
-              let videoTitle = item.title;
-              let videoId = videoUrl.split("=")[1]; // Obtener el ID del video de la URL
-              videos.push({ id: videoId, title: videoTitle });
-            });
-            updateVideoList(videos);
-          })
-          .catch((error) => console.error(error));
-      }
-
-      /////////////////////////////////////////////
-
-      const fila = document.querySelector(".contenedor-carousel");
-      const peliculas = document.querySelectorAll(".pelicula");
-
-      const flechaIzquierda = document.getElementById("flecha-izquierda");
-      const flechaDerecha = document.getElementById("flecha-derecha");
-
-      // ? ----- ----- Event Listener para la flecha derecha. ----- -----
-      flechaDerecha.addEventListener("click", () => {
-        fila.scrollLeft += fila.offsetWidth;
-        let selectedIndex = videoList.selectedIndex;
-        let selectedOption = videoList.options[selectedIndex];
-        let videoId = selectedOption.value;
-        console.log(videoId);
-        description.textContent = videoId.text;
-        titulo.innerHTML = videoId.textContent;
-
-        player.loadVideoById(videoId);
-        if (selectedIndex < videoList.options.length - 1) {
-          videoList.selectedIndex = selectedIndex + 1;
-        }
-
-        const indicadorActivo = document.querySelector(".indicadores .activo");
-        if (indicadorActivo.nextSibling) {
-          indicadorActivo.nextSibling.classList.add("activo");
-          indicadorActivo.classList.remove("activo");
-        }
-      });
-
-      // ? ----- ----- Event Listener para la flecha izquierda. ----- -----
-      flechaIzquierda.addEventListener("click", () => {
-        fila.scrollLeft -= fila.offsetWidth;
-        let selectedIndex = videoList.selectedIndex;
-        let selectedOption = videoList.options[selectedIndex];
-        let videoId = selectedOption.value;
-        console.log(videoId);
-        description.textContent = videoId.text;
-        titulo.innerHTML = videoId.textContent;
-
-        player.loadVideoById(videoId);
-        if (selectedIndex > 0) {
-          videoList.selectedIndex = selectedIndex - 1;
-        }
-
-        const indicadorActivo = document.querySelector(".indicadores .activo");
-        if (indicadorActivo.previousSibling) {
-          indicadorActivo.previousSibling.classList.add("activo");
-          indicadorActivo.classList.remove("activo");
-        }
-      });
-
-      // ? ----- ----- Paginacion ----- -----
-      const numeroPaginas = Math.ceil(peliculas.length / 5);
-      for (let i = 0; i < numeroPaginas; i++) {
-        const indicador = document.createElement("button");
-
-        if (i === 0) {
-          indicador.classList.add("activo");
-        }
-
-        document.querySelector(".indicadores").appendChild(indicador);
-        indicador.addEventListener("click", (e) => {
-          fila.scrollLeft = i * fila.offsetWidth;
-
-          document
-            .querySelector(".indicadores .activo")
-            .classList.remove("activo");
-          e.target.classList.add("activo");
-        });
-      }
-
-      // ? ----- ----- Hover ----- -----
-      peliculas.forEach((pelicula) => {
-        pelicula.addEventListener("mouseenter", (e) => {
-          const id = e.target.id;
-          console.log(`Nuevo id de video: ${id}`);
-          iFile.src = `https://drive.google.com/file/d/${id}/preview`;
-          const elemento = e.currentTarget;
-
-          iFile.id = id;
-        });
-      });
-
-      fila.addEventListener("mouseleave", () => {
-        peliculas.forEach((pelicula) => pelicula.classList.remove("hover"));
-      });
-    </script>
-
-    <script>
-      const loadButton = document.getElementById("loadButton");
-      const inputFile = document.getElementById("inputFile");
-      const videosContainer = document.getElementById("videosContainer");
-      const iFile = document.querySelector("iframe");
-
-      loadButton.addEventListener("click", () => {
-        const file = inputFile.files[0];
-        if (!file) {
-          console.error("Archivo no seleccionado");
-          return;
-        }
-
-        loadVideos();
-      });
-
-      // Función para cargar las imágenes y los videos en la página
-      function loadVideos() {
-        const inputFile = document.getElementById("inputFile");
-        const videosContainer = document.getElementById("videosContainer");
-
-        if (inputFile.files[0].type === "application/json") {
-          // Verificar si el archivo es JSON
-          const reader = new FileReader();
-          reader.readAsText(inputFile.files[0]);
-          reader.onload = (event) => {
-            const content = event.target.result;
-            const data = JSON.parse(content);
-            let videos = [];
-            data.forEach((item) => {
-              let videoUrl = item.url;
-              let videoTitle = item.title;
-              let videoDescription = item.description;
-              let videoId = videoUrl.split("=")[1]; // Obtener el ID del video de la URL
-              videos.push({
-                id: videoId,
-                title: videoTitle,
-                description: videoDescription,
-              });
-            });
-            updateVideoList(videos);
-          };
-        } else {
-          // Si el archivo no es JSON, tratarlo como archivo de texto plano
-          const reader = new FileReader();
-          reader.readAsText(inputFile.files[0]);
-          reader.onload = (event) => {
-            const content = event.target.result;
-            const videos = content.split("\n");
-            for (let video of videos) {
-              const match = video.match(/\/d\/([-\w]+)/);
-              if (match) {
-                const videoId = match[1];
-                const playlist = `
-          <div class="pelicula">
-            <a href="https://drive.google.com/file/d/${videoId}">
-              <img id="${videoId}" src="https://drive.google.com/thumbnail?id=${videoId}&sz=w600-h338" alt="" title="${videoId}">
-            </a>
-          </div>
-        `;
-                videosContainer.innerHTML += playlist;
-              } else {
-                console.error(`El enlace ${video} no es válido.`);
-              }
-            }
-            // Seleccionar la primera imagen por defecto
-            const firstImg = document.querySelector(".pelicula img");
-            firstImg.classList.add("hover");
-            iFile.src = `https://drive.google.com/file/d/${firstImg.id}/preview`;
-            iFile.id = firstImg.id;
-          };
-        }
-      }
-      
-      videoList = document.getElementById("videoList");
-      function onPlayerStateChange(event) {
-        if (event.data === YT.PlayerState.ENDED) {
-          let currentVideoIndex = player.getPlaylistIndex();
-          let nextVideoIndex = currentVideoIndex + 1;
-          player.playVideoAt(nextVideoIndex);
-
-          // Seleccionar el siguiente video en la lista de reproducción
-          videoList.selectedIndex = nextVideoIndex;
-        }
-      }
-    </script>
-    <script>
-        var input = document.getElementById("videoLinkInput");
-        function detectarEnlace() {
-          navigator.clipboard.readText().then((texto) => {
-            const expRegular = /(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
-            if (expRegular.test(texto)) {
-              const enlace = texto.match(expRegular)[0];
-              console.log(enlace);
-              // asignar el enlace a una variable o hacer algo con él
-              // Asignar el enlace al input
-            input.value = enlace;
-            } else {
-              console.log("No se encontró un enlace de YouTube en el portapapeles");
-            }
-          });
-        }
-
-        //Creamos un listener para el evento focus
-		input.addEventListener("focus", () => {
-			//Obtenemos el contenido del portapapeles
-			navigator.clipboard.readText()
-				.then((text) => {
-					//Si el contenido es un enlace de YouTube, lo agregamos al input y actualizamos video
-					if (text.includes("youtube.com") || text.includes("youtu.be")) {
-						videoLinkInput.value = text;
-                        getJSONVideos("playlist_0.json");
-                        let videoLink = videoLinkInput.value;
-                        let videoId = getVideoIdFromLink(videoLink);
-
-                        if (videoId) {
-                        player.loadVideoById(videoId);
-                        let option = document.createElement("option");
-                        option.text = videoLink;
-                        option.value = videoId;
-                        videoList.add(option);
-                        errorMessage.style.display = "none";
-                        } else {
-                        errorMessage.style.display = "block";
-                        }
-					}
-				})
-				.catch((err) => {
-					console.error(err);
-				});
-		});
-	    
-	    // Cargar lista de videos desde archivo JSON al iniciar la página
-		document.addEventListener("DOMContentLoaded", function () {
-		  getJSONVideos("playlist_10.json");
-		});
-
-      </script>
-      
-  </body>
+</script>
+</body>
 </html>

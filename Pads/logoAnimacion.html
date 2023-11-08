@@ -1,0 +1,137 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+/* css */
+var css = document.createElement('style');
+css.innerHTML = 'body { background-color: #000; color: #fff; }';
+document.body.appendChild(css);
+/* logo netflix centrado y sin deformar */
+var logo = document.createElement('img');
+logo.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2000px-Netflix_2015_logo.svg.png';
+logo.style.width = '100%';
+logo.style.height = 'auto';
+logo.style.display = 'block';
+logo.style.margin = '0 auto';
+document.body.appendChild(logo);
+/* blanco */
+var blanco = document.createElement('div');
+blanco.style.width = 'auto';
+blanco.style.height = '250px';
+blanco.style.backgroundColor = '#fff';
+document.body.appendChild(blanco);
+/* cambiar nombre blanco por carrusel */
+blanco.id = 'carrusel';
+/* rect dentro de carrusel color random */
+var rect = document.createElement('div');
+rect.style.width = '100px';
+rect.style.height = '100px';
+rect.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+document.getElementById('carrusel').appendChild(rect);
+/* mover hacia borde derecho y escalar smooth */
+rect.style.position = 'absolute';
+rect.style.right = '0px';
+rect.style.transition = 'all 1s';
+/* se mueve en un segundo */
+setTimeout(function() {
+  rect.style.right = '100%';
+}, 1000);
+/* bucle */
+setInterval(function() {
+  rect.style.right = '0px';
+  setTimeout(function() {
+    rect.style.right = '100%';
+  }, 1000);
+}, 2000);
+/* cambia color cada ciclo */
+setInterval(function() {
+  rect.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+}, 2000);
+/* neon */
+rect.style.boxShadow = '0 0 10px #fff';
+/* bajar 50px */
+rect.style.bottom = '80px';
+/* scala menor a medio ciclo */
+setInterval(function() {
+  rect.style.transform = 'scale(0.5)';
+  setTimeout(function() {
+    rect.style.transform = 'scale(1)';
+  }, 500);
+}, 1000);
+/* invertir */
+rect.style.transform = 'scaleX(-1)';
+/* crear 10 fantasmas cada .1 segundos, desvanecer en .5 segundos y eliminar en un segundo */
+setInterval(function() {
+  var ghost = document.createElement('div');
+  ghost.style.width = '100px';
+  ghost.style.height = '100px';
+  ghost.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  ghost.style.position = 'absolute';
+  ghost.style.right = '0px';
+  ghost.style.transition = 'all 1s';
+  ghost.style.opacity = '0';
+  ghost.style.bottom = '80px';
+  ghost.style.boxShadow = '0 0 10px #fff';
+  ghost.style.transform = 'scaleX(-1)';
+  document.getElementById('carrusel').appendChild(ghost);
+  setTimeout(function() {
+    ghost.style.right = '100%';
+  }, 100);
+  setTimeout(function() {
+    ghost.style.opacity = '1';
+  }, 100);
+  setTimeout(function() {
+    ghost.style.opacity = '0';
+  }, 600);
+  setTimeout(function() {
+    document.getElementById('carrusel').removeChild(ghost);
+  }, 1000);
+}, 100);
+/* blur dependiente de escala */
+rect.style.filter = 'blur(0px)';
+setInterval(function() {
+  rect.style.transform = 'scale(0.5)';
+  rect.style.filter = 'blur(5px)';
+  setTimeout(function() {
+    rect.style.transform = 'scale(1)';
+    rect.style.filter = 'blur(0px)';
+  }, 500);
+}, 1000);
+/* enumerar cada fantasma */
+var i = 0;
+setInterval(function() {
+  var ghost = document.createElement('div');
+  ghost.style.width = '100px';
+  ghost.style.height = '100px';
+  ghost.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  ghost.style.position = 'absolute';
+  ghost.style.right = '0px';
+  ghost.style.transition = 'all 1s';
+  ghost.style.opacity = '0';
+  ghost.style.bottom = '80px';
+  ghost.style.boxShadow = '0 0 10px #fff';
+  ghost.style.transform = 'scaleX(-1)';
+  ghost.innerHTML = i;
+  document.getElementById('carrusel').appendChild(ghost);
+  setTimeout(function() {
+    ghost.style.right = '100%';
+  }, 100);
+  setTimeout(function() {
+    ghost.style.opacity = '1';
+  }, 100);
+  setTimeout(function() {
+    ghost.style.opacity = '0';
+  }, 600);
+  setTimeout(function() {
+    document.getElementById('carrusel').removeChild(ghost);
+  }, 1000);
+  i++;
+}, 100);
+
+});
+        </script>
+    </head>
+    
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Video con AirPlay</title>
+</head>
+<body>
+    <video id="videoPlayer" controls>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        <!-- Puedes agregar más fuentes de video aquí para la compatibilidad con diferentes navegadores. -->
+    </video>
+
+    <button id="airplayButton">AirPlay</button>
+    <button id="pipButton">Modo PiP</button>
+    <button id="forwardButton">Avanzar 10s</button>
+    <button id="backwardButton">Retroceder 10s</button>
+
+    <div id="videoContainer">
+        <select id="videoList">
+            <!-- Las opciones se agregarán dinámicamente desde videos.json -->
+        </select>
+        <iframe id="videoIframe" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div id="loadingMessage" style="display: none;">Cargando video...</div>
+
+
+    <script>
+        // Verifica si AirPlay es compatible en este navegador.
+        if (window.WebKitPlaybackTargetAvailabilityEvent) {
+            // Registra un evento para detectar la disponibilidad de AirPlay.
+            videoPlayer.addEventListener('webkitplaybacktargetavailabilitychanged', (event) => {
+                switch (event.availability) {
+                    case "available":
+                        // AirPlay está disponible, habilita el botón de AirPlay.
+                        airplayButton.style.display = 'block';
+
+                        // Configura el botón de AirPlay para iniciar la transmisión.
+                        airplayButton.addEventListener('click', () => {
+                            // Comienza la transmisión a través de AirPlay.
+                            videoPlayer.webkitShowPlaybackTargetPicker();
+                        });
+                        break;
+                    case "not-available":
+                        // AirPlay no está disponible, oculta el botón de AirPlay.
+                        airplayButton.style.display = 'none';
+                        break;
+                }
+            });
+        } else {
+            // AirPlay no es compatible en este navegador, oculta el botón de AirPlay.
+            airplayButton.style.display = 'none';
+        }
+
+        
+
+        // Agrega un botón para activar el modo PiP después de la interacción del usuario.
+        const pipButton = document.getElementById('pipButton');
+        pipButton.addEventListener('click', () => {
+            if (videoPlayer.readyState >= 2) {
+                // Entrar en el modo PiP si el video está listo.
+                videoPlayer.requestPictureInPicture();
+            }
+        });
+
+
+        // Obtén una referencia a los botones de avanzar y retroceder.
+        const forwardButton = document.getElementById('forwardButton');
+        const backwardButton = document.getElementById('backwardButton');
+
+        // Agrega eventos para avanzar y retroceder 10 segundos.
+        forwardButton.addEventListener('click', () => {
+            videoPlayer.currentTime += 10;
+        });
+
+        backwardButton.addEventListener('click', () => {
+            videoPlayer.currentTime -= 10;
+        });
+
+        
+
+    </script>
+
+    <!-- Código para la lista de reproducción -->
+    <script>
+        const videoList = document.getElementById("videoList");
+        const videoFrame = document.getElementById("videoIframe");
+
+        // Precargar videos.json al cargar la página
+        fetch("videos.json")
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(video => {
+                    let option = document.createElement("option");
+                    option.value = video.link;
+                    option.textContent = video.name;
+                    videoList.appendChild(option);
+                });
+            })
+            .catch(error => console.error(error));
+
+            // Obtener una referencia al videoList y videoPlayer        
+            const videoPlayer = document.getElementById('videoPlayer');
+
+            videoList.addEventListener("change", () => {
+                const selectedOption = videoList.options[videoList.selectedIndex];
+                const videoLink = selectedOption.value;
+                if (videoLink) {
+                    const embedLink = videoLink.replace("/view", "/preview");
+                    videoPlayer.src = ''; // Limpia la fuente actual
+                    videoPlayer.style.display = 'none'; // Oculta el reproductor actual
+                    loadingMessage.style.display = 'block'; // Muestra el mensaje de carga
+
+                    // Crear un elemento de video en segundo plano
+                    const backgroundVideo = document.createElement('video');
+                    backgroundVideo.src = embedLink;
+
+                    // Escuchar el evento de carga del video
+                    backgroundVideo.addEventListener('loadedmetadata', () => {
+                        // Ocultar el mensaje de carga
+                        loadingMessage.style.display = 'none';
+
+                        // Copiar las propiedades del video cargado al reproductor principal
+                        videoPlayer.src = backgroundVideo.src;
+                        videoPlayer.style.display = 'block';
+
+                        // Iniciar la reproducción automáticamente (opcional)
+                        videoPlayer.play();
+                    });
+                } else {
+                    videoPlayer.src = ""; // Si no se selecciona un video, detén la reproducción
+                }
+            });
+
+
+    </script>
+</body>
+</html>

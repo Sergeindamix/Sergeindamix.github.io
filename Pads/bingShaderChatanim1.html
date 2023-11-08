@@ -1,0 +1,67 @@
+
+<html>
+    <head>
+        <!-- include the three.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- create a div element for the renderer -->
+<div id="container"></div>
+<script>
+  // create a scene
+var scene = new THREE.Scene();
+// create a camera
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+// create a renderer
+var renderer = new THREE.WebGLRenderer();
+// set the size of the renderer
+renderer.setSize(window.innerWidth, window.innerHeight);
+// add the renderer to the document body
+document.body.appendChild(renderer.domElement);
+
+
+// create a sphere geometry
+var geometry = new THREE.SphereGeometry(5, 32, 32);
+// create a texture loader
+var loader = new THREE.TextureLoader();
+// load the texture
+var texture = loader.load('https://source.unsplash.com/random/' + Math.random());
+// create a basic material with the texture
+var material = new THREE.MeshBasicMaterial({map: texture});
+// create a mesh
+var earth = new THREE.Mesh(geometry, material);
+// add the mesh to the scene
+scene.add(earth);
+
+
+// create an ambient light
+var ambientLight = new THREE.AmbientLight(0x404040);
+// add the ambient light to the scene
+scene.add(ambientLight);
+// create a directional light
+var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+// set the position of the directional light
+directionalLight.position.set(1, 1, 1);
+// add the directional light to the scene
+scene.add(directionalLight);
+// set the position of the camera
+camera.position.z = 10;
+// create a function to animate the scene
+function animate() {
+  // request the next animation frame
+  requestAnimationFrame(animate);
+  // rotate the earth
+  earth.rotation.y += 0.01;
+  // render the scene
+  renderer.render(scene, camera);
+}
+// call the animate function
+animate();
+</script>
+    </head>
+    
+</html>
+
+
+
+
+
+

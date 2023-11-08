@@ -1,0 +1,115 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+<style>
+/* Estilos CSS para centrar y ocultar el reproductor inicialmente */
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	background-color: white;
+}
+#audio-container {
+	text-align: center;
+	color: white;
+	display: none; /* Ocultar el reproductor inicialmente */
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1; /* Colocar el reproductor al frente */
+}
+/* Estilos para los controles del reproductor */
+#controls {
+	margin-top: 20px;
+}
+</style>
+</head>
+<body>
+<ul id="playlist">
+<li data-title="parte_1" data-src="https://drive.google.com/uc?export=download&id=1YFevA239iUaj0FRz1so-NAkwolA-JfCO">parte_1</li>
+<li data-title="parte_2" data-src="https://drive.google.com/uc?export=download&id=1-9WLKlS5-wLxvTHiDM_Q_baYlbvhU9US">parte_2</li>
+<li data-title="parte_3" data-src="https://drive.google.com/uc?export=download&id=1-J_72Xg0WoOaC-E0STh9oyaV8IEMBY1y">parte_3</li>
+<li data-title="parte_4" data-src="https://drive.google.com/uc?export=download&id=1-PMMCAttTcuEwp1FovDAJwBFlDfRy1sA">parte_4</li>
+
+<div id="audio-container">
+	<audio id="audio" controls>
+		<source src="https://drive.google.com/uc?export=download&id=1-1Se1TzNuoaSx8td760EtJ2RNhoTly4A" type="audio/mpeg">
+		Tu navegador no soporta la reproducción de audio.
+	</audio>
+	<button id="track1Button">Track 1</button>
+	<button id="track2Button">Track 2</button>
+	<button id="track3Button">Track 3</button>
+	<button id="track4Button">Track 4</button>
+
+</div>
+
+<script>
+const playlist = document.getElementById("playlist");
+let currentIndex = 0;
+let sound;
+function playSong(index) {
+const songs = playlist.querySelectorAll("li");
+if (index >= 0 && index < songs.length) {
+const song = songs[index];
+const src = song.getAttribute("data-src");
+if (sound) {
+sound.unload();
+}
+sound = new Howl({
+src: [src],
+html5: true
+});
+sound.play();
+currentIndex = index;
+}
+}
+
+// Mostrar el reproductor cuando el mouse entra en la página
+var audioContainer = document.getElementById('audio-container');
+document.body.addEventListener('mouseenter', function() {
+	audioContainer.style.display = 'block';
+});
+
+// Reproducir el audio al cargar
+var audio = document.getElementById('audio');
+audio.play();
+
+const track1Button = document.getElementById("track1Button");
+const track2Button = document.getElementById("track2Button");
+const track3Button = document.getElementById("track3Button");
+const track4Button = document.getElementById("track4Button");
+
+track1Button.addEventListener("click", () => {
+  updateAudioSource("https://drive.google.com/uc?export=download&id=1YFevA239iUaj0FRz1so-NAkwolA-JfCO");
+});
+
+track2Button.addEventListener("click", () => {
+  updateAudioSource("https://drive.google.com/uc?export=download&id=1-9WLKlS5-wLxvTHiDM_Q_baYlbvhU9US");
+});
+
+track3Button.addEventListener("click", () => {
+  updateAudioSource("https://drive.google.com/uc?export=download&id=1-J_72Xg0WoOaC-E0STh9oyaV8IEMBY1y");
+});
+
+track4Button.addEventListener("click", () => {
+  updateAudioSource("https://drive.google.com/uc?export=download&id=1-PMMCAttTcuEwp1FovDAJwBFlDfRy1sA");
+});
+
+function updateAudioSource(newSrc) {
+  const audio = document.getElementById("audio");
+  audio.pause(); // Pause the audio
+  const source = audio.querySelector("source");
+  source.src = newSrc; // Update the source URL
+  audio.load(); // Load the new source
+  audio.play(); // Play the updated audio
+}
+
+
+</script>
+</body>
+</html>

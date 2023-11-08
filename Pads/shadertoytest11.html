@@ -1,0 +1,392 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+var canvas = document.createElement('canvas');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+document.body.appendChild(canvas);
+var gl = canvas.getContext('webgl');
+var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+gl.shaderSource(vertexShader, `
+  attribute vec2 position;
+  varying vec2 uv;
+  void main() {
+    uv = position.xy * 0.5 + 0.5;
+    gl_Position = vec4(position, 0, 1);
+  }
+`);
+gl.compileShader(vertexShader);
+var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+gl.shaderSource(fragmentShader, `
+  precision highp float;
+  uniform vec2 mouse;
+  uniform sampler2D texture;
+  uniform sampler2D texture2;
+  uniform sampler2D texture3;
+  uniform sampler2D texture4;
+  varying vec2 uv;
+  uniform vec2 resolution;
+  uniform float time;
+  float random (in vec2 _st) {
+    return fract(sin(dot(_st.xy,
+                         vec2(12.9898,78.233)))*
+        43758.5453123);
+}
+#define SHADOW_ANGLE -50.0
+#define SHADOW_COLOR vec3(1, 0, 0);
+#define LIGHT_DIR vec2(1, 1)
+#define LIGHT_INTENSITY 0.3
+#define EPS 0.01
+#define ITER 30
+#define iTime time
+#define texture(a,b) texture2D(a,b)
+#define iChannel0 texture
+#define iChannel1 texture2
+#define iChannel2 texture3
+#define iChannel3 texture4
+#define iResolution resolution
+#define fragCoord gl_FragCoord
+
+#define MAX_STEPS 200
+#define MAX_DIST 50.
+#define MIN_DIST 0.0001
+
+#define PI 3.14159
+
+const vec3 SUN_DIR = normalize(vec3(2., 0.5, 3.));
+
+const vec3 SUN_COL = vec3(1.64, 1.27, 0.99);
+const vec3 SKY_COL = vec3(0.16, 0.20, 0.28);
+const vec3 IND_COL = vec3(0.40, 0.28, 0.20);
+
+const vec3 FOG_COL = vec3(0.5, 0.6, 0.7);
+
+// Return 2D rotation matrix of angle a
+mat2 rot(float a)
+{
+    return mat2(cos(a), -sin(a), sin(a), cos(a));
+}
+
+vec2 edge(vec2 p) 
+{
+    vec2 p2 = abs(p);
+    if (p2.x > p2.y) return vec2((p.x < 0.) ? -1. : 1., 0.);
+    else             return vec2(0., (p.y < 0.) ? -1. : 1.);
+}
+
+// Signed distance to a link, thanks to https://iquilezles.org/articles/distfunctions/
+float sdLink( vec3 p, float le, float r1, float r2 )
+{
+  vec3 q = vec3( p.x, max(abs(p.y)-le,0.0), p.z );
+  return length(vec2(length(q.xy)-r1,q.z)) - r2;
+}
+
+
+float sdChain(vec3 pos)
+{  
+    float d=1000.;
+
+    for (int i=-1; i<2; i++)
+    {
+        vec3 center = vec3(0, 0, (floor((pos.z+1.)/1.5) + float(i))*1.5);
+
+        vec3 p = pos - center;
+        p = vec3(rot(PI*center.z/4.)*p.xy, p.z);
+        p = p.xzy;
+        
+        d = min(d, sdLink(p, .5, .37, .15));
+    }
+    
+    return d;
+}
+
+// Compute signed distance to scene
+vec2 sdScene(vec3 pos)
+{
+   float d;
+   
+   float rep = 1.2;
+   
+   vec2 center = (floor(pos.xy/rep)+.5)*rep;
+   vec2 neighbour = center.xy + rep*edge(pos.xy - center); 
+    
+   float height = center.x*center.y + (1.+2.*sin(center.x+center.y))*iTime;
+    
+   float me = sdChain(pos - vec3(center, height));
+   float next = length(pos.xy - neighbour) - 0.52;
+   
+   d = min(me, next);
+   
+   return vec2(d, 0.);
+}
+
+// Get normal vector at pos
+vec3 getNormal(vec3 pos)
+{
+    vec2 u = vec2(0.001, 0);
+
+    return normalize(vec3(sdScene(pos + u.xyy).x - sdScene(pos - u.xyy).x,
+                    sdScene(pos + u.yxy).x - sdScene(pos - u.yxy).x,
+                    sdScene(pos + u.yyx).x - sdScene(pos - u.yyx).x));
+}
+
+// Standard raymarching function, with soft shadows
+vec3 rayMarch(vec3 rayOrigin, vec3 rayDir)
+{
+    float depth = 0.;
+    float shadow = 1.;
+    float ph = 1e20;
+    int mat_type = 0;
+    
+    for (int i=0; i<MAX_STEPS; i++)
+    {
+        vec3 pos = rayOrigin + depth * rayDir;
+        vec2 dist = sdScene(pos);
+        
+        depth += dist.x;
+        mat_type = int(dist.y);
+        
+        float y = dist.x*dist.x/(2.0*ph);
+        float d = sqrt(dist.x*dist.x-y*y);
+        shadow = min(shadow, 8.*d/max(0.0,depth-y) );
+        
+        if (abs(dist.x) < MIN_DIST) return vec3(depth, mat_type, shadow);
+        if (depth > MAX_DIST) return vec3(-1, 0, shadow);
+    }
+
+    return vec3(depth, mat_type, shadow);
+}
+
+void main( )
+{
+	//uv no se podra modificar---error
+    gl_FragColor = texture2D(texture3, 1.-uv);
+    vec2 p = uv -.5;
+    p.x *= iResolution.x/iResolution.y;
+    
+    // Camera ray origin and direction
+    vec3 rayOrigin = vec3(0., 0., 0);
+    vec3 rayDir = vec3(uv.x, .5, uv.y);
+    rayDir = vec3(rayDir.xy*rot(.3*iTime), rayDir.z);
+
+    // Do raymarching
+    vec3 u = rayMarch(rayOrigin, rayDir);
+    float depth = u.x;
+    vec3 pos = rayOrigin + depth*rayDir;
+    int mat_type = int(u.y); 
+        
+    // Compute color of the pixel at fragCoord
+    float t = sqrt(1.2+uv.y);
+    vec3 col = t*vec3(0.05, 0.63, 1.);
+    if (depth > 0.)
+    {
+        vec3 mat = vec3(0.3);
+        vec3 normal = getNormal(pos);
+        
+        // Intensity of sun light
+        float sun_int = clamp(dot(normal, SUN_DIR), 0., 1.);
+        
+        // Compute shadows
+        vec3 u = rayMarch(pos + 0.1*normal, SUN_DIR);
+        float shadow = u.z;
+        
+        // Apply lighting to material
+        vec3 lighting = shadow*sun_int*SUN_COL;
+        col = lighting * mat;
+    }
+
+    // Apply fog
+    float fog_int = 1. - exp(-depth*0.02);
+    col = mix(col, FOG_COL, fog_int);
+    
+    // Gamma correction
+    col = pow(col, vec3(1./2.2));
+
+    // Output to screen
+    gl_FragColor = vec4(col, 1.);
+}
+  /*void main() {	
+    gl_FragColor = texture2D(texture, 1.-uv);
+	vec2 uv2 = (gl_FragCoord.xy -.5 * resolution)/resolution.y;
+	float d = smoothstep(.1,.01,length(uv2)-sin(time)*.25-.5);
+	gl_FragColor*=d;
+	vec2 q = vec2(0.);
+    q.x = uv.x + 0.5 + 0.5*sin(time*0.1);
+    q.y = uv.y + 0.5 + 0.5*cos(time*0.1);
+    gl_FragColor.rgb *= vec3(0.5+0.5*sin(time*.25-.5)*vec3(random(uv*q)));
+    //gl_FragColor.rgb += 0.05*vec3(random(uv*q));
+	// vignette
+    gl_FragColor.rgb -= smoothstep(0.5, 3.0, length(uv*q));
+  }*/
+`);
+gl.compileShader(fragmentShader);
+var program = gl.createProgram();
+gl.attachShader(program, vertexShader);
+gl.attachShader(program, fragmentShader);
+gl.linkProgram(program);
+gl.useProgram(program);
+var positionLocation = gl.getAttribLocation(program, 'position');
+var resolutionLocation = gl.getUniformLocation(program, 'resolution');
+var timeLocation = gl.getUniformLocation(program, 'time');
+var buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+  -1.0, -1.0,
+  1.0, -1.0,
+  -1.0, 1.0,
+  -1.0, 1.0,
+  1.0, -1.0,
+  1.0, 1.0
+]), gl.STATIC_DRAW);
+gl.enableVertexAttribArray(positionLocation);
+gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+var startTime = Date.now();
+var texture = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, texture);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+var image = new Image();
+image.onload = function() {
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+};
+image.crossOrigin = "anonymous";
+image.src = 'https://source.unsplash.com/random/' + Math.random();
+function render(time) {
+  time *= 0.001;
+  gl.uniform1f(timeLocation, (Date.now() - startTime) * 0.001);
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+/* overflow hid */
+document.body.style.overflow = 'hidden';
+/* y crear texture2 */
+var texture2 = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, texture2);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+var image2 = new Image();
+image2.onload = function() {
+  gl.bindTexture(gl.TEXTURE_2D, texture2);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image2);
+};
+image2.crossOrigin = "anonymous";
+image2.src = 'https://source.unsplash.com/random/2' + Math.random();
+/* agregar textura de video */
+var video = document.createElement('video');
+video.src = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+video.autoplay = true;
+video.loop = true;
+video.crossOrigin = 'anonymous';
+video.addEventListener('canplay', function() {
+  var texture3 = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture3);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
+});
+/* cambiar texture cada segundo */
+setInterval(function() {
+  var image = new Image();
+  image.onload = function() {
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+  };
+  image.crossOrigin = "anonymous";
+  image.src = 'https://source.unsplash.com/random/' + Math.random();
+}, 1000);
+/* var que guarda posicion de puntero del mouse */
+var mousePos = {
+  x: 0,
+  y: 0
+};
+/* actualizar */
+document.addEventListener('mousemove', function(event) {
+  mousePos.x = event.clientX;
+  mousePos.y = event.clientY;
+});
+/* mostrar variables */
+var mousePosText = document.createElement('div');
+document.body.appendChild(mousePosText);
+setInterval(function() {
+  mousePosText.innerHTML = 'x: ' + mousePos.x + '<br>y: ' + mousePos.y;
+}, 1000 / 60);
+/* variables siempre encima de elementos */
+var mousePosText = document.createElement('div');
+mousePosText.style.position = 'fixed';
+mousePosText.style.top = 0;
+mousePosText.style.left = 0;
+document.body.appendChild(mousePosText);
+/* actualizar mouse a mousePos */
+var mouseLocation = gl.getUniformLocation(program, 'mouse');
+setInterval(function() {
+  gl.uniform2f(mouseLocation, mousePos.x, mousePos.y);
+}, 1000 / 60);
+/* integrar 5 buffers */
+var buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+  -1.0, -1.0,
+  1.0, -1.0,
+  -1.0, 1.0,
+  -1.0, 1.0,
+  1.0, -1.0,
+  1.0, 1.0,
+  -1.0, -1.0,
+  1.0, -1.0,
+  -1.0, 1.0,
+  -1.0, 1.0,
+  1.0, -1.0,
+  1.0, 1.0,
+  -1.0, -1.0,
+  1.0, -1.0,
+  -1.0, 1.0,
+  -1.0, 1.0,
+  1.0, -1.0,
+  1.0, 1.0,
+  -1.0, -1.0,
+  1.0, -1.0,
+  -1.0, 1.0,
+  -1.0, 1.0,
+  1.0, -1.0,
+  1.0, 1.0,
+  -1.0, -1.0,
+  1.0, -1.0,
+  -1.0, 1.0,
+  -1.0, 1.0,
+  1.0, -1.0,
+  1.0, 1.0
+]), gl.STATIC_DRAW);
+gl.enableVertexAttribArray(positionLocation);
+gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+/* crear otra textura */
+var texture4 = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, texture4);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+var image4 = new Image();
+image4.onload = function() {
+  gl.bindTexture(gl.TEXTURE_2D, texture4);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image4);
+};
+image4.crossOrigin = "anonymous";
+image4.src = 'https://source.unsplash.com/random/4' + Math.random();
+
+});
+        </script>
+    </head>
+    
+</html>

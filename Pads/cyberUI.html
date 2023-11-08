@@ -1,0 +1,162 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+var html = document.createElement('html');
+html.innerHTML = '<!DOCTYPE html> <html> <meta name="viewport" content="width=device-width, initial-scale=1"> <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css"> <style> .pitch-core { --aug-border: initial; --aug-border-all: 7px; --aug-border-bg: radial-gradient( at top, gold 25%, transparent 50%), url("https://i.pinimg.com/originals/f2/8b/62/f28b62e3c73e0991d51e6c0dcb412360.gif") 50% 50% / 100% 100%; --aug-inlay: initial; --aug-inlay-all: 4px; --aug-inlay-bg: radial-gradient( at center center, gold, black); --aug-inlay-opacity: 0.5; --aug-clip-b1: initial; --aug-clip-b2: initial; --aug-b-extend1: 50%; } .pitch-core:not(:hover) { --aug-clip-tl1: initial; --aug-tl-inset1: 30px; --aug-tl1-alt-join-in: initial; --aug-scoop-tr1: initial; --aug-tr1: 25px; } .pitch-core:hover { --aug-clip-t1: initial; --aug-clip-t2: initial; --aug-clip-r1: initial; --aug-clip-r2: initial; --aug-clip-l1: initial; --aug-clip-l2: initial; --aug-t-extend1: 50%; --aug-r-extend1: 50%; --aug-l-extend1: 50%; } </style> <body>  </body> </html>';
+
+document.body.appendChild(html);
+
+var div = document.createElement('div');
+div.className = 'pitch-core';
+div.setAttribute('data-augmented-ui', '');
+document.body.appendChild(div);
+
+var div = document.createElement('div');
+div.className = 'pitch-core';
+div.setAttribute('data-augmented-ui', '');
+div.innerHTML = 'ejemplo de augmented-ui';
+//document.body.appendChild(div);
+/* 50% centered */
+var div = document.createElement('div');
+div.className = 'pitch-core';
+div.setAttribute('data-augmented-ui', '');
+div.innerHTML = 'ejemplo de augmented-ui';
+div.style.position = 'fixed';
+div.style.top = '50%';
+div.style.left = '50%';
+div.style.width = '50%';
+div.style.height = '50%';
+div.style.transform = 'translate(-50%, -50%)';
+//document.body.appendChild(div);
+/* texto dentrado en div */
+var div = document.createElement('div');
+div.className = 'pitch-core';
+div.setAttribute('data-augmented-ui', '');
+div.innerHTML = 'ejemplo de augmented-ui';
+div.style.position = 'fixed';
+div.style.top = '50%';
+div.style.left = '50%';
+div.style.width = '50%';
+div.style.height = '50%';
+div.style.transform = 'translate(-50%, -50%)';
+div.style.textAlign = 'center';
+div.style.lineHeight = '50%';
+//document.body.appendChild(div);
+/* cover */
+var div = document.createElement('div');
+div.className = 'pitch-core';
+div.setAttribute('data-augmented-ui', '');
+div.innerHTML = 'ejemplo de augmented-ui';
+div.style.position = 'fixed';
+div.style.top = '50%';
+div.style.left = '50%';
+div.style.width = '50%';
+div.style.height = '50%';
+div.style.transform = 'translate(-50%, -50%)';
+div.style.textAlign = 'center';
+div.style.lineHeight = '50%';
+div.style.backgroundImage = 'url(https://picsum.photos/1920/1080/?random)';
+div.style.backgroundImage = 'url(https://i.pinimg.com/originals/d3/27/63/d327635099eee0bd6f192b6fd9bd5757.gif)';
+div.style.backgroundSize = 'cover';
+div.style.backgroundRepeat = 'no-repeat';
+div.style.backgroundPosition = 'center';
+document.body.appendChild(div);
+
+/* numero: 0 */
+var numero = 0;
+/* cada segundo cambia, si es 5 set a 0 */
+var cadaSegundoCambiaSiEs5SetA0 = function() {
+  numero = numero + 1;
+  if (numero === 6) {
+    numero = 0;
+  }
+};
+/* aplicar cada segundo cadaSegundoCambiaSiEs5SetA0 */
+setInterval(cadaSegundoCambiaSiEs5SetA0, 1000);
+/* convertir en switch numero */
+var convertirEnSwitchNumero = function() {
+  switch (numero) {
+    case 1:
+      document.body.style.backgroundColor = 'red';      
+	  div.setAttribute('data-augmented-ui', ' tl-2-round-x tr-scoop-x r-scoop-x br-scoop-x b-scoop-x bl-scoop l-scoop-x both ');
+	  document.body.appendChild(div);
+      break;
+    case 2:		
+		document.body.style.backgroundColor = 'blue';      
+		div.setAttribute('data-augmented-ui', 'all-hexangle-up border');
+		div.className = 'reticle';
+		div.style.setProperty('--aug-all-width', '150px');
+		div.style.setProperty('--reticle-color', '#00bfff');
+		div.style.setProperty('--reticle-size', 'calc(var(--aug-all-width) * 0.25)');
+		div.style.setProperty('--aug-border-bg', 'radial-gradient( circle at top center, var(--reticle-color) var(--reticle-size), transparent var(--reticle-size) ), radial-gradient( circle at bottom 13.92% right 6.89%, var(--reticle-color) var(--reticle-size), transparent var(--reticle-size) ), radial-gradient( circle at bottom 13.92% left 6.89%, var(--reticle-color) var(--reticle-size), transparent var(--reticle-size) )');
+		document.body.appendChild(div);
+      break;
+    case 3:
+		document.body.style.backgroundColor = 'green';
+		div.className = 'pitch-core';
+		div.setAttribute('data-augmented-ui', '');
+		div.innerHTML = 'ejemplo de augmented-ui';
+		div.style.position = 'fixed';
+		div.style.top = '50%';
+		div.style.left = '50%';
+		div.style.width = '50%';
+		div.style.height = '50%';
+		div.style.transform = 'translate(-50%, -50%)';
+		div.style.textAlign = 'center';
+		div.style.lineHeight = '50%';
+		div.style.backgroundImage = 'url(https://picsum.photos/1920/1080/?random)';
+		div.style.backgroundImage = 'url(https://i.pinimg.com/originals/d3/27/63/d327635099eee0bd6f192b6fd9bd5757.gif)';
+		div.style.backgroundSize = 'cover';
+		div.style.backgroundRepeat = 'no-repeat';
+		div.style.backgroundPosition = 'center';
+		document.body.appendChild(div);
+		div.setAttribute('data-augmented-ui', 'all-hexangle-up border');
+		document.body.appendChild(div);
+      break;
+    case 4:
+		document.body.style.backgroundColor = 'yellow';
+		div.className = 'pitch-core';
+		div.setAttribute('data-augmented-ui', '');
+		div.innerHTML = 'ejemplo de augmented-ui';
+		div.style.position = 'fixed';
+		div.style.top = '50%';
+		div.style.left = '50%';
+		div.style.width = '50%';
+		div.style.height = '50%';
+		div.style.transform = 'translate(-50%, -50%)';
+		div.style.textAlign = 'center';
+		div.style.lineHeight = '50%';
+		div.style.backgroundImage = 'url(https://picsum.photos/1920/1080/?random)';
+		div.style.backgroundImage = 'url(https://i.pinimg.com/originals/d3/27/63/d327635099eee0bd6f192b6fd9bd5757.gif)';
+		div.style.backgroundSize = 'cover';
+		div.style.backgroundRepeat = 'no-repeat';
+		div.style.backgroundPosition = 'center';
+		document.body.appendChild(div);
+
+      break;
+    case 5:
+		document.body.style.backgroundColor = 'purple';
+		
+		div.setAttribute('data-augmented-ui', ' tl-2-scoop-x t-clip-xy tr-2-scoop-x r-clip-y br-scoop-inset b-clip-x bl-2-rect-xy l-clip-y both ');
+		document.body.appendChild(div);
+		div.setAttribute('data-augmented-ui', 'all-hexangle-up border');
+		document.body.appendChild(div);
+      break;
+	  default:
+		document.body.style.backgroundColor = 'white';
+		
+		div.setAttribute('data-augmented-ui', ' tl-2-clip-x tr-clip-x r-clip-y br-clip b-clip-x bl-2-clip-x l-clip-y both ');
+		document.body.appendChild(div);
+		
+  }
+};
+/* aplicar cases a numero */
+setInterval(convertirEnSwitchNumero, 1000);
+});
+        </script>
+    </head>
+    
+</html>

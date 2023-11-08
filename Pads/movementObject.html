@@ -1,0 +1,108 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+/* mover circulo var keysDown = {}; addEventListener("keydown", function (e) { keysDown[e.keyCode] = true; }, false); addEventListener("keyup", function (e) { delete keysDown[e.keyCode]; }, false); */
+var keysDown = {};
+addEventListener("keydown", function (e) {
+  keysDown[e.keyCode] = true;
+}, false);
+addEventListener("keyup", function (e) {
+  delete keysDown[e.keyCode];
+}, false);
+/* mover circulo */
+var circulo = document.createElement('div');
+circulo.style.width = '100px';
+circulo.style.height = '100px';
+circulo.style.background = 'red';
+circulo.style.borderRadius = '50%';
+document.body.appendChild(circulo);
+
+/* // Cross-browser support for requestAnimationFrame var w = window; requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame; */
+var w = window;
+requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+/* porque no se mueve? */
+circulo.style.position = 'absolute';
+circulo.style.left = '0px';
+circulo.style.top = '0px';
+/* overflow hide */
+document.body.style.overflow = 'hidden';
+
+/* repetir en x */
+var fondo = document.createElement('div');
+fondo.style.width = '100%';
+fondo.style.height = '100%';
+fondo.style.background = 'url(https://c.wallhere.com/photos/7e/80/2560x1600_px_abstract_Wavy_Lines-616329.jpg!d)';
+fondo.style.backgroundSize = 'cover';
+fondo.style.backgroundRepeat = 'repeat-x';
+document.body.appendChild(fondo);
+/* en fondo, lo que se mueve es la imagen */
+var fondo = document.createElement('div');
+fondo.style.width = '100%';
+fondo.style.height = '100%';
+fondo.style.background = 'url(https://c.wallhere.com/photos/7e/80/2560x1600_px_abstract_Wavy_Lines-616329.jpg!d)';
+fondo.style.backgroundSize = 'cover';
+fondo.style.backgroundRepeat = 'repeat-x';
+fondo.style.position = 'absolute';
+fondo.style.left = '0px';
+fondo.style.top = '0px';
+fondo.style.backgroundPosition = '0px 0px';
+document.body.appendChild(fondo);
+var update = function () {
+  if (38 in keysDown) { // Player holding up
+    circulo.style.top = parseInt(circulo.style.top) - 0 + 'px';
+    fondo.style.backgroundPosition = '0px ' + parseInt(fondo.style.backgroundPosition.split(' ')[1]) + 0 + 'px';
+  }
+  if (40 in keysDown) { // Player holding down
+    circulo.style.top = parseInt(circulo.style.top) + 0 + 'px';
+    fondo.style.backgroundPosition = '0px ' + parseInt(fondo.style.backgroundPosition.split(' ')[1]) - 0 + 'px';
+  }
+  if (37 in keysDown) { // Player holding left
+    circulo.style.left = parseInt(circulo.style.left) - 0 + 'px';
+    fondo.style.backgroundPosition = parseInt(fondo.style.backgroundPosition.split(' ')[0]) + 1 + 'px 0px';
+  }
+  if (39 in keysDown) { // Player holding right
+    circulo.style.left = parseInt(circulo.style.left) + 0 + 'px';
+    fondo.style.backgroundPosition = parseInt(fondo.style.backgroundPosition.split(' ')[0]) - 1 + 'px 0px';
+  }
+  if (parseInt(circulo.style.left) > window.innerWidth) {
+    circulo.style.left = '0px';
+  }
+  if (parseInt(circulo.style.top) > window.innerHeight) {
+    circulo.style.top = '0px';
+  }
+  if (parseInt(circulo.style.left) < 0) {
+    circulo.style.left = window.innerWidth + 'px';
+  }
+  if (parseInt(circulo.style.top) < 0) {
+    circulo.style.top = window.innerHeight + 'px';
+  }
+};
+setInterval(update, 10);
+/* circulo siempre al frente */
+circulo.style.zIndex = '1';
+/* var speed: .1 */
+var speed = .1;
+/* circulo a mitad de pantalla */
+circulo.style.left = window.innerWidth / 2 - 50 + 'px';
+circulo.style.top = window.innerHeight / 2 - 50 + 'px';
+/* crear div ancho full y alto 1/3 */
+var div = document.createElement('div');
+div.style.width = '100%';
+div.style.height = window.innerHeight / 4 + 'px';
+div.style.background = 'red';
+document.body.appendChild(div);
+/* flotante */
+div.style.position = 'absolute';
+div.style.left = '0px';
+div.style.top = '0px';
+/* con imagen recortada */
+div.style.background = 'url(https://images.alphacoders.com/934/934043.jpg)';
+div.style.backgroundSize = 'cover';
+div.style.backgroundPosition = '0px 0px';
+});
+        </script>
+    </head>
+    
+</html>
