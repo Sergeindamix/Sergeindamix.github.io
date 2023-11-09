@@ -1,0 +1,405 @@
+
+    <!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Resultados de Películas - Página 1</title>
+    </head>
+    <body>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1eb06L5ElSAsCzf5g-WuJvHdHJyTlsTzj">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1eb06L5ElSAsCzf5g-WuJvHdHJyTlsTzj">1Absolutamente Radioactivo.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1eTuq226_ubhOuVPFlsU3LFfRh8qJYb_t">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1eTuq226_ubhOuVPFlsU3LFfRh8qJYb_t">2 Cantando en el baño.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1eTrqObUP5gyM_R3N6qdvaqJCl4w9FO_2">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1eTrqObUP5gyM_R3N6qdvaqJCl4w9FO_2">3 El descenlace de una idea.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1fVmhZ1fz5hpEl3Q2LVYc1jBvAq8Ql1ml">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1fVmhZ1fz5hpEl3Q2LVYc1jBvAq8Ql1ml">4 Beck - Looser.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1fR_nzOcj7HOPXQFMbe4EstEA03qqPYf6">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1fR_nzOcj7HOPXQFMbe4EstEA03qqPYf6">5 El lenguaje Radioactivo.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1fRYyCu3DZ8wrcNKbErVVgtVsag0Wc2z8">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1fRYyCu3DZ8wrcNKbErVVgtVsag0Wc2z8">6 Crash test Dummies - Mmmm.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1fAPhQi2-aPXQpSpz1lU2W1JdHaLJZkBM">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1fAPhQi2-aPXQpSpz1lU2W1JdHaLJZkBM">7 La propuesta interactiva.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1f8CrLk-tZkq74Xh-hAdQ7PVWopRZv9Sz">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1f8CrLk-tZkq74Xh-hAdQ7PVWopRZv9Sz">8 Guns N' Roses - Since I Don't Have You.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1f6Y0rUheoVpj0QrXfXkInmsjM2-skoto">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1f6Y0rUheoVpj0QrXfXkInmsjM2-skoto">9 La actitud radioactiva en sus programas.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1eAwCqiWiGdjy4kEk9o57Jg9xqKYyEv10">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1eAwCqiWiGdjy4kEk9o57Jg9xqKYyEv10">10 ZZ Top.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1e8AjDa-OAO4rxCPOi-qrojRletekT2Tc">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1e8AjDa-OAO4rxCPOi-qrojRletekT2Tc">11 El balance entre la broma y lo absurdo.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1e8-QfbXaYTCrb0lCdSG7iUR2NrKZSnRd">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1e8-QfbXaYTCrb0lCdSG7iUR2NrKZSnRd">12 Aerosmith -Amazing.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1e55909Hk65OF_ZXKoz5mZS-Y1a0dHY_Y">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1e55909Hk65OF_ZXKoz5mZS-Y1a0dHY_Y">13 La escuelita.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1e3vtTZC4wgVJ43aV_xnMlA7liwnX4F7z">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1e3vtTZC4wgVJ43aV_xnMlA7liwnX4F7z">14 Mr Jones.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1dyx5keEN6gABDLA4YH5WPYXVCXRtw1w5">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1dyx5keEN6gABDLA4YH5WPYXVCXRtw1w5">15 Una invitacion a viajar.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1edxqM01sQLXzV8W_Vl_cSu-_Go3JU3Bf">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1edxqM01sQLXzV8W_Vl_cSu-_Go3JU3Bf">16 Ace of base - All want you want.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1ed-wKgM31J0SYw5RWQaBWr04eMQxiWKH">
+            <img class="post-image" src="https://image-uniservice.linternaute.com/image/450/2/1422976902/10754801.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1ed-wKgM31J0SYw5RWQaBWr04eMQxiWKH">17 El final que no es final.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <script>
+        var videoModal = document.getElementById("videoModal");
+        var closeVideoButton = document.getElementById("closeVideoButton");
+        var videoSource = document.getElementById("videoSource"); // Agregado
+
+        closeVideoButton.addEventListener("click", function() {
+            videoModal.style.display = "none";
+        });
+
+        window.addEventListener("click", function(event) {
+            if (event.target == videoModal) {
+                videoModal.style.display = "none";
+            }
+        });
+
+        document.querySelectorAll(".post").forEach(function(post) {
+            post.addEventListener("click", function() {
+                var videoPlayer = document.getElementById("videoPlayer");
+                var videoUrl = this.dataset.videoUrl;
+                videoSource.src = videoUrl; // Actualiza el src del elemento source
+                videoPlayer.load(); // Recarga el reproductor de video para usar la nueva fuente
+                videoModal.style.display = "block";
+                videoPlayer.play();
+            });
+        });
+        </script>
+    </body>
+    </html>
+    

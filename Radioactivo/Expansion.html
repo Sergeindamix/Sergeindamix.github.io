@@ -1,0 +1,501 @@
+
+    <!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Resultados de Películas - Página 1</title>
+    </head>
+    <body>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1aahXPZGx6iy26oIwTUDLb9D2efbB0wa5">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1aahXPZGx6iy26oIwTUDLb9D2efbB0wa5">Radioactivo 07 - 01. Expancion.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1aTbhsiKYKmXf5b0IAYgct4qz-6O3HnHs">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1aTbhsiKYKmXf5b0IAYgct4qz-6O3HnHs">Radioactivo 07 - 02. Musica Radioactiva.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1aQzz9I_RR2a5wDKJ9OBf0x9LNPpgOuwl">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1aQzz9I_RR2a5wDKJ9OBf0x9LNPpgOuwl">Radioactivo 07 - 03. Wipes.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1aMAFUsg7Zt02hR2AlNj7T95KTTDPNHwl">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1aMAFUsg7Zt02hR2AlNj7T95KTTDPNHwl">Radioactivo 07 - 04. Monica Lenguinsky.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1aGZAo9izSXUUTa854t8ssSMmRssP6Us4">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1aGZAo9izSXUUTa854t8ssSMmRssP6Us4">Radioactivo 07 - 05. Musica Radioactiva.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1aFRqypWlAnETEiuHK5OpAw0BCyQatacC">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1aFRqypWlAnETEiuHK5OpAw0BCyQatacC">Radioactivo 07 - 06. Marley.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1b6Qj1O5zKEkpn98dRGZPTw3k1FnXxkkD">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1b6Qj1O5zKEkpn98dRGZPTw3k1FnXxkkD">Radioactivo 07 - 07. Radiosecundaria.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1b5AkCtrlDnN1t7utpkaeqdHxarZ-gr46">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1b5AkCtrlDnN1t7utpkaeqdHxarZ-gr46">Radioactivo 07 - 08. Musica Radioactiva.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1b25aMGcMQwU3d9zOsm0F0kb1Gyjby_DC">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1b25aMGcMQwU3d9zOsm0F0kb1Gyjby_DC">Radioactivo 07 - 09. Maquina de Raspados.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1b-4aIrllAoAsMQnEvfkbgF8qACZuSOWF">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1b-4aIrllAoAsMQnEvfkbgF8qACZuSOWF">Radioactivo 07 - 10. Sabia usted-.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1asKweD3EdzQjyrQ6UiN6ooVM-_Tdn_ya">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1asKweD3EdzQjyrQ6UiN6ooVM-_Tdn_ya">Radioactivo 07 - 11. Musica Radioactiva.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1ak5a0xhQnJvIOZ0KSbNsO08Iqp5XXHv1">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1ak5a0xhQnJvIOZ0KSbNsO08Iqp5XXHv1">Radioactivo 07 - 12. Infectors.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1aiB7n5ENHaVAC9RzrHIBUOYsnr1ElGFm">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1aiB7n5ENHaVAC9RzrHIBUOYsnr1ElGFm">Radioactivo 07 - 13. Se lo que hiciste el sexenio pasado.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1afO0BobTUojFZxmj6Xuj0Bev09541xfP">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1afO0BobTUojFZxmj6Xuj0Bev09541xfP">Radioactivo 07 - 14. Moda Virtual.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1ae3qk2xeHp5Z1M9-ccSeh4PEt5y-kM-n">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1ae3qk2xeHp5Z1M9-ccSeh4PEt5y-kM-n">Radioactivo 07 - 15. Musica Radioactiva.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1adxB22j22yKpmowPi53usAJxaD1q_ZqN">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1adxB22j22yKpmowPi53usAJxaD1q_ZqN">Radioactivo 07 - 16. Robo DJ.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1bJpeEk5EkCLMdK6GGpuqMFYnSUwv6Fou">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1bJpeEk5EkCLMdK6GGpuqMFYnSUwv6Fou">Radioactivo 07 - 17. Musica Radioactiva.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1bCG1VjyEM-wPhjQoY25Cl6X0Kq0OrBfg">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1bCG1VjyEM-wPhjQoY25Cl6X0Kq0OrBfg">Radioactivo 07 - 18. Habia una vez un lago.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1b9bg0iryqm0XQ80WlPb8Lo4pKAFXoHll">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1b9bg0iryqm0XQ80WlPb8Lo4pKAFXoHll">Radioactivo 07 - 19. Anti-Identificador de llamadas.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1b8YXAocvI9ISTt6RpRS7qOm6KR_3pCDB">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1b8YXAocvI9ISTt6RpRS7qOm6KR_3pCDB">Radioactivo 07 - 20. Ubicacion.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1bWez79UAZB9NngCWNogee6Y2Q8n2Ra8d">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1bWez79UAZB9NngCWNogee6Y2Q8n2Ra8d">Radioactivo 07 - 21. Musica Radioactiva.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1bPbi8cp_NwMXApFLue2B8qjmGzbQYMY-">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1bPbi8cp_NwMXApFLue2B8qjmGzbQYMY-">Radioactivo 07 - 22. Kaliman.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1bMZ-Bm3AjVR-I4VORKdMl9M6qUvswb58">
+            <img class="post-image" src="https://i.pinimg.com/originals/85/98/63/85986361e9cd83a7e66923c856159aaf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1bMZ-Bm3AjVR-I4VORKdMl9M6qUvswb58">Radioactivo 07 - 23. Hagalo por ella.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <script>
+        var videoModal = document.getElementById("videoModal");
+        var closeVideoButton = document.getElementById("closeVideoButton");
+        var videoSource = document.getElementById("videoSource"); // Agregado
+
+        closeVideoButton.addEventListener("click", function() {
+            videoModal.style.display = "none";
+        });
+
+        window.addEventListener("click", function(event) {
+            if (event.target == videoModal) {
+                videoModal.style.display = "none";
+            }
+        });
+
+        document.querySelectorAll(".post").forEach(function(post) {
+            post.addEventListener("click", function() {
+                var videoPlayer = document.getElementById("videoPlayer");
+                var videoUrl = this.dataset.videoUrl;
+                videoSource.src = videoUrl; // Actualiza el src del elemento source
+                videoPlayer.load(); // Recarga el reproductor de video para usar la nueva fuente
+                videoModal.style.display = "block";
+                videoPlayer.play();
+            });
+        });
+        </script>
+    </body>
+    </html>
+    

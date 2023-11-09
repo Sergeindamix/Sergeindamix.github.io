@@ -1,0 +1,533 @@
+
+    <!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Resultados de Películas - Página 1</title>
+    </head>
+    <body>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Y4tFtkLFpQvG1qnJi47hIk6tvZVHPi7g">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Y4tFtkLFpQvG1qnJi47hIk6tvZVHPi7g">01-Radioactivo Vs. Radioactivo.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Y35G8IpraFK6xfmXQywOPaportBsjdlP">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Y35G8IpraFK6xfmXQywOPaportBsjdlP">02-Fight test (1).mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1XsjdwmB9cbs6JrQyKhmyzguvbpsHgGlA">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1XsjdwmB9cbs6JrQyKhmyzguvbpsHgGlA">03-Quien... Se creen (1).mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Xr47mBzv1-27Js__L0pEIZE-4xhIiHXE">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Xr47mBzv1-27Js__L0pEIZE-4xhIiHXE">04-Juguete Radioactivo - Terminatrix PMS.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1XpgRUd5HsJawktjSvOlyCYGKwasEdlxT">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1XpgRUd5HsJawktjSvOlyCYGKwasEdlxT">05-Danger (High Voltage).mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1XotOY_X0eNPo22B9ksy4RIOvG3VH_8eE">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1XotOY_X0eNPo22B9ksy4RIOvG3VH_8eE">06-Quien... Se creen (2).mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1XiIS11EJ-MvorraxJyVtXGcRsLFT8xJ5">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1XiIS11EJ-MvorraxJyVtXGcRsLFT8xJ5">07-6 de Julio 2003.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1YKygytArbWqOiNz4cIw3lVNEcIuc_nPq">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1YKygytArbWqOiNz4cIw3lVNEcIuc_nPq">08-Cafe Tacuba- Eo.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1YKX8E_Zq8fljjyprYlr_QcaCziMgKIof">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1YKX8E_Zq8fljjyprYlr_QcaCziMgKIof">09-Radioactivo Vs Radio (2).mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Y9JLop6rX1MyMHNbpm3BLf-dNrXCDoJ7">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Y9JLop6rX1MyMHNbpm3BLf-dNrXCDoJ7">10-In da club.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Y7JS3JIfGxWwQJTL6uGyMc4RCij_6sP0">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Y7JS3JIfGxWwQJTL6uGyMc4RCij_6sP0">11-Juguete Radioactivo - President Evil.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Y5R2-6h36XRpTGhgVYM59h5qwieAmVzz">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Y5R2-6h36XRpTGhgVYM59h5qwieAmVzz">12-California waiting.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Y5BTgrXzHXJTXZklOBZMSvxwS0kEVWPV">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Y5BTgrXzHXJTXZklOBZMSvxwS0kEVWPV">13-Quien... Se creen (3).mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Yg_qCkanCV9fKBZmUbjXsrDiQpbqUThY">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Yg_qCkanCV9fKBZmUbjXsrDiQpbqUThY">14-Yo simplemente un reflejo de ustedes.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1YbMglZskJW1Nki5e-gi8J85BdjcaAXSJ">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1YbMglZskJW1Nki5e-gi8J85BdjcaAXSJ">15-Nine Inch Nails - Hurt.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1YYiCVdY6zw1Pg11tx25aC2gavgKKo3Ot">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1YYiCVdY6zw1Pg11tx25aC2gavgKKo3Ot">16-Muere Latino 2003.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1YXX4p31bfcehWHDjTZsl9u3n9agyevpv">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1YXX4p31bfcehWHDjTZsl9u3n9agyevpv">17-Audioslave - Like stone.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1YPxrFAb1giwa5HKwWbFPUSYcd2CowO2Z">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1YPxrFAb1giwa5HKwWbFPUSYcd2CowO2Z">18-Pearl Jam - Hunger strike.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1YOYEQvkHO4_oYGypZKmcpyYVkSYwElqu">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1YOYEQvkHO4_oYGypZKmcpyYVkSYwElqu">19-Juguete Radioactivo - Grand Theft Auto Mexico City.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1YjO1B1YHDHUhIxW6OEb5qk_XBaajQTiF">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1YjO1B1YHDHUhIxW6OEb5qk_XBaajQTiF">20-Times Like These (Acustica).mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1YpftW4r7DLlqgwmG5UyNp0aFjnnyD5ys">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1YpftW4r7DLlqgwmG5UyNp0aFjnnyD5ys">21-Quien... Se creen (4).mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Yp_46j_x_UuBYGlJWyCB5vHG8kpOeI-C">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Yp_46j_x_UuBYGlJWyCB5vHG8kpOeI-C">22-Juguete Radioactivo - Final fantasy.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Yo3Ca-JT7NoQcACFQFsDOp_oQiDrm-OY">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Yo3Ca-JT7NoQcACFQFsDOp_oQiDrm-OY">23-El peor enemigo no esta alla afuera.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1Yn_eiIP2HAiAL2PM9KsnAwy2bt-2EhGz">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1Yn_eiIP2HAiAL2PM9KsnAwy2bt-2EhGz">24-White Stripes - Seven nation army.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="https://drive.google.com/uc?export=download&id=1YnI2fkw5IsxHft3Jmky9U3CRfsNwCoe_">
+            <img class="post-image" src="https://i.ytimg.com/vi/t5BnSHHy9Ek/hqdefault.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="https://drive.google.com/uc?export=download&id=1YnI2fkw5IsxHft3Jmky9U3CRfsNwCoe_">25-Radioactivo 11 - 14. La Despedida de Ilana.mp3 - Google Drive</span>
+            </div>
+        </div>
+        
+        <script>
+        var videoModal = document.getElementById("videoModal");
+        var closeVideoButton = document.getElementById("closeVideoButton");
+        var videoSource = document.getElementById("videoSource"); // Agregado
+
+        closeVideoButton.addEventListener("click", function() {
+            videoModal.style.display = "none";
+        });
+
+        window.addEventListener("click", function(event) {
+            if (event.target == videoModal) {
+                videoModal.style.display = "none";
+            }
+        });
+
+        document.querySelectorAll(".post").forEach(function(post) {
+            post.addEventListener("click", function() {
+                var videoPlayer = document.getElementById("videoPlayer");
+                var videoUrl = this.dataset.videoUrl;
+                videoSource.src = videoUrl; // Actualiza el src del elemento source
+                videoPlayer.load(); // Recarga el reproductor de video para usar la nueva fuente
+                videoModal.style.display = "block";
+                videoPlayer.play();
+            });
+        });
+        </script>
+    </body>
+    </html>
+    
