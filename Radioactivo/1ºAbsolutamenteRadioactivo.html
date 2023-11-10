@@ -361,31 +361,34 @@
         </div>
         
         <script>
-            var audioModal = document.getElementById("audioModal");
-            var closeAudioButton = document.getElementById("closeAudioButton");
-            var audioSource = document.getElementById("audioSource");
+        var audioModal = document.getElementById("audioModal");
+        var closeAudioButton = document.getElementById("closeAudioButton");
+        var audioSource = document.getElementById("audioSource");
 
-            closeAudioButton.addEventListener("click", function() {
-                audioModal.style.display = "none";
-            });
+        closeAudioButton.addEventListener("click", closeAudioModal);
+        closeAudioButton.addEventListener("touchend", closeAudioModal);
 
-            window.addEventListener("click", function(event) {
-                if (event.target == audioModal) {
-                    audioModal.style.display = "none";
-                }
-            });
+        window.addEventListener("click", function(event) {
+            if (event.target == audioModal) {
+                closeAudioModal();
+            }
+        });
 
-            document.querySelectorAll(".post").forEach(function(post) {
-                post.addEventListener("click", function() {
-                    var audioPlayer = document.getElementById("audioPlayer");
-                    var audioUrl = this.querySelector(".post-title").getAttribute("data-audio-url");
-                    audioSource.src = audioUrl;
-                    audioPlayer.load();
-                    audioModal.style.display = "block";
-                    audioPlayer.play();
-                });
+        document.querySelectorAll(".post").forEach(function(post) {
+            post.addEventListener("click", function() {
+                var audioPlayer = document.getElementById("audioPlayer");
+                var audioUrl = this.querySelector(".post-title").getAttribute("data-audio-url");
+                audioSource.src = audioUrl;
+                audioPlayer.load();
+                audioModal.style.display = "block";
             });
-        </script>
+        });
+
+        function closeAudioModal() {
+            audioModal.style.display = "none";
+        }
+    </script>
+
     </body>
     </html>
     
