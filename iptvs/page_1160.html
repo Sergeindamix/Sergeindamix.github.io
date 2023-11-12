@@ -729,14 +729,14 @@
         <script>
         var videoModal = document.getElementById("videoModal");
         var closeVideoButton = document.getElementById("closeVideoButton");
-        var videoSource = document.getElementById("videoSource"); // Agregado
+        var videoSource = document.getElementById("videoSource");
 
         closeVideoButton.addEventListener("click", function() {
             videoModal.style.display = "none";
         });
 
         window.addEventListener("click", function(event) {
-            if (event.target == videoModal) {
+            if (event.target === videoModal) {
                 videoModal.style.display = "none";
             }
         });
@@ -745,12 +745,36 @@
             post.addEventListener("click", function() {
                 var videoPlayer = document.getElementById("videoPlayer");
                 var videoUrl = this.dataset.videoUrl;
-                videoSource.src = videoUrl; // Actualiza el src del elemento source
-                videoPlayer.load(); // Recarga el reproductor de video para usar la nueva fuente
+                var title = this.querySelector(".post-title").innerText; // Updated this line
+                var imageUrl = this.querySelector(".post-image").getAttribute("src");
+
+                videoSource.src = videoUrl;
+                videoPlayer.load();
                 videoModal.style.display = "block";
+
+                // Create a blob with the M3U playlist content
+                const m3uContent = `#EXTINF:-1,${title}
+${videoUrl}
+`;
+                const blob = new Blob([m3uContent], { type: "application/m3u" });
+
+                // Create a download link
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = `${title}_playlist.m3u`;
+                a.style.display = "none";
+
+                // Append the link to the document and trigger the click event
+                document.body.appendChild(a);
+                a.click();
+
+                // Clean up
+                document.body.removeChild(a);
             });
         });
-        </script>
+    </script>
+
+
     </body>
     </html>
     
