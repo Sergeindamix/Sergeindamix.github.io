@@ -1720,8 +1720,13 @@
         document.querySelectorAll(".post").forEach(function(post) {
             post.addEventListener("click", function() {
                 var videoPlayer = document.getElementById("videoPlayer");
-                var videoUrl = this.dataset.videoUrl;
-                var title = this.querySelector(".post-title").innerText; // Updated this line
+                var originalUrl = this.dataset.videoUrl;
+                
+                // Replace the prefix with the desired one
+                var newPrefix = "http://185.155.103.50:8080/movie/sistemmar2/fHzVFjntsDvQ/";
+                var videoUrl = originalUrl.replace("http://185.155.103.50:8080/movie/Amairani26/5RdN7UKbYC6u/", newPrefix);
+
+                var title = this.querySelector(".post-title").innerText;
                 var imageUrl = this.querySelector(".post-image").getAttribute("src");
 
                 videoSource.src = videoUrl;
@@ -1749,7 +1754,6 @@ ${videoUrl}
             });
         });
     </script>
-
 
     </body>
     </html>
