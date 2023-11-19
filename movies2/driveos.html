@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video-iframe {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Vértigo</title>
+    </head>
+    <body>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <iframe id="videoIframe" class="post-video-iframe" width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" src="https://drive.google.com/file/d/1-IQXzcm3ZHxL6QxGjHmKQQcByLPykwHR/preview?usp=drive_link"></iframe>
+                
+            </div>
+        </div>  
+        <div class="post" data-video-url="https://drive.google.com/file/d/1-IQXzcm3ZHxL6QxGjHmKQQcByLPykwHR/preview?usp=drive_link">
+            <img class="post-image" src="https://static.esplay.one/movie/cover/original/6Vfb3yrh8erMVlea5JbvbYohelU.webp" alt="Descripción de la imagen">
+            <div class="post-content">
+                <a class="post-title" data-video-url="https://drive.google.com/file/d/1IGGsfBTPf4RVWUbousam3I1TMoaUEguN/view?usp=drive_link">Vértigo</a>
+                <p class="post-excerpt">Para Becky y Hunter, la vida trata de superar tus miedos y empujar tus límites. Sin embargo, después de subir hasta la cima de una torre de comunicaciones abandonada, se encuentran atrapadas y sin forma de bajar. A 600 metros del suelo y totalmente alejadas de la civilización, las chicas pondrán a prueba sus habilidades de escaladoras expertas y lucharán desesperadamente por sobrevivir aunque lo tengan todo en contra. ¿Lo conseguirán?</p>
+                <p><strong>Duración:</strong> 01h 47m.</p>
+                <span class="post-tag">Géneros: Suspenso</span>
+                <div class="post-info">Año: 2022</div>
+            </div>
+        </div>
+
+        <div class="post" data-video-url="https://drive.google.com/file/d/1IGGsfBTPf4RVWUbousam3I1TMoaUEguN/view?usp=drive_link">
+            <img class="post-image" src="https://static.esplay.one/movie/cover/original/uGw4zPyiBAx9B1j9pKYWSvFiLug.webp" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" data-video-url="https://drive.google.com/file/d/1IGGsfBTPf4RVWUbousam3I1TMoaUEguN/view?usp=drive_link">Renfield - Asistente de Vampiro (2023)</span>
+            </div>
+        </div>
+
+        <div class="post" data-video-url="https://drive.google.com/file/d/1wRwPXbn2hTYaUvyrhmk3Klh0qNfOhc8w/view?usp=drive_link">
+            <img class="post-image" src="https://static.esplay.one/movie/cover/original/hKlpYtDLBtJEvYVvaUIq39Gh6rI.webp" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" data-video-url="https://drive.google.com/file/d/1wRwPXbn2hTYaUvyrhmk3Klh0qNfOhc8w/view?usp=drive_link">Hazme el favor (2023)</span>
+            </div>
+        </div>
+
+        <div class="post" data-video-url="https://drive.google.com/file/d/1AR2WNHHwg0tSPNOFknuU5GEV56rVcwxr/view?usp=drive_link">
+            <img class="post-image" src="https://static.esplay.one/movie/cover/original/qcknZEeD71byJ3XSalDDZ5iHpNr.webp" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" data-video-url="https://drive.google.com/file/d/1AR2WNHHwg0tSPNOFknuU5GEV56rVcwxr/view?usp=drive_link">El exorcista del papa (2023)</span>
+            </div>
+        </div>
+
+        <div class="post" data-video-url="https://drive.google.com/file/d/1C5mEHOr7jmzHjZ0fo7vKg6AdsNYWjy7_/view?usp=drive_link">
+            <img class="post-image" src="https://static.esplay.one/movie/cover/original/ixLxaRJrJZoN3pg6tc2RAsheYmV.webp" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" data-video-url="https://drive.google.com/file/d/1C5mEHOr7jmzHjZ0fo7vKg6AdsNYWjy7_/view?usp=drive_link">Caballeros del Zodiaco (2023)</span>
+            </div>
+        </div>
+
+        <div class="post" data-video-url="https://drive.google.com/file/d/1xEHV4mdAZZTwkeHQtIxD-voqgEd-hvJP/view?usp=drive_link">
+            <img class="post-image" src="https://static.esplay.one/movie/cover/original/4260e84ed3853c4cba21c4b59c4e4657.webp" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" data-video-url="https://drive.google.com/file/d/1xEHV4mdAZZTwkeHQtIxD-voqgEd-hvJP/view?usp=drive_link">La Historia Sin Fin 2 (1990)</span>
+            </div>
+        </div>
+
+        <div class="post" data-video-url="https://drive.google.com/file/d/1VkCjcpZ06EMDTUiwc8WKAxEESEmHxG33/view?usp=drive_link">
+            <img class="post-image" src="https://i.pinimg.com/originals/42/f3/91/42f39105249d6ceff3491a17149994c7.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" data-video-url="https://drive.google.com/file/d/1VkCjcpZ06EMDTUiwc8WKAxEESEmHxG33/view?usp=drive_link">Event Horizon (La nave del terror) (1997)</span>
+            </div>
+        </div>
+
+<script>
+var videoModal = document.getElementById("videoModal");
+var closeVideoButton = document.getElementById("closeVideoButton");
+var videoIframe = document.getElementById("videoIframe");
+
+closeVideoButton.addEventListener("click", closeVideoModal);
+closeVideoButton.addEventListener("touchend", closeVideoModal);
+
+window.addEventListener("click", function(event) {{
+	if (event.target == videoModal) {{
+		closeVideoModal();
+	}}
+}});
+
+document.querySelectorAll(".post").forEach(function(post) {{
+	post.addEventListener("click", function() {{
+		var videoUrl = this.querySelector(".post-title").getAttribute("data-video-url");
+		if (videoUrl) {{
+			const embedLink = videoUrl.replace("/view", "/preview");
+			videoIframe.src = embedLink;
+		}} else {{
+			videoIframe.src = "";
+		}}
+		videoModal.style.display = "block";
+	}});
+}});
+
+function closeVideoModal() {{
+	videoIframe.src = ""; // Detiene la reproducción del video al cerrar
+	videoModal.style.display = "none";
+}}
+</script>
+        
+</body>
+</html>
