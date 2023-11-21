@@ -1,0 +1,1214 @@
+    <!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Malcolm el de Enmedio</title>
+    </head>
+    <body>
+        
+	<div class="modal" id="videoModal">
+		<div class="modal-content">
+			<span class="close" id="closeVideoButton">×</span>
+			<video id="videoPlayer" class="post-video" controls>
+				<source id="videoSource" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+		</div>
+	</div>
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139956.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139956.mkv">Malcolm el de Enmedio S01 E01</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139957.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139957.mkv">Malcolm el de Enmedio S01 E02</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139958.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139958.mkv">Malcolm el de Enmedio S01 E03</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139959.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139959.mkv">Malcolm el de Enmedio S01 E04</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139960.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139960.mkv">Malcolm el de Enmedio S01 E05</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139961.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139961.mkv">Malcolm el de Enmedio S01 E06</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139962.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139962.mkv">Malcolm el de Enmedio S01 E07</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139963.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139963.mkv">Malcolm el de Enmedio S01 E08</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139964.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139964.mkv">Malcolm el de Enmedio S01 E09</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139965.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139965.mkv">Malcolm el de Enmedio S01 E10</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139966.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139966.mkv">Malcolm el de Enmedio S01 E11</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139967.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139967.mkv">Malcolm el de Enmedio S01 E12</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139968.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139968.mkv">Malcolm el de Enmedio S01 E13</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139969.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139969.mkv">Malcolm el de Enmedio S01 E14</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139970.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139970.mkv">Malcolm el de Enmedio S01 E15</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139971.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139971.mkv">Malcolm el de Enmedio S01 E16</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139972.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139972.mkv">Malcolm el de Enmedio S02 E01</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139973.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139973.mkv">Malcolm el de Enmedio S02 E02</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139974.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139974.mkv">Malcolm el de Enmedio S02 E03</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139975.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139975.mkv">Malcolm el de Enmedio S02 E04</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139976.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139976.mkv">Malcolm el de Enmedio S02 E05</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139977.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139977.mkv">Malcolm el de Enmedio S02 E06</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139978.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139978.mkv">Malcolm el de Enmedio S02 E07</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139979.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139979.mkv">Malcolm el de Enmedio S02 E08</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139980.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139980.mkv">Malcolm el de Enmedio S02 E09</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139981.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139981.mkv">Malcolm el de Enmedio S02 E10</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139982.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139982.mkv">Malcolm el de Enmedio S02 E11</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139983.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139983.mkv">Malcolm el de Enmedio S02 E12</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139984.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139984.mkv">Malcolm el de Enmedio S02 E13</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139985.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139985.mkv">Malcolm el de Enmedio S02 E14</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139986.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139986.mkv">Malcolm el de Enmedio S02 E15</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139987.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139987.mkv">Malcolm el de Enmedio S02 E16</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139988.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139988.mkv">Malcolm el de Enmedio S02 E17</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139989.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139989.mkv">Malcolm el de Enmedio S02 E18</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139990.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139990.mkv">Malcolm el de Enmedio S02 E19</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139991.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139991.mkv">Malcolm el de Enmedio S02 E20</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139992.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139992.mkv">Malcolm el de Enmedio S02 E21</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139993.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139993.mkv">Malcolm el de Enmedio S02 E22</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139994.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139994.mkv">Malcolm el de Enmedio S02 E23</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139995.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139995.mkv">Malcolm el de Enmedio S02 E24</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139996.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139996.mkv">Malcolm el de Enmedio S02 E25</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139997.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139997.mkv">Malcolm el de Enmedio S03 E01</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139998.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139998.mkv">Malcolm el de Enmedio S03 E02</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/139999.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/139999.mkv">Malcolm el de Enmedio S03 E03</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140000.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140000.mkv">Malcolm el de Enmedio S03 E04</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140001.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140001.mkv">Malcolm el de Enmedio S03 E05</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140002.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140002.mkv">Malcolm el de Enmedio S03 E06</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140003.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140003.mkv">Malcolm el de Enmedio S03 E07</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140004.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140004.mkv">Malcolm el de Enmedio S03 E08</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140005.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140005.mkv">Malcolm el de Enmedio S03 E09</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140006.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140006.mkv">Malcolm el de Enmedio S03 E10</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140007.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140007.mkv">Malcolm el de Enmedio S03 E11</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140008.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140008.mkv">Malcolm el de Enmedio S03 E12</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140009.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140009.mkv">Malcolm el de Enmedio S03 E13</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140010.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140010.mkv">Malcolm el de Enmedio S03 E14</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140011.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140011.mkv">Malcolm el de Enmedio S03 E15</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140012.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140012.mkv">Malcolm el de Enmedio S03 E16</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140013.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140013.mkv">Malcolm el de Enmedio S03 E17</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140014.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140014.mkv">Malcolm el de Enmedio S03 E18</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140015.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140015.mkv">Malcolm el de Enmedio S03 E19</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140016.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140016.mkv">Malcolm el de Enmedio S03 E20</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140017.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140017.mkv">Malcolm el de Enmedio S03 E21</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140018.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140018.mkv">Malcolm el de Enmedio S03 E22</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140019.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140019.mkv">Malcolm el de Enmedio S04 E01</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140020.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140020.mkv">Malcolm el de Enmedio S04 E02</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140021.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140021.mkv">Malcolm el de Enmedio S04 E03</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140022.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140022.mkv">Malcolm el de Enmedio S04 E04</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140023.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140023.mkv">Malcolm el de Enmedio S04 E05</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140024.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140024.mkv">Malcolm el de Enmedio S04 E06</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140025.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140025.mkv">Malcolm el de Enmedio S04 E07</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140026.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140026.mkv">Malcolm el de Enmedio S04 E08</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140027.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140027.mkv">Malcolm el de Enmedio S04 E09</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140028.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140028.mkv">Malcolm el de Enmedio S04 E10</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140029.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140029.mkv">Malcolm el de Enmedio S04 E11</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140030.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140030.mkv">Malcolm el de Enmedio S04 E12</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140031.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140031.mkv">Malcolm el de Enmedio S04 E13</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140032.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140032.mkv">Malcolm el de Enmedio S04 E14</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140033.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140033.mkv">Malcolm el de Enmedio S04 E15</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140034.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140034.mkv">Malcolm el de Enmedio S04 E16</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140035.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140035.mkv">Malcolm el de Enmedio S04 E17</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140036.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140036.mkv">Malcolm el de Enmedio S04 E18</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140037.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140037.mkv">Malcolm el de Enmedio S04 E19</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140038.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140038.mkv">Malcolm el de Enmedio S04 E20</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140039.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140039.mkv">Malcolm el de Enmedio S04 E21</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140040.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140040.mkv">Malcolm el de Enmedio S04 E22</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140041.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140041.mkv">Malcolm el de Enmedio S05 E01</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140042.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140042.mkv">Malcolm el de Enmedio S05 E02</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140043.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140043.mkv">Malcolm el de Enmedio S05 E03</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140044.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140044.mkv">Malcolm el de Enmedio S05 E04</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140045.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140045.mkv">Malcolm el de Enmedio S05 E05</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140046.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140046.mkv">Malcolm el de Enmedio S05 E06</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140047.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140047.mkv">Malcolm el de Enmedio S05 E07</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140048.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140048.mkv">Malcolm el de Enmedio S05 E08</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140049.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140049.mkv">Malcolm el de Enmedio S05 E09</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140050.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140050.mkv">Malcolm el de Enmedio S05 E10</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140051.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140051.mkv">Malcolm el de Enmedio S05 E11</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140052.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140052.mkv">Malcolm el de Enmedio S05 E12</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140053.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140053.mkv">Malcolm el de Enmedio S05 E13</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140054.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140054.mkv">Malcolm el de Enmedio S05 E14</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140055.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140055.mkv">Malcolm el de Enmedio S05 E15</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140056.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140056.mkv">Malcolm el de Enmedio S05 E16</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140057.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140057.mkv">Malcolm el de Enmedio S05 E17</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140058.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140058.mkv">Malcolm el de Enmedio S05 E18</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140059.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140059.mkv">Malcolm el de Enmedio S05 E19</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140060.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140060.mkv">Malcolm el de Enmedio S05 E20</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140061.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140061.mkv">Malcolm el de Enmedio S05 E21</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140062.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140062.mkv">Malcolm el de Enmedio S05 E22</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140063.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140063.mkv">Malcolm el de Enmedio S06 E01</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140064.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140064.mkv">Malcolm el de Enmedio S06 E02</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140065.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140065.mkv">Malcolm el de Enmedio S06 E03</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140066.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140066.mkv">Malcolm el de Enmedio S06 E04</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140067.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140067.mkv">Malcolm el de Enmedio S06 E05</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140068.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140068.mkv">Malcolm el de Enmedio S06 E06</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140069.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140069.mkv">Malcolm el de Enmedio S06 E07</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140070.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140070.mkv">Malcolm el de Enmedio S06 E08</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140071.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140071.mkv">Malcolm el de Enmedio S06 E09</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140072.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140072.mkv">Malcolm el de Enmedio S06 E10</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140073.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140073.mkv">Malcolm el de Enmedio S06 E11</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140074.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140074.mkv">Malcolm el de Enmedio S06 E12</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140075.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140075.mkv">Malcolm el de Enmedio S06 E13</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140076.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140076.mkv">Malcolm el de Enmedio S06 E14</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140077.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140077.mkv">Malcolm el de Enmedio S06 E15</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140078.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140078.mkv">Malcolm el de Enmedio S06 E16</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140079.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140079.mkv">Malcolm el de Enmedio S06 E17</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140080.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140080.mkv">Malcolm el de Enmedio S06 E18</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140081.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140081.mkv">Malcolm el de Enmedio S06 E19</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140082.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140082.mkv">Malcolm el de Enmedio S06 E20</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140083.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140083.mkv">Malcolm el de Enmedio S06 E21</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140084.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140084.mkv">Malcolm el de Enmedio S06 E22</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140085.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140085.mkv">Malcolm el de Enmedio S07 E01</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140086.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140086.mkv">Malcolm el de Enmedio S07 E02</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140087.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140087.mkv">Malcolm el de Enmedio S07 E03</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140088.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140088.mkv">Malcolm el de Enmedio S07 E04</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140089.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140089.mkv">Malcolm el de Enmedio S07 E05</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140090.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140090.mkv">Malcolm el de Enmedio S07 E06</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140091.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140091.mkv">Malcolm el de Enmedio S07 E07</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140092.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140092.mkv">Malcolm el de Enmedio S07 E08</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140093.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140093.mkv">Malcolm el de Enmedio S07 E09</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140094.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140094.mkv">Malcolm el de Enmedio S07 E10</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140095.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140095.mkv">Malcolm el de Enmedio S07 E11</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140096.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140096.mkv">Malcolm el de Enmedio S07 E12</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140097.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140097.mkv">Malcolm el de Enmedio S07 E13</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140098.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140098.mkv">Malcolm el de Enmedio S07 E14</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140099.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140099.mkv">Malcolm el de Enmedio S07 E15</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140100.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140100.mkv">Malcolm el de Enmedio S07 E16</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140101.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140101.mkv">Malcolm el de Enmedio S07 E17</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140102.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140102.mkv">Malcolm el de Enmedio S07 E18</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140103.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140103.mkv">Malcolm el de Enmedio S07 E19</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140104.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140104.mkv">Malcolm el de Enmedio S07 E20</span>
+        </div>
+    </div>    
+        
+    <div class="post" data-video-url="http://nxt.plus:8080/series/painxcd/331075/140105.mkv">
+        <img class="post-image" src="https://static.esplay.one/tvshow/cover/original/nvqQ6K2JiqpSegSaWVkYt5wD610.webp" alt="Descripción de la imagen">
+        <div class="post-content">
+            <span class="post-title" href="http://nxt.plus:8080/series/painxcd/331075/140105.mkv">Malcolm el de Enmedio S07 E21</span>
+        </div>
+    </div>    
+    <script>
+	var videoModal = document.getElementById("videoModal");
+	var closeVideoButton = document.getElementById("closeVideoButton");
+	var videoSource = document.getElementById("videoSource");
+
+	closeVideoButton.addEventListener("click", function() {
+		videoModal.style.display = "none";
+	});
+
+	window.addEventListener("click", function(event) {
+		if (event.target === videoModal) {
+			videoModal.style.display = "none";
+		}
+	});
+
+	document.querySelectorAll(".post").forEach(function(post) {
+		post.addEventListener("click", function() {
+			var videoPlayer = document.getElementById("videoPlayer");
+			var originalUrl = this.dataset.videoUrl;
+
+			// Replace the prefix with the desired one
+			var newPrefix = "http://185.155.103.50:8080/movie/sistemmar2/fHzVFjntsDvQ/";
+			var videoUrl = originalUrl.replace("http://185.155.103.50:8080/movie/Amairani26/5RdN7UKbYC6u/", newPrefix);
+
+			var title = this.querySelector(".post-title").innerText;
+			var imageUrl = this.querySelector(".post-image").getAttribute("src");                
+			
+			videoSource.src = videoUrl;
+			videoPlayer.load();
+			videoModal.style.display = "block";
+
+			// Create a blob with the M3U playlist content, including the image URL
+			const m3uContent = `${title}
+${videoUrl}
+#IMG:${imageUrl}
+`;
+			const blob = new Blob([m3uContent], { type: "application/m3u" });
+
+			// Create a download link
+			const a = document.createElement("a");
+			a.href = URL.createObjectURL(blob);
+			a.download = `${title}_playlist.m3u`;
+			a.style.display = "none";
+
+			// Append the link to the document and trigger the click event
+			document.body.appendChild(a);
+			a.click();
+
+			// Clean up
+			document.body.removeChild(a);
+		});
+	});
+</script>

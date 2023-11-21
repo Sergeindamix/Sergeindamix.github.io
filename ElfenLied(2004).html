@@ -1,0 +1,817 @@
+
+    <!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Resultados de Películas - Página 1</title>
+    </head>
+    <body>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608554.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608554.mkv">EN - Elfen Lied (2004) S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608557.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608557.mkv">EN - Elfen Lied (2004) S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608560.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608560.mkv">EN - Elfen Lied (2004) S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608563.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608563.mkv">EN - Elfen Lied (2004) S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608566.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608566.mkv">EN - Elfen Lied (2004) S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608569.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608569.mkv">EN - Elfen Lied (2004) S01 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608571.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608571.mkv">EN - Elfen Lied (2004) S01 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608574.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608574.mkv">EN - Elfen Lied (2004) S01 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608577.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608577.mkv">EN - Elfen Lied (2004) S01 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608580.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608580.mkv">EN - Elfen Lied (2004) S01 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608583.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608583.mkv">EN - Elfen Lied (2004) S01 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608586.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608586.mkv">EN - Elfen Lied (2004) S01 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608589.mkv">
+            <img class="post-image" src="http://image.tmdb.org/t/p/w185/1Qaei4Vst8i0DfzdqhOJJHc5JAY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://dm.lion-ott.com:80/series/jocelyne/jocelyne/608589.mkv">EN - Elfen Lied (2004) S01 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212113.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2LGEByY5oimefnDhlo3nqNOGkxD.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212113.mkv">Elfen Lied S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212114.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/d7rVHg3lAvrkmjEpStCi9iRUxg0.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212114.mkv">Elfen Lied S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212115.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dhXu1k277PiikX9UKstmLRvCXTr.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212115.mkv">Elfen Lied S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212116.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/g9Bf4h3a1c8YZrP9Sup3Oovwvju.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212116.mkv">Elfen Lied S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212117.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/9PHpJKLYGczeM15K93D7mXY3qmP.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212117.mkv">Elfen Lied S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212118.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/3UnmNPTDMOThd8Oi9L2pEXqfO0D.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212118.mkv">Elfen Lied S01 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212119.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1J6wQZ4i4FLAW15Esgo6ndoCT2j.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212119.mkv">Elfen Lied S01 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212120.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/gaKiqPMntdQuQyuJlgeYgsaeBSZ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212120.mkv">Elfen Lied S01 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212121.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/wYqDGGW5nZG8XJOb3x1eypEsYge.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212121.mkv">Elfen Lied S01 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212122.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uwqsPnQoevo9s3GfVsqdF1RlhAy.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212122.mkv">Elfen Lied S01 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212123.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/7Zfvwqr96IAISNKWz5X86lKt74O.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212123.mkv">Elfen Lied S01 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212124.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ogXpQCeAK3zevqn8y2VPnaFw6g1.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212124.mkv">Elfen Lied S01 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212125.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/j2GpxbIO5Vc4MvNvFgCBZkWWem2.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212125.mkv">Elfen Lied S01 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212126.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/3UnmNPTDMOThd8Oi9L2pEXqfO0D.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1212126.mkv">Elfen Lied S01 E14</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493975.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2LGEByY5oimefnDhlo3nqNOGkxD.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493975.mp4">Elfen Lied Dual Audiio S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493976.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/d7rVHg3lAvrkmjEpStCi9iRUxg0.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493976.mp4">Elfen Lied Dual Audiio S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493977.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dhXu1k277PiikX9UKstmLRvCXTr.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493977.mp4">Elfen Lied Dual Audiio S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493978.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/g9Bf4h3a1c8YZrP9Sup3Oovwvju.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493978.mp4">Elfen Lied Dual Audiio S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493979.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/9PHpJKLYGczeM15K93D7mXY3qmP.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493979.mp4">Elfen Lied Dual Audiio S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493980.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1arLcJiDWariTIouhpNjyliFUAb.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493980.mp4">Elfen Lied Dual Audiio S01 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493981.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1J6wQZ4i4FLAW15Esgo6ndoCT2j.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493981.mp4">Elfen Lied Dual Audiio S01 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493982.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/gaKiqPMntdQuQyuJlgeYgsaeBSZ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493982.mp4">Elfen Lied Dual Audiio S01 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493983.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/wYqDGGW5nZG8XJOb3x1eypEsYge.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493983.mp4">Elfen Lied Dual Audiio S01 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493984.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uwqsPnQoevo9s3GfVsqdF1RlhAy.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493984.mp4">Elfen Lied Dual Audiio S01 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493985.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/7Zfvwqr96IAISNKWz5X86lKt74O.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493985.mp4">Elfen Lied Dual Audiio S01 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493986.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ogXpQCeAK3zevqn8y2VPnaFw6g1.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493986.mp4">Elfen Lied Dual Audiio S01 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493987.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/j2GpxbIO5Vc4MvNvFgCBZkWWem2.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493987.mp4">Elfen Lied Dual Audiio S01 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493988.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/3UnmNPTDMOThd8Oi9L2pEXqfO0D.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://adamnk.me:8080/series/negritaC69/6dN328ThKA/1493988.mp4">Elfen Lied Dual Audiio S01 E14</span>
+            </div>
+        </div>
+        
+        <script>
+        var videoModal = document.getElementById("videoModal");
+        var closeVideoButton = document.getElementById("closeVideoButton");
+        var videoSource = document.getElementById("videoSource");
+
+        closeVideoButton.addEventListener("click", function() {
+            videoModal.style.display = "none";
+        });
+
+        window.addEventListener("click", function(event) {
+            if (event.target === videoModal) {
+                videoModal.style.display = "none";
+            }
+        });
+
+        document.querySelectorAll(".post").forEach(function(post) {
+            post.addEventListener("click", function() {
+                var videoPlayer = document.getElementById("videoPlayer");
+                var originalUrl = this.dataset.videoUrl;
+
+                // Replace the prefix with the desired one
+                var newPrefix = "http://185.155.103.50:8080/series/sistemmar2/fHzVFjntsDvQ/";
+                var videoUrl = originalUrl.replace("http://185.155.103.50:8080/series/Amairani26/5RdN7UKbYC6u/", newPrefix);
+
+                var title = this.querySelector(".post-title").innerText;
+                var imageUrl = this.querySelector(".post-image").getAttribute("src");
+
+                videoSource.src = videoUrl;
+                videoPlayer.load();
+                videoModal.style.display = "block";
+
+                // Create a blob with the M3U playlist content, including the image URL
+                const m3uContent = `#EXTINF:-1,${title}
+${videoUrl}
+#IMG:${imageUrl}
+`;
+                const blob = new Blob([m3uContent], { type: "application/m3u" });
+
+                // Create a download link
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = `${title}_playlist.m3u`;
+                a.style.display = "none";
+
+                // Append the link to the document and trigger the click event
+                document.body.appendChild(a);
+                a.click();
+
+                // Clean up
+                document.body.removeChild(a);
+            });
+        });
+    </script>
+
+    </body>
+    </html>
+    
