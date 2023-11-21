@@ -1,0 +1,1761 @@
+
+    <!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Resultados de Películas - Página 3</title>
+    </head>
+    <body>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231758.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/90mVE4ClMT6Dq8mSRGhBqqjg2RQ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231758.mkv">El bombero atómico (1952)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231759.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/gvrFgYWXABlUd69HfPyNBImc279.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231759.mkv">El Extra (1962)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231760.avi">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uqv69ruL7APgVQizjD2bsQRRinO.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231760.avi">El Gendarme Desconocido (1941)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231761.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/oJM8PjiRh4jk83raqYhZbGCOA6d.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231761.mkv">El Mago (1949)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231762.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ibgXsi4lJZIsRJ2cap6HIUjEpvj.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231762.mkv">El ministro y yo (1977)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231763.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/tir2ztLk0UG2nEaEZ1qkV8FApqq.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231763.mkv">El Padrecito (1964)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231764.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/yvKNyUKczXCWA9dg5IoHfOIfj2e.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231764.mkv">El Patrullero 777 (1978)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231765.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uVYiY770FoAHduzyEIE8zNccEiv.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231765.mkv">El Portero (1950)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231766.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/AdjL0R0c1rS9tld2dx9l9ptr9wf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231766.mkv">El profe (1971)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231767.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/xV3GNFLdR4Gi1ZORfoEEn4psS7N.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231767.mkv">El señor fotógrafo (1953)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231768.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/stghzuBSuhiBbvAIxrm8D0G8m1z.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231768.mkv">El Siete Machos (1951)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231769.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/rD2Sw5wex8Zp1JCvWnEKscOKHbj.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231769.mkv">El Signo de la Muerte (1939)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231770.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/pvwIm6TwYAeruu02vgCk6V4FVxu.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231770.mkv">El Supersabio (1948)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231771.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8cnD0EioVun4kfcNg9VXiAJi2xT.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231771.mkv">Festival de la comedia (1939)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231772.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/hLjpIN5HkFeW4sZZqThLvhCuWwK.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231772.mkv">Los Tres Mosqueteros (1942)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231773.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/7kR6QVdmiHQ9eYOO4VOh1bUgZn1.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231773.mkv">Ni sangre ni arena (1941)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231774.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qSWIHSwohqeZTFartIE3qzzV4i0.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231774.mkv">Por mis pistolas (1968)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231775.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/7ERL6U2Vlxc8w5j7wwXgUFUHMrI.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231775.mkv">Su excelencia (1967)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231776.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zeKCrxzTUZQqy6DeUvLhDz9kAPx.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231776.mp4">Sube y baja (1959)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231777.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/iyaahRe35jJTmwN91PUsL92vhjo.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/231777.mp4">Un día con el Diablo (1945)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/79">
+            <img class="post-image" src="http://offshore.lat:25461/images/5e5eab8ff59dbc806a151fe6255b76fc.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/79">MX | Animal Planet</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/78">
+            <img class="post-image" src="http://offshore.lat:8001/images/ffdc5ff5eca339b0a34e23f54f12d28c.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/78">MX | Discovery Channel</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/82">
+            <img class="post-image" src="http://offshore.lat:36995/images/446a574323225259893aa2b6d5068ecd.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/82">MX | Discovery Civilization</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/81">
+            <img class="post-image" src="http://offshore.lat:36995/images/b444b69067ef45b80df37ba028005cd1.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/81">MX | Discovery Science</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/74">
+            <img class="post-image" src="http://offshore.lat:25461/images/c0230e2ffc6b3761d6c3997142e077ec.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/74">MX | Discovery Theater</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/77">
+            <img class="post-image" src="http://offshore.lat:36995/images/f8e35201aead9ad5be348ac80fbdef79.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/77">MX | Discovery World</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/73">
+            <img class="post-image" src="http://offshore.lat:36995/images/7643c19130ba9e572ea6ce7ef8fe17d2.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/73">MX | Food Network</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/83">
+            <img class="post-image" src="http://offshore.lat:25461/images/1d74566a8c9173df749a6d7ad3c65b7e.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/83">MX | Film & Arts</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/75">
+            <img class="post-image" src="http://offshore.lat:8001/images/559f0f212b642b3e2c79a3f0a89912e1.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/75">MX | History</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1510">
+            <img class="post-image" src="http://offshore.lat:25461/images/7dacd2ff1a0e6315afbaf2dd862df248.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1510">MX | History 2</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/72">
+            <img class="post-image" src="http://offshore.lat:8001/images/993f15f3e1adababfc1fcccaff065f2a.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/72">MX | Ingenio Tv</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/80">
+            <img class="post-image" src="http://offshore.lat:8001/images/c9ac57e5a641756778160612169d4005.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/80">MX | NatGeo Channel</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/257650">
+            <img class="post-image" src="http://offshore.lat:25461/images/8fc698c3c101411272af8e1958b4f8c9.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/257650">MX | HGTV HD</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/84">
+            <img class="post-image" src="http://offshore.lat:25461/images/9c9653c6f2eb626756e1ea87b2a5605d.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/84">MX | Star Channel</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/85">
+            <img class="post-image" src="http://offshore.lat:25461/images/7334fa93b1ca52c9c0d26ee59cada4b4.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/85">MX | Sony</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/301304">
+            <img class="post-image" src="http://offshore.lat:25461/images/833f11014757f0406b9f3675134e23a4.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/301304">MX | Sony Movies</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/86">
+            <img class="post-image" src="http://offshore.lat:25461/images/25dd8c163a2d0e198e5771be42bc6666.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/86">MX | Warner Channel</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/87">
+            <img class="post-image" src="http://offshore.lat:25461/images/a49c61ad9f5101d3e1f856df5d725d20.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/87">MX | Universal Channel</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/88">
+            <img class="post-image" src="http://offshore.lat:25461/images/a5562e4547a39fcaa6ed5235a1923b56.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/88">MX | FX</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/89">
+            <img class="post-image" src="http://offshore.lat:25461/images/3dbdd5967ecf1a9be6608d390828c015.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/89">MX | A&E</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/90">
+            <img class="post-image" src="http://offshore.lat:36995/images/767fe1317328ade9bfcf8936153c887a.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/90">MX | AXN</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/91">
+            <img class="post-image" src="http://offshore.lat:8001/images/1d0a3f9f3a24cdb2a9290cda99825362.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/91">MX | TruTV</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/92">
+            <img class="post-image" src="http://offshore.lat:8001/images/7a90ecf5662cee955ab246c2bb39b2a1.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/92">MX | Comedy Central</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/93">
+            <img class="post-image" src="http://offshore.lat:25461/images/ba098b8ef3a43cc97c8e1b101c3e6e69.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/93">MX | Unicable</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/94">
+            <img class="post-image" src="http://offshore.lat:8001/images/84cb10cc0f4bb12c7b154d5f72def149.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/94">MX | Hola TV</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/263901">
+            <img class="post-image" src="http://offshore.lat:25461/images/84cb10cc0f4bb12c7b154d5f72def149.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/263901">MX | HolaTV</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/95">
+            <img class="post-image" src="http://offshore.lat:8001/images/74ff223f801c0a58072788a79492df70.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/95">MX | Mas Chic</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/96">
+            <img class="post-image" src="http://offshore.lat:8001/images/a01945d4b5c867d4b22c1ee08a7bc492.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/96">MX | E! Entertainment</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/97">
+            <img class="post-image" src="http://offshore.lat:8001/images/e06fe0e616040ead9314a10dfd3bc1bb.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/97">MX | Syfy</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/98">
+            <img class="post-image" src="http://offshore.lat:36995/images/1cc80d4dd260f26cbf81c7aa57ffd9ba.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/98">MX | Discovery Investigation</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/99">
+            <img class="post-image" src="http://offshore.lat:8001/images/5bc3e41bd117481b0ebefd4eed56f33a.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/99">MX | El Gourmet</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/100">
+            <img class="post-image" src="http://offshore.lat:8001/images/8507b82aa13dcf28bc3311555868551e.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/100">MX | Glitz</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/102">
+            <img class="post-image" src="http://offshore.lat:8001/images/7a90ecf5662cee955ab246c2bb39b2a1.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/102">MX | Distrito Comedia</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/103">
+            <img class="post-image" src="http://offshore.lat:25461/images/11fc105dd70d87df8ba94f1fef6f79a4.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/103">MX | TBS</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/104">
+            <img class="post-image" src="http://offshore.lat:25461/images/7061f002454601bfbb0798233336175d.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/104">MX | Tlnovelas</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/263257">
+            <img class="post-image" src="http://offshore.lat:25461/images/7061f002454601bfbb0798233336175d.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/263257">MX | Tlnovelas *</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/105">
+            <img class="post-image" src="http://offshore.lat:25461/images/cb10af03728871ce74872412844dfd1e.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/105">MX | Discovery Home and Health</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/106">
+            <img class="post-image" src="http://offshore.lat:8001/images/bb3a83a2f09e3be97df666b727ce5f3a.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/106">MX | Lifetime</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/107">
+            <img class="post-image" src="http://offshore.lat:8001/images/724d7b6951745b9faf2972369b04427e.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/107">MX | TLC</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/109">
+            <img class="post-image" src="http://offshore.lat:8001/images/1f2e06860e7d7e541152d3a53df4b9e9.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/109">MX | Studio Universal</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/110">
+            <img class="post-image" src="http://offshore.lat:8001/images/55899fef2f0b2eba13eb1316b34b3694.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/110">MX | Europa Europa</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/111">
+            <img class="post-image" src="http://offshore.lat:8001/images/a2548b23c20a8ae2e57ffa20b818c410.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/111">MX | Discovery Turbo</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/112">
+            <img class="post-image" src="http://offshore.lat:8001/images/6610ae00d0ff30021862c55b95f6020f.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/112">MX | Paramount</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1468">
+            <img class="post-image" src="http://offshore.lat:8001/images/40e685603a0d89585dd0325da7ee6ef4.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1468">MX | Pasiones</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1503">
+            <img class="post-image" src="http://offshore.lat:25461/images/08f106f9fa65c99ae849844b7482d3fc.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1503">MX | I sat</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1504">
+            <img class="post-image" src="http://offshore.lat:8001/images/c0755915de6d6ba42386958b8729fe8a.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1504">MX | Telemundo Internacional</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1507">
+            <img class="post-image" src="http://offshore.lat:25461/images/dea551b17a18866f9039a6082d911344.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1507">MX | Telemundo New York</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1509">
+            <img class="post-image" src="http://offshore.lat:8001/images/b8fbd742d437388e092bd0acb45d16d4.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1509">MX | TCM</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1505">
+            <img class="post-image" src="http://offshore.lat:8001/images/7a90ecf5662cee955ab246c2bb39b2a1.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1505">MX | Distrito Comedia HD</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/10542">
+            <img class="post-image" src="http://offshore.lat:25461/images/524935ddbb5afba76f91df4a0f164eee.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/10542">IT | RAI</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/284458">
+            <img class="post-image" src="http://offshore.lat:25461/images/65132225f1a3f84e755eaa1350e79e9e.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/284458">MX | Wobi</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/291432">
+            <img class="post-image" src="https://play-lh.googleusercontent.com/gr5NLZ4T3dJdykoSJzHsVjNwv4aXgcDCm5hitLmG-eOmOhtlieUoTJufQrCRS-jhy74" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/291432">TUR | Canal D Drama</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/273757.mp4">
+            <img class="post-image" src="http://offshore.lat:36995/images/d54c1323c67de909d9a1740f2757de20.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/273757.mp4">Gunpowder Milkshake (Cóctel explosivo) (2021)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/274612.mkv">
+            <img class="post-image" src="http://offshore.lat:25461/images/bfae0fbc2537a72d794f5ff5f789f8f5.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/274612.mkv">Joker (2019)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275137.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/b8b743ad2b9624d8039f82a35c43876d.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275137.mkv">American Pie (1999)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275138.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/06266a938eca05969feb3a79498a1a3b.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275138.mkv">American Pie 2 (2001)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275139.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/aa319dec3311ea8ab51261ee8ab4ec8c.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275139.mkv">American Pie ¡Menuda boda! (2003)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275140.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/63b0900d6569e40de0056d9995d8d102.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275140.mkv">American Pie presenta: Band Camp (2005)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275141.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/f91334e4ac18093a2a8dc5b4c7cf80f2.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275141.mkv">American Pie presenta: Una fiesta de pelotas (2006)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275142.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/0cc32a8b6824e6bbeb0d3bf3703ac943.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275142.mkv">American Pie presenta: Fraternidad Beta (2007)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275143.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/2d587bba1257d7f4e7992afc482d7466.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275143.mkv">American Pie presenta: El libro del amor (2009)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275144.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/735c980bdbecdafdaf9bde859f575b7e.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275144.mkv">American Pie: El reencuentro (2012)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275145.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/f9d4190a093e388aff19b36829e2b417.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/275145.mkv">Hoyo en uno (2009)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/276282.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/42b9d81203abb547dbe4a337c9f6fe5a.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/276282.mkv">Cruella  (2021)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/276299.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/bc577f1c1a991ad8060ad37164a92d58.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/276299.mkv">Independence Day (1996)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279148.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/b6c1bb3442dbafc89e198d7920a5f4f5.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279148.mkv">El Colombian Dream (2005)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279149.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/a1e6642777c993fb1661b1c28cb2a6a3.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279149.mkv">El paseo 2 (2012)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279152.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/6d1899006c0452dade0a2effef230646.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279152.mkv">El Paseo 5: El Paseo de Oficina (2018)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279158.avi">
+            <img class="post-image" src="http://offshore.lat:36995/images/fb8a082f8b1c76b3cf72f4135025a41d.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279158.avi">García (2010)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279161.mkv">
+            <img class="post-image" src="http://offshore.lat:36995/images/0c311044cdce5cc348bdb66151b0ed2b.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279161.mkv">La historia del baúl rosado (2005)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279203.mp4">
+            <img class="post-image" src="http://offshore.lat:36995/images/217c3a1708e16be9870e5405dd412926.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/movie/eusmiarea@/12q12@@wpo/279203.mp4">Ben-Hur  (1959)</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40831">
+            <img class="post-image" src="http://offshore.lat:8001/images/8ed22db47337540c3d1283c57a9b5466.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40831">NEWS | NTN24</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40832">
+            <img class="post-image" src="http://offshore.lat:36995/images/b8770dbaa7579b25fc663cdf1a5cf433.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40832">NEWS | CNN</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40835">
+            <img class="post-image" src="http://offshore.lat:25461/images/31b62f37e4fb426aa7abc82dce86f0d5.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40835">NEWS | 24/7 Noticias Argentina</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40836">
+            <img class="post-image" src="https://store-images.s-microsoft.com/image/apps.43920.14040225113011303.cbd708c5-2464-4539-a253-6c914322b21f.918a7025-e426-4b2e-930e-412c69d9a8bd?mode=scale&q=90&h=270&w=270&background=%23ffffff" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40836">NEWS | ABC News</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40837">
+            <img class="post-image" src="http://offshore.lat:8001/images/b80e4fd68eab9b347bdf563967a6c02d.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40837">NEWS | Cable Noticias</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40838">
+            <img class="post-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_NBNhn9wavYNpIf4uXGvD4XPztzuyLRCJDwhPiiYm_sZ6hAYb" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/40838">NEWS | DW</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/253">
+            <img class="post-image" src="http://offshore.lat:25461/images/b8770dbaa7579b25fc663cdf1a5cf433.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/253">MX | CNN En español</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1506">
+            <img class="post-image" src="http://offshore.lat:25461/images/30a07a89c0993c71176693709627e4c6.png" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/1506">MX | CNN Internacional</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/244515">
+            <img class="post-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQpxa7jvHc01Vy2os4y5kq8FNhA0n8WfxNQag&usqp=CAU" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://offshore.lat:25461/eusmiarea@/12q12@@wpo/244515">UK | BBC Entertaiment</span>
+            </div>
+        </div>
+        
+        <script>
+        var videoModal = document.getElementById("videoModal");
+        var closeVideoButton = document.getElementById("closeVideoButton");
+        var videoSource = document.getElementById("videoSource");
+
+        closeVideoButton.addEventListener("click", function() {
+            videoModal.style.display = "none";
+        });
+
+        window.addEventListener("click", function(event) {
+            if (event.target === videoModal) {
+                videoModal.style.display = "none";
+            }
+        });
+
+        document.querySelectorAll(".post").forEach(function(post) {
+            post.addEventListener("click", function() {
+                var videoPlayer = document.getElementById("videoPlayer");
+                var originalUrl = this.dataset.videoUrl;
+
+                // Replace the prefix with the desired one
+                var newPrefix = "http://185.155.103.50:8080/series/sistemmar2/fHzVFjntsDvQ/";
+                var videoUrl = originalUrl.replace("http://185.155.103.50:8080/series/Amairani26/5RdN7UKbYC6u/", newPrefix);
+
+                var title = this.querySelector(".post-title").innerText;
+                var imageUrl = this.querySelector(".post-image").getAttribute("src");
+
+                videoSource.src = videoUrl;
+                videoPlayer.load();
+                videoModal.style.display = "block";
+
+                // Create a blob with the M3U playlist content, including the image URL
+                const m3uContent = `#EXTINF:-1,${title}
+${videoUrl}
+#IMG:${imageUrl}
+`;
+                const blob = new Blob([m3uContent], { type: "application/m3u" });
+
+                // Create a download link
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = `${title}_playlist.m3u`;
+                a.style.display = "none";
+
+                // Append the link to the document and trigger the click event
+                document.body.appendChild(a);
+                a.click();
+
+                // Clean up
+                document.body.removeChild(a);
+            });
+        });
+    </script>
+
+    </body>
+    </html>
+    
