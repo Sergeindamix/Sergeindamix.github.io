@@ -1,0 +1,941 @@
+
+    <!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Resultados de Películas - Página 1</title>
+    </head>
+    <body>
+      
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/176487.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/xDaSyYTkevwjcS4EQeRK1ztW0dL.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/176487.mkv">Hambre (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/250130.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/wOEF7NmEwcwTdbV8nsCmPk5u8VT.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/250130.mkv">Hermana muerte (2023) ESP</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/83485.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8K0EpAAVI29ge1jJPys6SuqMq7R.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/83485.mkv">Su casa (2020) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/15549.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/3PuSDZTLK38t2q0Gs4nEQ4c8ote.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/15549.mkv">Tigre Blanco (2021) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/54534.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qv30R1uDDKTLWDlNc3qi6MRdRf0.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/54534.mkv">El hoyo (2019) ESP</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/82914.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/sNilmIAwBbH0DmBOWBS6gWvNDex.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/82914.mkv">El irlandes (2019) SUB</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/126701.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/sNsmI4vQ1A6VG52dquTFx8oNTWk.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/126701.mkv">Sin novedad en el frente (2022) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/131149.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/npBvD1rRQHYGrxuwr2OrzXLso1w.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/131149.mkv">The Wonder (2022) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/163457.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/aF0CmJl2rP7MvKxgNzKdKOk03rJ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/163457.mkv">Me llamo Chihiro (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/257527.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/5oeLyShu9JK7C8U57xF00zuTovf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/257527.mkv">La maravillosa historia de Henry Sugar (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/241195.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/h8dQwCNtEEfeYpDA0LJDBiJ8M2e.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/241195.mkv">Reptiles (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/151602.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/rVpYUUPVBpGuuJnXjNfM5EKPD1c.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/151602.mkv">Ruido (2022) LAT</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/161013.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/pRNSIJyGM7cR8xAHee0obKXpzIl.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/161013.mkv">Re/Member (2022) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/192012.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/4eNtOleY02KXbYYyljwEE0YhdYb.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/192012.mkv">Mixed by Erry (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/243920.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uSwqy8mu4tqbDUjgYDbkc3NWBro.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/243920.mkv">Juego limpio (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/173188.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1MQoYvEIvsCZMpTuBlWfbaliJes.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/173188.mkv">Boksoon debe morir (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/254587.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/jcQBZhO1ZYKyQTELLS3UI41uytt.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/254587.mkv">El asesino (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/191706.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/4rS1rcaeIJd2zdTn2G8RMfTNeiV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/191706.mkv">Reality (2023) SUB</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/219110.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/rS8fjd6dYcf64v3ZhAE6fKrxoaF.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/219110.mkv">Hablame (2022) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/248450.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/t2EEPT4UBwppzi5LbjvkUemIJII.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/248450.mkv">La desconocida (2023) ESP</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/158535.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/z9Tk2tkXL2zmbAuYr8staL0SZWO.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/158535.mkv">Decision to Leave (2022) SUB</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/176738.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/sGSzha9K65abyvzBwXXnSV2sHWV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/176738.mkv">La Niña de la Comunion (2022) ESP</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/195790.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2SgIad0VaPFYQJu8gZ6BfmuZjlU.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/195790.mkv">El hijo (2022) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/169049.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ic1LmfuGibGJMYjdz1Pobxeouon.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/169049.mkv">Ellas hablan (2022) SUB</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/160960.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/7Y7l9FDxdknampTfpp6qjVWm54O.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/160960.mkv">El imperio de la luz (2022) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/168529.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/i30ZaOHjIllEeQrL67IqKs8kk4A.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/168529.mkv">Oso vicioso (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/258055.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/s7LIE7oNZ6WU4ajf1FaXWyMYdpX.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/258055.mkv">Asteroid City (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/185614.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ioMtng0qHbwNjR1fuxYZsRf1kjm.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/185614.mkv">Posesion infernal El despertar (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/162942.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/4Zna9CvyzaAgejsErmyXmHC64Dd.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/162942.mkv">Llaman a la puerta (2023) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/194910.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/4cpko9t8rapKC6OS9rIzkfavl6l.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/194910.mp4">Beau tiene miedo (2023) SUB</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/169046.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ucuuM51Kw3IoTXRUQLnKAz9jhip.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/169046.mkv">Almas en pena de Inisherin (2022) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/167085.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/oLZULW6Kn5imFM427tWfqIPMLmP.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/167085.mkv">Babylon (2022) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/169048.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/fbuRh2bTCqcuamIQuldqLBTwRjg.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/169048.mkv">El triangulo de la tristeza (2022) DUAL</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/243861.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/vz0S6pzVDOMmdp5zgYVLDVxLudG.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/movie/roku-2736/cu8asWhG4d/243861.mkv">Ballerina (2023) DUAL</span>
+            </div>
+        </div>
+        
+      <script>
+          var videoModal = document.getElementById("videoModal");
+          var closeVideoButton = document.getElementById("closeVideoButton");
+          var videoSource = document.getElementById("videoSource");
+          var iframePlayer = document.getElementById("inlineFrameExample"); // Agregamos el elemento iframe
+
+          closeVideoButton.addEventListener("click", function() {
+              videoModal.style.display = "none";
+          });
+
+          window.addEventListener("click", function(event) {
+              if (event.target === videoModal) {
+                  videoModal.style.display = "none";
+              }
+          });
+
+          document.querySelectorAll(".post").forEach(function(post) {
+              post.addEventListener("click", function() {
+                  var videoPlayer = document.getElementById("videoPlayer");
+                  var originalUrl = this.dataset.videoUrl;
+                  var fileExtension = originalUrl.split('.').pop(); // Obtener la extensión del archivo
+
+                  // Verificar el tipo de archivo y actuar en consecuencia
+                  if (fileExtension.toLowerCase() === "mp4") {
+                      // Para archivos MP4
+                      videoSource.src = originalUrl; // No es necesario cambiar la URL para MP4
+                      videoPlayer.load();
+                      videoModal.style.display = "block";
+
+                      // Ocultar el iframe si está visible
+                      iframePlayer.style.display = "none";
+                  } else if (fileExtension.toLowerCase() === "mkv") {
+                      // Para archivos MKV
+                      iframePlayer.src = originalUrl; // Establecer la URL del archivo MKV en el iframe
+                      // Puedes ajustar el tamaño y otras propiedades según sea necesario
+                      iframePlayer.width = 640;
+                      iframePlayer.height = 480;
+
+                      // Mostrar el iframe
+                      iframePlayer.style.display = "block";
+
+                      // Ocultar el reproductor de video
+                      videoPlayer.style.display = "none";
+
+                      // Ocultar el modal de video
+                      videoModal.style.display = "none";
+                  }
+
+                  // Resto de tu código...
+              });
+          });
+      </script>
+
+  </body>
+    
