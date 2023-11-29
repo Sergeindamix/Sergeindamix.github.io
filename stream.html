@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Stream</title>
+</head>
+<body>
+
+    <h1>Actualizar Stream</h1>
+
+    <form id="streamForm">
+        <label for="streamUrl">URL del Stream:</label>
+        <input type="text" id="streamUrl" name="streamUrl" placeholder="Ingrese la nueva URL del stream">
+
+        <button type="button" onclick="actualizarStream()">Actualizar Stream</button>
+    </form>
+
+    <iframe title="Transmisión en vivo" width="1280" height="720" src="https://f8dc-189-217-203-131.ngrok-free.app" allowfullscreen></iframe>
+
+    <script>
+        function actualizarStream() {
+            var nuevaUrl = document.getElementById('streamUrl').value;
+            var iframe = document.querySelector('iframe');
+            iframe.src = nuevaUrl;
+        }
+    </script>
+
+</body>
+</html>

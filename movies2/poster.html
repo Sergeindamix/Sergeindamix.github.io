@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aggretsuko | JustWatch</title>  
+</head>
+<style>
+    /* Estilo del contenedor principal */
+    .jw-info-box {
+    max-width: 1900px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #2d2a2a;
+    border-radius: 10px; /* Redondea las esquinas del contenedor */
+    }
+
+    /* Estilo del contenedor flexible */
+    .jw-info-box__container {
+    display: flex; /* Crea un contenedor flexible */
+    flex-direction: row; /* Especifica una dirección de fila */
+    border-radius: 10px; /* Redondea las esquinas del contenedor */
+    /*overflow: hidden; /* Evita que el contenido sobresalga del contenedor */
+    }
+
+    /* Estilo del contenedor lateral */
+    .jw-info-box__container-sidebar {
+    flex-basis: 25%; /* Define el tamaño inicial del póster */
+    padding: 10px; /* Agrega un relleno al póster */
+    }
+
+    /* Estilo del título y el póster */
+    .title-sidebar {
+    text-align: center;
+    }
+
+    .title-poster {
+    position: relative;
+    }
+
+    .title-poster__badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #000000;
+    background-color: #ff0000;
+    }
+
+    .title-poster__image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px; /* Redondea las esquinas del póster */
+    }
+
+    .title-poster__provider {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #0000ff;
+    }
+
+    /* Estilo de la barra de acción rápida */
+    .quick-action-bar {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    }
+
+    .share-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+    .share-button svg {
+    width: 32px;
+    height: 32px;
+    fill: #4c5a67;
+    }
+
+    .share-button small {
+    font-size: 12px;
+    color: #4c5a67;
+    }
+
+    /* Estilo del contenedor de contenido */
+    .jw-info-box__container-content {
+    flex-basis: 75%; /* Define el tamaño inicial del contenido */
+    }
+
+    /* Estilo del bloque de título */
+    .title-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    }
+
+    .title-block h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #ffffff;
+    }
+
+    .text-muted {
+    color: white;
+}
+
+
+    .title-block h3 {
+    font-size: 24px;
+    font-weight: normal;
+    color: #8d8787;
+    }
+
+    .title-block__share-button {
+    margin-left: 10px;
+    }
+
+    /* Estilo del carrusel de temporadas */
+    .subheading {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #8d8787;
+    }
+
+    .horizontal-title-list {
+    margin-top: 10px;
+    overflow-x: auto;
+    position: relative; /* Establece una posición relativa para el contenedor del carrusel */
+    }
+
+    .horizontal-title-list__item {
+    width: 190px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: top;
+    }
+
+    .horizontal-title-list__item a {
+    text-decoration: none;
+    }
+
+    .horizontal-title-list__item .title-poster {
+    position: relative;
+    }
+
+    .horizontal-title-list__item .title-poster__badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #ff0000;
+    }
+
+    .horizontal-title-list__item .title-poster__image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px; /* Redondea las esquinas del póster */
+    }
+
+    .horizontal-title-list__item .title-poster__provider {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #4c5a67;
+    }
+
+    /* Cambios adicionales para el carrusel */
+    .hidden-horizontal-scrollbar {
+    overflow-x: hidden; /* Oculta el contenido que se sale de la pantalla */
+    scroll-snap-type: x mandatory; /* Habilita el desplazamiento suave y alineado */
+    }
+
+    .hidden-horizontal-scrollbar__items {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+
+    .horizontal-title-list__item {
+    scroll-snap-align: start; /* Alinea los elementos al inicio del contenedor */
+    }
+
+    /* Estilo de las flechas de desplazamiento */
+    .arrow-left, .arrow-right {    
+        position: absolute;
+        border: none;
+        background: rgba(0, 0, 0, 0.3);
+        font-size: 40px;
+        height: 100px; /* Ajusta el alto de las flechas */
+        top: calc(50% - 50px); /* Centra las flechas verticalmente */
+        line-height: 40px;
+        width: 100px; /* Ajusta el ancho de las flechas */
+        color: #fff;
+        cursor: pointer;
+        z-index: 500;
+        transition: 0.2 ease all;
+    }
+
+    .arrow-left:hover, .arrow-right:hover {  
+        background: rgba(0, 0, 0, 0.9);
+    }
+
+    .arrow-left svg {
+        left: 0; /* Coloca la flecha izquierda al inicio del contenedor */
+        transform: rotate(-90deg); /* Rota la flecha izquierda 90 grados hacia la izquierda */
+    }
+
+    .arrow-right svg {
+        right: 0; /* Coloca la flecha derecha al final del contenedor */
+        transform: rotate(90deg); /* Rota la flecha derecha 90 grados hacia la derecha */
+        max-width: calc(100% - 100px); /* Limita el ancho para evitar que salga del contenedor */
+    }
+
+    .arrow-right {
+        right: 0; /* Coloca la flecha derecha al final del contenedor */
+        transform: rotate(0deg); /* Rota la flecha derecha 90 grados hacia la derecha */
+    }
+
+
+    /* Oculta los SVG, excepto el de compartir y el de la flecha derecha */
+    svg:not(.share-button svg, .arrow-right svg, .arrow-left svg) {
+        display: none;
+    }
+
+    /* Oculta la flecha derecha cuando se alcanza el final del contenido */
+    .hidden-horizontal-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Colorea el contenedor en azul índigo */
+    .jw-info-box__container {
+    background-color: #060d17; /* Establece el color de fondo en azul índigo */
+    }
+
+</style>
+<body>
+
+<div class="jw-info-box">
+
+  <div class="jw-info-box__container">
+
+    <div class="jw-info-box__container-sidebar">
+
+      <div class="title-sidebar">
+
+        <div class="title-poster">
+          <picture>
+            <img data-sizes="auto" src="https://images.justwatch.com/poster/66582446/s592/aggretsuko" data-src="https://images.justwatch.com/poster/66582446/s592/aggretsuko" alt="Aggretsuko" loading="eager" class="picture-comp__img lazyautosizes ls-is-cached lazyloaded" data-v-0455c87e="" sizes="384px">
+          </picture>
+          <span class="title-poster__badge">TV</span>
+        </div>
+
+        <div class="quick-action-bar">
+          <!-- Botones de acción rápida -->  
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="jw-info-box__container-content">
+
+        <div class="title-block"><div><h1>Aggretsuko</h1><span class="text-muted"> (2018) </span></div><!----><!----><h3> Título original: アグレッシブ烈子 </h3>
+    </div>
+
+    <div class="title-block__share-button"><div class=""><div class="share-button"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="share-nodes" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-share-nodes fa-2x"><path fill="currentColor" d="M352 224c53 0 96-43 96-96s-43-96-96-96s-96 43-96 96c0 4 .2 8 .7 11.9l-94.1 47C145.4 170.2 121.9 160 96 160c-53 0-96 43-96 96s43 96 96 96c25.9 0 49.4-10.2 66.6-26.9l94.1 47c-.5 3.9-.7 7.8-.7 11.9c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-25.9 0-49.4 10.2-66.6 26.9l-94.1-47c.5-3.9 .7-7.8 .7-11.9s-.2-8-.7-11.9l94.1-47C302.6 213.8 326.1 224 352 224z" class=""></path></svg><small>Compartir</small></div></div></div>
+
+    
+      <div class="hidden-horizontal-scrollbar">
+        <div class="hidden-horizontal-scrollbar__items">
+          <!-- Tus elementos del carrusel aquí -->
+          <div data-v-c423c05a="" data-v-1649cbca=""><h2 class="subheading" data-v-c423c05a=""> 5 temporadas </h2><div data-v-43154258="" data-v-c423c05a=""><div class="horizontal-title-list" style="display:;" data-v-43154258=""><div itemamount="5" class="hidden-horizontal-scrollbar" style="min-height:236px;" data-v-43154258=""><div class="hidden-horizontal-scrollbar__items"><div class="horizontal-title-list__item" data-v-43154258=""><!----><a href="/mx/serie/aggretsuko/temporada-5" data-v-43154258="" class=""><div data-v-43154258=""><div class="title-poster" data-v-43154258=""><!----><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bookmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="ribbon svg-inline--fa fa-bookmark ribbon--left" data-v-28b24704=""><path fill="currentColor" d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" data-v-28b24704="" class=""></path></svg><!----><!----><picture class="picture-comp title-poster__image" data-v-0455c87e=""><source type="image/webp" data-srcset="https://images.justwatch.com/poster/307422652/s166/temporada-5.webp, https://images.justwatch.com/poster/307422652/s166/temporada-5.webp" data-v-0455c87e="" sizes="190px" srcset="https://images.justwatch.com/poster/307422652/s166/temporada-5.webp, https://images.justwatch.com/poster/307422652/s166/temporada-5.webp"><source type="image/jpeg" data-srcset="https://images.justwatch.com/poster/307422652/s166/temporada-5, https://images.justwatch.com/poster/307422652/s166/temporada-5" data-v-0455c87e="" sizes="190px" srcset="https://images.justwatch.com/poster/307422652/s166/temporada-5, https://images.justwatch.com/poster/307422652/s166/temporada-5"><img data-sizes="auto" src="https://images.justwatch.com/poster/307422652/s166/temporada-5" data-src="https://images.justwatch.com/poster/307422652/s166/temporada-5" alt="Aggretsuko" loading="eager" class="picture-comp__img lazyautosizes ls-is-cached lazyloaded" data-v-0455c87e="" sizes="190px"></picture><!----><!----><span class="title-poster__provider"><!----><!----></span><!----></div><div class="horizontal-title-list__item__caption" data-v-43154258=""> Temporada 5 </div></div></a><!----></div><div class="horizontal-title-list__item" data-v-43154258=""><!----><a href="/mx/serie/aggretsuko/temporada-4" data-v-43154258="" class=""><div data-v-43154258=""><div class="title-poster" data-v-43154258=""><!----><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bookmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="ribbon svg-inline--fa fa-bookmark ribbon--left" data-v-28b24704=""><path fill="currentColor" d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" data-v-28b24704="" class=""></path></svg><!----><!----><picture class="picture-comp title-poster__image" data-v-0455c87e=""><source type="image/webp" data-srcset="https://images.justwatch.com/poster/307422654/s166/temporada-4.webp, https://images.justwatch.com/poster/307422654/s166/temporada-4.webp" data-v-0455c87e="" sizes="190px" srcset="https://images.justwatch.com/poster/307422654/s166/temporada-4.webp, https://images.justwatch.com/poster/307422654/s166/temporada-4.webp"><source type="image/jpeg" data-srcset="https://images.justwatch.com/poster/307422654/s166/temporada-4, https://images.justwatch.com/poster/307422654/s166/temporada-4" data-v-0455c87e="" sizes="190px" srcset="https://images.justwatch.com/poster/307422654/s166/temporada-4, https://images.justwatch.com/poster/307422654/s166/temporada-4"><img data-sizes="auto" src="https://images.justwatch.com/poster/307422654/s166/temporada-4" data-src="https://images.justwatch.com/poster/307422654/s166/temporada-4" alt="Aggretsuko" loading="eager" class="picture-comp__img lazyautosizes ls-is-cached lazyloaded" data-v-0455c87e="" sizes="190px"></picture><!----><!----><span class="title-poster__provider"><!----><!----></span><!----></div><div class="horizontal-title-list__item__caption" data-v-43154258=""> Temporada 4 </div></div></a><!----></div><div class="horizontal-title-list__item" data-v-43154258=""><!----><a href="/mx/serie/aggretsuko/temporada-3" data-v-43154258="" class=""><div data-v-43154258=""><div class="title-poster" data-v-43154258=""><!----><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bookmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="ribbon svg-inline--fa fa-bookmark ribbon--left" data-v-28b24704=""><path fill="currentColor" d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" data-v-28b24704="" class=""></path></svg><!----><!----><picture class="picture-comp title-poster__image" data-v-0455c87e=""><source type="image/webp" data-srcset="https://images.justwatch.com/poster/307422649/s166/temporada-3.webp, https://images.justwatch.com/poster/307422649/s166/temporada-3.webp" data-v-0455c87e="" sizes="190px" srcset="https://images.justwatch.com/poster/307422649/s166/temporada-3.webp, https://images.justwatch.com/poster/307422649/s166/temporada-3.webp"><source type="image/jpeg" data-srcset="https://images.justwatch.com/poster/307422649/s166/temporada-3, https://images.justwatch.com/poster/307422649/s166/temporada-3" data-v-0455c87e="" sizes="190px" srcset="https://images.justwatch.com/poster/307422649/s166/temporada-3, https://images.justwatch.com/poster/307422649/s166/temporada-3"><img data-sizes="auto" src="https://images.justwatch.com/poster/307422649/s166/temporada-3" data-src="https://images.justwatch.com/poster/307422649/s166/temporada-3" alt="Aggretsuko" loading="eager" class="picture-comp__img lazyautosizes ls-is-cached lazyloaded" data-v-0455c87e="" sizes="190px"></picture><!----><!----><span class="title-poster__provider"><!----><!----></span><!----></div><div class="horizontal-title-list__item__caption" data-v-43154258=""> Temporada 3 </div></div></a><!----></div><div class="horizontal-title-list__item" data-v-43154258=""><!----><a href="/mx/serie/aggretsuko/temporada-2" data-v-43154258="" class=""><div data-v-43154258=""><div class="title-poster" data-v-43154258=""><!----><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bookmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="ribbon svg-inline--fa fa-bookmark ribbon--left" data-v-28b24704=""><path fill="currentColor" d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" data-v-28b24704="" class=""></path></svg><!----><!----><picture class="picture-comp title-poster__image" data-v-0455c87e=""><source type="image/webp" data-srcset="https://images.justwatch.com/poster/307422651/s166/temporada-2.webp, https://images.justwatch.com/poster/307422651/s166/temporada-2.webp" data-v-0455c87e="" sizes="190px" srcset="https://images.justwatch.com/poster/307422651/s166/temporada-2.webp, https://images.justwatch.com/poster/307422651/s166/temporada-2.webp"><source type="image/jpeg" data-srcset="https://images.justwatch.com/poster/307422651/s166/temporada-2, https://images.justwatch.com/poster/307422651/s166/temporada-2" data-v-0455c87e="" sizes="190px" srcset="https://images.justwatch.com/poster/307422651/s166/temporada-2, https://images.justwatch.com/poster/307422651/s166/temporada-2"><img data-sizes="auto" src="https://images.justwatch.com/poster/307422651/s166/temporada-2" data-src="https://images.justwatch.com/poster/307422651/s166/temporada-2" alt="Aggretsuko" loading="eager" class="picture-comp__img lazyautosizes ls-is-cached lazyloaded" data-v-0455c87e="" sizes="190px"></picture><!----><!----><span class="title-poster__provider"><!----><!----></span><!----></div><div class="horizontal-title-list__item__caption" data-v-43154258=""> Temporada 2 </div></div></a><!----></div><div class="horizontal-title-list__item" data-v-43154258=""><!----><a href="/mx/serie/aggretsuko/temporada-1" data-v-43154258="" class=""><div data-v-43154258=""><div class="title-poster" data-v-43154258=""><!----><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bookmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="ribbon svg-inline--fa fa-bookmark ribbon--left" data-v-28b24704=""><path fill="currentColor" d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" data-v-28b24704="" class=""></path></svg><!----><!----><picture class="picture-comp title-poster__image" data-v-0455c87e=""><source type="image/webp" data-srcset="https://images.justwatch.com/poster/307422653/s166/temporada-1.webp, https://images.justwatch.com/poster/307422653/s166/temporada-1.webp" data-v-0455c87e="" sizes="190px" srcset="https://images.justwatch.com/poster/307422653/s166/temporada-1.webp, https://images.justwatch.com/poster/307422653/s166/temporada-1.webp"><source type="image/jpeg" data-srcset="https://images.justwatch.com/poster/307422653/s166/temporada-1, https://images.justwatch.com/poster/307422653/s166/temporada-1" data-v-0455c87e="" sizes="190px" srcset="https://images.justwatch.com/poster/307422653/s166/temporada-1, https://images.justwatch.com/poster/307422653/s166/temporada-1"><img data-sizes="auto" src="https://images.justwatch.com/poster/307422653/s166/temporada-1" data-src="https://images.justwatch.com/poster/307422653/s166/temporada-1" alt="Aggretsuko" loading="eager" class="picture-comp__img lazyautosizes ls-is-cached lazyloaded" data-v-0455c87e="" sizes="190px"></picture><!----><!----><span class="title-poster__provider"><!----><!----></span><!----></div><div class="horizontal-title-list__item__caption" data-v-43154258=""> Temporada 1 </div></div></a><!----></div></div><!----><span class="hidden-horizontal-scrollbar__nav hidden-horizontal-scrollbar__nav--end"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-chevron-right"><path fill="currentColor" d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" class=""></path></svg></span></div></div></div></div>
+
+        </div>
+      
+        <!-- Botones de flecha -->
+        <button role="button" id="arrow-left" class="arrow-left">
+          <i class="fas fa-angle-left"></i>
+        </button>
+      
+        <button role="button" id="arrow-right" class="arrow-right">
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+      
+      
+    <iframe name="page-frame" src="aggretsuko.html" width="100%" height="600px"></iframe>
+    
+      
+      <div class="buybox">
+        <!-- Opciones para ver la serie -->
+      </div>
+
+      <div class="streaming-chart">
+        <!-- Rankings de streaming -->  
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+
+<script>
+    const scrollContainer = document.querySelector('.hidden-horizontal-scrollbar');
+    let scrollItemIndex = 0;
+
+    document.getElementById('arrow-left').onclick = function() {
+        console.log('Botón izquierdo clicado');
+        scrollContainer.scrollLeft -= 300;
+        scrollItemIndex = (scrollItemIndex - 1 + 5) % 5;
+        updateSelectedItem();
+    };
+
+    document.getElementById('arrow-right').onclick = function() {
+        console.log('Botón derecho clicado');
+        scrollContainer.scrollLeft += 300;
+        scrollItemIndex = (scrollItemIndex + 1) % 5;
+        updateSelectedItem();
+    };
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowLeft') {
+            console.log('Flecha izquierda presionada');
+            scrollContainer.scrollLeft -= 300;
+            scrollItemIndex = (scrollItemIndex - 1 + 5) % 5;
+            updateSelectedItem();
+        } else if (event.key === 'ArrowRight') {
+            console.log('Flecha derecha presionada');
+            scrollContainer.scrollLeft += 300;
+            scrollItemIndex = (scrollItemIndex + 1) % 5;
+            updateSelectedItem();
+        }
+    });
+
+    function updateSelectedItem() {
+        // Resalta el elemento seleccionado cambiando su estilo
+        const items = document.querySelectorAll('.horizontal-title-list__item');
+        items.forEach((item, index) => {
+            if (index === scrollItemIndex) {
+                item.style.border = '2px solid red'; // Puedes ajustar este estilo según tu preferencia
+            } else {
+                item.style.border = 'none';
+            }
+        });
+    }
+
+</script>
+<script>
+    // Obtén todos los elementos con la clase 'post-title'
+const postTitles = document.querySelectorAll('.post-title');
+
+// Itera sobre cada elemento y asigna un manejador de clic
+postTitles.forEach((title, index) => {
+    title.addEventListener('click', function(event) {
+        // Previene el comportamiento predeterminado del enlace
+        event.preventDefault();
+
+        // Obtiene el atributo 'data-video-url' del elemento padre 'post'
+        const videoUrl = title.closest('.post').dataset.videoUrl;
+
+        // Muestra el modal con el video correspondiente
+        openVideoModal(videoUrl);
+    });
+});
+
+// Elimina todos los enlaces existentes
+document.querySelectorAll('.horizontal-title-list__item a').forEach(link => {
+    link.href = '';
+});
+
+// Obtén todos los elementos de tipo 'post' que contienen el nombre 'post-title'
+const postElements = document.querySelectorAll('.post .post-title');
+
+// Itera sobre cada elemento y asigna un manejador de clic
+postElements.forEach((postTitle, index) => {
+    // Obtiene el número de temporada desde el título
+    const seasonNumber = postTitle.textContent.match(/S(\d+)/)[1];
+
+    // Construye la URL del elemento correspondiente en la página
+    const elementId = `temporada-${seasonNumber}`;
+    const elementUrl = `#${elementId}`;
+
+    // Actualiza el atributo 'href' del enlace de temporada
+    const seasonLink = postTitle.closest('.post').querySelector('a');
+    seasonLink.href = elementUrl;
+
+    // Vincula el enlace con el elemento correspondiente en el carrusel
+    const carouselElement = document.getElementById(elementId);
+    seasonLink.addEventListener('click', () => {
+        carouselElement.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+// ... (código existente)
+
+
+// Función para abrir el modal con el video
+function openVideoModal(videoUrl) {
+    // Obtiene los elementos necesarios del modal
+    const videoModal = document.getElementById('videoModal');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const videoSource = document.getElementById('videoSource');
+
+    // Establece la fuente del video
+    videoSource.src = videoUrl;
+
+    // Recarga el reproductor de video
+    videoPlayer.load();
+
+    // Muestra el modal
+    videoModal.style.display = 'block';
+
+    // Manejador de clic para cerrar el modal
+    const closeVideoButton = document.getElementById('closeVideoButton');
+    closeVideoButton.addEventListener('click', function() {
+        videoModal.style.display = 'none';
+        // Pausa el video al cerrar el modal
+        videoPlayer.pause();
+    });
+}
+
+
+</script>
+</body>
+</html>
