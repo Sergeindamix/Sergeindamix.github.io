@@ -1,0 +1,2459 @@
+
+    <!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Resultados de Películas - Página 206</title>
+    </head>
+    <body>
+      
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53840.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lNsHcDYBlQJDfQo2mc2sHqVXw51.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53840.mp4">Sabrina, la bruja adolescente S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53841.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/y5K7nPrF6YZCcdnhBMvgoa65pp7.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53841.mp4">Sabrina, la bruja adolescente S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53842.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/jer09OUErakIFNbva7AUe0c40x5.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53842.mp4">Sabrina, la bruja adolescente S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53843.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/94pM8bh2MRro8hApdBW4bGCVIvz.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53843.mp4">Sabrina, la bruja adolescente S01 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53844.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/g4BEmdYUzZb2qOyuef71XKyU5WQ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53844.mp4">Sabrina, la bruja adolescente S01 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53845.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lanhB0bvPmz6PAKiJOOfYJlxNhG.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53845.mp4">Sabrina, la bruja adolescente S01 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53846.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/cZuOBvd4qQHEASpqyrq24pL6a2Y.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53846.mp4">Sabrina, la bruja adolescente S01 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53847.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/nXtdq9mu0EX4qeqxn5S48TChyrY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53847.mp4">Sabrina, la bruja adolescente S01 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53848.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uGoUjEoyjI0YaJJdkScx9Fx5e1t.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53848.mp4">Sabrina, la bruja adolescente S01 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53849.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/rLVNlgkcbsigPnkCw3vAvXWJDoN.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53849.mp4">Sabrina, la bruja adolescente S01 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53850.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/e08r5nTrOmmzky0u7usT5reHmXk.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53850.mp4">Sabrina, la bruja adolescente S01 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53851.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/g7GAba27HNjOtzQuA3oyhwJS0oX.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53851.mp4">Sabrina, la bruja adolescente S01 E14</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53852.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/h1ovN5IBxmhcz6AFrGyFPRdAn6l.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53852.mp4">Sabrina, la bruja adolescente S01 E15</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53853.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8eJsFMU4OHHZvD7up5jzB1iFGma.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53853.mp4">Sabrina, la bruja adolescente S01 E16</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53854.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/hsBRV9XELHozdqiduGKkNYWGNTw.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53854.mp4">Sabrina, la bruja adolescente S01 E17</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53855.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/aMNwc5GhwRsGZF9HwrZzPozw2JV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53855.mp4">Sabrina, la bruja adolescente S01 E18</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53856.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dh0gHgwAZqI4kUM5eX6ovQGrIyD.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53856.mp4">Sabrina, la bruja adolescente S01 E19</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53857.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/xXuFyDAVWzKXP5YKGAYkIZFJs6k.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53857.mp4">Sabrina, la bruja adolescente S01 E20</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53858.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ib1P6rAMO5jQFZBkifMfXS9hbRO.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53858.mp4">Sabrina, la bruja adolescente S01 E21</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53859.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/jgOMYX5ItiHcbmYAGIVLstoJq4C.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53859.mp4">Sabrina, la bruja adolescente S01 E22</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53860.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/nvDV8YKQNCaV35pBIQeFo0QOm4Q.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53860.mp4">Sabrina, la bruja adolescente S01 E23</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53861.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/yQViWuWu0IgbPSoEsfJJXmzF5RK.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53861.mp4">Sabrina, la bruja adolescente S01 E24</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53862.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/mAPNGxRqYmPeLzO0qJYVpIckNZf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53862.mp4">Sabrina, la bruja adolescente S02 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53863.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1PqFRtjzB8ZnwGepdtLfwYQQiTS.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53863.mp4">Sabrina, la bruja adolescente S02 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53864.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/cD3cWoiznqZDCJIoeaHfMk2ECeH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53864.mp4">Sabrina, la bruja adolescente S02 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53865.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/hGryncozj9rof5erj3X5m7vMHvV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53865.mp4">Sabrina, la bruja adolescente S02 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53866.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lRi7nnSPPEqqHsCD9PFSl7BV1hV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53866.mp4">Sabrina, la bruja adolescente S02 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53867.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/sVDpvXis1IYDEokQBS2KSzrAplw.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53867.mp4">Sabrina, la bruja adolescente S02 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53868.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zUr2vOPZb7ZbaFp0qnzFKvMDPpw.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53868.mp4">Sabrina, la bruja adolescente S02 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53869.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/iBLMHkaQ8Ym4db7WbzEc2dDCtUh.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53869.mp4">Sabrina, la bruja adolescente S02 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53870.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/baSC6mtrvCAIculphGf9e2bFfuc.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53870.mp4">Sabrina, la bruja adolescente S02 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53871.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/vdJEVvfTufMFOHBWYu7nvbpIxVy.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53871.mp4">Sabrina, la bruja adolescente S02 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53872.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/9UhEzT8pDzoxZNw0Ev7Z5FJN38y.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53872.mp4">Sabrina, la bruja adolescente S02 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53873.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/aN2i5BGv3F44nNdhzDCEKTRekYX.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53873.mp4">Sabrina, la bruja adolescente S02 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53874.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/95N9N3sG1lMOlC2hgufuVNpt83v.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53874.mp4">Sabrina, la bruja adolescente S02 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53875.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zlmR9ADgLV6l7JiIHaeoQBQufLB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53875.mp4">Sabrina, la bruja adolescente S02 E14</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53876.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ovsNn06kXjPS9USXYs98u0UBaNW.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53876.mp4">Sabrina, la bruja adolescente S02 E15</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53877.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/u1zfoMGVTFSfRAjbxDRa1fUigY8.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53877.mp4">Sabrina, la bruja adolescente S02 E16</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53878.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/gZLIiSYEW4MzY3HSSmvZBt7nbAa.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53878.mp4">Sabrina, la bruja adolescente S02 E17</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53879.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/jSk1xCmChJwFYMBuZLMnMvzh8jI.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53879.mp4">Sabrina, la bruja adolescente S02 E18</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53880.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/y3l4r6qAHOsA2RjBE40mK0clY2W.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53880.mp4">Sabrina, la bruja adolescente S02 E19</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53881.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dhSplO8pCIll2wTrmCfeqzzMsap.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53881.mp4">Sabrina, la bruja adolescente S02 E20</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53882.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/xNW9MSzwGk7v4QnKhtLBNlB3y9F.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53882.mp4">Sabrina, la bruja adolescente S02 E21</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53883.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/kIUPsMm2C1rS6GfHUaT0IAMAaJP.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53883.mp4">Sabrina, la bruja adolescente S02 E22</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53884.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2FPEAPI2PmY2Uijgc7aAP8rvnoV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53884.mp4">Sabrina, la bruja adolescente S02 E23</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53885.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/9XeghmUAxK2hTQ57q1SSsbX3pCU.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53885.mp4">Sabrina, la bruja adolescente S02 E24</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53886.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/kTuCeLrKPCL7nweSQbAFAkfbppe.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53886.mp4">Sabrina, la bruja adolescente S02 E25</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53887.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/cekpbqRkPH7qTHK6eT6kzL6XjaO.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53887.mp4">Sabrina, la bruja adolescente S02 E26</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53888.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/fNY9uMRlCUQ62VwYrPcPEynfjYN.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53888.mp4">Sabrina, la bruja adolescente S03 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53889.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qUAkgcaNnsNu6xUg1w3ACZX9RCU.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53889.mp4">Sabrina, la bruja adolescente S03 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53890.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8EeCxYE1DZtOS8xfQKJN2Aq1Mq0.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53890.mp4">Sabrina, la bruja adolescente S03 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53891.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/hPN1qP2shYY1ayhttlpgdaqH1tp.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53891.mp4">Sabrina, la bruja adolescente S03 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53892.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/b746v2PvB7hbaOIndAZRjpInyQ3.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53892.mp4">Sabrina, la bruja adolescente S03 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53893.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/yMY5Ym2PGjGQQr4hp3J6iOmtmQC.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53893.mp4">Sabrina, la bruja adolescente S03 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53894.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uqR75tzU110ofx6uhSt7xDK9WdC.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53894.mp4">Sabrina, la bruja adolescente S03 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53895.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/tta995tjoI3tAdccVmbsgEPwJjg.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53895.mp4">Sabrina, la bruja adolescente S03 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53896.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/wSVY9yKAot8hvQkPhvghu7dmHAi.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53896.mp4">Sabrina, la bruja adolescente S03 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53897.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/cukDG6QZ3tShyafn0P5ZarAyiyi.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53897.mp4">Sabrina, la bruja adolescente S03 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53898.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/mbzK8X6aCR6CszGGuT1J2niFGn9.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53898.mp4">Sabrina, la bruja adolescente S03 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53899.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/jjBiFDcGuJJZDVMQKVBt7yANqgT.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53899.mp4">Sabrina, la bruja adolescente S03 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53900.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/vmiEaMLSrjyGVBDGm73CUyPUZvW.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53900.mp4">Sabrina, la bruja adolescente S03 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53901.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6qS705ooIJOw0B0lpkBdrZxLjAN.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53901.mp4">Sabrina, la bruja adolescente S03 E14</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53902.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qLSr86hLJVYJnjqH56wp6cB9ZQf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53902.mp4">Sabrina, la bruja adolescente S03 E15</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53903.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lCEuTeRuz9p4Bq0ID7d2cAdsiO5.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53903.mp4">Sabrina, la bruja adolescente S03 E16</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53904.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/vV5ORq5CLeno1VVGfkzm3OeiWpy.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53904.mp4">Sabrina, la bruja adolescente S03 E17</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53905.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/r2rqp2qm9iJzLMdeBozI5CDvTqr.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53905.mp4">Sabrina, la bruja adolescente S03 E18</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53906.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/fbFiTuWjgQAQkYS2TzYTidv1ULy.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53906.mp4">Sabrina, la bruja adolescente S03 E19</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53907.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6SWTSzzd7CubgiP94mrqfakFTOr.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53907.mp4">Sabrina, la bruja adolescente S03 E20</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53908.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ca0NPBPgqbLxqLjJxCWP0z1u76t.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53908.mp4">Sabrina, la bruja adolescente S03 E21</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53909.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/yC4XzuNNVCTioEWFRXl85vPhcAU.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53909.mp4">Sabrina, la bruja adolescente S03 E22</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53910.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/fctGnmABkE9xIDUyalBz7GMkM3a.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53910.mp4">Sabrina, la bruja adolescente S03 E23</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53911.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qCaNru1dyjFmPFvawxeAcAqAref.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53911.mp4">Sabrina, la bruja adolescente S03 E24</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53912.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1N1iVMSimOqaXpD9ogJPFDOn1Q2.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53912.mp4">Sabrina, la bruja adolescente S03 E25</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53913.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/48Z5PBUSnMskdFVWpLr9DRSHqiN.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53913.mp4">Sabrina, la bruja adolescente S04 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53914.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2kj1DTS4YflTQdzZ6ga2EgMGCcs.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53914.mp4">Sabrina, la bruja adolescente S04 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53915.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ylKA2xf1nbFKaDp45itZTpKKcGA.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53915.mp4">Sabrina, la bruja adolescente S04 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53916.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lg8i503xvUPoFkHbWYTN78lQsv5.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53916.mp4">Sabrina, la bruja adolescente S04 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53917.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2zeRRtrsZHSUilBQ39eQ2pJapOU.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53917.mp4">Sabrina, la bruja adolescente S04 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53918.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/h23ye0qP9SNvU6fiqR9Tl6AjGqE.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53918.mp4">Sabrina, la bruja adolescente S04 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53919.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qss0ClFNMNhInDgkIDW6pVgpmey.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53919.mp4">Sabrina, la bruja adolescente S04 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53920.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/fyMNpYGNUjHKUq1lh7pQSUxewui.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53920.mp4">Sabrina, la bruja adolescente S04 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53921.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/r7mZ144JcsSwSNUtKu3GJAUdD6r.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53921.mp4">Sabrina, la bruja adolescente S04 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53922.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/k1M9v3yvslJsRkz3YkgBtkCTXXB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53922.mp4">Sabrina, la bruja adolescente S04 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53923.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/tpKm5kNvSxuFoHfZx4EjNzuzq4A.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53923.mp4">Sabrina, la bruja adolescente S04 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53924.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/5tKqXGP4IAVjFPJNINEfLUyCuEX.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53924.mp4">Sabrina, la bruja adolescente S04 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53925.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/oLHvKJRN0OZ5fvhCRPOn81TxF2y.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53925.mp4">Sabrina, la bruja adolescente S04 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53926.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/s0YcEo3LrnvpAL2dkfRP5LrDKbn.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53926.mp4">Sabrina, la bruja adolescente S04 E14</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53927.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/y0bhfFe796wo1BBxdRWBdlcnhpz.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53927.mp4">Sabrina, la bruja adolescente S04 E15</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53928.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/sZ9D0RsFVva5pQs16IfKwo3a9h1.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53928.mp4">Sabrina, la bruja adolescente S04 E16</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53929.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2MiE0mr9mtN9P5Vu9CSkC4Y2bNY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53929.mp4">Sabrina, la bruja adolescente S04 E17</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53930.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zBhfEdos8rSyhn1qZPpt7qJKz81.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53930.mp4">Sabrina, la bruja adolescente S04 E18</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53931.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6jwzN2S68QzdJgFM3kzx536P9j5.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53931.mp4">Sabrina, la bruja adolescente S04 E19</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53932.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/9tLzcHgFLKIQ0PYTaoGYaxxEoVo.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53932.mp4">Sabrina, la bruja adolescente S04 E20</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53933.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zi9M98ojr2D5q34Esd7rgpEbPMT.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53933.mp4">Sabrina, la bruja adolescente S04 E21</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53934.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/mC2BCSHEbtDcUSRCPpLJSFihDeY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53934.mp4">Sabrina, la bruja adolescente S04 E22</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53935.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6JYqRr8qntOmPuVSpEUaDpbqT3.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53935.mp4">Sabrina, la bruja adolescente S05 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53936.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zIILrwQzjh8kRRe0RvrKk2gVBmn.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53936.mp4">Sabrina, la bruja adolescente S05 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53937.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/gnD7ovcC3cMtMYn9RkyNe245Upj.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53937.mp4">Sabrina, la bruja adolescente S05 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53938.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8VHTQKIBkBowugJ2bHp5dkaYDP.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53938.mp4">Sabrina, la bruja adolescente S05 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53939.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/bTmeY5i9mCMb4F497Ig4pozg3a.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/53939.mp4">Sabrina, la bruja adolescente S05 E05</span>
+            </div>
+        </div>
+        
+      <script>
+          var videoModal = document.getElementById("videoModal");
+          var closeVideoButton = document.getElementById("closeVideoButton");
+          var videoSource = document.getElementById("videoSource");
+          var iframePlayer = document.getElementById("inlineFrameExample"); // Agregamos el elemento iframe
+
+          closeVideoButton.addEventListener("click", function() {
+              videoModal.style.display = "none";
+          });
+
+          window.addEventListener("click", function(event) {
+              if (event.target === videoModal) {
+                  videoModal.style.display = "none";
+              }
+          });
+
+          document.querySelectorAll(".post").forEach(function(post) {
+              post.addEventListener("click", function() {
+                  var videoPlayer = document.getElementById("videoPlayer");
+                  var originalUrl = this.dataset.videoUrl;
+                  var fileExtension = originalUrl.split('.').pop(); // Obtener la extensión del archivo
+
+                  // Verificar el tipo de archivo y actuar en consecuencia
+                  if (fileExtension.toLowerCase() === "mp4") {
+                      // Para archivos MP4
+                      videoSource.src = originalUrl; // No es necesario cambiar la URL para MP4
+                      videoPlayer.load();
+                      videoModal.style.display = "block";
+
+                      // Ocultar el iframe si está visible
+                      iframePlayer.style.display = "none";
+                  } else if (fileExtension.toLowerCase() === "mkv") {
+                      // Para archivos MKV
+                      iframePlayer.src = originalUrl; // Establecer la URL del archivo MKV en el iframe
+                      // Puedes ajustar el tamaño y otras propiedades según sea necesario
+                      iframePlayer.width = 640;
+                      iframePlayer.height = 480;
+
+                      // Mostrar el iframe
+                      iframePlayer.style.display = "block";
+
+                      // Ocultar el reproductor de video
+                      videoPlayer.style.display = "none";
+
+                      // Ocultar el modal de video
+                      videoModal.style.display = "none";
+                  }
+
+                  // Resto de tu código...
+              });
+          });
+      </script>
+
+  </body>
+    

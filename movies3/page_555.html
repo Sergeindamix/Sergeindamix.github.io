@@ -1,0 +1,2459 @@
+
+    <!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Resultados de Películas - Página 555</title>
+    </head>
+    <body>
+      
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/189626.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/189626.mkv">Love is in the Air ¿Será que es amor? S01 E117</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/189627.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/189627.mkv">Love is in the Air ¿Será que es amor? S01 E118</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/189628.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/189628.mkv">Love is in the Air ¿Será que es amor? S01 E119</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/189629.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/189629.mkv">Love is in the Air ¿Será que es amor? S01 E120</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/189630.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/189630.mkv">Love is in the Air ¿Será que es amor? S01 E121</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190515.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/aJMTDkPIc3tFnSBNvms4BoBimtI.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190515.mkv">Love is in the Air ¿Será que es amor? S02 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190516.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8N5nRbyvI1k6Wgj3gRai8wEsiY1.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190516.mkv">Love is in the Air ¿Será que es amor? S02 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190517.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uDeYC4lTsMcS1JsyEoOQ0YXRFb8.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190517.mkv">Love is in the Air ¿Será que es amor? S02 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190518.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/4mH2Dq59ZWSNYfZGR9pfeMobI3y.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190518.mkv">Love is in the Air ¿Será que es amor? S02 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190519.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/fZQG286HAWkhCWbkzkv2kcWMvul.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190519.mkv">Love is in the Air ¿Será que es amor? S02 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190520.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6fnKwjhK2Miqs72zRjyOpTykRED.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190520.mkv">Love is in the Air ¿Será que es amor? S02 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190521.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2yi7UY7NwBQOkQDHJHMTQ0guwFb.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190521.mkv">Love is in the Air ¿Será que es amor? S02 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190522.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/cTZjJqNzYW18HfdvJm6MvXnJy8H.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190522.mkv">Love is in the Air ¿Será que es amor? S02 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190523.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qCxXxtHgraEPM8kOJnOuW2bEjbE.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190523.mkv">Love is in the Air ¿Será que es amor? S02 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190524.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/3GWwTl9rCP93wpeC7gCM2L2mWA2.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190524.mkv">Love is in the Air ¿Será que es amor? S02 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190525.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zI9cDrCUIpIgxAi20xuW0ChBKtA.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190525.mkv">Love is in the Air ¿Será que es amor? S02 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190526.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/i71XoZbfi8V2QwxITTKMkasQFFW.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190526.mkv">Love is in the Air ¿Será que es amor? S02 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190527.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/4nDJrZSileOHG2uVKynRnnUHBLi.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190527.mkv">Love is in the Air ¿Será que es amor? S02 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190528.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190528.mkv">Love is in the Air ¿Será que es amor? S02 E14</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190529.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190529.mkv">Love is in the Air ¿Será que es amor? S02 E15</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190530.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190530.mkv">Love is in the Air ¿Será que es amor? S02 E16</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190531.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190531.mkv">Love is in the Air ¿Será que es amor? S02 E17</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190532.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190532.mkv">Love is in the Air ¿Será que es amor? S02 E18</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190533.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190533.mkv">Love is in the Air ¿Será que es amor? S02 E19</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190534.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190534.mkv">Love is in the Air ¿Será que es amor? S02 E20</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190535.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190535.mkv">Love is in the Air ¿Será que es amor? S02 E21</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190536.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190536.mkv">Love is in the Air ¿Será que es amor? S02 E22</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190537.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190537.mkv">Love is in the Air ¿Será que es amor? S02 E23</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190538.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190538.mkv">Love is in the Air ¿Será que es amor? S02 E24</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190539.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190539.mkv">Love is in the Air ¿Será que es amor? S02 E25</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190540.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190540.mkv">Love is in the Air ¿Será que es amor? S02 E26</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190541.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190541.mkv">Love is in the Air ¿Será que es amor? S02 E27</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190542.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190542.mkv">Love is in the Air ¿Será que es amor? S02 E28</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190543.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190543.mkv">Love is in the Air ¿Será que es amor? S02 E29</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190544.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190544.mkv">Love is in the Air ¿Será que es amor? S02 E30</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190545.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190545.mkv">Love is in the Air ¿Será que es amor? S02 E31</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190546.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190546.mkv">Love is in the Air ¿Será que es amor? S02 E32</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190547.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190547.mkv">Love is in the Air ¿Será que es amor? S02 E33</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190548.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190548.mkv">Love is in the Air ¿Será que es amor? S02 E34</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190549.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190549.mkv">Love is in the Air ¿Será que es amor? S02 E35</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190550.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190550.mkv">Love is in the Air ¿Será que es amor? S02 E36</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190551.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190551.mkv">Love is in the Air ¿Será que es amor? S02 E37</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190552.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190552.mkv">Love is in the Air ¿Será que es amor? S02 E38</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190553.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190553.mkv">Love is in the Air ¿Será que es amor? S02 E39</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190554.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/JITbsrEbfjBQd8T5szoS04ZfWB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/190554.mkv">Love is in the Air ¿Será que es amor? S02 E40</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187305.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/4qGSJbbtVViCUvqKifp2Wim4xpq.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187305.mp4">V Invasión Extraterrestre S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187306.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/r8o2HV3Uwbp0X8ddDY5nfB4C0lp.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187306.mp4">V Invasión Extraterrestre S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187307.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187307.mp4">V Invasión Extraterrestre S02 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187308.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187308.mp4">V Invasión Extraterrestre S02 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187309.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187309.mp4">V Invasión Extraterrestre S02 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187310.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187310.mp4">V Invasión Extraterrestre S03 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187311.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187311.mp4">V Invasión Extraterrestre S03 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187312.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187312.mp4">V Invasión Extraterrestre S03 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187313.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187313.mp4">V Invasión Extraterrestre S03 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187314.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187314.mp4">V Invasión Extraterrestre S03 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187315.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187315.mp4">V Invasión Extraterrestre S03 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187316.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187316.mp4">V Invasión Extraterrestre S03 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187317.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187317.mp4">V Invasión Extraterrestre S03 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187318.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187318.mp4">V Invasión Extraterrestre S03 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187319.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187319.mp4">V Invasión Extraterrestre S03 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187320.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187320.mp4">V Invasión Extraterrestre S03 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187321.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187321.mp4">V Invasión Extraterrestre S03 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187322.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187322.mp4">V Invasión Extraterrestre S03 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187323.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187323.mp4">V Invasión Extraterrestre S03 E14</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187324.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187324.mp4">V Invasión Extraterrestre S03 E15</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187325.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187325.mp4">V Invasión Extraterrestre S03 E16</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187326.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187326.mp4">V Invasión Extraterrestre S03 E17</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187327.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187327.mp4">V Invasión Extraterrestre S03 E18</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187328.mp4">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1NQEDdxqzIK7yEwa95erDeRvoRH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187328.mp4">V Invasión Extraterrestre S03 E19</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187352.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uGxZuo0KFkUp0lL7J7D7aLDyol7.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187352.mkv">Waco S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187353.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/yc72dIWPL2hzuQAiKm0YmNDstML.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187353.mkv">Waco S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187354.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/413bjRgiZT07Kz3wuocHOUQjUdH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187354.mkv">Waco S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187355.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/cKFnZy2xeiMda8mWYV0jcKRhYAS.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187355.mkv">Waco S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187356.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/9cPQMWvGAZ0wVTOoio0e2HgMpHj.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187356.mkv">Waco S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187357.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/nuZJUIpf0jFipwqVOr2Nyk4WwWd.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187357.mkv">Waco S01 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187358.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/kiUJAeCrfHxttnDlgIyxy1weBft.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187358.mkv">Waco: The Aftermath S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187359.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zzxctFac6TXbpCTj52xfIH5SSPk.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187359.mkv">Waco: The Aftermath S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187360.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/wyXGJu9uiPZrBsE8hU5c8xCkard.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187360.mkv">Waco: The Aftermath S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187361.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/oSisvkbFmV1yiqjrGPYpN0A0mOC.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187361.mkv">Waco: The Aftermath S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187362.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ncbxkQcbj7QicS8kxo2W96plvDs.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187362.mkv">Waco: The Aftermath S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187537.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/bWf9X34rWHAlDLuMNk9U4tj4BLN.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187537.mkv">Heroes S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187538.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/7YYpUFrlrOd2Z5m9Z1eux9gVdZs.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187538.mkv">Heroes S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187539.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/vbSouJd7KxMPYzEYaoi4Vq3MlXX.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187539.mkv">Heroes S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187540.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/4yGMJsQT0vmBGszMZu0V9f6XkEp.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187540.mkv">Heroes S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187541.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zgQSkJJK4ofGsbXP6Rf9tlGQI5b.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187541.mkv">Heroes S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187542.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/5d5v9A78lpr15e9hBe0aJ1PbHUa.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187542.mkv">Heroes S01 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187543.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ucOwRnWt1aP9rm4gI54s7EFqW6J.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187543.mkv">Heroes S01 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187544.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/xFedu1j2GlUAQ0PffyVmZrmxGZh.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187544.mkv">Heroes S01 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187545.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lheK3OfHvnIfS98dq2KKdS5FrIE.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187545.mkv">Heroes S01 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187546.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ajv4b4fro64GZBeDQk5t9TWQOvT.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187546.mkv">Heroes S01 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187547.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ppMut2CmpPE6C1OTqdEhKZmBjq1.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187547.mkv">Heroes S01 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187548.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/am7C0xgATaYrwElFL13zAAa3uGe.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187548.mkv">Heroes S01 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187549.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dfUxKc1amxu6SCWWAuO96cQDfCZ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187549.mkv">Heroes S01 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187550.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uLjnm6A3BZiaicC8pZU5ov7fAUs.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187550.mkv">Heroes S01 E14</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187551.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/60HboE48ufaHmneXb71XhorfTyd.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187551.mkv">Heroes S01 E15</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187552.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/fpG0TjWSUwv3QmEvTArUPr5UaD6.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187552.mkv">Heroes S01 E16</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187553.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/aDZcXzF8x0gUVgWWnnoScSlOVfa.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187553.mkv">Heroes S01 E17</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187554.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/kvOKDkyLO67t18TSPsARTR8eYy3.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187554.mkv">Heroes S01 E18</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187555.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2wXxwOKmLGDRURPBgE2frC47zBR.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187555.mkv">Heroes S01 E19</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187556.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/bQ1e0l1moAbRttTOl6NA40qiDJC.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/187556.mkv">Heroes S01 E20</span>
+            </div>
+        </div>
+        
+      <script>
+          var videoModal = document.getElementById("videoModal");
+          var closeVideoButton = document.getElementById("closeVideoButton");
+          var videoSource = document.getElementById("videoSource");
+          var iframePlayer = document.getElementById("inlineFrameExample"); // Agregamos el elemento iframe
+
+          closeVideoButton.addEventListener("click", function() {
+              videoModal.style.display = "none";
+          });
+
+          window.addEventListener("click", function(event) {
+              if (event.target === videoModal) {
+                  videoModal.style.display = "none";
+              }
+          });
+
+          document.querySelectorAll(".post").forEach(function(post) {
+              post.addEventListener("click", function() {
+                  var videoPlayer = document.getElementById("videoPlayer");
+                  var originalUrl = this.dataset.videoUrl;
+                  var fileExtension = originalUrl.split('.').pop(); // Obtener la extensión del archivo
+
+                  // Verificar el tipo de archivo y actuar en consecuencia
+                  if (fileExtension.toLowerCase() === "mp4") {
+                      // Para archivos MP4
+                      videoSource.src = originalUrl; // No es necesario cambiar la URL para MP4
+                      videoPlayer.load();
+                      videoModal.style.display = "block";
+
+                      // Ocultar el iframe si está visible
+                      iframePlayer.style.display = "none";
+                  } else if (fileExtension.toLowerCase() === "mkv") {
+                      // Para archivos MKV
+                      iframePlayer.src = originalUrl; // Establecer la URL del archivo MKV en el iframe
+                      // Puedes ajustar el tamaño y otras propiedades según sea necesario
+                      iframePlayer.width = 640;
+                      iframePlayer.height = 480;
+
+                      // Mostrar el iframe
+                      iframePlayer.style.display = "block";
+
+                      // Ocultar el reproductor de video
+                      videoPlayer.style.display = "none";
+
+                      // Ocultar el modal de video
+                      videoModal.style.display = "none";
+                  }
+
+                  // Resto de tu código...
+              });
+          });
+      </script>
+
+  </body>
+    

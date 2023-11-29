@@ -1,0 +1,2459 @@
+
+    <!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Resultados de Películas - Página 360</title>
+    </head>
+    <body>
+      
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240541.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/bBYR1msej7haXZbRbWen6QpPcRA.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240541.mkv">Sandro de América S01 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240542.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/355ALfJPOEZilCRyCJ3Tr4y4nsa.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240542.mkv">Sandro de América S01 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240543.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/tpzCrqb66lxJh5mTAfRqf989R02.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240543.mkv">Sandro de América S01 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240544.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/mYrCWL1QgnhTqAcZlLUMftwro6y.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240544.mkv">Sandro de América S01 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240545.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/wytSC63ZPH74SMU1U0AA0qgu6fz.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240545.mkv">Sandro de América S01 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240546.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qFqpvIrsM0XQRnbDDwm8dZvRHlI.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240546.mkv">Sandro de América S01 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240781.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/aXF0vp5O8TqYGeKkO0Pf11aIeDo.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240781.mkv">Súbete a mi moto S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240782.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6v7jCJZxqnlDP8NnGZsDo66Sxie.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240782.mkv">Súbete a mi moto S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240783.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8EKIRYFhamJCu0DOaL0wMvXvDoH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240783.mkv">Súbete a mi moto S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240784.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dDYsXI7Lq7MaU6iUUod4lTXgGxs.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240784.mkv">Súbete a mi moto S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240785.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lSwqA2RvLlg40ZyEC17sYbfu93I.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240785.mkv">Súbete a mi moto S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240786.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/7qfloDgxhV2GtFdoHKeUYVkvLeG.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240786.mkv">Súbete a mi moto S01 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240787.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/b5GLXeOUaqLFy3AAeZG17FnEPGq.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240787.mkv">Súbete a mi moto S01 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240788.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/jbtV6uw1gjXQFhssnbBxCYGfL30.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240788.mkv">Súbete a mi moto S01 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240789.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/oWuvTkG1I4s6xRvi7iQWqctxOYY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240789.mkv">Súbete a mi moto S01 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240790.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qKC3QsumWTx2U4J3XlNUUBZwEim.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240790.mkv">Súbete a mi moto S01 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240791.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/bJ0FBZdTmyocoejVVvLnKTYAb8o.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240791.mkv">Súbete a mi moto S01 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240792.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/aF0nn96kNSLqsO2MxDiXIgmNxTj.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240792.mkv">Súbete a mi moto S01 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240793.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/yoXRab6A2AXKDv4EZj7eD7sOdUV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240793.mkv">Súbete a mi moto S01 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240794.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/12XEt8kKVJHD2HmW3dmhEnHMcTp.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240794.mkv">Súbete a mi moto S01 E14</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240795.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/aFaH9XRJ4E6w8i3qIBKvC6s2jV5.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240795.mkv">Súbete a mi moto S01 E15</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240820.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ziijoQYq0tpSA2t7li7nggvk0gY.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240820.mkv">Teheran S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240821.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/wv6Smma7sts6C4LKBHNaMyVX9Nf.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240821.mkv">Teheran S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240822.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/tNlEENZmKwakHq4PUPUbgZAUjfm.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240822.mkv">Teheran S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240823.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/hSKQKCZMGD7DsW5Ag3AXB1syMVn.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240823.mkv">Teheran S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240824.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/hI569JoZu5Mry19dsbzR8YbpcBz.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240824.mkv">Teheran S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240825.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qoSHd5bapr3Xr38kUCmeaiqYlBp.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240825.mkv">Teheran S01 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240826.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/15ygKBzC956vKldIoGs5touihXy.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240826.mkv">Teheran S01 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240827.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/rCSToK3lXrjtdm3D2f6wehrwKfL.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240827.mkv">Teheran S01 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240828.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/aQepUd37ixkRdfI9YsPs3gI8Rs0.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240828.mkv">Teheran S02 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240829.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/u7QLCOydX0PQazSRbIRplqbfMxj.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240829.mkv">Teheran S02 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240830.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/xpUBjrd5JjZepu5MbU72nLAKVTk.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240830.mkv">Teheran S02 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240831.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/po4fa88hWnTnfgCpkc6sEGmZxFp.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240831.mkv">Teheran S02 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240832.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/khI7l3fJgBm28vHI8xbCdHgT4K7.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240832.mkv">Teheran S02 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240833.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/w2kzvoVhFmZXbnQhr6MVwIeRdXZ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240833.mkv">Teheran S02 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240834.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/onx6r62K0bInLsqWNs2t2FpAQn6.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/240834.mkv">Teheran S02 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241250.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uoIXt0N0lmMHpCZizrTY38Qwlc1.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241250.mkv">The Walking Dead: World Beyond S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241251.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/gUvq9LjtAgTY2CDksT9qdj5pSaD.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241251.mkv">The Walking Dead: World Beyond S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241252.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dGi3EClrmN0UBmz9Vst0jVp8Vb5.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241252.mkv">The Walking Dead: World Beyond S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241253.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qV6aPDDfoamSXpmzv7jupBKugz2.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241253.mkv">The Walking Dead: World Beyond S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241254.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/epVHqo24YhbmBAwmqPjdIgjZe5E.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241254.mkv">The Walking Dead: World Beyond S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241255.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lOUWGxlQNIw23TWUmh6q4q5VjFp.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241255.mkv">The Walking Dead: World Beyond S01 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241256.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/i1Cdgy3w4XSpS4ZlL1eVZ5PhXQl.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241256.mkv">The Walking Dead: World Beyond S01 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241257.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/e2v9EmXv7MCB0cQYN5MJ75eBn9b.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241257.mkv">The Walking Dead: World Beyond S01 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241258.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/5ceQ7GPZhxMPx0Rs0A7X6lRNjyN.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241258.mkv">The Walking Dead: World Beyond S01 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241259.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2C2TvqRgEt7cftRXEFkesuydcfV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241259.mkv">The Walking Dead: World Beyond S01 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241260.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dRfaS8PD799G5SRkKHyelouY7Qr.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241260.mkv">The Walking Dead: World Beyond S02 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241261.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/t7sMnOBAGJ8MHL2mjtDvchN1jUL.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241261.mkv">The Walking Dead: World Beyond S02 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241262.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qfCmXctM5Wy7sUcl957QWrNuHy5.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241262.mkv">The Walking Dead: World Beyond S02 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241263.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ic5dXVebiCFWQEcpLno0crcRnIz.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241263.mkv">The Walking Dead: World Beyond S02 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241264.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/rqrO7CTmBeXNVSe7FgM6oLQlnmn.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241264.mkv">The Walking Dead: World Beyond S02 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241265.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uy0N1jlHvfAAvxJNNOLOAhSmilT.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241265.mkv">The Walking Dead: World Beyond S02 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241266.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/hJIv0Lb8ARAJosRWDdrq3IO9gDo.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241266.mkv">The Walking Dead: World Beyond S02 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241267.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/s3ZqxTzAvWI5xSvgay67GJyJ4Ag.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241267.mkv">The Walking Dead: World Beyond S02 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241268.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/xZeGbOy158qKEDndDxdj2sV85ZV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241268.mkv">The Walking Dead: World Beyond S02 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241269.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qN5QA6BHuRuUBGoyXIUmPIt026o.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/241269.mkv">The Walking Dead: World Beyond S02 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230426.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/7U32I9XSreE4M2HeLgR12c6wwNU.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230426.mkv">12 monos S01 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230427.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/rzdMVcHUEiRaocQIWXFb8A4mHvJ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230427.mkv">12 monos S01 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230428.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zX0zUgsyUfNU14gVvBBNd3ARMk9.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230428.mkv">12 monos S01 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230429.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ylj8XICR49WxcEPm9wZxl6mzbMt.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230429.mkv">12 monos S01 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230430.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dy7YfgNUv3tZREfujQ7QGqk7dAU.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230430.mkv">12 monos S01 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230431.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lKgFU0ksyeVxE1wPyCA97Sw1EYE.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230431.mkv">12 monos S01 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230432.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/2PTGBGsNVQ3TGel0EMDBIKnCDMV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230432.mkv">12 monos S01 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230433.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/jrnLvDXLbu5qWPxifHDLsptmpGM.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230433.mkv">12 monos S01 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230434.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/96BgywamaFP4AeJ8vU5LHJmw2oT.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230434.mkv">12 monos S01 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230435.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/Ahm5hhJFpnEVxEC8SHB3zjwthGC.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230435.mkv">12 monos S01 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230436.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/gNyJfwoIkVp7IskN2Qm79TQoldx.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230436.mkv">12 monos S01 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230437.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/3VE6f35PuP0x1RpJQpFq88CKfC9.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230437.mkv">12 monos S01 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230438.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/A7hdGbip5uIn4Ml8OirOsC67Gyx.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230438.mkv">12 monos S01 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230439.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/latsZHeL5bAyKOkUQpjvGCUdWtV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230439.mkv">12 monos S02 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230440.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lxTz6SQTyegtrTu4quDcLwFvHiy.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230440.mkv">12 monos S02 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230441.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/A8prMD2MqQyY4sOUJ039ELbqAvB.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230441.mkv">12 monos S02 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230442.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/49rlGC85JAcbsrRqWqb4SBAACEM.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230442.mkv">12 monos S02 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230443.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/wuJW6cTDljrec1GXHHGZLSMFeUp.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230443.mkv">12 monos S02 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230444.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/5Bzv4xBH6EjfSVg5adaJCOtw0ne.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230444.mkv">12 monos S02 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230445.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/t3ojvMIojv9Q4C28pc24MWa1Rmr.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230445.mkv">12 monos S02 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230446.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/3XO8VlOESCtJmtdxebRQ4nzNmqZ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230446.mkv">12 monos S02 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230447.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/3jsNlVP3xslU4C187xgku4wM0FX.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230447.mkv">12 monos S02 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230448.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/y9H0gYaUa1pnChdjWouYUwUFzWh.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230448.mkv">12 monos S02 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230449.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6bmIJ1ONFjKEnE3yAb75c6iazgV.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230449.mkv">12 monos S02 E11</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230450.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qwiV84vOzUOlCt8a101A2ItNBvD.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230450.mkv">12 monos S02 E12</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230451.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1yM4CaB35JCTHsEEGPnz00YgY64.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230451.mkv">12 monos S02 E13</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230452.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/9Yk8doc8P4QS6wF0nPblRZ9twAh.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230452.mkv">12 monos S03 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230453.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/hvuWOWGkivvedkCgglOMGfF7yUX.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230453.mkv">12 monos S03 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230454.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/qWt0DVtCr8I2d9wBP5XS8YmL7TZ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230454.mkv">12 monos S03 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230455.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/vSAA2IFaKt7VoPd0cSkcwqVHGhz.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230455.mkv">12 monos S03 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230456.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/t7xJuLwj8beKZFJwdniDReSalac.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230456.mkv">12 monos S03 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230457.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/74ENWf6Mgg7iNklFKK3qq7V0umm.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230457.mkv">12 monos S03 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230458.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/mQAlbCZ4yZsiaEFMF9RE3smzbzg.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230458.mkv">12 monos S03 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230459.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zi0rqrlWPMAX7YqxZigv3itel8h.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230459.mkv">12 monos S03 E08</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230460.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/tZlnKPvvBeDPOfUkva5ndO9oirn.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230460.mkv">12 monos S03 E09</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230461.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/nSulfM7hKmjdtNeEZKSpf5e4ssG.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230461.mkv">12 monos S03 E10</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230462.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/r60TGZZ4lhFjmVwvD15Mqw5xAMQ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230462.mkv">12 monos S04 E01</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230463.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/iXOO6jTY5L1Eh0zp5tSQnyOP5dz.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230463.mkv">12 monos S04 E02</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230464.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/eZbgXVQhRMqki2EsUM61bhrZFC0.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230464.mkv">12 monos S04 E03</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230465.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/xUpyBhupOM0WrR17GdI2t7IGuqr.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230465.mkv">12 monos S04 E04</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230466.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/w7ZhHC1wFH5M0h4jCL9bQj2EIZz.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230466.mkv">12 monos S04 E05</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230467.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/zReRilNgiHikiwp9MCwNA5SuSb5.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230467.mkv">12 monos S04 E06</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230468.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/wyEQCfKO6j8sV5djdKuHqRjn5mJ.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230468.mkv">12 monos S04 E07</span>
+            </div>
+        </div>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <video id="videoPlayer" class="post-video" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <iframe
+                    id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="640"
+                    height="480"
+                    style="display: none;" <!-- Inicialmente oculto -->
+                ></iframe>
+            </div>
+        </div>
+        <div class="post" data-video-url="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230469.mkv">
+            <img class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/v8cAZQO7QMIRswRq4eKm2OUksqH.jpg" alt="Descripción de la imagen">
+            <div class="post-content">
+                <span class="post-title" href="http://cineplay.vip:8080/series/roku-2736/cu8asWhG4d/230469.mkv">12 monos S04 E08</span>
+            </div>
+        </div>
+        
+      <script>
+          var videoModal = document.getElementById("videoModal");
+          var closeVideoButton = document.getElementById("closeVideoButton");
+          var videoSource = document.getElementById("videoSource");
+          var iframePlayer = document.getElementById("inlineFrameExample"); // Agregamos el elemento iframe
+
+          closeVideoButton.addEventListener("click", function() {
+              videoModal.style.display = "none";
+          });
+
+          window.addEventListener("click", function(event) {
+              if (event.target === videoModal) {
+                  videoModal.style.display = "none";
+              }
+          });
+
+          document.querySelectorAll(".post").forEach(function(post) {
+              post.addEventListener("click", function() {
+                  var videoPlayer = document.getElementById("videoPlayer");
+                  var originalUrl = this.dataset.videoUrl;
+                  var fileExtension = originalUrl.split('.').pop(); // Obtener la extensión del archivo
+
+                  // Verificar el tipo de archivo y actuar en consecuencia
+                  if (fileExtension.toLowerCase() === "mp4") {
+                      // Para archivos MP4
+                      videoSource.src = originalUrl; // No es necesario cambiar la URL para MP4
+                      videoPlayer.load();
+                      videoModal.style.display = "block";
+
+                      // Ocultar el iframe si está visible
+                      iframePlayer.style.display = "none";
+                  } else if (fileExtension.toLowerCase() === "mkv") {
+                      // Para archivos MKV
+                      iframePlayer.src = originalUrl; // Establecer la URL del archivo MKV en el iframe
+                      // Puedes ajustar el tamaño y otras propiedades según sea necesario
+                      iframePlayer.width = 640;
+                      iframePlayer.height = 480;
+
+                      // Mostrar el iframe
+                      iframePlayer.style.display = "block";
+
+                      // Ocultar el reproductor de video
+                      videoPlayer.style.display = "none";
+
+                      // Ocultar el modal de video
+                      videoModal.style.display = "none";
+                  }
+
+                  // Resto de tu código...
+              });
+          });
+      </script>
+
+  </body>
+    
