@@ -26,6 +26,13 @@
             text-align: left;
             display: none; /* Inicialmente oculto */
         }
+
+        .result-item {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -50,13 +57,64 @@
         <div id="video-player"></div>
     </div>
 
+    <div id="search-results" style="margin-top: 60px;">
+        <!-- Aquí se mostrarán los resultados de la búsqueda -->
+    </div>
+
     <script>
         async function searchYoutube() {
             // Obtener el valor de búsqueda
             var searchTerm = document.getElementById('masthead-search-terms').value;
 
-            // Lógica para obtener el primer resultado de la búsqueda
-            var videoInfo = await obtenerVideoInfo(searchTerm);
+            // Lógica para obtener los primeros 10 resultados de la búsqueda
+            var videos = await obtenerVideos(searchTerm);
+
+            // Mostrar los resultados
+            var resultsContainer = document.getElementById('search-results');
+            resultsContainer.innerHTML = '';
+
+            videos.forEach((video, index) => {
+                var resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.textContent = `${index + 1}. ${video.title}`;
+                resultItem.onclick = () => cargarVideo(video.id);
+                resultsContainer.appendChild(resultItem);
+            });
+        }
+
+        
+        async function obtenerVideos(query) {
+            // Lógica para obtener los primeros 10 videos de la búsqueda (usando la API de YouTube)
+            var apiKey = 'AIzaSyCyYq3aWzXK-sE8surQuxZxCI2bZTzZtZA'; // ¡Reemplaza con tu propia clave de API de YouTube!
+            var apiUrl = `https://www.googleapis.com/youtube/v3/search?q=${query}&key=${apiKey}&part=snippet&type=video&maxResults=10`;
+
+            try {
+                // Hacemos una llamada a la API de YouTube
+                var response = await fetch(apiUrl);
+                var data = await response.json();
+
+                // Verificar si hay resultados en la respuesta
+                if (data.items && data.items.length > 0) {
+                    // Extraemos la información de los videos
+                    var videos = data.items.map(item => ({
+                        id: item.id.videoId,
+                        title: item.snippet.title
+                    }));
+
+                    return videos;
+                } else {
+                    throw new Error('No se encontraron resultados en la búsqueda.');
+                }
+            } catch (error) {
+                console.error('Error al obtener videos:', error.message);
+                throw error;
+            }
+        }
+
+
+        async function cargarVideo(videoId) {
+            // Lógica para cargar el video en el reproductor local
+            var videoInfo = await obtenerVideoInfo(videoId);
 
             // Mostrar el nombre y el enlace
             var videoInfoContainer = document.getElementById('video-info');
@@ -70,20 +128,39 @@
             
             // Mostrar el reproductor flotante
             document.getElementById('video-player-container').style.display = 'block';
+
+            // Agregar evento de finalización de reproducción para cargar el siguiente video
+            var player = document.querySelector('#video-player iframe');
+            player.addEventListener('ended', () => cargarSiguienteVideo());
         }
 
-        async function obtenerVideoInfo(query) {
-            // Lógica para obtener información del primer video de la búsqueda (usando la API de YouTube)
+        async function cargarSiguienteVideo() {
+            // Lógica para cargar el siguiente video de la lista
+            var searchTerm = document.getElementById('masthead-search-terms').value;
+            var videos = await obtenerVideos(searchTerm);
+
+            // Encontrar el índice del video actual
+            var currentVideoId = document.querySelector('#video-player iframe').getAttribute('src').split('/').pop();
+            var currentIndex = videos.findIndex(video => video.id === currentVideoId);
+
+            // Cargar el siguiente video o volver al primero si estamos en el último
+            var nextIndex = (currentIndex + 1) % videos.length;
+            cargarVideo(videos[nextIndex].id);
+        }
+
+
+        async function obtenerVideoInfo(videoId) {
+            // Lógica para obtener información de un video específico (usando la API de YouTube)
             var apiKey = 'AIzaSyCyYq3aWzXK-sE8surQuxZxCI2bZTzZtZA'; // ¡Reemplaza con tu propia clave de API de YouTube!
-            var apiUrl = `https://www.googleapis.com/youtube/v3/search?q=${query}&key=${apiKey}&part=snippet&type=video&maxResults=1`;
+            var apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`;
 
             // Hacemos una llamada a la API de YouTube
             var response = await fetch(apiUrl);
             var data = await response.json();
 
-            // Extraemos la información del primer video
+            // Extraemos la información del video
             var videoInfo = {
-                id: data.items[0].id.videoId,
+                id: data.items[0].id,
                 title: data.items[0].snippet.title
             };
 
