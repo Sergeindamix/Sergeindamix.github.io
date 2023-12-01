@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador Mágico</title>
+    <style>
+        #video-player-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #video-player {
+            width: 100%; /* Ajusta el ancho al 100% del contenedor */
+            height: 100%; /* Ajusta la altura al 100% del contenedor */
+        }
+
+        #video-info {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            text-align: left;
+            display: none; /* Inicialmente oculto */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="yt-masthead">
+        <form id="masthead-search" class="search-form" action="https://www.youtube.com/results" onsubmit="searchYoutube(); return false;">
+            <div id="masthead-search-terms-border" dir="ltr">
+                <input id="masthead-search-terms" autocomplete="off" name="search_query" value="" type="text" placeholder="Buscar" title="Buscar" aria-label="Buscar">
+            </div>
+            <button id="masthead-search-button" class="search-button" type="submit" dir="ltr">
+                <span class="search-button-content">Buscar</span>
+            </button>
+        </form>
+    </div>
+
+    <div id="video-info">
+        <!-- Aquí se mostrará el nombre y el enlace -->
+    </div>
+
+    <div id="video-player-container" style="display: none;">
+        <!-- Aquí se inyectará el video -->
+        <div id="video-player"></div>
+    </div>
+
+    <script>
+        async function searchYoutube() {
+            // Obtener el valor de búsqueda
+            var searchTerm = document.getElementById('masthead-search-terms').value;
+
+            // Lógica para obtener el primer resultado de la búsqueda
+            var videoInfo = await obtenerVideoInfo(searchTerm);
+
+            // Mostrar el nombre y el enlace
+            var videoInfoContainer = document.getElementById('video-info');
+            videoInfoContainer.innerHTML = `<h2>${videoInfo.title}</h2>
+                                            <p><a href="https://www.youtube.com/watch?v=${videoInfo.id}" target="_blank">Ver en YouTube</a></p>`;
+            videoInfoContainer.style.display = 'block';
+
+            // Inyectar el video en el reproductor local con autoplay
+            var videoPlayer = document.getElementById('video-player');
+            videoPlayer.innerHTML = `<video width="100%" height="100%" controls autoplay>
+                                       <source src="https://www.youtube.com/embed/${videoInfo.id}" type="video/mp4">
+                                     </video>`;
+            
+            // Mostrar el reproductor flotante
+            document.getElementById('video-player-container').style.display = 'block';
+        }
+
+        async function obtenerVideoInfo(query) {
+            // Lógica para obtener información del primer video de la búsqueda (usando la API de YouTube)
+            var apiKey = 'AIzaSyCyYq3aWzXK-sE8surQuxZxCI2bZTzZtZA'; // ¡Reemplaza con tu propia clave de API de YouTube!
+            var apiUrl = `https://www.googleapis.com/youtube/v3/search?q=${query}&key=${apiKey}&part=snippet&type=video&maxResults=1`;
+
+            // Hacemos una llamada a la API de YouTube
+            var response = await fetch(apiUrl);
+            var data = await response.json();
+
+            // Extraemos la información del primer video
+            var videoInfo = {
+                id: data.items[0].id.videoId,
+                title: data.items[0].snippet.title
+            };
+
+            return videoInfo;
+        }
+    </script>
+
+</body>
+</html>
