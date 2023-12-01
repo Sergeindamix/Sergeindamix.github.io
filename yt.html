@@ -66,9 +66,7 @@
 
             // Inyectar el video en el reproductor local con autoplay
             var videoPlayer = document.getElementById('video-player');
-            videoPlayer.innerHTML = `<video width="100%" height="100%" controls autoplay>
-                                       <source src="https://www.youtube.com/embed/${videoInfo.id}" type="video/mp4">
-                                     </video>`;
+            videoPlayer.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoInfo.id}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
             
             // Mostrar el reproductor flotante
             document.getElementById('video-player-container').style.display = 'block';
