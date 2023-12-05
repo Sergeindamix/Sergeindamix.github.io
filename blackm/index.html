@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+    <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Cambia el ancho al 90% */
+        height: 90%; /* Cambia el alto al 90% */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    /* Estilos para el botón de cierre */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el reproductor de video */
+    .post-video-iframe {
+        width: 100%; /* Ancho del 100% del contenedor del modal */
+        height: 100%; /* Alto del 100% del contenedor del modal */
+    }
+    .post {
+        display: flex;
+        flex-direction: row;
+        background-color: #f0f0f0;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .post-image {
+        transition: transform 0.3s ease;
+    }
+
+    .post-image:hover {
+        transform: scale(1.1);
+    }
+
+    .post-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        margin-right: 10px;
+        background-color: #f0f0f0; /* Color de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el espacio */
+    }
+
+    .post-content {
+        margin-left: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    .post-tag {
+        font-size: 12px;
+        color: white;
+        background-color: #007BFF; /* Color de fondo de la etiqueta */
+    }
+
+    .post-info {
+        font-size: 12px;
+    }
+    </style>
+    <html>
+    <head>
+        <title>Vértigo</title>
+    </head>
+    <body>
+        
+        <div class="modal" id="videoModal">
+            <div class="modal-content">
+                <span class="close" id="closeVideoButton">×</span>
+                <iframe id="videoIframe" class="post-video-iframe" width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" src="https://drive.google.com/file/d/1-IQXzcm3ZHxL6QxGjHmKQQcByLPykwHR/preview?usp=drive_link"></iframe>
+                
+            </div>
+        </div>  
+        <div class="post" data-video-url="https://drive.google.com/file/d/11jTre3wtmfCnFS-A4j6rhU1tgF5amT2b/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/9w27Lgeq8KVxhz4ysygT6ranxf1.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/11jTre3wtmfCnFS-A4j6rhU1tgF5amT2b/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465709.mkv">Black Mirror S01 E01</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/11pv2uyd_BD5CPUsQI9UvAvypdXqYo8Ud/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/c62HKSbeTRkatK223O3m58CmmPd.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/11pv2uyd_BD5CPUsQI9UvAvypdXqYo8Ud/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465710.mkv">Black Mirror S01 E02</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/11pvjWTO8vmfF03PHFmH25Nqo4UwVujrZ/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/lhZmmQ6HSIYCo4Rxe6pmHMvkJE6.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/11pvjWTO8vmfF03PHFmH25Nqo4UwVujrZ/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465711.mkv">Black Mirror S01 E03</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/11tryWakJ-M3nt70TsMPRNKa2R7yuFRKY/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/ltgvZMI9y73GOlBqoOFiXlot87V.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/11tryWakJ-M3nt70TsMPRNKa2R7yuFRKY/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465712.mkv">Black Mirror S02 E01</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/11xyfbTWPWIbOCDQ9yr6tY5vefWlj7_L_/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/iS34hF0GMqwry7gJtDoH29r5YVv.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/11xyfbTWPWIbOCDQ9yr6tY5vefWlj7_L_/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465713.mkv">Black Mirror S02 E02</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/124fGIOGCL8Zd3_rzQdWZlXBjBCKqIVk6/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/hSEwesgbIQWoMucQdc55c4qaAQM.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/124fGIOGCL8Zd3_rzQdWZlXBjBCKqIVk6/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465714.mkv">Black Mirror S02 E03</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/1IneLvp_-_3lGWnP0JVY75_EISLezapWE/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6nDRo824oyBwg1prOZHc8UtonVB.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/1IneLvp_-_3lGWnP0JVY75_EISLezapWE/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465715.mkv">Black Mirror S02 E04</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/126LcjdH3IYANluTkLBXfTB5aHNMbgJup/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dmEDQliQbapSOcbdu0c2KtmIVna.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/126LcjdH3IYANluTkLBXfTB5aHNMbgJup/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465716.mkv">Black Mirror S03 E01</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/128O4O-vT1tL67f2bl57k6IXt0TrCDo7w/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/v0zfbxuUnQ4YQ3hkRq7EvFsEKQN.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/128O4O-vT1tL67f2bl57k6IXt0TrCDo7w/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465717.mkv">Black Mirror S03 E02</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12Ba-EJJnB57Joug5-SqXST4bbYxTwPQa/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/MU0lsD08pcuwaYMGOQMFGFWJGg.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12Ba-EJJnB57Joug5-SqXST4bbYxTwPQa/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465718.mkv">Black Mirror S03 E03</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12aEOxB-xIxbK1UdyWTY19lRziHyCBpwd/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/AfKQ9bm4RVTwyKdE2QfLDGrtVTu.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12aEOxB-xIxbK1UdyWTY19lRziHyCBpwd/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465719.mkv">Black Mirror S03 E04</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12epMePlhvy13wTCBylLjHJOXI1gqa7ba/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/A4g3nH0kYQpqHv1oHBXuTgRgT5u.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12epMePlhvy13wTCBylLjHJOXI1gqa7ba/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465720.mkv">Black Mirror S03 E05</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12f_X5XU1TgYTt-R3bJ0XOYkSffeFc8PH/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/sBrdKKIMwdiFj5Xx8NRzLxqfVkX.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12f_X5XU1TgYTt-R3bJ0XOYkSffeFc8PH/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465721.mkv">Black Mirror S03 E06</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12iAdX231TnI8o-xyL7n4zAHdNoiP_nfg/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dagpqvCO48XDFCUe7I2SYCuXCA1.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12iAdX231TnI8o-xyL7n4zAHdNoiP_nfg/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465722.mkv">Black Mirror S04 E01</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12jBQwHUzP-yNwbRZaXpVqIxiOxziAHbk/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/3uXHGkHO5B9icYTxyVRDXoxDldR.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12jBQwHUzP-yNwbRZaXpVqIxiOxziAHbk/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465723.mkv">Black Mirror S04 E02</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12o5DplqiBzxsW97XXREozoNz11gtvSqh/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/mvNCd4qfwtdXeRHgvWHRRPUA1TF.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12o5DplqiBzxsW97XXREozoNz11gtvSqh/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465724.mkv">Black Mirror S04 E03</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12otN5BhqWuNiCzQHhvSG1hFvvdYNGwnt/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/xvdqaFVz8f8BWZS0ip0Fjr4Eqmt.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12otN5BhqWuNiCzQHhvSG1hFvvdYNGwnt/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465725.mkv">Black Mirror S04 E04</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12uKRHuDNJL6g4hKBjqVRABNm4iKmRplU/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8mMSk4cGfIftbIoA2Mq83LpzYlw.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12uKRHuDNJL6g4hKBjqVRABNm4iKmRplU/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465726.mkv">Black Mirror S04 E05</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12wWsOKoR8ScbgJLzu7uY4mkd03CVeJVQ/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/fOKwBPMBSm1B6zc3wkN4hCkbtsf.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12wWsOKoR8ScbgJLzu7uY4mkd03CVeJVQ/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465727.mkv">Black Mirror S04 E06</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12xHPfwTrYiZtYCivgmZW4EY8owdTv6cI/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/t8uIVDjfCoutXHwIRZoUX8XpNS2.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12xHPfwTrYiZtYCivgmZW4EY8owdTv6cI/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465728.mkv">Black Mirror S05 E01</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/12zkxW7V6vzmhYcmqpgirZw8lHy0NrqGa/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/wOvJYn5p1dfjL4zNgZuMMhT0KPE.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/12zkxW7V6vzmhYcmqpgirZw8lHy0NrqGa/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465729.mkv">Black Mirror S05 E02</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/13-1UW1U30txwoMX7dVLrZwNHvIMkP8Nd/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uwLkdgvIT7hvJD2k9FMdiA8MpVX.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/13-1UW1U30txwoMX7dVLrZwNHvIMkP8Nd/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465730.mkv">Black Mirror S05 E03</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/131Q6xN3jMg8_Himr1s-_dJlkguaalTpH/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/7cB4EIsn2eSP26t0ta8a9szWVZE.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/131Q6xN3jMg8_Himr1s-_dJlkguaalTpH/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465731.mkv">Black Mirror S06 E01</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/133XXT_j3__X9hRzi5bIUnpyuqk_C-xu2/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dA9ZWi2Q172vYUVxhKPTarJeDLj.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/133XXT_j3__X9hRzi5bIUnpyuqk_C-xu2/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465732.mkv">Black Mirror S06 E02</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/135AW9BDdtKAPMLgz7RfPLEdwk4kveGB6/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1I3oE47FZwSuQWYP02d9rSCaQpq.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/135AW9BDdtKAPMLgz7RfPLEdwk4kveGB6/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465733.mkv">Black Mirror S06 E03</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/13As5JUVF2WhEBo4c-aFnCCb1LsPyOMC_/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8v4OZ4O0P4MZu59lWqOb1BZGrB4.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/13As5JUVF2WhEBo4c-aFnCCb1LsPyOMC_/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465734.mkv">Black Mirror S06 E04</span>
+</div>
+</div>
+
+<div class="post" data-video-url="https://drive.google.com/file/d/13DRKamP8lWQ6AeKQ-qg34b2-58u23BvE/view?usp=drive_link">
+<img alt="Descripción de la imagen" class="post-image" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6lGVCSv4DfQqgjqauSxM4HmfvKS.jpg"/>
+<div class="post-content">
+<span class="post-title" data-video-url="https://drive.google.com/file/d/13DRKamP8lWQ6AeKQ-qg34b2-58u23BvE/view?usp=drive_link" href="http://flashprinttv.com:2086/series/2720z15CVK/uie4AI88F7/465735.mkv">Black Mirror S06 E05</span>
+</div>
+</div>
+
+<script>
+var videoModal = document.getElementById("videoModal");
+var closeVideoButton = document.getElementById("closeVideoButton");
+var videoIframe = document.getElementById("videoIframe");
+
+closeVideoButton.addEventListener("click", closeVideoModal);
+closeVideoButton.addEventListener("touchend", closeVideoModal);
+
+window.addEventListener("click", function(event) {{
+	if (event.target == videoModal) {{
+		closeVideoModal();
+	}}
+}});
+
+document.querySelectorAll(".post").forEach(function(post) {{
+	post.addEventListener("click", function() {{
+		var videoUrl = this.querySelector(".post-title").getAttribute("data-video-url");
+		if (videoUrl) {{
+			const embedLink = videoUrl.replace("/view", "/preview");
+			videoIframe.src = embedLink;
+		}} else {{
+			videoIframe.src = "";
+		}}
+		videoModal.style.display = "block";
+	}});
+}});
+
+function closeVideoModal() {{
+	videoIframe.src = ""; // Detiene la reproducción del video al cerrar
+	videoModal.style.display = "none";
+}}
+</script>
+        
+</body>
+</html>
