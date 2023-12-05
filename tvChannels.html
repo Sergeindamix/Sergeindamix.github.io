@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Playlist</title>
+</head>
+<body>
+    <h1>Magical Playlist</h1>
+
+    <label for="channelDropdown">Select a Channel:</label>
+    <input type="text" id="filterInput" oninput="updateFilter()" placeholder="Filter channels">
+    <span id="filterCount"></span>
+    <select id="channelDropdown"></select>
+
+    <button onclick="updatePlaylist()">Update Playlist</button>
+    
+    <script>
+        let allChannels = []; // To store all channels for counting
+
+        // Fetch and parse the 0.json file
+        fetch('0.json')
+            .then(response => response.json())
+            .then(data => {
+                allChannels = data;
+
+                const channelDropdown = document.getElementById('channelDropdown');
+                // Populate the dropdown with channel names and links
+                data.forEach(channel => {
+                    const option = document.createElement('option');
+                    option.text = channel.name.replace('#EXTINF:-1,', ''); // Remove the prefix
+                    option.value = channel.link;
+                    channelDropdown.add(option);
+                });
+            });
+
+        function updatePlaylist() {
+            const selectedLink = document.getElementById('channelDropdown').value;
+            updateDownloadLink(selectedLink);
+        }
+
+        function updateDownloadLink(playlistLink) {
+            const downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = `data:text/plain;charset=utf-8,${encodeURIComponent(`#EXTM3U\n#EXTINF:-1, Magical Playlist\n${playlistLink}`)}`;
+        }
+
+        function updateFilter() {
+            const filterInput = document.getElementById('filterInput').value.toLowerCase();
+            const channelDropdown = document.getElementById('channelDropdown');
+            const filterCount = document.getElementById('filterCount');
+
+            // Filter and count channels
+            const filteredChannels = allChannels.filter(channel => channel.name.toLowerCase().includes(filterInput));
+
+            // Update dropdown options
+            while (channelDropdown.options.length > 0) {
+                channelDropdown.remove(0);
+            }
+
+            filteredChannels.forEach(channel => {
+                const option = document.createElement('option');
+                option.text = channel.name.replace('#EXTINF:-1,', ''); // Remove the prefix
+                option.value = channel.link;
+                channelDropdown.add(option);
+            });
+
+            // Update filter count
+            filterCount.textContent = `(${filteredChannels.length} results)`;
+        }
+    </script>
+    
+    <a id="downloadLink" download="playlist.m3u" href="#">Download Playlist</a>
+</body>
+</html>
