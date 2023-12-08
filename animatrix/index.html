@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .pip-video {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 40%;
+            height: 40%;
+            z-index: 1;
+            transition: left 1s ease-in-out, bottom 1s ease-in-out;
+            display: none;
+        }
+        .rectangle {
+            position: fixed;
+            top: 25%;
+            left: 70%;
+            width: 275px;
+            height: 50px;
+            background-color: rgba(255, 0, 0, 0.5);
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        .rectangle2 {
+            position: fixed;
+            top: 90%;
+            left: 85%;
+            width: 150px;
+            height: 30px;
+            background-color: rgba(0, 0, 255, 0.5);
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        .rectangle3 {
+            position: fixed;
+            top: 90%;
+            left: 20%;
+            width: 200px;
+            height: 20px;
+            background-color: rgba(0, 255, 0, 0.5);
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Estilos para el modal de video */
+        #videoModal {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            height: 50%;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            padding: 20px;
+        }
+
+        #closeVideoButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #closeVideoButton:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <video id="mainVideo" autoplay muted loop>
+        <source src="(y2save.net) animatrix dvd menu.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+    </video>
+    <!-- Fondo de video a pantalla completa -->
+    <iframe class="background-video" src="https://drive.google.com/file/d/1j1O4XMgIg8fWT9M34e78hzDNHtDiu2d-/preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+    <!-- Video Picture in Picture en la esquina inferior izquierda -->
+    <iframe id="pipVideo" class="pip-video" src="https://drive.google.com/file/d/1tD4e1q1OPbYouMI7E9mYM1GGxGLb1-wD/preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+    <!-- Rectángulo y lógica de tiempo -->
+    <div id="rectangle" class="rectangle" onclick="navigateVideo()"></div>
+
+    <!-- Rectángulo 2 y lógica de tiempo -->
+    <div id="rectangle2" class="rectangle2" onclick="openAndNavigateVideo()"></div>
+
+    <!-- Rectángulo 3 y lógica de tiempo -->
+    <div id="rectangle3" class="rectangle3" onclick="navigateTo17()"></div>
+
+    <!-- Modal de Video -->
+    <div id="videoModal">
+        <span id="closeVideoButton" onclick="closeVideoModal">×</span>
+        <video id="modalVideoPlayer" controls style="width: 100%; height: 100%;">
+            <source id="modalVideoSource" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+    </div>
+
+    <script>
+        var mainVideo = document.getElementById('mainVideo');
+        var pipVideo = document.getElementById('pipVideo');
+        var rectangle = document.getElementById('rectangle');
+        var rectangle2 = document.getElementById('rectangle2');
+        var rectangle3 = document.getElementById('rectangle3');
+        var videoModal = document.getElementById('videoModal');
+        var modalVideoPlayer = document.getElementById('modalVideoPlayer');
+        var modalVideoSource = document.getElementById('modalVideoSource');
+
+        mainVideo.addEventListener('timeupdate', function() {
+            var currentTime = mainVideo.currentTime;
+
+            // Lógica de tiempo para el rectángulo
+            if (currentTime >= 61 && currentTime < 62) {
+                // Regresar al segundo 17
+                mainVideo.currentTime = 17;
+            } else if (currentTime >= 97 && currentTime < 98) {
+                // Regresar al segundo 68
+                mainVideo.currentTime = 68;
+            } else if (currentTime >= 18 && currentTime < 61) {
+                // Mostrar el rectángulo
+                rectangle.style.display = 'block';
+            } else if (currentTime >= 68 && currentTime < 97) {
+                // Mostrar el rectángulo 2 y el rectángulo 3
+                rectangle2.style.display = 'block';
+                rectangle3.style.display = 'block';
+            }
+
+            // Cuando llega al minuto
+            if (currentTime >= 17) {
+                // Centrar el video Picture in Picture
+                pipVideo.style.left = '50%';
+                pipVideo.style.bottom = '50%';
+                pipVideo.style.transform = 'translate(-50%, -50%)';
+            }
+        });
+
+        function navigateVideo() {
+            // Navegar al segundo 62 cuando se hace clic en el rectángulo
+            mainVideo.currentTime = 62;
+            rectangle.style.display = 'none';
+        }
+
+        function openAndNavigateVideo() {
+            // Mostrar y navegar al segundo 68 cuando se hace clic en el rectángulo 2
+            mainVideo.currentTime = 68;
+            rectangle2.style.display = 'none';
+            rectangle3.style.display = 'none';
+            openVideoModal();
+        }
+
+        function navigateTo17() {
+            // Navegar al segundo 17 cuando se hace clic en el rectángulo 3
+            mainVideo.currentTime = 17;
+            rectangle2.style.display = 'none';
+            rectangle3.style.display = 'none';
+        }
+
+        function openVideoModal() {
+            // Mostrar el modal de video
+            videoModal.style.display = "block";
+            // Asignar la fuente del video al modal
+            modalVideoSource.src = "http://amepz.xyz:2052/movie/QnqxrWDPYAVA/W7CzDmL4ey44/137287.mp4";
+            modalVideoPlayer.load();
+        }
+
+        function closeVideoModal() {
+            // Cerrar el modal de video
+            videoModal.style.display = "none";
+            // Pausar el video al cerrar el modal
+            modalVideoPlayer.pause();
+        }
+    </script>
+</body>
+</html>
