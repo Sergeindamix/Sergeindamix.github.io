@@ -1,6 +1,17 @@
 <
 <html>
     <head>
+        <style>
+            /* Estilo para el hint */
+            .hint-container {
+                position: absolute;
+                display: none;
+                background-color: rgba(255, 255, 255, 0.9);
+                padding: 5px;
+                border-radius: 5px;
+                z-index: 999; /* Asegura que esté al frente de todo */
+            }
+        </style>
         <script>
         document.addEventListener("DOMContentLoaded", function() {
 
@@ -33,6 +44,7 @@ fetch('videos.json')
 
                 // Mostrar las primeras 10 imágenes en el documento HTML
                 //var spinContainer = document.body;  // Ajusta esto según tu estructura HTML
+                var hintContainer = createHintContainer();
 
                 for (var i = 0; i < 10; i++) {
                     var img = document.createElement('img');
@@ -41,8 +53,8 @@ fetch('videos.json')
 
                     // Agregar evento al pasar el mouse
                     img.addEventListener('mouseover', function(index) {
-                        return function() {
-                            console.log('Enlace al pasar el mouse:', json[index].link);
+                        return function(event) {
+                            showHint(event, json[index].link);
                         };
                     }(i));
 
@@ -58,6 +70,32 @@ fetch('videos.json')
             })
             .catch(error => console.error('Error al cargar videos.json:', error));
 
+        // Función para crear el contenedor de hint
+        function createHintContainer() {
+            var container = document.createElement('div');
+            container.className = 'hint-container';
+            document.body.appendChild(container);
+            return container;
+        }
+
+        // Función para mostrar el hint
+        function showHint(event, message) {
+            var hintContainer = document.querySelector('.hint-container');
+            hintContainer.innerHTML = message;
+            hintContainer.style.display = 'block';
+            hintContainer.style.left = event.pageX + 'px';
+            hintContainer.style.top = event.pageY + 'px';
+        }
+
+        // Función para ocultar el hint
+        function hideHint() {
+            var hintContainer = document.querySelector('.hint-container');
+            hintContainer.style.display = 'none';
+        }
+
+        // Agregar evento para ocultar el hint al salir del área de la imagen
+        document.addEventListener('mouseout', hideHint);
+        
 var p = document.createElement('p');
 p.innerHTML = 'OSCARS';
 spinContainer.appendChild(p);
