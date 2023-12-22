@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Elegant Webpage</title>
+    <style>
+        body {
+            background-color: #0a0a16; /* Dark purple */
+            color: #f5f5f5; /* Light text color */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #sidebar {
+            background-color: #1f1f2e; /* Slightly lighter purple for sidebar */
+            width: 25%;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        #title {
+            font-size: 24px;
+        }
+
+        #browse {
+            font-size: 18px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            width: 100%; /* Ensure full width */
+        }
+
+        #arrow {
+            font-size: 12px; /* Adjust size accordingly */
+            transform: rotate(0deg);
+            transition: transform .25s ease; /* Transition effect */
+        }
+
+        #content {
+            margin-left: 25%; /* Adjust margin to match sidebar width */
+            padding: 20px;
+        }
+
+        /* Your existing CSS styles */
+
+        #list {
+            height: 0; /* Initially hide the list */
+            margin-top: 10px;
+            overflow: hidden;
+            transition: height 0.25s ease-out; /* Add slide-down animation */
+        }
+
+        #list li {
+            opacity: 0; /* Initially hide list items */
+            transform: translateY(-10px); /* Move list items up */
+            transition: opacity 0.25s ease-out, transform 0.25s ease-out; /* Add fade-in and slide-down animation */
+        }
+
+        #list.active {
+            height: 100px; /* Adjust height based on your content height */
+        }
+
+        #list.active li {
+            opacity: 1; /* Fade in list items when active */
+            transform: translateY(0); /* Slide down list items when active */
+        }
+
+        /* Add your styling for the film cards here */
+        .film-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px; /* Agrega esquinas redondeadas */
+            overflow: hidden; /* Evita que las esquinas redondeadas afecten a los bordes internos */
+        }
+
+        #filmsGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1000px; /* Ajusta el ancho máximo de la cuadrícula */
+            margin: 0 auto; /* Centra la cuadrícula */
+        }
+
+        
+
+        .film-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Add styling for highlighted item */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        ul li.highlight {
+            background-color: #e0e0e0; /* Ajusta el color de fondo según sea necesario */
+        }
+
+        #searchContainer {
+            display: none;
+            margin-top: 20px;
+            align-items: center; /* Center items vertically */
+        }
+
+        #searchInput {
+            padding: 5px;
+            margin-right: 5px; /* Add some space between input and button */
+        }
+
+        #searchButton {
+            padding: 5px;
+        }
+
+        #filterCount {
+            color: #ccc; /* Ajusta el color del contador según sea necesario */
+            margin-top: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div id="sidebar">
+        <div id="title">Film</div>
+        <div id="browse" onclick="toggleList()">
+            Browse
+            <span id="arrow">&lt;</span>
+        </div>
+        <ul id="list">
+            <li onclick="generateFilmGrid()">Films</li>
+            <li onclick="generateTVShowsGrid()">TV Shows</li>
+            <li onclick="showSearch()">Search</li>
+        </ul>
+        <!-- Add other sidebar content here -->
+    </div>
+
+    <div id="content">        
+        <div id="searchContainer" style="text-align: center;">
+            <input type="text" id="searchInput" placeholder="Enter search term" oninput="searchFilms()" style="margin: 0 auto;">
+            <div id="filterCount"></div>
+        </div>
+        
+        <div id="filmsGrid"></div>
+    </div>
+
+    <script>
+        // JavaScript logic for toggling the list
+        function toggleList() {
+            var list = document.getElementById("list");
+            var arrow = document.getElementById("arrow");
+
+            if (list.classList.contains("active")) {
+                list.classList.remove("active");
+                arrow.style.transform = "rotate(0deg)";
+            } else {
+                list.classList.add("active");
+                arrow.style.transform = "rotate(90deg)";
+            }
+        }
+
+    </script>
+
+<script>
+    let filmsData = []; // Store the original data for filtering
+
+    // Function to generate the film grid
+    function generateFilmGrid() {
+        // Clear previous grid content
+        var filmsGrid = document.getElementById('filmsGrid');
+        filmsGrid.innerHTML = '';
+
+        // Remove highlight from all list items
+        var listItems = document.querySelectorAll('ul li');
+        listItems.forEach(item => item.classList.remove('highlight'));
+
+        // Highlight the clicked item
+        event.target.classList.add('highlight');
+
+        // Fetch data from videos.json (assuming it's in the same directory)
+        fetch('videos.json')
+            .then(response => response.json())
+            .then(data => {
+                filmsData = data; // Store the original data
+                data.forEach(film => {
+                    var filmCard = document.createElement('div');
+                    filmCard.className = 'film-card';
+
+                    var title = document.createElement('h3');
+                    title.textContent = film.name;
+
+                    var image = document.createElement('img');
+                    image.src = film['tvg-logo'];
+                    image.alt = film.name;
+                    image.className = 'film-image';
+
+                    var link = document.createElement('a');
+                    link.href = film.link;
+                    link.target = '_blank'; // Open link in a new tab
+                    link.textContent = 'Watch Now';
+
+                    filmCard.appendChild(title);
+                    filmCard.appendChild(image);
+                    filmCard.appendChild(link);
+
+                    // Add an event listener to open the link when the card is clicked
+                    filmCard.addEventListener('click', function() {
+                        window.open(film.link, '_blank');
+                    });
+
+                    filmsGrid.appendChild(filmCard);
+                });
+            });
+            
+        highlightedCategory = 'Films'; // Establecer la categoría resaltada
+  
+    }
+
+    // Function to show search input
+    function showSearch() {
+        var searchContainer = document.getElementById('searchContainer');
+        // Clear previous grid content
+        var filmsGrid = document.getElementById('filmsGrid');
+        filmsGrid.innerHTML = '';
+        
+        searchContainer.style.display = 'flex';
+    }
+
+    // Función de búsqueda y actualización del grid
+    function searchFilms() {
+            var searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            var filterCount = document.getElementById('filterCount');
+            var filmsGrid = document.getElementById('filmsGrid');
+
+            // Filtrar y contar películas o series según la categoría resaltada
+            var filteredData = [];
+            if (highlightedCategory === 'Films') {
+                filteredData = filmsData.filter(film => film.name.toLowerCase().includes(searchTerm));
+            } else if (highlightedCategory === 'TV Shows') {
+                filteredData = seriesData.filter(show => show.name.toLowerCase().includes(searchTerm));
+            }
+
+            // Actualizar contador
+            filterCount.textContent = `Showing ${filteredData.length} result(s)`;
+
+            // Limpiar grid
+            filmsGrid.innerHTML = '';
+
+            // Verificar si hay resultados
+            if (filteredData.length > 0) {
+                // Mostrar resultados
+                filteredData.forEach(item => {
+                    var itemCard = document.createElement('div');
+                    itemCard.className = 'film-card';
+
+                    var title = document.createElement('h3');
+                    title.textContent = item.name;
+
+                    var image = document.createElement('img');
+                    image.src = item['tvg-logo'];
+                    image.alt = item.name;
+                    image.className = 'film-image';
+
+                    var link = document.createElement('a');
+                    link.href = item.link;
+                    link.target = '_blank'; // Abrir en nueva pestaña
+                    link.textContent = 'Watch Now';
+
+                    itemCard.appendChild(title);
+                    itemCard.appendChild(image);
+                    itemCard.appendChild(link);
+
+                    // Event listener para abrir el enlace al hacer clic
+                    itemCard.addEventListener('click', function() {
+                        window.open(item.link, '_blank');
+                    });
+
+                    filmsGrid.appendChild(itemCard);
+                });
+            } else {
+                // Mostrar mensaje si no hay resultados
+                filmsGrid.innerHTML = '<p>No results found.</p>';
+            }
+        }
+
+    let seriesData = []; // Almacena los datos originales de las series
+    let highlightedCategory = ''; // Almacena la categoría resaltada
+
+    // Función para generar la cuadrícula de series
+    function generateTVShowsGrid() {
+        // Limpiar cuadrícula anterior
+        var filmsGrid = document.getElementById('filmsGrid');
+        filmsGrid.innerHTML = '';
+
+        // Resaltar el elemento seleccionado y quitar el resaltado de los demás
+        var listItems = document.querySelectorAll('ul li');
+        listItems.forEach(item => item.classList.remove('highlight'));
+        event.target.classList.add('highlight');
+
+        // Obtener datos de series desde series.json (suponiendo que está en el mismo directorio)
+        fetch('series.json')
+            .then(response => response.json())
+            .then(data => {
+                seriesData = data; // Almacenar los datos originales
+                data.forEach(show => {
+                    var showCard = document.createElement('div');
+                    showCard.className = 'film-card';
+
+                    var title = document.createElement('h3');
+                    title.textContent = show.name;
+
+                    var image = document.createElement('img');
+                    image.src = show['tvg-logo'];
+                    image.alt = show.name;
+                    image.className = 'film-image';
+
+                    var link = document.createElement('a');
+                    link.href = show.link;
+                    link.target = '_blank'; // Abrir en nueva pestaña
+                    link.textContent = 'Watch Now';
+
+                    showCard.appendChild(title);
+                    showCard.appendChild(image);
+                    showCard.appendChild(link);
+
+                    // Event listener para abrir el enlace al hacer clic
+                    showCard.addEventListener('click', function() {
+                        window.open(show.link, '_blank');
+                    });
+
+                    filmsGrid.appendChild(showCard);
+                });
+            });
+
+        highlightedCategory = 'TV Shows'; // Establecer la categoría resaltada
+    }
+</script>
+
+</body>
+</html>
