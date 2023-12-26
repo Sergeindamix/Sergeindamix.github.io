@@ -56,7 +56,6 @@
         #list {
             height: 0; /* Initially hide the list */
             margin-top: 10px;
-            overflow: hidden;
             transition: height 0.25s ease-out; /* Add slide-down animation */
         }
 
@@ -135,6 +134,28 @@
             margin-top: 10px;
         }
 
+        #searchOption {
+            display: none; /* Ocultar el elemento Search al cargar la página */
+        }
+
+        #list {
+            white-space: nowrap;
+            overflow-x: auto;
+            
+            scrollbar-width: thin; /* Estilo de la barra de desplazamiento en navegadores compatibles con Firefox */
+            scrollbar-color: #ccc transparent; /* Estilo de la barra de desplazamiento en navegadores compatibles con Firefox */
+            -ms-overflow-style: none; /* Oculta la barra de desplazamiento en Internet Explorer y Microsoft Edge */
+        }
+
+        #list::-webkit-scrollbar {
+            width: 280px; /* Ancho de la barra de desplazamiento en navegadores basados en WebKit */
+        }
+
+        #list::-webkit-scrollbar-thumb {
+            background-color: #ccc; /* Color de la barra de desplazamiento en navegadores basados en WebKit */
+            border-radius: 4px; /* Bordes redondeados de la barra de desplazamiento en navegadores basados en WebKit */
+        }
+
 
     </style>
 </head>
@@ -149,7 +170,51 @@
         <ul id="list">
             <li onclick="generateFilmGrid()">Films</li>
             <li onclick="generateTVShowsGrid()">TV Shows</li>
-            <li onclick="showSearch()">Search</li>
+            <li id="searchOption" onclick="showSearch()">Search</li>            
+            <li onclick="filterByYear(2023)">2023</li>
+            <li onclick="filterByYear(2022)">2022</li>
+            <li onclick="filterByYear(2021)">2021</li>
+            <li onclick="filterByYear(2020)">2020</li>
+            <li onclick="filterByYear(2019)">2019</li>
+            <li onclick="filterByYear(2018)">2018</li>
+            <li onclick="filterByYear(2017)">2017</li>
+            <li onclick="filterByYear(2016)">2016</li>
+            <li onclick="filterByYear(2015)">2015</li>
+            <li onclick="filterByYear(2014)">2014</li>
+            <li onclick="filterByYear(2013)">2013</li>
+            <li onclick="filterByYear(2012)">2012</li>
+            <li onclick="filterByYear(2011)">2011</li>
+            <li onclick="filterByYear(2010)">2010</li>
+            <li onclick="filterByYear(2009)">2009</li>
+            <li onclick="filterByYear(2008)">2008</li>
+            <li onclick="filterByYear(2007)">2007</li>
+            <li onclick="filterByYear(2006)">2006</li>
+            <li onclick="filterByYear(2005)">2005</li>
+            <li onclick="filterByYear(2004)">2004</li>
+            <li onclick="filterByYear(2003)">2003</li>
+            <li onclick="filterByYear(2002)">2002</li>
+            <li onclick="filterByYear(2001)">2001</li>
+            <li onclick="filterByYear(2000)">2000</li>
+            <li onclick="filterByYear(1999)">1999</li>
+            <li onclick="filterByYear(1998)">1998</li>
+            <li onclick="filterByYear(1997)">1997</li>
+            <li onclick="filterByYear(1996)">1996</li>
+            <li onclick="filterByYear(1995)">1995</li>
+            <li onclick="filterByYear(1994)">1994</li>
+            <li onclick="filterByYear(1993)">1993</li>
+            <li onclick="filterByYear(1992)">1992</li>
+            <li onclick="filterByYear(1991)">1991</li>
+            <li onclick="filterByYear(1990)">1990</li>
+            <li onclick="filterByYear(1989)">1989</li>
+            <li onclick="filterByYear(1988)">1988</li>
+            <li onclick="filterByYear(1987)">1987</li>
+            <li onclick="filterByYear(1986)">1986</li>
+            <li onclick="filterByYear(1985)">1985</li>
+            <li onclick="filterByYear(1984)">1984</li>
+            <li onclick="filterByYear(1983)">1983</li>
+            <li onclick="filterByYear(1982)">1982</li>
+            <li onclick="filterByYear(1981)">1981</li>
+            <li onclick="filterByYear(1980)">1980</li>
         </ul>
         <!-- Add other sidebar content here -->
     </div>
@@ -231,7 +296,9 @@
                 });
             });
             
-        highlightedCategory = 'Films'; // Establecer la categoría resaltada
+            highlightedCategory = 'Films'; // Establecer la categoría resaltada
+            showSearchContainer(true); // Mostrar el contenedor de búsqueda
+
   
     }
 
@@ -351,8 +418,74 @@
                 });
             });
 
-        highlightedCategory = 'TV Shows'; // Establecer la categoría resaltada
+            highlightedCategory = 'TV Shows'; // Establecer la categoría resaltada
+            showSearchContainer(true); // Mostrar el contenedor de búsqueda
+
     }
+</script>
+<script>
+    // Función para mostrar u ocultar el contenedor de búsqueda
+    function showSearchContainer(show) {
+            var searchContainer = document.getElementById('searchContainer');
+            var searchOption = document.getElementById('searchOption');
+
+            if (show) {
+                searchContainer.style.display = 'block';
+                searchOption.style.display = 'list-item'; // Mostrar elemento de búsqueda
+            } else {
+                searchContainer.style.display = 'none';
+                searchOption.style.display = 'none'; // Ocultar elemento de búsqueda
+            }
+        }
+
+    // Función para filtrar por año
+function filterByYear(year) {
+    // Filtra los films por el año seleccionado
+    const filteredFilms = filmsData.filter(film => {
+        // Supongo que el año está en el nombre del film, por ejemplo, "Gladiator (2000)"
+        return film.name.includes(`(${year})`);
+    });
+
+    // Aquí puedes realizar la lógica para mostrar los films filtrados en el contenido
+    displayFilteredFilms(filteredFilms);
+}
+
+// Función para mostrar los films filtrados en el contenido
+function displayFilteredFilms(filteredFilms) {
+    // Borra el contenido actual del grid
+    const filmsGrid = document.getElementById('filmsGrid');
+    filmsGrid.innerHTML = '';
+
+    // Renderiza los films filtrados en el grid
+    filteredFilms.forEach(film => {
+        const filmCard = document.createElement('div');
+        filmCard.className = 'film-card';
+
+        const title = document.createElement('h3');
+        title.textContent = film.name;
+
+        const image = document.createElement('img');
+        image.src = film['tvg-logo'];
+        image.alt = film.name;
+        image.className = 'film-image';
+
+        const link = document.createElement('a');
+        link.href = film.link;
+        link.target = '_blank'; // Abre el enlace en una nueva pestaña
+        link.textContent = 'Watch Now';
+
+        filmCard.appendChild(title);
+        filmCard.appendChild(image);
+        filmCard.appendChild(link);
+
+        // Agrega un event listener para abrir el enlace cuando se hace clic en la tarjeta
+        filmCard.addEventListener('click', function() {
+            window.open(film.link, '_blank');
+        });
+
+        filmsGrid.appendChild(filmCard);
+    });
+}
 </script>
 
 </body>
