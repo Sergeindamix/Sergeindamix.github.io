@@ -1,158 +1,133 @@
-const btnAnterior = document.getElementById('btnAnterior');
-const btnSiguiente = document.getElementById('btnSiguiente');
-
-btnSiguiente.addEventListener('click', () => {
-	if(pagina < 1000){
-		pagina += 1;
-		cargarPeliculas();
-	}
-});
-
-btnAnterior.addEventListener('click', () => {
-	if(pagina > 1){
-		pagina -= 1;
-		cargarPeliculas();
-	}
-});
-
-const cargarPeliculas = async() => {
-	try {
-		const respuesta = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=192e0b9821564f26f52949758ea3c473&language=es-MX&page=${pagina}`);
-	
-		console.log(respuesta);
-
-		// Si la respuesta es correcta
-		if(respuesta.status === 200){
-			const datos = await respuesta.json();
-			
-			let peliculas = '';
-			datos.results.forEach(pelicula => {
-				peliculas += `
-					<div class="pelicula">
-						<img class="poster" src="https://image.tmdb.org/t/p/w500/${pelicula.poster_path}">
-						<h3 class="titulo">${pelicula.title}</h3>
-					</div>
-				`;
-			});
-
-			document.getElementById('contenedor').innerHTML = peliculas;
-
-		} else if(respuesta.status === 401){
-			console.log('Pusiste la llave mal');
-		} else if(respuesta.status === 404){
-			console.log('La pelicula que buscas no existe');
-		} else {
-			console.log('Hubo un error y no sabemos que paso');
-		}
-
-	} catch(error){
-		console.log(error);
-	}
-
-}
-
-
-  
-const realizarBusquedaTMDB = async (titulo) => {
-    try {
-        const respuesta = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
-            params: {
-                api_key: '62ef27a2db165131317f8ee3fedb705b',
-                language: 'es-ES',
-                query: titulo
-            }
-        });
-
-        if (respuesta.status === 200) {
-            return respuesta.data.results; // Devolvemos solo los resultados
-        } else {
-            throw new Error(`Error en la búsqueda de TMDB para ${titulo}. Estado: ${respuesta.status}`);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="estilos.css">
+	<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-    } catch (error) {
-        throw error;
-    }
-};
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #e0e0e0;
+            color: #1d1d1d;
+        }
 
-const eliminarAnio = (titulo) => {
-    // Utilizamos una expresión regular para eliminar el año entre paréntesis
-    return titulo.replace(/\(\d{4}\)/g, '').trim();
-};
+        .galeria {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto 100px auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
 
-// Variable para controlar la página actual
-let pagina = 1;
-const peliculasPorPagina = 20;
+        .tarjeta {
+            text-align: center;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px;
+            transition: box-shadow 0.3s ease;
+        }
 
-// Variable para verificar si ya se están cargando más películas
-let cargando = false;
+        .titulo {
+            font-size: 16px;
+            font-weight: 600;
+            color: #090909;
+        }
 
-// Función para cargar películas desde el archivo JSON
-const cargarPeliculasDesdeJson = async () => {
-    try {
-        const respuesta = await fetch('https://sergeindamix.github.io/filmore/videos.json');
-        const datosJson = await respuesta.json();
+        .portada {
+            width: 100%;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
 
-        // Función para cargar tarjetas de películas en el contenedor
-        const cargarTarjetas = async (inicio, fin) => {
-            for (let i = inicio; i < fin; i++) {
-                if (i >= datosJson.length) {
-                    break;
-                }
+        .descripcion {
+            display: none;
+            color: #000000;
+            margin-top: 10px;
+        }
 
-                const video = datosJson[i];
-                const tituloSinAnio = eliminarAnio(video.name);
-                const resultadosTMDB = await realizarBusquedaTMDB(tituloSinAnio);
+        .tarjeta:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
 
-                if (resultadosTMDB.length > 0) {
-                    const primeraPelicula = resultadosTMDB[0];
+        .tarjeta:hover .descripcion {
+            display: block;
+        }
 
-                    // Crea el HTML para la tarjeta de la película
-                    const tarjetaHTML = `
-                        <div class="pelicula">
-                            <img class="poster" src="https://image.tmdb.org/t/p/w500/${primeraPelicula.poster_path}">
-                            <h3 class="titulo">${primeraPelicula.title}</h3>
-                            <p class="descripcion">${primeraPelicula.overview}</p>
-                            <a href="${video.link}" target="_blank" rel="noopener noreferrer">Ver película</a>
-                        </div>
-                    `;
+        .paginacion {
+            position: fixed;
+            bottom: 0;
+            background: #100a1f;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px;
+        }
 
-                    // Agrega la tarjeta al contenedor
-                    document.getElementById('contenedor').insertAdjacentHTML('beforeend', tarjetaHTML);
-                }
-            }
-        };
+        .paginacion button {
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 50px;
+            width: 200px;
+            background: #241744;
+            color: #fff;
+            border-radius: 100px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: .3s ease all;
+        }
 
-        // Llamada inicial para cargar las primeras 20 películas
-        await cargarTarjetas(0, peliculasPorPagina);
+        .paginacion button:hover {
+            background: #137c32;
+        }
 
-        // Agrega el observador de scroll
-        window.addEventListener('scroll', async () => {
-            // Si ya se están cargando más películas o no hay más que cargar, sal del evento
-            if (cargando || pagina * peliculasPorPagina >= datosJson.length) {
-                return;
-            }
+        /* Estilo para la caja de texto y el botón */
+        .search-container {
+            margin-top: 20px;
+            text-align: center;
+        }
 
-            // Si el usuario ha llegado al final del documento
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-                // Indica que se está cargando más películas para evitar solicitudes concurrentes
-                cargando = true;
+        input[type="text"] {
+            padding: 10px;
+            margin-right: 10px;
+        }
 
-                // Incrementa la página y carga las siguientes 20 películas
-                pagina++;
-                const inicio = (pagina - 1) * peliculasPorPagina;
-                const fin = pagina * peliculasPorPagina;
+        button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+	<title>Sitio de peliculas</title>
+</head>
+<body>
+	<div id="galeria" class="galeria"></div>
+	<div class="contenedor" id="contenedor"></div>
+	<div id="tip-container"></div>
 
-                // Carga las siguientes películas
-                await cargarTarjetas(inicio, fin);
 
-                // Actualiza el estado de carga
-                cargando = false;
-            }
-        });
-    } catch (error) {
-        console.error('Error al cargar las películas desde TMDB:', error);
-    }
-};
-
-// Llamada inicial para cargar las primeras 20 películas
-cargarPeliculasDesdeJson();
+	<div class="paginacion">
+		<button id="btnAnterior">Anterior</button>
+		<button id="btnSiguiente">Siguiente</button>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>
