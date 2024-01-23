@@ -287,7 +287,6 @@ h3 {
 		<div class="dropdown-content">
 			<ul id="lista-archivos">
 				<li><a href="https://sergeindamix.github.io/filmore/" target="_blank">Sergeflix</a></li>
-				<li><a href="https://sergeindamix.github.io/tmdb/" target="_blank">tmdb</a></li>
 				<!-- Lista de archivos generada din�micamente -->
 			</ul>
 		</div>
@@ -319,25 +318,49 @@ h3 {
 </div>
 
 <!-- Contenido intermedio aqu�... -->
-<div style="color: #777;background-color:white;text-align:center;padding:50px 80px;text-align: justify;">
-  <h1 style="text-align:center;">Sergeindamix</h1>
-	<h3>Bienvenidos a nuestra página web dedicada a explorar las increíbles aplicaciones de audio, video e imágenes creadas con inteligencia artificial.</h3>
+<div style="color: #777; background-color: white; text-align: center; padding: 50px 80px; text-align: justify;">
+  <h1 style="text-align: center;">DRIVE SERVER</h1>
+  <h3>Bienvenidos a nuestro tutorial sobre la creación de un servidor de videos desde Google Drive con rclone y Plex.</h3>
 
-	<p>La IA ha revolucionado nuestra capacidad para generar contenido multimedia de alta calidad de forma rápida y eficiente.</p>
+  <p>Paso 1: Descarga y Configura rclone y winfsp. Puedes obtener la última versión de rclone <a href="https://rclone.org/downloads/" target="_blank">aquí</a> y <a href="https://github.com/winfsp/winfsp/releases/tag/v2.0" target="_blank">winfsp</a>. Luego, instala winfsp y configura rclone, entra en la carpeta donde instalaste rclone y en la barra de direcciones utiliza el siguiente comando <strong>cmd</strong>. Se abre linea de comandos y ahi pega esto: </p>
+  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
+    <pre style="color: #ffffff;">
+rclone config
+    </pre>
+    <button onclick="copyCodeToClipboard('rcloneConfig')">Copiar Código</button>
+  </div>
 
-	<p>Desde asistentes de voz realistas hasta imágenes hiperrealistas, la IA está transformando la forma en que interactuamos con el audio, el video y las imágenes. En esta página, encontrará información sobre las últimas innovaciones en aplicaciones de audio generadas por IA como:</p>
+  <p>Paso 2: Monta la carpeta "movies" como la unidad virtual F: con este comando rclone:</p>
+  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
+    <pre style="color: #ffffff;">
+rclone mount remote:/movies F:
+    </pre>
+    <button onclick="copyCodeToClipboard('rcloneMount')">Copiar Código</button>
+  </div>
+  <ul>
+    <li>Asegúrate de reemplazar "remote" con el nombre de tu configuración de Google Drive en rclone.</li>  
+    <li>Después de ejecutar este comando, tu carpeta "movies" debería ser accesible como la unidad F:.</li>
+  </ul>
 
-	<ul>
-	<li>Lectura de textos</li>  
-	<li>Síntesis de voz</li>
-	<li>Eliminación de ruido</li>
-	</ul>
+  <p>Después de configurar rclone, instala Plex y añade una nueva biblioteca:</p>
+  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
+    <pre style="color: #ffffff;">
+rclone config
+Plex Dashboard > Libraries > Add Library > Movies > Specify Name > Add folders (Selecciona la unidad F:)
+    </pre>
+    <button onclick="copyCodeToClipboard('plexLibrary')">Copiar Código</button>
+  </div>
 
-	<p>También cubriremos fascinantes avances en video generado por IA, desde avatares digitales hasta efectos especiales de última generación. Asimismo, exploraremos cómo la IA está revolucionando la creación y edición de imágenes a través de técnicas como la generación automática de arte.</p>
+  <p>También cubriremos otros detalles...</p>
 
-	<p>Nuestro objetivo es mantenerlo informado sobre cómo estas asombrosas tecnologías están cambiando los campos del audio, el video y la imagen.</p>
+  <p>Nuestro objetivo es mostrarte cómo disfrutar de las asombrosas posibilidades que ofrece esta configuración...</p>
 
-	<h2>Esperamos que disfrute aprendiendo sobre las increíbles posibilidades que la IA ofrece para crear contenido multimedia innovador. ¡Comencemos!</h2></div>
+  <h2>Esperamos que disfrutes aprendiendo sobre las increíbles posibilidades que te brinda este servidor.</h2>
+</div>
+
+
+
+
 
 <!-- Bloque 2 con Parallax -->
 <div class="bgimg-2">
@@ -356,6 +379,47 @@ h3 {
 </div>
 
 <!-- Contenido intermedio aqu�... -->
+<div style="color: #777; background-color: white; text-align: center; padding: 50px 80px; text-align: justify;">
+  <h1 style="text-align: center;">REMOTE SERVER</h1>
+  <h3>Lleva tu servidor local a las nubes con Pyngrok</h3>
+
+  <p>Paso 1: Descarga y Configura rclone. Puedes obtener la última versión de rclone <a href="https://rclone.org/downloads/" target="_blank">aquí</a>. Luego, configura rclone, entra en la carpeta donde instalaste rclone y en la barra de direcciones utiliza el siguiente comando <strong>cmd</strong>. Se abre linea de comandos y ahi pega esto: </p>
+  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
+    <pre style="color: #ffffff;">
+rclone config
+    </pre>
+    <button onclick="copyCodeToClipboard('rcloneConfig')">Copiar Código</button>
+  </div>
+
+  <p>Paso 2: Sirve la carpeta "movies" como contenido online con este comando rclone:</p>
+  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
+    <pre style="color: #ffffff;">
+      rclone serve http remote:/movies
+    </pre>
+    <button onclick="copyCodeToClipboard('rcloneMount')">Copiar Código</button>
+  </div>
+  <ul>
+    <li>Asegúrate de reemplazar "remote" con el nombre de tu configuración de Google Drive en rclone.</li>  
+    <li>Después de ejecutar este comando, tu carpeta "movies" debería ser accesible en <a href="http://localhost:8080" target="_blank">localhost:8080</a>.</li>
+  </ul>
+
+  <p>Paso 3: Haz que tu servidor sea accesible en línea con Pyngrok. Descarga e instala Pyngrok desde <a href="https://ngrok.com/download" target="_blank">aquí</a>. Luego, ejecuta los siguientes comandos abriendo otra terminal cmd:</p>
+  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
+    <pre style="color: #ffffff;">
+      ngrok config add-authtoken "tu token"
+      pyngrok http 8080
+    </pre>
+    <button onclick="copyCodeToClipboard('pyngrokCommand')">Copiar Código</button>
+  </div>
+  
+  <p>Listo, copia la url generada y abrela con cualquier browser y veras todo el contenido de "movies"</p>
+
+  <p>Nuestro objetivo es mostrarte cómo disfrutar de las asombrosas posibilidades que ofrece esta configuración...</p>
+
+  <h2>Esperamos que disfrutes aprendiendo sobre las increíbles posibilidades que te brinda este servidor.</h2>
+</div>
+
+
 
 <!-- Bloque 4 con Parallax -->
 <div class="bgimg-1">
@@ -410,6 +474,18 @@ function openPopup(url, title, width, height) {
 // Cargar la lista de archivos cuando se carga la p�gina
 window.onload = cargarListaArchivos;
 
+</script>
+<script>
+  function copyCodeToClipboard(codeId) {
+    const codeElement = document.querySelector(`#${codeId} pre`);
+    const textarea = document.createElement('textarea');
+    textarea.value = codeElement.innerText;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert('Código copiado al portapapeles');
+  }
 </script>
 </body>
 </html>
