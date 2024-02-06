@@ -1,0 +1,115 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                margin: 0;
+                padding: 0;
+            }
+
+            #vcontainer {
+                display: flex;
+                width: 100%;
+            }
+
+            #vplayer {
+                flex: 1;
+                background: #000;
+                overflow: hidden;
+            }
+
+            video {
+                width: 100%;
+                height: auto;
+            }
+
+            #vplaylist {
+                width: 300px;
+                background: #fff;
+                box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+            }
+
+            #vplaylist li {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                list-style: none;
+            }
+
+            #vplaylist li a {
+                text-decoration: none;
+                color: #333;
+            }
+
+            #vplaylist li:hover {
+                background: #f5f5f5;
+            }
+
+            #vplaylist .active {
+                background: #23a6b3;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="vcontainer">
+            <div id="vplayer">
+                <video controls='' id='video' preload='auto' tabindex='0' type='video/mp4'>
+                    <!-- Agregar aquí la fuente del primer video -->
+                </video>
+            </div>
+            <ul id="vplaylist">
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/360957.mp4">Uno Para Morir (2023)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/373367.mp4">Revenant: El renacido (2015)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/373368.mp4">La Guerra de los Botones (2011)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/373325.mp4">El Unico Sobreviviente (2013)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/378303.mp4">El Ogro: La maldición de Ellensford (2008)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/378305.mp4">Poseidon Rex (2014)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/378306.mp4">Que Leones (2019)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/378307.mp4">Beneath Loch Ness (2001)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/378308.mp4">Tortugas Ninja 2: Fuera de las Sombras (2016)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/378989.mp4">12 Horas para sobrevivir: El Año de la Elección (2016)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/378991.mp4">xXx 2: Estado de Emergencia (2005)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/378992.mp4">Tribal - Caza Feroz (2020)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/378993.mp4">El avión del dinero (2020)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/378999.mp4">Escolta (2019)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/379002.mp4">Restart The Earth (2021)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/379003.mp4">Junto a los dioses: Los últimos 49 días (2018)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/379004.mp4">Laberinto del terror (2021)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/379142.mkv">Un sueño posible (2009)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/379203.mkv">Shrek 2 (2004)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/379204.mkv">Shrek tercero (2007)</a></li>
+    
+        </ul>
+    </div>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' type='text/javascript'></script>
+    <script>
+        var video;var vplaylist;var vtracks;var vcurrent;initvideo();function initvideo(){vcurrent=0;video=$('video');vplaylist=$('#vplaylist');vtracks=vplaylist.find('li a');vlen=vtracks.length-1;video[0].volume=1;vplaylist.find('a').click(function(e){e.preventDefault();link=$(this);vcurrent=link.parent().index();runvideo(link,video[0])});video[0].addEventListener('ended',function(e){vcurrent++;if(vcurrent>vlen){vcurrent=0;link=vplaylist.find('a')[0]}else{link=vplaylist.find('a')[vcurrent]}runvideo($(link),video[0])})}function runvideo(link,player){player.src=link.attr('href');par=link.parent();par.addClass('active').siblings().removeClass('active');video[0].load();video[0].play()}
+    </script>
+</body>
+</html>

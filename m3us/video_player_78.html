@@ -1,0 +1,115 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                margin: 0;
+                padding: 0;
+            }
+
+            #vcontainer {
+                display: flex;
+                width: 100%;
+            }
+
+            #vplayer {
+                flex: 1;
+                background: #000;
+                overflow: hidden;
+            }
+
+            video {
+                width: 100%;
+                height: auto;
+            }
+
+            #vplaylist {
+                width: 300px;
+                background: #fff;
+                box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+            }
+
+            #vplaylist li {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                list-style: none;
+            }
+
+            #vplaylist li a {
+                text-decoration: none;
+                color: #333;
+            }
+
+            #vplaylist li:hover {
+                background: #f5f5f5;
+            }
+
+            #vplaylist .active {
+                background: #23a6b3;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="vcontainer">
+            <div id="vplayer">
+                <video controls='' id='video' preload='auto' tabindex='0' type='video/mp4'>
+                    <!-- Agregar aquí la fuente del primer video -->
+                </video>
+            </div>
+            <ul id="vplaylist">
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280199.mkv">Digimon Adventure tri. 1: Reunión (2015)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280200.mkv">Digimon Adventure tri. 5: Simbiosis (2017)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280201.mkv">Fullmetal Alchemist: El conquistador de Shambala (2005)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280202.mp4">Kizumonogatari - [2]: ~Nekketsu-hen~ (2016)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280203.mp4">Kizumonogatari - [3]: ~Reiketsu-hen~ (2017)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280204.mkv">Fullmetal Alchemist: La estrella sagrada de Milos (2011)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280205.mkv">Gurren Lagann: El fin de la infancia (2008)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280206.mp4">Higashi no Eden Movie I: The King of Eden (2009)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280207.mkv">The Seven Deadly Sins: Prisioneros del cielo (2018)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280208.mkv">One Piece: Estampida (2019)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280209.mkv">My Hero Academia: El despertar de los héroes (2019)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280210.mkv">La película Pokémon: El poder de todos (2018)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280211.mkv">Ni no Kuni (2019)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280212.mp4">Kizumonogatari - [1]: ~Tekketsu-hen~ (2016)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280213.mkv">Resident Evil: Vendetta (2017)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280214.mkv">Pokémon:  Volcanion y la maravilla mecánica (2016)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280215.mkv">Neon Genesis Evangelion: Death Rebirth (1997)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280216.mkv">Hiroshima (1983)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280217.mkv">Resident Evil: Degeneración (2008)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/280218.mkv">Genesect y el despertar de una leyenda (2013)</a></li>
+    
+        </ul>
+    </div>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' type='text/javascript'></script>
+    <script>
+        var video;var vplaylist;var vtracks;var vcurrent;initvideo();function initvideo(){vcurrent=0;video=$('video');vplaylist=$('#vplaylist');vtracks=vplaylist.find('li a');vlen=vtracks.length-1;video[0].volume=1;vplaylist.find('a').click(function(e){e.preventDefault();link=$(this);vcurrent=link.parent().index();runvideo(link,video[0])});video[0].addEventListener('ended',function(e){vcurrent++;if(vcurrent>vlen){vcurrent=0;link=vplaylist.find('a')[0]}else{link=vplaylist.find('a')[vcurrent]}runvideo($(link),video[0])})}function runvideo(link,player){player.src=link.attr('href');par=link.parent();par.addClass('active').siblings().removeClass('active');video[0].load();video[0].play()}
+    </script>
+</body>
+</html>

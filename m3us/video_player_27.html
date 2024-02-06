@@ -1,0 +1,115 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                margin: 0;
+                padding: 0;
+            }
+
+            #vcontainer {
+                display: flex;
+                width: 100%;
+            }
+
+            #vplayer {
+                flex: 1;
+                background: #000;
+                overflow: hidden;
+            }
+
+            video {
+                width: 100%;
+                height: auto;
+            }
+
+            #vplaylist {
+                width: 300px;
+                background: #fff;
+                box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+            }
+
+            #vplaylist li {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                list-style: none;
+            }
+
+            #vplaylist li a {
+                text-decoration: none;
+                color: #333;
+            }
+
+            #vplaylist li:hover {
+                background: #f5f5f5;
+            }
+
+            #vplaylist .active {
+                background: #23a6b3;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="vcontainer">
+            <div id="vplayer">
+                <video controls='' id='video' preload='auto' tabindex='0' type='video/mp4'>
+                    <!-- Agregar aquí la fuente del primer video -->
+                </video>
+            </div>
+            <ul id="vplaylist">
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387165.mkv">Coldplay A Head Full of Dreams (2018)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387166.mp4">Coldplay Ghost Stories (2014)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387167.mkv">Coldplay Live 2012 (2012)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387168.mkv">Coldplay Rock in Rio 2011 (2011)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387169.mkv">Collective Soul Home (2006)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387170.mkv">Concert for George (2003)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387171.mkv">Cypress Hill - Live At Hurricane Festival 2004 (2004)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387172.mkv">Cypress Hill live - Live au Woo-Hah! festival 2015 (2015)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387173.mkv">Dance Commander - CSC St Julien de Concelles September 14th 2019</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387174.mkv">David Guetta Miami Ultra Music Festival (2019)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387175.mkv">Def Leppard Viva! Hysteria (2013)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387176.mkv">Demi Lovato iggy Azalea Certified Superfanfest (2014)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387177.mkv">Die Antwoord Live In Lollapalooza Chile (2016)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387178.mkv">Dream Theater Live At Luna Park (2013)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387179.mkv">Ed Sheeran - Moscow 2019 LIVE!</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387180.mkv">Elton John 4K full concert in Lille, France. 18.06.19</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387181.mkv">Elton John London Radio 2 Live In Hyde Park (2016)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387182.mkv">Eminem Live from New York City 2005 (2005)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387183.mkv">Eminem Live From New York City Remasterizado (2015)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/387184.mkv">Eric Clapton Live in San Diego (2007)</a></li>
+    
+        </ul>
+    </div>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' type='text/javascript'></script>
+    <script>
+        var video;var vplaylist;var vtracks;var vcurrent;initvideo();function initvideo(){vcurrent=0;video=$('video');vplaylist=$('#vplaylist');vtracks=vplaylist.find('li a');vlen=vtracks.length-1;video[0].volume=1;vplaylist.find('a').click(function(e){e.preventDefault();link=$(this);vcurrent=link.parent().index();runvideo(link,video[0])});video[0].addEventListener('ended',function(e){vcurrent++;if(vcurrent>vlen){vcurrent=0;link=vplaylist.find('a')[0]}else{link=vplaylist.find('a')[vcurrent]}runvideo($(link),video[0])})}function runvideo(link,player){player.src=link.attr('href');par=link.parent();par.addClass('active').siblings().removeClass('active');video[0].load();video[0].play()}
+    </script>
+</body>
+</html>

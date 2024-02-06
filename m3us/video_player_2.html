@@ -1,0 +1,115 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                margin: 0;
+                padding: 0;
+            }
+
+            #vcontainer {
+                display: flex;
+                width: 100%;
+            }
+
+            #vplayer {
+                flex: 1;
+                background: #000;
+                overflow: hidden;
+            }
+
+            video {
+                width: 100%;
+                height: auto;
+            }
+
+            #vplaylist {
+                width: 300px;
+                background: #fff;
+                box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+            }
+
+            #vplaylist li {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                list-style: none;
+            }
+
+            #vplaylist li a {
+                text-decoration: none;
+                color: #333;
+            }
+
+            #vplaylist li:hover {
+                background: #f5f5f5;
+            }
+
+            #vplaylist .active {
+                background: #23a6b3;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="vcontainer">
+            <div id="vplayer">
+                <video controls='' id='video' preload='auto' tabindex='0' type='video/mp4'>
+                    <!-- Agregar aquí la fuente del primer video -->
+                </video>
+            </div>
+            <ul id="vplaylist">
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397005.mp4">Annette (Sub)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397006.mp4">Annie (Lat)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397007.mp4">Annie (Sub)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397008.mp4">A Piece of My Heart (Sub)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397009.mkv">Artistas y Modelos (Dual)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397010.mkv">August Rush  Escucha tu Destino (Dual)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397012.mkv">A Week Away (Dual)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397014.mkv">Bailando Nace el Amor (Dual)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397015.mkv">Bailar en la oscuridad (Dual)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397016.mp4">Banjo (Lat)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397017.mp4">Basmati Blues (Sub)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397018.mp4">Becks (Sub)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397019.mp4">Been so Long  Y Todo CambiÃ³ (Lat)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397020.mp4">Been so Long  Y Todo CambiÃ³ (Sub)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397021.mp4">Ben Platt  Live from Radio City Music Hall (Sub)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397022.mp4">Beyond the Sea (Sub)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397024.mp4">Black Is King (Sub)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397025.mkv">Blanca Nieves y los Tres Chiflados (Dual)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397026.mkv">Blues Brothers 2000 (El Ritmo Continua) (Dual)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/397027.mkv">Breakdance (Dual)</a></li>
+    
+        </ul>
+    </div>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' type='text/javascript'></script>
+    <script>
+        var video;var vplaylist;var vtracks;var vcurrent;initvideo();function initvideo(){vcurrent=0;video=$('video');vplaylist=$('#vplaylist');vtracks=vplaylist.find('li a');vlen=vtracks.length-1;video[0].volume=1;vplaylist.find('a').click(function(e){e.preventDefault();link=$(this);vcurrent=link.parent().index();runvideo(link,video[0])});video[0].addEventListener('ended',function(e){vcurrent++;if(vcurrent>vlen){vcurrent=0;link=vplaylist.find('a')[0]}else{link=vplaylist.find('a')[vcurrent]}runvideo($(link),video[0])})}function runvideo(link,player){player.src=link.attr('href');par=link.parent();par.addClass('active').siblings().removeClass('active');video[0].load();video[0].play()}
+    </script>
+</body>
+</html>

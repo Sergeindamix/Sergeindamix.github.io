@@ -1,0 +1,115 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                margin: 0;
+                padding: 0;
+            }
+
+            #vcontainer {
+                display: flex;
+                width: 100%;
+            }
+
+            #vplayer {
+                flex: 1;
+                background: #000;
+                overflow: hidden;
+            }
+
+            video {
+                width: 100%;
+                height: auto;
+            }
+
+            #vplaylist {
+                width: 300px;
+                background: #fff;
+                box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+            }
+
+            #vplaylist li {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                list-style: none;
+            }
+
+            #vplaylist li a {
+                text-decoration: none;
+                color: #333;
+            }
+
+            #vplaylist li:hover {
+                background: #f5f5f5;
+            }
+
+            #vplaylist .active {
+                background: #23a6b3;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="vcontainer">
+            <div id="vplayer">
+                <video controls='' id='video' preload='auto' tabindex='0' type='video/mp4'>
+                    <!-- Agregar aquí la fuente del primer video -->
+                </video>
+            </div>
+            <ul id="vplaylist">
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278865.mkv">Hermanastra siniestra (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278866.mkv">Heart Shot (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278867.mkv">პაპანაქება (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278868.mkv">First Love</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278869.mkv">Hoy se arregla el mundo (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278870.mkv">Hawa (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278871.mkv">Hotel Transilvania: Transformanía (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278872.mkv">Holiday Harmony (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278873.mkv">The Hatching</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278874.mkv">Incompatibles 2 (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278875.mkv">Jaula (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278876.mkv">Hogar a la deriva (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278879.mkv">Jackass Forever (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278880.mkv">Immanence (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278881.mkv">Jennifer Lopez: Halftime (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278882.mkv">LEGO Star Wars: Vacaciones de verano (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278883.mkv">Kimi (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278884.mkv">La burbuja (2022)</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278885.mkv">Indemnity</a></li>
+    
+        <li><a href="http://paputv.xyz:8080/movie/Roberto10/Roberto10/278886.mkv">La chica salvaje (2022)</a></li>
+    
+        </ul>
+    </div>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' type='text/javascript'></script>
+    <script>
+        var video;var vplaylist;var vtracks;var vcurrent;initvideo();function initvideo(){vcurrent=0;video=$('video');vplaylist=$('#vplaylist');vtracks=vplaylist.find('li a');vlen=vtracks.length-1;video[0].volume=1;vplaylist.find('a').click(function(e){e.preventDefault();link=$(this);vcurrent=link.parent().index();runvideo(link,video[0])});video[0].addEventListener('ended',function(e){vcurrent++;if(vcurrent>vlen){vcurrent=0;link=vplaylist.find('a')[0]}else{link=vplaylist.find('a')[vcurrent]}runvideo($(link),video[0])})}function runvideo(link,player){player.src=link.attr('href');par=link.parent();par.addClass('active').siblings().removeClass('active');video[0].load();video[0].play()}
+    </script>
+</body>
+</html>
