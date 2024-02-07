@@ -895,5 +895,76 @@
     <script>
         var video;var vplaylist;var vtracks;var vcurrent;initvideo();function initvideo(){vcurrent=0;video=$('video');vplaylist=$('#vplaylist');vtracks=vplaylist.find('li a');vlen=vtracks.length-1;video[0].volume=1;vplaylist.find('a').click(function(e){e.preventDefault();link=$(this);vcurrent=link.parent().index();runvideo(link,video[0])});video[0].addEventListener('ended',function(e){vcurrent++;if(vcurrent>vlen){vcurrent=0;link=vplaylist.find('a')[0]}else{link=vplaylist.find('a')[vcurrent]}runvideo($(link),video[0])})}function runvideo(link,player){player.src=link.attr('href');par=link.parent();par.addClass('active').siblings().removeClass('active');video[0].load();video[0].play()}
     </script>
+    <script>
+    var video;
+    var vplaylist;
+    var vtracks;
+    var vcurrent;
+
+    initvideo();
+
+    function initvideo() {
+        vcurrent = 0;
+        video = $('video');
+        vplaylist = $('#vplaylist');
+        vtracks = vplaylist.find('li a');
+        vlen = vtracks.length - 1;
+        video[0].volume = 1;
+
+        // Asignar evento de clic a los elementos de la lista de reproducción
+        vplaylist.find('a').click(function (e) {
+            e.preventDefault();
+            var link = $(this);
+            vcurrent = link.parent().index();
+            runvideo(link, video[0]);
+        });
+
+        // Agregar el evento de finalización de video
+        video[0].addEventListener('ended', function (e) {
+            vcurrent++;
+            if (vcurrent > vlen) {
+                vcurrent = 0;
+            }
+            var link = vplaylist.find('a')[vcurrent];
+            runvideo($(link), video[0]);
+        });
+
+        // Iniciar el primer video
+        runvideo($(vplaylist.find('a')[0]), video[0]);
+    }
+
+    function runvideo(link, player) {
+        var src = link.attr('href');
+        var fileType = src.split('.').pop().toLowerCase(); // Obtener la extensión del archivo
+
+        // Seleccionar el tipo de fuente de video según la extensión del archivo
+        var sourceType;
+        switch (fileType) {
+            case 'mp4':
+                sourceType = 'video/mp4';
+                break;
+            case 'mkv':
+                sourceType = 'video/x-matroska';
+                break;
+            case 'avi':
+                sourceType = 'video/avi';
+                break;
+            default:
+                sourceType = 'video/mp4'; // Establecer un tipo de fuente predeterminado para otras extensiones
+        }
+
+        // Actualizar la fuente del reproductor de video
+        player.src = src;
+        player.type = sourceType;
+
+        // Actualizar la clase activa en la lista de reproducción
+        link.parent().addClass('active').siblings().removeClass('active');
+
+        // Cargar y reproducir el video
+        video[0].load();
+        video[0].play();
+    }
+</script>
+
 </body>
 </html>
