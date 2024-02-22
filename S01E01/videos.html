@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/7.14.3/video.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        #vcontainer {
+            display: flex;
+            width: 100%;
+        }
+
+        #vplayer {
+            flex: 1;
+            background: #000;
+            overflow: hidden; /* Ocultar el reproductor de video que se desplaza fuera de la pantalla */
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+        }
+
+        #vplaylist {
+            width: 300px;
+            background: #fff;
+            box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* Hacer que la lista de reproducción tenga un desplazamiento vertical si es necesario */
+            max-height: 100vh; /* Limitar la altura de la lista de reproducción al 100% de la altura de la ventana */
+        }
+
+        #vplaylist li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            list-style: none;
+        }
+
+        #vplaylist li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        #vplaylist li:hover {
+            background: #f5f5f5;
+        }
+
+        #vplaylist .active {
+            background: #23a6b3;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="vcontainer">
+        <div id="vplayer">
+            <video controls='' id='video' preload='auto' tabindex='0' type='video/mp4'>
+                <!-- Agregar aquí la fuente del primer video -->
+            </video>
+        </div>
+        <ul id="vplaylist">
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/287491.mkv">Krypto the Superdog S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/287523.mp4">Las aventuras de Jackie Chan S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/287688.mkv">Los pitufos S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/287742.mkv">La Patrulla Canina S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/287767.mkv">Pinky, Elvira y Cerebro S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/287779.mp4">Pokémon S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/421203.mkv">¿Qué pasaría si...? S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/288845.mkv">Scooby-Doo! Misterios, S. A. S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323606.mkv">Roma S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/322965.mkv">Dahmer - Monstruo: La historia de Jeffrey Dahmer S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323378.avi">El equipo A S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321846.mkv">Smallville S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323730.mkv">Prison Break S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321836.mkv">Academia de vampiros S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/320614.mkv">Shokugeki no Soma S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323220.mkv">Saikin Yatotta Maid ga Ayashii S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323072.mkv">El pequeño Tom S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/322666.mkv">Beckham: Salva a nuestro equipo S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/322436.mkv">Becoming Elizabeth S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323185.mkv">Blockbuster S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323195.mkv">Blood & Treasure S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/322946.mkv">Chernobyl S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/322936.mkv">Cachorros fantasmas S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/296561.mkv">Caleidoscopio S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/322923.mkv">Caminantes: La ruta del horror S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321760.mkv">Capitani S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/296618.mkv">Cazar Asesinos S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323062.mkv">Dr. Death S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/322910.mkv">Déjame entrar S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/296848.mkv">Segundas nupcias y anhelos S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/296865.mkv">After the Verdict S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321784.mkv">Manifest S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/322901.mkv">Califato S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321714.mp4">CSI: Vegas S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321220.mp4">Matrimonio con hijos S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321143.mkv">Big Sky S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321626.mkv">Black Monday S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321656.mkv">¡Qué susto, tía! S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/320996.mkv">Break Point S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321115.mkv">Stargirl S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/319889.mkv">The Last of Us S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/322767.mp4">Tanked S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/298851.mkv">Dulceida al desnudo S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321108.mkv">Dualidad S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321104.mkv">El Buki: Las letras de mi historia S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/321100.mkv">El Comandante Fort S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/320740.mkv">Los ensayos S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/320604.mkv">El club de la medianoche S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/320595.mkv">El hombre contra la abeja S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/320586.mkv">El chico malo S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/402196.mp4">A mano limpia S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/306527.mp4">Sin tetas no hay paraíso S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/427066.mp4">Perdona nuestros pecados S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/322373.mp4">La Reina del Sur S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323110.mp4">La que no podía amar S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323471.mkv">Vikingos S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323560.mkv">The Last Kingdom S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/323851.mp4">Dragon Ball Super S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/402256.mp4">Rubí S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/326762.mp4">Dragon Ball Heroes S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/326794.mkv">Salvados por la campana S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/326832.mkv">Cebollitas S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/326862.mkv">Embrujadas S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/358741.mkv">Alégrame el día S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/429306.mkv">Naruto S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/329886.mkv">3 tonelada$: Atraco al Banco Central de Brasil S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/329889.mkv">Por trece razones S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/358735.mkv">42 días en la oscuridad S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/330603.mkv">800 metros S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/332640.mkv">9-1-1: Lone Star S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/332674.mkv">Contraataque S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/332754.mkv">Halo S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/332763.mkv">Inspectora Koo S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/332775.mkv">La Brea S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/332807.mkv">Los protegidos: A.D.N. S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/332813.mkv">MacGyver S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/333509.mkv">Toy Boy S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/333527.mkv">Supergirl S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/333679.mkv">La Casa de Papel S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/358590.mp4">Alas rotas S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/334315.mp4">Amar y temer S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/334406.mp4">Amor a mil S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/377718.mkv">Clarissa Explains It All S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/377784.mkv">D.C.: La Biblia continúa S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/377796.mkv">Pitch Perfect: Bumper in Berlin S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/377802.mkv">Digman! S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/377851.mkv">El mundo de Beakman S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/377903.mkv">Ella Era Bonita S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/377919.mkv">Ghosts S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/377926.mkv">iCarly S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/377951.mkv">Kenan & Kel S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378007.mkv">Las Seguidoras S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378311.mp4">101 Dalmatas la serie S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378323.mkv">Viajeros en el tiempo S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378419.mp4">ALF S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378521.mp4">Animorphs S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378547.mkv">Automan S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378560.avi">Combat! S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378591.mp4">Miami Vice S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378704.mp4">Where's Wally? S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378716.mkv">Drake y Josh S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378776.mkv">Captain Scarlet and the Mysterons S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378802.mkv">El hombre de la Atlántida S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378816.avi">El Show de Super Mario Bros S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/378870.mkv">El Hombre Nuclear S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379349.mp4">Barrabrava S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379357.mp4">Las brujas de Mayfair de Anne Rice S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379362.mp4">Madre de alquiler S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379386.mkv">YOU S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379426.mp4">Yo nunca S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379464.mkv">Yakamoz S-245 S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379471.mkv">Woo, Una Abogada Extraordinaria S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379485.mkv">Wanna Marchi: La telestafadora de  Italia S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379489.mkv">Vincenzo S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379509.mkv">Vikingos: Valhalla S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379524.mkv">Vikingos S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379613.mkv">Vigilante S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379436.mkv">Merlina S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379620.mkv">Yo acoso S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379628.mkv">Wellmania S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379636.mkv">Veinticinco, veintiuno S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379652.mkv">Van Helsing S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379710.mp4">Valeria S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379734.mp4">Vagabond S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379750.mp4">Cómo desbloquear a mi jefe S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379762.mp4">Bajo el paraguas de la reina S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379789.mkv">Una serie de eventos desafortunados S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379927.mkv">Una Segunda Oportunidad: Escuela de Gimnasia S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379937.mkv">Bonus Family S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/379947.mkv">Los Soprano S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380033.mkv">Un mundo de juegos S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380042.mkv">Un lugar para soñar S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380084.mkv">Maternidad activada S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380090.mp4">Un caballero y una joven dama S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380114.mp4">Un amor tan hermoso S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380138.mkv">Rabo de Peixe S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380145.mp4">Tú, yo y ella S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380195.mkv">Tribunal de menores S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380205.mkv">Tríada S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380213.mkv">Transatlántico S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380220.mkv">Traición S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380225.mkv">Trabajar: Eso que hacemos todo el día S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380229.mkv">Top Boy S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380246.mkv">Todos quieren salvarse S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380253.mkv">Todos los días la misma noche S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380258.mkv">Todas las veces que nos enamoramos S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380267.mkv">Titanes S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380316.mkv">The Witcher: El origen de la sangre S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380323.mkv">The Witcher S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380345.mp4">The Walking Dead S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380445.mkv">The Umbrella Academy S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380475.mkv">The Sinner S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380508.mkv">El Secreto de la Familia Greco S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/380518.mp4">The Ranch S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381042.mkv">The OA S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381058.mkv">El Último Reino S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381105.mkv">El interés del amor S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381121.mkv">The I-Land S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381128.mp4">La buena mala madre S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381142.mkv">La gloria S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381157.mkv">The Gift S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381181.mkv">The Flash S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381359.mkv">Goles en contra S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381365.mkv">Bolsa de Valores S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381371.mkv">The Crown S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381422.mp4">The Blacklist S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381565.mkv">Terim S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381569.mkv">Temporada de verano S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381577.mkv">Tormenta de Navidad S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381584.mkv">Lobo Adolescente S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381683.mp4">Sweet Tooth S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381700.mkv">Supergirl S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381826.mkv">Super PupZ S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381835.mkv">Super Crooks S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381848.mkv">La Ley de los Audaces S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381909.mkv">Stranger Things S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381943.mkv">Los virtuosos Gemstone S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/381964.mkv">Lucifer S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/382057.mkv">Hércules: Los viajes legendarios S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/382188.mkv">Cuentos de la cripta S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/382282.mkv">Beauty and the Beast S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/382337.mp4">La Isla de la Fantasía S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/382453.mkv">La Mujer Biónica S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/382513.mp4">La mujer maravilla S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/382573.mkv">Airwolf S01 E01</a></li>
+
+        <li><a href="http://paputv.xyz:8080/series/Roberto10/Roberto10/382656.mkv">Baywatch: Guardianes de la bahía S01 E01</a></li>
+
+        </ul>
+    </div>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' type='text/javascript'></script>
+    <script>
+        var video;var vplaylist;var vtracks;var vcurrent;initvideo();function initvideo(){vcurrent=0;video=$('video');vplaylist=$('#vplaylist');vtracks=vplaylist.find('li a');vlen=vtracks.length-1;video[0].volume=1;vplaylist.find('a').click(function(e){e.preventDefault();link=$(this);vcurrent=link.parent().index();runvideo(link,video[0])});video[0].addEventListener('ended',function(e){vcurrent++;if(vcurrent>vlen){vcurrent=0;link=vplaylist.find('a')[0]}else{link=vplaylist.find('a')[vcurrent]}runvideo($(link),video[0])})}function runvideo(link,player){player.src=link.attr('href');par=link.parent();par.addClass('active').siblings().removeClass('active');video[0].load();video[0].play()}
+    </script>
+</body>
+</html>
