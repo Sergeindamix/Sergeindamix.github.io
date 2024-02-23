@@ -376,55 +376,6 @@ Plex Dashboard > Libraries > Add Library > Movies > Specify Name > Add folders (
 </div>
 
 <!-- Contenido intermedio aqu�... -->
-
-<!-- Bloque 3 con Parallax -->
-<div class="bgimg-3">
-  <div class="caption">
-    <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">SCROLL UP</span>
-  </div>
-</div>
-
-<!-- Contenido intermedio aqu�... -->
-<div style="color: #777; background-color: white; text-align: center; padding: 50px 80px; text-align: justify;">
-  <h1 style="text-align: center;">REMOTE SERVER</h1>
-  <h3>Lleva tu servidor local a las nubes con Pyngrok</h3>
-
-  <p>Paso 1: Descarga y Configura rclone. Puedes obtener la última versión de rclone <a href="https://rclone.org/downloads/" target="_blank">aquí</a>. Luego, configura rclone, entra en la carpeta donde instalaste rclone y en la barra de direcciones utiliza el siguiente comando <strong>cmd</strong>. Se abre linea de comandos y ahi pega esto: </p>
-  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
-    <pre style="color: #ffffff;">
-rclone config
-    </pre>
-    <button onclick="copyCodeToClipboard('rcloneConfig')">Copiar Código</button>
-  </div>
-
-  <p>Paso 2: Sirve la carpeta "movies" como contenido online con este comando rclone:</p>
-  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
-    <pre style="color: #ffffff;">
-      rclone serve http remote:/movies
-    </pre>
-    <button onclick="copyCodeToClipboard('rcloneMount')">Copiar Código</button>
-  </div>
-  <ul>
-    <li>Asegúrate de reemplazar "remote" con el nombre de tu configuración de Google Drive en rclone.</li>  
-    <li>Después de ejecutar este comando, tu carpeta "movies" debería ser accesible en <a href="http://localhost:8080" target="_blank">localhost:8080</a>.</li>
-  </ul>
-
-  <p>Paso 3: Haz que tu servidor sea accesible en línea con Pyngrok. Descarga e instala Pyngrok desde <a href="https://ngrok.com/download" target="_blank">aquí</a>. Luego, ejecuta los siguientes comandos abriendo otra terminal cmd:</p>
-  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
-    <pre style="color: #ffffff;">
-      ngrok config add-authtoken "tu token"
-      pyngrok http 8080
-    </pre>
-    <button onclick="copyCodeToClipboard('pyngrokCommand')">Copiar Código</button>
-  </div>
-  
-  <p>Listo, copia la url generada y abrela con cualquier browser y veras todo el contenido de "movies"</p>
-
-  <p>Nuestro objetivo es mostrarte cómo disfrutar de las asombrosas posibilidades que ofrece esta configuración...</p>
-
-  <h2>Esperamos que disfrutes aprendiendo sobre las increíbles posibilidades que te brinda este servidor.</h2>
-</div>
-
 <div class="container">
         <h1>Tutorial: Transmisión de Video en Vivo con Nginx</h1>
         <p>Bienvenido al tutorial sobre cómo configurar y usar un servidor de video en vivo con Nginx. En este tutorial, aprenderás cómo configurar un servidor de video en vivo usando Nginx y cómo crear una página web para interactuar con el video transmitido.</p>
@@ -551,6 +502,56 @@ stopButton.addEventListener('click', () => {
 });
         </code></pre>
     </div>
+
+<!-- Bloque 3 con Parallax -->
+<div class="bgimg-3">
+  <div class="caption">
+    <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">SCROLL UP</span>
+  </div>
+</div>
+
+<!-- Contenido intermedio aqu�... -->
+<div style="color: #777; background-color: white; text-align: center; padding: 50px 80px; text-align: justify;">
+  <h1 style="text-align: center;">REMOTE SERVER</h1>
+  <h3>Lleva tu servidor local a las nubes con Pyngrok</h3>
+
+  <p>Paso 1: Descarga y Configura rclone. Puedes obtener la última versión de rclone <a href="https://rclone.org/downloads/" target="_blank">aquí</a>. Luego, configura rclone, entra en la carpeta donde instalaste rclone y en la barra de direcciones utiliza el siguiente comando <strong>cmd</strong>. Se abre linea de comandos y ahi pega esto: </p>
+  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
+    <pre style="color: #ffffff;">
+rclone config
+    </pre>
+    <button onclick="copyCodeToClipboard('rcloneConfig')">Copiar Código</button>
+  </div>
+
+  <p>Paso 2: Sirve la carpeta "movies" como contenido online con este comando rclone:</p>
+  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
+    <pre style="color: #ffffff;">
+      rclone serve http remote:/movies
+    </pre>
+    <button onclick="copyCodeToClipboard('rcloneMount')">Copiar Código</button>
+  </div>
+  <ul>
+    <li>Asegúrate de reemplazar "remote" con el nombre de tu configuración de Google Drive en rclone.</li>  
+    <li>Después de ejecutar este comando, tu carpeta "movies" debería ser accesible en <a href="http://localhost:8080" target="_blank">localhost:8080</a>.</li>
+  </ul>
+
+  <p>Paso 3: Haz que tu servidor sea accesible en línea con Pyngrok. Descarga e instala Pyngrok desde <a href="https://ngrok.com/download" target="_blank">aquí</a>. Luego, ejecuta los siguientes comandos abriendo otra terminal cmd:</p>
+  <div style="background-color: #2d2d2d; padding: 10px; border-radius: 5px; overflow: auto;">
+    <pre style="color: #ffffff;">
+      ngrok config add-authtoken "tu token"
+      pyngrok http 8080
+    </pre>
+    <button onclick="copyCodeToClipboard('pyngrokCommand')">Copiar Código</button>
+  </div>
+  
+  <p>Listo, copia la url generada y abrela con cualquier browser y veras todo el contenido de "movies"</p>
+
+  <p>Nuestro objetivo es mostrarte cómo disfrutar de las asombrosas posibilidades que ofrece esta configuración...</p>
+
+  <h2>Esperamos que disfrutes aprendiendo sobre las increíbles posibilidades que te brinda este servidor.</h2>
+</div>
+
+
 
 
 
