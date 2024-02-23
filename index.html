@@ -434,6 +434,133 @@ rclone config
   </div>
 </div>
 
+<div class="container">
+        <h1>Tutorial: Transmisión de Video en Vivo con Nginx</h1>
+        <p>Bienvenido al tutorial sobre cómo configurar y usar un servidor de video en vivo con Nginx. En este tutorial, aprenderás cómo configurar un servidor de video en vivo usando Nginx y cómo crear una página web para interactuar con el video transmitido.</p>
+        
+        <h2>Paso 1: Configuración del Servidor Nginx</h2>
+        <p>Primero, necesitas tener instalado Nginx en tu sistema. Puedes instalarlo utilizando el gestor de paquetes de tu sistema operativo.</p>
+        <pre><code># Ubuntu
+sudo apt update
+sudo apt install nginx
+        </code></pre>
+        <p>Luego, crea un archivo de configuración para Nginx. Aquí tienes un ejemplo básico:</p>
+        <pre><code># Archivo de configuración nginx.conf
+worker_processes  2;
+
+events {
+    worker_connections  8192;
+}
+
+http {
+    server {
+        listen 8080;
+
+        location /live {
+            # Configuración HLS
+            ...
+        }     
+    }
+}
+
+rtmp {
+    server {
+        listen 1935;
+        ...
+
+        application live {
+            live on;
+            ...
+
+            # Configuración HLS
+            hls on;
+            hls_path /nginx/temp/live;
+        }
+    }
+}
+        </code></pre>
+
+        <h2>Paso 2: Creación de la Página HTML</h2>
+        <p>Ahora, crearemos una página HTML para interactuar con el video transmitido. Aquí tienes un ejemplo:</p>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Transmisión de Video en Vivo&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h1&gt;Transmisión de Video en Vivo&lt;/h1&gt;
+        &lt;video id="videoPlayer" controls&gt;&lt;/video&gt;
+        &lt;button id="startButton"&gt;Iniciar&lt;/button&gt;
+        &lt;button id="stopButton"&gt;Detener&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </code></pre>
+
+        <h2>Paso 3: Estilo y Funcionalidad Interactiva</h2>
+        <p>Finalmente, agregaremos estilo y funcionalidad interactiva a nuestra página HTML mediante CSS y JavaScript:</p>
+        <pre><code>/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+video {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* script.js */
+const videoPlayer = document.getElementById('videoPlayer');
+const startButton = document.getElementById('startButton');
+const stopButton = document.getElementById('stopButton');
+
+const videoSource = 'http://192.168.0.183:8080/live/stream';
+
+startButton.addEventListener('click', () => {
+    videoPlayer.src = videoSource;
+    videoPlayer.play();
+});
+
+stopButton.addEventListener('click', () => {
+    videoPlayer.pause();
+    videoPlayer.src = '';
+});
+        </code></pre>
+    </div>
+
 <script>
 // Funci�n para cargar la lista de archivos HTML
 function cargarListaArchivos() {
