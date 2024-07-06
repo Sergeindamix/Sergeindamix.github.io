@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/7.14.3/video.js"></script>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #212121;
+            margin: 0;
+            padding: 0;
+        }
+
+        #vcontainer {
+            display: flex;
+            width: 100%;
+        }
+
+        #vplayer {
+            flex: 1;
+            background: #000;
+            overflow: hidden; /* Ocultar el reproductor de video que se desplaza fuera de la pantalla */
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+        }
+
+        #vplaylist {
+            width: 300px;
+            background: #424242;
+            box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* Hacer que la lista de reproducción tenga un desplazamiento vertical si es necesario */
+            max-height: 100vh; /* Limitar la altura de la lista de reproducción al 100% de la altura de la ventana */
+        }
+
+        #vplaylist li {
+            padding: 10px;
+            border-bottom: 1px solid #616161;
+            list-style: none;
+        }
+
+        #vplaylist li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        #vplaylist li:hover {
+            background: #616161;
+        }
+
+        #vplaylist .active {
+            background: #03a9f4;
+        }
+
+		#movieTitle {
+            margin-top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+			color: #ffffff;
+            max-width: 20%;
+            padding: 10px;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="vcontainer">
+        <div id="vplayer">
+            <video controls='' id='video' preload='auto' tabindex='0' type='video/mp4'>
+                <!-- Agregar aquí la fuente del primer video -->
+            </video>
+        </div>
+		<div id="movieTitle">Selecciona►</div>
+    <ul id="vplaylist">
+
+        <li data-info='{"tvg-name": "Cuentos de Terramar (2006)", "tvg-logo": "http://alfatv.lat:2082/images/2ea97284556f93d27267ed436895a5ec.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/278475.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/278475.mkv">Cuentos de Terramar (2006)</a></li>
+
+        <li data-info='{"tvg-name": "El castillo en el cielo (1986)", "tvg-logo": "http://alfatv.lat:2082/images/a267be953b9b2128bcdd2145ffe73874.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/278465.mp4"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/278465.mp4">El castillo en el cielo (1986)</a></li>
+
+        <li data-info='{"tvg-name": "El cuento de la princesa Kaguya (2013)", "tvg-logo": "http://alfatv.lat:2082/images/e666b6029a65accaf022a546cdd5dd38.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/278588.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/278588.mkv">El cuento de la princesa Kaguya (2013)</a></li>
+
+        <li data-info='{"tvg-name": "El increíble castillo vagabundo (2004)", "tvg-logo": "http://alfatv.lat:2082/images/df74e52fe6df26ca95d52b432527769a.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/272421.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/272421.mkv">El increíble castillo vagabundo (2004)</a></li>
+
+        <li data-info='{"tvg-name": "El recuerdo de Marnie (2014)", "tvg-logo": "http://alfatv.lat:2082/images/a2fca55d31a2e59b397eeb7a34c25d49.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/272152.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/272152.mkv">El recuerdo de Marnie (2014)</a></li>
+
+        <li data-info='{"tvg-name": "El viaje de Chihiro (2001)", "tvg-logo": "http://alfatv.lat:2082/images/b44ac6221194be645733520fcb27bc2f.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/278522.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/278522.mkv">El viaje de Chihiro (2001)</a></li>
+
+        <li data-info='{"tvg-name": "Haru en el reino de los gatos (2002)", "tvg-logo": "https://castlempire.site:443/images/1e3a5b0b85c90168b0dc3e554bc256b6.jpg", "url": "https://castlempire.site:443/movie/Mynor6109/SwvJyTnvzR7A/282612.mkv"}'><a href="https://castlempire.site:443/movie/Mynor6109/SwvJyTnvzR7A/282612.mkv">Haru en el reino de los gatos (2002)</a></li>
+
+        <li data-info='{"tvg-name": "Kiki: Entregas a domicilio (1989)", "tvg-logo": "http://alfatv.lat:2082/images/dedf845dab4d150e0b76825d4afe06ca.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/278561.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/278561.mkv">Kiki: Entregas a domicilio (1989)</a></li>
+
+        <li data-info='{"tvg-name": "La colina de las amapolas (2011)", "tvg-logo": "http://alfatv.lat:2082/images/a9764627f24f402caba6467e9ab912b8.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/275810.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/275810.mkv">La colina de las amapolas (2011)</a></li>
+
+        <li data-info='{"tvg-name": "La tortuga roja (2016)", "tvg-logo": "http://castlempire.site:8080/images/990857be66ea0eb5b79813e692ec1aa4.jpg", "url": "https://castlempire.site:443/movie/Mynor6109/SwvJyTnvzR7A/131037.mkv"}'><a href="https://castlempire.site:443/movie/Mynor6109/SwvJyTnvzR7A/131037.mkv">La tortuga roja (2016)</a></li>
+
+        <li data-info='{"tvg-name": "La tumba de las luciérnagas (1988)", "tvg-logo": "http://alfatv.lat:2082/images/837fd2f792f689a27b9c00c79851b6f8.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/275830.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/275830.mkv">La tumba de las luciérnagas (1988)</a></li>
+
+        <li data-info='{"tvg-name": "Mi vecino Totoro (1988)", "tvg-logo": "http://alfatv.lat:2082/images/deddf7567aa10542f88b32179f15107a.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/272464.mp4"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/272464.mp4">Mi vecino Totoro (1988)</a></li>
+
+        <li data-info='{"tvg-name": "Mis vecinos los Yamada (1999)", "tvg-logo": "http://alfatv.lat:2082/images/63f5352b3b1a60d9e888691fab6fb30a.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/278637.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/278637.mkv">Mis vecinos los Yamada (1999)</a></li>
+
+        <li data-info='{"tvg-name": "Nausicaä del Valle del Viento (1984)", "tvg-logo": "http://alfatv.lat:2082/images/9b3a1f7db8315b0ca64ba10ba4b384af.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/278640.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/278640.mkv">Nausicaä del Valle del Viento (1984)</a></li>
+
+        <li data-info='{"tvg-name": "Pompoko (1994)", "tvg-logo": "http://castlempire.site:8080/images/9268bfacbe293ece60f5e0791a9150a0.jpg", "url": "https://castlempire.site:443/movie/Mynor6109/SwvJyTnvzR7A/131520.mkv"}'><a href="https://castlempire.site:443/movie/Mynor6109/SwvJyTnvzR7A/131520.mkv">Pompoko (1994)</a></li>
+
+        <li data-info='{"tvg-name": "Ponyo y el secreto de la sirenita (2008)", "tvg-logo": "http://alfatv.lat:2082/images/93383e929cff00e9f95397cc32de1cec.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/276049.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/276049.mkv">Ponyo y el secreto de la sirenita (2008)</a></li>
+
+        <li data-info='{"tvg-name": "Porco Rosso (1992)", "tvg-logo": "http://alfatv.lat:2082/images/45165b84776b1486ee653cac90c191aa.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/278672.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/278672.mkv">Porco Rosso (1992)</a></li>
+
+        <li data-info='{"tvg-name": "La princesa Mononoke (1997)", "tvg-logo": "http://alfatv.lat:2082/images/c568cc1e49bd9c9a9958a60646793e18.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/278593.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/278593.mkv">La princesa Mononoke (1997)</a></li>
+
+        <li data-info='{"tvg-name": "Puedo escuchar el mar (1994)", "tvg-logo": "http://alfatv.lat:2082/images/9bc2b6370bc8d61f1abe4eb389922a0f.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/276017.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/276017.mkv">Puedo escuchar el mar (1994)</a></li>
+
+        <li data-info='{"tvg-name": "Recuerdos del ayer (1991)", "tvg-logo": "http://alfatv.lat:2082/images/c08f7fa17986c9eb8a2442f651b32494.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/278646.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/278646.mkv">Recuerdos del ayer (1991)</a></li>
+
+        <li data-info='{"tvg-name": "Se levanta el viento (2013)", "tvg-logo": "http://alfatv.lat:2082/images/b0af755052996a8a664ebd4ef43fd64d.jpg", "url": "http://alfatv.lat:2082/movie/Juan9592/Angeles63/276218.mkv"}'><a href="http://alfatv.lat:2082/movie/Juan9592/Angeles63/276218.mkv">Se levanta el viento (2013)</a></li>
+
+        <li data-info='{"tvg-name": "Noche en Taneyamagahara (2006)", "tvg-logo": "http://castlempire.site:8080/images/f039f6bb96a92e46efd910662494f0b7.jpg", "url": "https://castlempire.site:443/movie/Mynor6109/SwvJyTnvzR7A/131351.mp4"}'><a href="https://castlempire.site:443/movie/Mynor6109/SwvJyTnvzR7A/131351.mp4">Noche en Taneyamagahara (2006)</a></li>
+
+        </ul>
+    </div>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' type='text/javascript'></script>
+    <script>
+    var video;
+    var vplaylist;
+    var vtracks;
+    var vcurrent;
+    var movieTitle;
+    initvideo();
+
+    function initvideo() {
+        vcurrent = 0;
+        video = $('video');
+        vplaylist = $('#vplaylist');
+        vtracks = vplaylist.find('li a');
+        movieTitle = $('#movieTitle');
+        vlen = vtracks.length - 1;
+        video[0].volume = 1;
+
+        vtracks.click(function(e) {
+            e.preventDefault();
+            var link = $(this);
+            vcurrent = link.parent().index();
+            runvideo(link, video[0]);
+        });
+
+        video[0].addEventListener('ended', function(e) {
+            vcurrent++;
+            if (vcurrent > vlen) {
+                vcurrent = 0;
+            }
+            link = vplaylist.find('a')[vcurrent];
+            runvideo($(link), video[0]);
+        });
+    }
+
+    function runvideo(link, player) {
+        player.src = link.attr('href');
+        var title = link.text();
+        movieTitle.text(title);
+        var posterUrl = link.parent().attr('data-info');
+        movieTitle.css('background-image', 'url(' + JSON.parse(posterUrl)['tvg-logo'] + ')');
+        var par = link.parent();
+        par.addClass('active').siblings().removeClass('active');
+        video[0].load();
+        video[0].play();
+    }
+    </script>
+</body>
+</html>
