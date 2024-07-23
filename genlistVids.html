@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Video Avanzado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/7.14.3/video.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #212121;
+            margin: 0;
+            padding: 0;
+        }
+        #vcontainer {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+        #vplayer {
+            flex: 1;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            max-height: calc(100vh - 60px);
+        }
+        #vplaylist {
+            width: 300px;
+            background: #424242;
+            box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+        #vplaylist li {
+            padding: 10px;
+            border-bottom: 1px solid #616161;
+            list-style: none;
+        }
+        #vplaylist li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        #vplaylist li:hover {
+            background: #616161;
+        }
+        #vplaylist .active {
+            background: #03a9f4;
+        }
+        #movieTitle {
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+        #fileInput {
+            margin: 10px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="vcontainer">
+        <div id="vplayer">
+            <video controls id='video' preload='auto' class="video-js vjs-default-skin">
+                <source src="" type="video/mp4">
+            </video>
+            <div id="movieTitle">Selecciona un video ►</div>
+        </div>
+        <div id="playlistContainer">
+            <input type="file" id="fileInput" multiple accept=".mkv,.mp4">
+            <ul id="vplaylist"></ul>
+        </div>
+    </div>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    <script>
+        var video, vplaylist, vtracks, vcurrent, movieTitle, player;
+
+        $(document).ready(function() {
+            initvideo();
+
+            $('#fileInput').on('change', function(e) {
+                const files = e.target.files;
+                vplaylist.empty();
+                for (let file of files) {
+                    if (file.name.endsWith('.mkv') || file.name.endsWith('.mp4')) {
+                        const year = Math.floor(Math.random() * (2024 - 2000 + 1)) + 2000;
+                        const title = `${file.name.replace(/\.[^/.]+$/, "")} (${year})`;
+                        const imageId = Math.random().toString(36).substring(2, 10);
+                        const imageUrl = `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${imageId}.jpg`;
+                        const dataInfo = {
+                            "tvg-name": title,
+                            "tvg-logo": imageUrl,
+                            "url": URL.createObjectURL(file)
+                        };
+                        const li = $('<li>').attr('data-info', JSON.stringify(dataInfo));
+                        const a = $('<a>').attr('href', dataInfo.url).text(title);
+                        li.append(a);
+                        vplaylist.append(li);
+                    }
+                }
+                vtracks = vplaylist.find('li a');
+                if (vtracks.length > 0) {
+                    vtracks.first().click();
+                }
+            });
+        });
+
+        function initvideo() {
+            vcurrent = 0;
+            video = $('video');
+            vplaylist = $('#vplaylist');
+            vtracks = vplaylist.find('li a');
+            movieTitle = $('#movieTitle');
+            player = videojs('video');
+
+            vplaylist.on('click', 'li a', function(e) {
+                e.preventDefault();
+                var link = $(this);
+                vcurrent = link.parent().index();
+                runvideo(link, player);
+            });
+
+            player.on('ended', function() {
+                vcurrent++;
+                if (vcurrent >= vtracks.length) {
+                    vcurrent = 0;
+                }
+                var link = $(vtracks[vcurrent]);
+                runvideo(link, player);
+            });
+        }
+
+        function runvideo(link, player) {
+            var videoUrl = link.attr('href');
+            player.src({ type: 'video/mp4', src: videoUrl });
+            var title = link.text();
+            movieTitle.text(title);
+            var posterInfo = JSON.parse(link.parent().attr('data-info'));
+            player.poster(posterInfo['tvg-logo']);
+            link.parent().addClass('active').siblings().removeClass('active');
+            player.play();
+        }
+    </script>
+</body>
+</html>
