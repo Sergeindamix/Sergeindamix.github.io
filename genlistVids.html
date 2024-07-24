@@ -3,85 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor de Video Avanzado</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>CyberPlayer 3000</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
     <script src="https://vjs.zencdn.net/7.14.3/video.js"></script>
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #212121;
+        body, html {
             margin: 0;
             padding: 0;
+            height: 100%;
+            font-family: 'Orbitron', sans-serif;
+            background: #000;
+            color: #0ff;
+            overflow: hidden;
+        }
+        #device {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            border: 2px solid #0ff;
+            box-shadow: 0 0 20px #0ff, inset 0 0 10px #0ff;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
         }
         #vcontainer {
             display: flex;
-            width: 100%;
-            height: 100vh;
+            height: calc(100% - 40px);
         }
         #vplayer {
             flex: 1;
             background: #000;
             display: flex;
             flex-direction: column;
+            border-right: 2px solid #0ff;
         }
-        video {
+        .video-js {
             width: 100%;
-            height: auto;
-            max-height: calc(100vh - 60px);
+            height: calc(100% - 60px) !important;
+            background-color: #000;
         }
-        #vplaylist {
-            width: 300px;
-            background: #424242;
-            box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-            max-height: 100vh;
-            padding: 0;
-            margin: 0;
+        .video-js .vjs-control-bar {
+            background-color: rgba(0, 255, 255, 0.3);
         }
-        #vplaylist li {
-            padding: 10px;
-            border-bottom: 1px solid #616161;
-            list-style: none;
-        }
-        #vplaylist li a {
-            text-decoration: none;
-            color: #ffffff;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        #vplaylist li:hover {
-            background: #616161;
-        }
-        #vplaylist .active {
-            background: #03a9f4;
+        .video-js .vjs-big-play-button {
+            background-color: rgba(0, 255, 255, 0.6);
+            border-color: #0ff;
         }
         #movieTitle {
             padding: 10px;
             font-size: 18px;
             font-weight: bold;
-            color: #ffffff;
+            color: #0ff;
             background-color: rgba(0, 0, 0, 0.7);
             text-align: center;
+            border-top: 2px solid #0ff;
+            text-shadow: 0 0 5px #0ff;
+        }
+        #playlistContainer {
+            width: 300px;
+            background: rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
         #fileInput {
             margin: 10px;
             padding: 5px;
+            background: #0ff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        #vplaylist {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+        #vplaylist::-webkit-scrollbar {
+            width: 5px;
+        }
+        #vplaylist::-webkit-scrollbar-thumb {
+            background: #0ff;
+        }
+        #vplaylist li {
+            padding: 10px;
+            border-bottom: 1px solid #0ff;
+            transition: all 0.3s ease;
+        }
+        #vplaylist li a {
+            text-decoration: none;
+            color: #0ff;
+            font-size: 14px;
+            display: block;
+        }
+        #vplaylist li:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        #vplaylist .active {
+            background: rgba(0, 255, 255, 0.3);
+        }
+        #deviceHeader {
+            height: 40px;
+            background: linear-gradient(90deg, #0ff, #00f);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-weight: bold;
+            text-shadow: 0 0 5px #fff;
+        }
+        .neon-effect {
+            animation: neon 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes neon {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #0ff, 0 0 35px #0ff, 0 0 40px #0ff, 0 0 50px #0ff, 0 0 75px #0ff;
+            }
+            to {
+                text-shadow: 0 0 2.5px #fff, 0 0 5px #fff, 0 0 7.5px #fff, 0 0 10px #0ff, 0 0 17.5px #0ff, 0 0 20px #0ff, 0 0 25px #0ff, 0 0 37.5px #0ff;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="vcontainer">
-        <div id="vplayer">
-            <video controls id='video' preload='auto' class="video-js vjs-default-skin">
-                <source src="" type="video/mp4">
-            </video>
-            <div id="movieTitle">Selecciona un video ►</div>
+    <div id="device">
+        <div id="deviceHeader">
+            <span class="neon-effect">CyberPlayer 3000</span>
         </div>
-        <div id="playlistContainer">
-            <input type="file" id="fileInput" multiple accept=".mkv,.mp4">
-            <ul id="vplaylist"></ul>
+        <div id="vcontainer">
+            <div id="vplayer">
+                <video id='video' class="video-js vjs-default-skin" controls preload="auto">
+                    <source src="" type="video/mp4">
+                </video>
+                <div id="movieTitle" class="neon-effect">Selecciona un video ►</div>
+            </div>
+            <div id="playlistContainer">
+                <input type="file" id="fileInput" multiple accept=".mkv,.mp4">
+                <ul id="vplaylist"></ul>
+            </div>
         </div>
     </div>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
