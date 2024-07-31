@@ -26,6 +26,55 @@
         #videoElement {
             display: none;
         }
+        #playlist {
+            position: absolute;
+            top: 10%;
+            right: 0;
+            width: 30%;
+            height: 80%;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .playlist-item {
+            padding: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .playlist-item:hover {
+            background-color: rgba(0, 255, 255, 0.3);
+        }
+        .playlist-item.active {
+            background-color: rgba(0, 255, 255, 0.5);
+        }
+        #controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70%;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #controls button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: rgba(0, 255, 255, 0.5);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #controls button:hover {
+            background-color: rgba(0, 255, 255, 0.7);
+        }
+        #controls button.active {
+            background-color: rgba(0, 255, 255, 1);
+        }
     </style>
 </head>
 <body>
@@ -35,6 +84,14 @@
         <source src="" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+    <div id="playlist"></div>
+    <div id="controls">
+        <button id="prevButton">Previous</button>
+        <button id="playPauseButton">Play/Pause</button>
+        <button id="nextButton">Next</button>
+        <button id="loopButton">Loop</button>
+        <button id="continuousButton">Continuous</button>
+    </div>
 
     <script id="vertexShader" type="x-shader/x-vertex">
         varying vec2 vUv;
@@ -49,7 +106,7 @@
         uniform float u_time;
         uniform sampler2D u_videoTexture;
         uniform vec2 u_mouse;
-        uniform float u_videoAspect;
+        uniform vec2 u_videoResolution;
         uniform int u_playlistSize;
         uniform int u_currentVideo;
         varying vec2 vUv;
@@ -78,26 +135,25 @@
                 vec2 videoUV = (uv - vec2(0.0, 0.1)) / vec2(0.7, 0.9);
                 if(videoUV.x >= 0.0 && videoUV.x <= 1.0 && videoUV.y >= 0.0 && videoUV.y <= 1.0) {
                     vec2 aspectCorrectedUV = videoUV;
-                    aspectCorrectedUV.y = (aspectCorrectedUV.y - 0.5) * u_videoAspect + 0.5;
-                    if(aspectCorrectedUV.y >= 0.0 && aspectCorrectedUV.y <= 1.0) {
+                    
+                    // Calculate video and container aspect ratios
+                    float videoAspect = u_videoResolution.x / u_videoResolution.y;
+                    float containerAspect = 0.7 / 0.9;
+                    
+                    if (videoAspect > containerAspect) {
+                        // Video is wider than the container
+                        float scale = containerAspect / videoAspect;
+                        aspectCorrectedUV.y = (aspectCorrectedUV.y - 0.5) * scale + 0.5;
+                    } else {
+                        // Video is taller than the container (or equal)
+                        float scale = videoAspect / containerAspect;
+                        aspectCorrectedUV.x = (aspectCorrectedUV.x - 0.5) / scale + 0.5;
+                    }
+                    
+                    if(aspectCorrectedUV.x >= 0.0 && aspectCorrectedUV.x <= 1.0 &&
+                       aspectCorrectedUV.y >= 0.0 && aspectCorrectedUV.y <= 1.0) {
                         vec4 videoColor = texture2D(u_videoTexture, aspectCorrectedUV);
                         color = mix(color, videoColor.rgb, videoColor.a);
-                    }
-                }
-            }
-
-            // Playlist area
-            if(uv.x > 0.7) {
-                float playlistItemHeight = 0.1;
-                int itemIndex = int(floor(uv.y / playlistItemHeight));
-                if(itemIndex < u_playlistSize) {
-                    vec3 itemColor = (itemIndex == u_currentVideo) ? vec3(0.0, 1.0, 1.0) : vec3(0.5);
-                    color = mix(color, itemColor, 0.7);
-                    
-                    // Highlight on hover
-                    vec2 mouseUV = u_mouse / u_resolution;
-                    if(mouseUV.x > 0.7 && abs(mouseUV.y - uv.y) < playlistItemHeight / 2.0) {
-                        color = mix(color, vec3(1.0), 0.3);
                     }
                 }
             }
@@ -124,6 +180,8 @@
         let playlist = [];
         let currentVideoIndex = 0;
         let videoTexture, videoElement;
+        let isLooping = true;
+        let isContinuous = false;
 
         function init() {
             camera = new THREE.Camera();
@@ -141,7 +199,7 @@
                 u_resolution: { type: "v2", value: new THREE.Vector2() },
                 u_mouse: { type: "v2", value: new THREE.Vector2() },
                 u_videoTexture: { type: "t", value: videoTexture },
-                u_videoAspect: { type: "f", value: 16 / 9 },
+                u_videoResolution: { type: "v2", value: new THREE.Vector2(1, 1) },
                 u_playlistSize: { type: "i", value: 0 },
                 u_currentVideo: { type: "i", value: 0 }
             };
@@ -161,9 +219,26 @@
             onWindowResize();
             window.addEventListener('resize', onWindowResize, false);
             document.addEventListener('mousemove', onMouseMove, false);
-            document.addEventListener('click', onClick, false);
 
             document.getElementById('fileInput').addEventListener('change', handleFileInput);
+
+            // Add event listener for video metadata loaded
+            videoElement.addEventListener('loadedmetadata', function() {
+                uniforms.u_videoResolution.value.x = this.videoWidth;
+                uniforms.u_videoResolution.value.y = this.videoHeight;
+            });
+
+            // Add event listeners for control buttons
+            document.getElementById('prevButton').addEventListener('click', playPreviousVideo);
+            document.getElementById('playPauseButton').addEventListener('click', togglePlayPause);
+            document.getElementById('nextButton').addEventListener('click', playNextVideo);
+            document.getElementById('loopButton').addEventListener('click', toggleLoop);
+            document.getElementById('continuousButton').addEventListener('click', toggleContinuous);
+
+            // Add event listener for video ended
+            videoElement.addEventListener('ended', handleVideoEnded);
+
+            updateButtonStates();
         }
 
         function onWindowResize() {
@@ -177,29 +252,41 @@
             uniforms.u_mouse.value.y = window.innerHeight - event.clientY;
         }
 
-        function onClick(event) {
-            const uv = {
-                x: event.clientX / window.innerWidth,
-                y: 1 - (event.clientY / window.innerHeight)
-            };
-
-            if(uv.x > 0.7) {
-                const itemHeight = 0.1;
-                const itemIndex = Math.floor(uv.y / itemHeight);
-                if(itemIndex < playlist.length) {
-                    currentVideoIndex = itemIndex;
-                    playVideo(playlist[currentVideoIndex]);
-                }
-            }
-        }
-
         function handleFileInput(event) {
             const files = event.target.files;
             playlist = Array.from(files).filter(file => file.type.startsWith('video/'));
             uniforms.u_playlistSize.value = playlist.length;
+            updatePlaylistUI();
             if(playlist.length > 0) {
                 currentVideoIndex = 0;
                 playVideo(playlist[0]);
+            }
+        }
+
+        function updatePlaylistUI() {
+            const playlistElement = document.getElementById('playlist');
+            playlistElement.innerHTML = '';
+            playlist.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item';
+                item.textContent = file.name;
+                item.onclick = () => {
+                    currentVideoIndex = index;
+                    playVideo(playlist[currentVideoIndex]);
+                    updateActiveItem();
+                };
+                playlistElement.appendChild(item);
+            });
+            updateActiveItem();
+        }
+
+        function updateActiveItem() {
+            const items = document.getElementsByClassName('playlist-item');
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.remove('active');
+            }
+            if (items[currentVideoIndex]) {
+                items[currentVideoIndex].classList.add('active');
             }
         }
 
@@ -208,6 +295,56 @@
             videoElement.src = videoURL;
             videoElement.play();
             uniforms.u_currentVideo.value = currentVideoIndex;
+            updateActiveItem();
+        }
+
+        function playPreviousVideo() {
+            if (playlist.length > 0) {
+                currentVideoIndex = (currentVideoIndex - 1 + playlist.length) % playlist.length;
+                playVideo(playlist[currentVideoIndex]);
+            }
+        }
+
+        function playNextVideo() {
+            if (playlist.length > 0) {
+                currentVideoIndex = (currentVideoIndex + 1) % playlist.length;
+                playVideo(playlist[currentVideoIndex]);
+            }
+        }
+
+        function togglePlayPause() {
+            if (videoElement.paused) {
+                videoElement.play();
+            } else {
+                videoElement.pause();
+            }
+            updateButtonStates();
+        }
+
+        function toggleLoop() {
+            isLooping = !isLooping;
+            videoElement.loop = isLooping;
+            updateButtonStates();
+        }
+
+        function toggleContinuous() {
+            isContinuous = !isContinuous;
+            updateButtonStates();
+        }
+
+        function handleVideoEnded() {
+            if (isContinuous) {
+                playNextVideo();
+            } else if (!isLooping) {
+                videoElement.pause();
+                updateButtonStates();
+            }
+        }
+
+        function updateButtonStates() {
+            document.getElementById('playPauseButton').textContent = videoElement.paused ? 'Play' : 'Pause';
+            document.getElementById('loopButton').classList.toggle('active', isLooping);
+            document.getElementById('continuousButton').classList.toggle('active', isContinuous);
         }
 
         function animate() {
