@@ -136,9 +136,28 @@
 				0, s, c
 			);
 		}
+		
+		float rotationSpeed = 6.28318; // 2 * PI para una rotación completa
+		float waitTime = 60.0; // 60 segundos de espera
+
+		float random(vec2 st) {
+			return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+		}
 
 		void main() {
 			vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+			float cycleTime = mod(u_time, rotationSpeed + waitTime);
+			float rotation = min(cycleTime, rotationSpeed);
+			
+			// Efecto glitch
+			float glitchIntensity = smoothstep(0.0, rotationSpeed, rotation) * (1.0 - smoothstep(rotationSpeed * 0.9, rotationSpeed, rotation));
+			vec2 glitchOffset = vec2(
+				random(vec2(uv.y, u_time)) * 2.0 - 1.0,
+				random(vec2(uv.x, u_time)) * 2.0 - 1.0
+			) * 0.02 * glitchIntensity;
+			
+			uv += glitchOffset;
+
 			vec3 color = vec3(0.0);
 
 			// Background effect
@@ -151,17 +170,26 @@
 			vec2 grid = fract(uv * 20.0 + sin(u_time * 0.1) * 0.5);
 			float gridLine = step(0.95, max(grid.x, grid.y));
 			color += vec3(0.0, 1.0, 1.0) * gridLine * 0.2;
+			
+			// Aplicar distorsión de color para el efecto glitch
+			color.r += glitchIntensity * 0.1;
+			color.g -= glitchIntensity * 0.05;
+			color.b += glitchIntensity * 0.05;	
 
 			// Cube video player area
 			if(uv.x < 0.7 && uv.y > 0.1) {
 				vec2 videoUV = (uv - vec2(0.0, 0.1)) / vec2(0.7, 0.9);
-				vec3 ro = vec3(0.0, 0.0, -2.0);
+				vec3 ro = vec3(0.0, 0.0, -1.750);
 				vec3 rd = normalize(vec3(videoUV * 2.0 - 1.0, 1.0));
 
 				// Rotate the cube (not the ray)
-				float rotationSpeed = 0.0;
-				mat3 rotationMatrix = rotateY(u_time * rotationSpeed) * rotateX(u_time * rotationSpeed * 0.7);
+				float rotationSpeed = 6.28318; // 2 * PI para una rotación completa
+				float waitTime = 60.0; // 60 segundos de espera
 
+				float cycleTime = mod(u_time, rotationSpeed + waitTime);
+				float rotation = min(cycleTime, rotationSpeed);
+
+				mat3 rotationMatrix = rotateY(rotation) * rotateX(rotation * 0.7);
 				// Cube properties
 				float cubeSize = 0.8;
 				vec3 cubeMin = -vec3(cubeSize);
