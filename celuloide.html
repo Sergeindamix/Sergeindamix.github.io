@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberPlayer 3000 Shader Edition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #shaderCanvas {
+            width: 100%;
+            height: 100%;
+        }
+        #fileInput {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+        }
+        #videoElement {
+            display: none;
+        }
+        #playlist {
+            position: absolute;
+            top: 10%;
+            right: 0;
+            width: 30%;
+            height: 80%;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .playlist-item {
+            padding: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .playlist-item:hover {
+            background-color: rgba(0, 255, 255, 0.3);
+        }
+        .playlist-item.active {
+            background-color: rgba(0, 255, 255, 0.5);
+        }
+        #controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70%;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #controls button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: rgba(0, 255, 255, 0.5);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #controls button:hover {
+            background-color: rgba(0, 255, 255, 0.7);
+        }
+        #controls button.active {
+            background-color: rgba(0, 255, 255, 1);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="shaderCanvas"></canvas>
+    <input type="file" id="fileInput" multiple accept=".mp4,.webm,.ogg">
+    <video id="videoElement" loop>
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="playlist"></div>
+    <div id="controls">
+        <button id="prevButton">Previous</button>
+        <button id="playPauseButton">Play/Pause</button>
+        <button id="nextButton">Next</button>
+        <button id="loopButton">Loop</button>
+        <button id="continuousButton">Continuous</button>
+    </div>
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            gl_Position = vec4(position, 1.0);
+        }
+    </script>
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        uniform vec2 u_resolution;
+		uniform float u_time;
+		uniform sampler2D u_videoTexture;
+		uniform vec2 u_mouse;
+		uniform vec2 u_videoResolution;
+		uniform int u_playlistSize;
+		uniform int u_currentVideo;
+		varying vec2 vUv;
+
+		vec3 neon(vec3 color, float intensity) {
+			return color * intensity / (distance(vUv, vec2(0.5)) + 0.5);
+		}
+
+		// Función para rotar un punto alrededor del eje Y
+		mat3 rotateY(float angle) {
+			float c = cos(angle);
+			float s = sin(angle);
+			return mat3(
+				c, 0, -s,
+				0, 1, 0,
+				s, 0, c
+			);
+		}
+
+		// Función para rotar un punto alrededor del eje X
+		mat3 rotateX(float angle) {
+			float c = cos(angle);
+			float s = sin(angle);
+			return mat3(
+				1, 0, 0,
+				0, c, -s,
+				0, s, c
+			);
+		}
+		
+		float rotationSpeed = 6.28318; // 2 * PI para una rotación completa
+		float waitTime = 60.0; // 60 segundos de espera
+
+		float random(vec2 st) {
+			return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+		}
+		
+		const float scale = 0.57 * 0.7;
+const float separation = 1.2;
+const float filmWidth = 1.4;
+const float smallJitterProbability = 0.82;
+const vec2 smallJitterDisplacement = vec2(0.03);
+const float largeJitterProbability = 0.05;
+const vec2 largeJitterDisplacement = vec2(0.3);
+const float angleJitter = 60.0*3.1415/180.0;
+const float angleProbability = 0.15;
+const float contrast = 2.0;
+const float brightness = 1.2;
+const float vignettePower = 3.0;
+const float sepiaStrength = 1.0;
+
+float time() {
+    return u_time * 0.0101;
+}
+
+float hash(float n) {
+ 	return fract(cos(n*89.42)*343.42);
+}
+
+vec2 hash2(vec2 n) {
+ 	return vec2(hash(n.x*23.62-300.0+n.y*34.35),hash(n.x*45.13+256.0+n.y*38.89)); 
+}
+
+float worley(vec2 c, float time) {
+    float dis = 1.0;
+    for(int x = -1; x <= 1; x++)
+        for(int y = -1; y <= 1; y++){
+            vec2 p = floor(c)+vec2(x,y);
+            vec2 a = hash2(p) * time;
+            vec2 rnd = 0.5+sin(a)*0.5;
+            float d = length(rnd+vec2(x,y)-fract(c));
+            dis = min(dis, d);
+        }
+    return dis;
+}
+
+float worley2(vec2 c, float time) {
+    float w = 0.0;
+    float a = 0.5;
+    for (int i = 0; i<2; i++) {
+        w += worley(c, time)*a;
+        c*=2.0;
+        time*=2.0;
+        a*=0.5;
+    }
+    return w;
+}
+float worley5(vec2 c, float time) {
+    float w = 0.0;
+    float a = 0.5;
+    int i = 0;
+    for (int i = 0; i<5; i++) {
+        w += worley(c, time)*a;
+        c*=2.0;
+        time*=2.0;
+        a*=0.5;
+    }
+    return w;
+}
+
+float rand(vec2 co) {
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
+vec2 jitter(vec2 uv, vec2 s, float seed) {
+	return vec2(rand(vec2(time(),seed))-0.5, rand(vec2(time(),seed+0.11))-0.5)*s;    
+}
+
+vec2 rot(vec2 coord, float a) {
+    float sin_factor = sin(a);
+    float cos_factor = cos(a);
+    return coord * mat2(cos_factor, sin_factor, -sin_factor, cos_factor);
+}
+
+vec4 vignette(vec2 uv, float strength) {
+    float l = length(uv);
+    l = pow(l, vignettePower);
+	return 1.0 - vec4(vec3(l)*strength,1.0);
+}
+
+vec4 bw(vec4 c) {
+    float v = c.r*.15+c.g*.8 + c.b*.05;
+    return vec4(vec3(v),1.0);
+}
+
+vec4 sepia(vec4 c, float s) {
+	float or = (c.r * .393) + (c.g *.769) + (c.b * .189);
+	float og = (c.r * .349) + (c.g *.686) + (c.b * .168);
+	float ob = (c.r * .272) + (c.g *.534) + (c.b * .131);
+    return vec4(or,og,ob,1.0);
+}
+
+vec4 frame(vec2 uv, float fn) {
+    if (abs(uv.x) > 0.5 || abs(uv.y) > 0.5) return vec4(0.0);
+    float strength = 64.0;
+    float x = (uv.x + 4.0) * (uv.y + 4.0) * (u_time * 10.0);
+    vec4 grain = vec4(mod((mod(x, 13.0) + 1.0) * (mod(x, 123.0) + 1.0), 0.01)-0.005) * strength;
+    vec4 i = texture2D(u_videoTexture, uv + 0.5);
+    float fnn = floor((fn + 0.5) / separation) + float(gl_FragCoord.x); // Using gl_FragCoord.x instead of iFrame
+    fnn = mod(fnn / 20.0, 1.0);
+    float fj = rand(vec2(fnn, 0.34)) * 2.;
+    
+    vec4 ic = vec4(((i.rgb - 0.5) * contrast - 0.5 + brightness) * fj, 1.0);
+    ic *= vignette(uv * 2.5, 0.2);
+    vec4 bwc = bw(ic);
+    
+    uv.x *= 100.0 + u_time * 0.10;
+    uv.y *= 100.;
+    float dis = worley5(uv / 64.0, u_time * 50.0);
+    vec3 c = mix(vec3(-1.0), vec3(10.), dis);
+    vec4 spots = vec4(clamp(c, 0.0, 1.0), 1.0);
+    
+    return mix(i, sepia(bwc, 1.0), sepiaStrength) * (1.0 - grain) * spots;
+}
+
+vec4 film(vec2 uv) {
+    float wm = 0.5 + (filmWidth-1.0)/4.0;
+    float ww = (filmWidth-1.0)*0.1;
+    float ax = abs(uv.x);
+    if (ax > filmWidth/2.0 || (ax > wm-ww && ax < wm+ww && mod(floor(uv.y*12.0),2.0) == 1.0))
+	    return vec4(vec3(1.0), 1.0);
+
+    uv.x *= 2000.10 ;
+    uv.y *= 5.;
+    float dis = worley2(uv/64.0, + u_time*50.0);
+    vec3 c = mix(vec3(1.0), vec3(-30.6), dis);
+    return vec4(clamp(1.0-c*c,0.0,1.0), -10.0);
+}
+
+vec4 final(vec2 uv, float aspect) {
+    float smallJitterTrigger = rand(vec2(time(),0.125));
+    float largeJitterTrigger = rand(vec2(time(),0.122));
+    vec2 juv = uv;
+    juv += ((smallJitterTrigger > smallJitterProbability) ? vec2(0.) : jitter(uv, smallJitterDisplacement,0.01));
+    juv += ((largeJitterTrigger > largeJitterProbability) ? vec2(0.) : jitter(uv, largeJitterDisplacement,0.01));
+
+    float rotationTrigger = rand(vec2(time(),0.123));
+	juv = (rotationTrigger > angleProbability) ? juv : rot(juv, (rand(vec2(time(),0.14))-0.5)*angleJitter);
+    
+    vec2 fuv = vec2(juv.x*aspect, (mod(juv.y+0.5,separation)-0.5));
+
+    return (frame(fuv, juv.y)  + film(vec2(juv.x*aspect,juv.y))) ;
+}
+		void main() {
+			vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+			
+			
+			
+			float cycleTime = mod(u_time, rotationSpeed + waitTime);
+			float rotation = min(cycleTime, rotationSpeed);
+			
+			// Efecto glitch
+			float glitchIntensity = smoothstep(0.0, rotationSpeed, rotation) * (1.0 - smoothstep(rotationSpeed * 0.9, rotationSpeed, rotation));
+			vec2 glitchOffset = vec2(
+				random(vec2(uv.y, u_time)) * 2.0 - 1.0,
+				random(vec2(uv.x, u_time)) * 2.0 - 1.0
+			) * 0.02 * glitchIntensity;
+			
+			uv += glitchOffset;
+
+			vec3 color = vec3(0.0);
+
+			// Background effect
+			vec2 center = vec2(0.5);
+			float d = distance(uv, center);
+			vec3 bgColor = mix(vec3(0.1, 0.0, 0.2), vec3(0.0, 0.1, 0.2), d);
+			color += bgColor;
+
+			// Grid effect
+			vec2 grid = fract(uv * 20.0 + sin(u_time * 0.1) * 0.5);
+			float gridLine = step(0.95, max(grid.x, grid.y));
+			color += vec3(0.0, 1.0, 1.0) * gridLine * 0.2;
+			
+			// Aplicar distorsión de color para el efecto glitch
+			color.r += glitchIntensity * 0.1;
+			color.g -= glitchIntensity * 0.05;
+			color.b += glitchIntensity * 0.05;	
+			
+			
+
+			// Cube video player area
+			if(uv.x < 0.7 && uv.y > 0.1) {
+				vec2 videoUV = (uv - vec2(0.0, 0.1)) / vec2(0.7, 0.9);
+				vec3 ro = vec3(-.0, 0.0, -02.050);
+				vec3 rd = normalize(vec3(videoUV * 2.0 - 1.0, 1.0));
+
+				// Rotate the cube (not the ray)
+				float rotationSpeed = 6.28318; // 2 * PI para una rotación completa
+				float waitTime = 60.0; // 60 segundos de espera
+
+				float cycleTime = mod(u_time, rotationSpeed + waitTime);
+				float rotation = min(cycleTime, rotationSpeed);
+
+				mat3 rotationMatrix = rotateY(rotation) * rotateX(rotation * 0.7);
+				// Cube properties
+				float cubeSize = 0.8;
+				vec3 cubeMin = -vec3(cubeSize);
+				vec3 cubeMax = vec3(cubeSize);
+
+				// Transform ray origin and direction
+				ro = rotationMatrix * ro;
+				rd = rotationMatrix * rd;
+
+				// Ray-cube intersection
+				vec3 m = 1.0 / rd;
+				vec3 n = m * ro;
+				vec3 k = abs(m) * cubeSize;
+				vec3 t1 = -n - k;
+				vec3 t2 = -n + k;
+				float tN = max(max(t1.x, t1.y), t1.z);
+				float tF = min(min(t2.x, t2.y), t2.z);
+
+				if(tN < tF && tF > 0.0) {
+					vec3 pos = ro + rd * tN;
+					vec3 absPos = abs(pos);
+					vec2 faceUV;
+
+					// Determine which face of the cube we're on
+					if(absPos.x > absPos.y && absPos.x > absPos.z) {
+						faceUV = pos.yz / cubeSize * 0.5 + 0.5;
+						faceUV.x = pos.x > 0.0 ? faceUV.x : 1.0 - faceUV.x;
+					} else if(absPos.y > absPos.z) {
+						faceUV = pos.xz / cubeSize * 0.5 + 0.5;
+						faceUV.y = pos.y > 0.0 ? faceUV.y : 1.0 - faceUV.y;
+					} else {
+						faceUV = pos.xy / cubeSize * 0.5 + 0.5;
+						faceUV.x = pos.z > 0.0 ? 1.0 - faceUV.x : faceUV.x;
+					}
+
+					// Correct aspect ratio
+					vec2 aspectCorrectedUV = faceUV;
+					float videoAspect = u_videoResolution.x / u_videoResolution.y;
+					float containerAspect = 0.7 / 0.9;
+					if (videoAspect > containerAspect) {
+						float scale = containerAspect / videoAspect;
+						aspectCorrectedUV.y = (aspectCorrectedUV.y - 0.5) * scale + 0.5;
+					} else {
+						float scale = videoAspect / containerAspect;
+						aspectCorrectedUV.x = (aspectCorrectedUV.x - 0.5) / scale + 0.5;
+					}
+
+					// Sample video texture
+					if(aspectCorrectedUV.x >= 0.0 && aspectCorrectedUV.x <= 1.0 &&
+					   aspectCorrectedUV.y >= 0.0 && aspectCorrectedUV.y <= 1.0) {
+						vec4 videoColor = texture2D(u_videoTexture, aspectCorrectedUV);
+						color = mix(color, videoColor.rgb, videoColor.a);
+					} else {
+						// Add a border effect for cube edges
+						color = mix(color, vec3(0.0, 1.0, 1.0), 0.5);
+					}
+				}
+			}
+			uv = ((gl_FragCoord.xy)/u_resolution.xy - 0.5);
+			uv.x += 0.15;
+			vec2 vuv = uv;
+			uv /= scale;
+			float aspect = u_resolution.y/u_resolution.x;
+			uv *= vec2(01.750,aspect);
+			gl_FragColor = mix(vec4(color, 1.0) , final(uv, aspect), -0.90705);
+			
+			uv = gl_FragCoord.xy / u_resolution.xy;
+
+			// Header
+			if(uv.y < 0.1) {
+				color = mix(color, vec3(0.0, 0.5, 0.5), 0.8);
+				// Add text effect for "CyberPlayer 3000"
+				if(uv.x > 0.05 && uv.x < 0.35 && uv.y > 0.03 && uv.y < 0.07) {
+					color = neon(vec3(0.0, 1.0, 1.0), 1.5);
+				}
+			}
+
+			// Add some glow and scanlines
+			color += neon(vec3(0.0, 1.0, 1.0), 0.2);
+			color *= 0.8 + 0.2 * sin(uv.y * 1000.0 + u_time * 5.0);
+
+			gl_FragColor += vec4(color, 1.0);
+		}    </script>
+
+    <script>
+        let camera, scene, renderer, uniforms;
+        let playlist = [];
+        let currentVideoIndex = 0;
+        let videoTexture, videoElement;
+        let isLooping = true;
+        let isContinuous = false;
+
+        function init() {
+            camera = new THREE.Camera();
+            camera.position.z = 1;
+
+            scene = new THREE.Scene();
+
+            const geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+            videoElement = document.getElementById('videoElement');
+            videoTexture = new THREE.VideoTexture(videoElement);
+
+            uniforms = {
+                u_time: { type: "f", value: 1.0 },
+                u_resolution: { type: "v2", value: new THREE.Vector2() },
+                u_mouse: { type: "v2", value: new THREE.Vector2() },
+                u_videoTexture: { type: "t", value: videoTexture },
+                u_videoResolution: { type: "v2", value: new THREE.Vector2(1, 1) },
+                u_playlistSize: { type: "i", value: 0 },
+                u_currentVideo: { type: "i", value: 0 }
+            };
+
+            const material = new THREE.ShaderMaterial({
+                uniforms: uniforms,
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragmentShader').textContent
+            });
+
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('shaderCanvas') });
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            onWindowResize();
+            window.addEventListener('resize', onWindowResize, false);
+            document.addEventListener('mousemove', onMouseMove, false);
+
+            document.getElementById('fileInput').addEventListener('change', handleFileInput);
+
+            // Add event listener for video metadata loaded
+            videoElement.addEventListener('loadedmetadata', function() {
+                uniforms.u_videoResolution.value.x = this.videoWidth;
+                uniforms.u_videoResolution.value.y = this.videoHeight;
+            });
+
+            // Add event listeners for control buttons
+            document.getElementById('prevButton').addEventListener('click', playPreviousVideo);
+            document.getElementById('playPauseButton').addEventListener('click', togglePlayPause);
+            document.getElementById('nextButton').addEventListener('click', playNextVideo);
+            document.getElementById('loopButton').addEventListener('click', toggleLoop);
+            document.getElementById('continuousButton').addEventListener('click', toggleContinuous);
+
+            // Add event listener for video ended
+            videoElement.addEventListener('ended', handleVideoEnded);
+
+            updateButtonStates();
+        }
+
+        function onWindowResize() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            uniforms.u_resolution.value.x = renderer.domElement.width;
+            uniforms.u_resolution.value.y = renderer.domElement.height;
+        }
+
+        function onMouseMove(event) {
+            uniforms.u_mouse.value.x = event.clientX;
+            uniforms.u_mouse.value.y = window.innerHeight - event.clientY;
+        }
+
+        function handleFileInput(event) {
+            const files = event.target.files;
+            playlist = Array.from(files).filter(file => file.type.startsWith('video/'));
+            uniforms.u_playlistSize.value = playlist.length;
+            updatePlaylistUI();
+            if(playlist.length > 0) {
+                currentVideoIndex = 0;
+                playVideo(playlist[0]);
+            }
+        }
+
+        function updatePlaylistUI() {
+            const playlistElement = document.getElementById('playlist');
+            playlistElement.innerHTML = '';
+            playlist.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item';
+                item.textContent = file.name;
+                item.onclick = () => {
+                    currentVideoIndex = index;
+                    playVideo(playlist[currentVideoIndex]);
+                    updateActiveItem();
+                };
+                playlistElement.appendChild(item);
+            });
+            updateActiveItem();
+        }
+
+        function updateActiveItem() {
+            const items = document.getElementsByClassName('playlist-item');
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.remove('active');
+            }
+            if (items[currentVideoIndex]) {
+                items[currentVideoIndex].classList.add('active');
+            }
+        }
+
+        function playVideo(file) {
+            const videoURL = URL.createObjectURL(file);
+            videoElement.src = videoURL;
+            videoElement.play();
+            uniforms.u_currentVideo.value = currentVideoIndex;
+            updateActiveItem();
+        }
+
+        function playPreviousVideo() {
+            if (playlist.length > 0) {
+                currentVideoIndex = (currentVideoIndex - 1 + playlist.length) % playlist.length;
+                playVideo(playlist[currentVideoIndex]);
+            }
+        }
+
+        function playNextVideo() {
+            if (playlist.length > 0) {
+                currentVideoIndex = (currentVideoIndex + 1) % playlist.length;
+                playVideo(playlist[currentVideoIndex]);
+            }
+        }
+
+        function togglePlayPause() {
+            if (videoElement.paused) {
+                videoElement.play();
+            } else {
+                videoElement.pause();
+            }
+            updateButtonStates();
+        }
+
+        function toggleLoop() {
+            isLooping = !isLooping;
+            videoElement.loop = isLooping;
+            updateButtonStates();
+        }
+
+        function toggleContinuous() {
+            isContinuous = !isContinuous;
+            updateButtonStates();
+        }
+
+        function handleVideoEnded() {
+            if (isContinuous) {
+                playNextVideo();
+            } else if (!isLooping) {
+                videoElement.pause();
+                updateButtonStates();
+            }
+        }
+
+        function updateButtonStates() {
+            document.getElementById('playPauseButton').textContent = videoElement.paused ? 'Play' : 'Pause';
+            document.getElementById('loopButton').classList.toggle('active', isLooping);
+            document.getElementById('continuousButton').classList.toggle('active', isContinuous);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            uniforms.u_time.value += 0.05;
+            renderer.render(scene, camera);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
