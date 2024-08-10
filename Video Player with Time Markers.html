@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Player with Time Markers (HTML Download)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        #markerList {
+            width: 200px;
+            height: 360px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        button, input {
+            margin-top: 10px;
+        }
+        .marker {
+            cursor: pointer;
+            padding: 5px;
+            margin: 2px 0;
+            background-color: #f0f0f0;
+            border-radius: 3px;
+        }
+        .marker:hover {
+            background-color: #e0e0e0;
+        }
+        #videoInput {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="text" id="videoInput" placeholder="Enter YouTube Video ID">
+        <button id="loadVideo">Load Video</button>
+    </div>
+    <div class="container">
+        <div>
+            <div id="player"></div>
+            <button id="addMarker">Add Marker</button>
+            <button id="downloadMarkers">Download Markers (HTML)</button>
+        </div>
+        <div id="markerList"></div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        let player;
+        const videoInput = document.getElementById('videoInput');
+        const loadVideoBtn = document.getElementById('loadVideo');
+        const addMarkerBtn = document.getElementById('addMarker');
+        const downloadMarkersBtn = document.getElementById('downloadMarkers');
+        const markerList = document.getElementById('markerList');
+        const markers = [];
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '360',
+                width: '640',
+                videoId: '',
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            loadVideoBtn.addEventListener('click', () => {
+                const videoId = videoInput.value.trim();
+                if (videoId) {
+                    player.loadVideoById(videoId);
+                    markers.length = 0;
+                    updateMarkerList();
+                }
+            });
+
+            addMarkerBtn.addEventListener('click', () => {
+                const currentTime = player.getCurrentTime();
+                const formattedTime = formatTime(currentTime);
+                markers.push({time: currentTime, formatted: formattedTime});
+                updateMarkerList();
+            });
+
+            downloadMarkersBtn.addEventListener('click', () => {
+                const videoId = videoInput.value.trim();
+                const content = generateMarkersHTML(videoId);
+                const blob = new Blob([content], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'youtube_video_markers.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        function formatTime(seconds) {
+            const date = new Date(null);
+            date.setSeconds(seconds);
+            return date.toISOString().substr(11, 8);
+        }
+
+        function updateMarkerList() {
+            markerList.innerHTML = markers.map((marker, index) => 
+                `<div class="marker" data-index="${index}">${marker.formatted}</div>`
+            ).join('');
+
+            document.querySelectorAll('.marker').forEach(markerElement => {
+                markerElement.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    player.seekTo(markers[index].time);
+                });
+            });
+        }
+
+        function generateMarkersHTML(videoId) {
+            const listItems = markers.map(marker => 
+                `<li><a href="https://www.youtube.com/watch?v=${videoId}&t=${Math.floor(marker.time)}s" target="_blank">${marker.formatted}</a></li>`
+            ).join('');
+
+            return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Markers</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        h1 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 10px; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Video Markers</h1>
+    <ul>
+        ${listItems}
+    </ul>
+</body>
+</html>`;
+        }
+    </script>
+</body>
+</html>
