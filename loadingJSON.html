@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberPlayer 3000 Shader Edition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #shaderCanvas {
+            width: 100%;
+            height: 100%;
+        }
+        #fileInput {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+        }
+        #videoElement {
+            display: none;
+        }
+        #playlist {
+            position: absolute;
+            top: 10%;
+            right: 0;
+            width: 30%;
+            height: 80%;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .playlist-item {
+            padding: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .playlist-item:hover {
+            background-color: rgba(0, 255, 255, 0.3);
+        }
+        .playlist-item.active {
+            background-color: rgba(0, 255, 255, 0.5);
+        }
+        #controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70%;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #controls button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: rgba(0, 255, 255, 0.5);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #controls button:hover {
+            background-color: rgba(0, 255, 255, 0.7);
+        }
+        #controls button.active {
+            background-color: rgba(0, 255, 255, 1);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="shaderCanvas"></canvas>
+    <input type="file" id="fileInput" multiple accept=".mp4,.webm,.ogg">
+    <video id="videoElement" loop>
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="playlist"></div>
+    <div id="controls">
+        <button id="prevButton">Previous</button>
+        <button id="playPauseButton">Play/Pause</button>
+        <button id="nextButton">Next</button>
+        <button id="loopButton">Loop</button>
+        <button id="continuousButton">Continuous</button>
+    </div>
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            gl_Position = vec4(position, 1.0);
+        }
+    </script>
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        uniform vec2 u_resolution;
+        uniform float u_time;
+        uniform sampler2D u_videoTexture;
+        uniform vec2 u_mouse;
+        uniform vec2 u_videoResolution;
+		uniform vec2 u_containerAspect;   // Aspecto del contenedor (canvas)
+        uniform int u_playlistSize;
+        uniform int u_currentVideo;
+        varying vec2 vUv;
+
+        const float noiseIntensity = 2.8;
+        const float noiseDefinition = 0.6;
+        const vec2 glowPos = vec2(-2.0, 0.0);
+
+        const float total = 60.0;
+        const float minSize = 0.03;
+        const float maxSize = 0.08 - minSize;
+        const float yDistribution = 0.5;
+
+        // Funciones de ruido y efectos
+		float rand(vec2 co) {
+			return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+		}
+
+		float noise(vec2 p) {
+			const float noiseIntensity = 2.8;
+			const float noiseDefinition = 0.6;
+			p *= noiseIntensity;
+			vec2 i = floor(p);
+			vec2 f = fract(p);
+			vec2 u = f * f * (3.0 - 2.0 * f);
+			return mix(mix(rand(i + vec2(0.0, 0.0)), rand(i + vec2(1.0, 0.0)), u.x),
+					   mix(rand(i + vec2(0.0, 1.0)), rand(i + vec2(1.0, 1.0)), u.x), u.y);
+		}
+
+		float fbm(vec2 uv) {
+			uv *= 5.0;
+			mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
+			float f = 0.5000 * noise(uv); uv = m * uv;
+			f += 0.2500 * noise(uv); uv = m * uv;
+			f += 0.1250 * noise(uv); uv = m * uv;
+			f += 0.0625 * noise(uv); uv = m * uv;
+			f = 0.5 + 0.5 * f;
+			return f;
+		}
+
+		vec3 bg(vec2 uv) {
+			float velocity = u_time / 1.6;
+			float intensity = sin(uv.x * 3.0 + velocity * 2.0) * 1.1 + 1.5;
+			uv.y -= 2.0;
+			vec2 bp = uv + vec2(-2.0, 0.0);
+			uv *= 0.6;
+
+			float rb = fbm(vec2(uv.x * 0.5 - velocity * 0.03, uv.y)) * 0.1;
+			uv += rb;
+
+			float rz = fbm(uv * 0.9 + vec2(velocity * 0.35, 0.0));
+			rz *= dot(bp * intensity, bp) + 1.2;
+
+			vec3 col = vec3(0.01, 0.16, 0.42) / (0.1 - rz);
+			return sqrt(abs(col));
+		}
+
+		float rectangle(vec2 uv, vec2 pos, float width, float height, float blur) {
+			pos = (vec2(width, height) + 0.01) / 2.0 - abs(uv - pos);
+			pos = smoothstep(0.0, blur, pos);
+			return pos.x * pos.y;
+		}
+
+		mat2 rotate2d(float _angle) {
+			return mat2(cos(_angle), -sin(_angle),
+						sin(_angle), cos(_angle));
+		}
+
+        void main() {
+			// Corregir la relación de aspecto
+			vec2 aspectCorrectedUV = vUv;
+			float videoAspect = u_videoResolution.x / u_videoResolution.y;
+			float containerAspect = u_containerAspect.x / u_containerAspect.y;
+
+			if (videoAspect > containerAspect) {
+				float scale = 1.0; //containerAspect / videoAspect;
+				aspectCorrectedUV.y = (aspectCorrectedUV.y - 0.5) * scale + 0.5;
+			} else {
+				float scale = 1.0; //videoAspect / containerAspect;
+				aspectCorrectedUV.x = (aspectCorrectedUV.x - 0.5) / scale + 0.5;
+			}
+
+			// Obtener el color del video
+			vec4 videoColor = texture2D(u_videoTexture, aspectCorrectedUV);
+
+			// Efectos y fondo
+			vec2 p = vUv * 2.0 - 1.0;
+			p.x *= u_resolution.x / u_resolution.y;
+			vec3 color = bg(p) * (2.0 - abs(p.y * 2.0));
+
+			float velX = -u_time / 8.0;
+			float velY = u_time / 10.0;
+			const float total = 60.0;
+			const float minSize = 0.03;
+			const float maxSize = 0.08 - minSize;
+			const float yDistribution = 0.5;
+
+			for (float i = 0.0; i < total; i++) {
+				float index = i / total;
+				float rnd = rand(vec2(index));
+				vec3 pos = vec3(0.0, 0.0, 0.0);
+				pos.x = fract(velX * rnd + index) * 4.0 - 2.0;
+				pos.y = sin(index * rnd * 1000.0 + velY) * yDistribution;
+				pos.z = maxSize * rnd + minSize;
+				vec2 uvRot = p - pos.xy + pos.z / 2.0;
+				uvRot = rotate2d(i + u_time / 2.0) * uvRot;
+				uvRot += pos.xy + pos.z / 2.0;
+				float rect = rectangle(uvRot, pos.xy, pos.z, pos.z, (maxSize + minSize - pos.z) / 2.0);
+				color += vec3(0.01, 0.26, 0.57) * rect * pos.z / maxSize;
+			}
+
+			gl_FragColor = vec4(color + videoColor.rgb, 1.0);
+		}
+    </script>
+
+    <script>
+        let camera, scene, renderer, uniforms;
+        let playlist = [];
+        let currentVideoIndex = 0;
+        let videoTexture, videoElement;
+        let isLooping = true;
+        let isContinuous = false;
+
+        function init() {
+			camera = new THREE.Camera();
+			camera.position.z = 1;
+
+			scene = new THREE.Scene();
+
+			const geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+			videoElement = document.getElementById('videoElement');
+			videoTexture = new THREE.VideoTexture(videoElement);
+
+			uniforms = {
+				u_time: { type: "f", value: 1.0 },
+				u_resolution: { type: "v2", value: new THREE.Vector2() },
+				u_mouse: { type: "v2", value: new THREE.Vector2() },
+				u_videoTexture: { type: "t", value: videoTexture },
+				u_videoResolution: { type: "v2", value: new THREE.Vector2(1, 1) },
+				u_aspectRatio: { type: "v2", value: new THREE.Vector2(1, 1) },
+				u_playlistSize: { type: "i", value: 0 },
+				u_currentVideo: { type: "i", value: 0 }
+			};
+
+			const material = new THREE.ShaderMaterial({
+				uniforms: uniforms,
+				vertexShader: document.getElementById('vertexShader').textContent,
+				fragmentShader: document.getElementById('fragmentShader').textContent
+			});
+
+			const mesh = new THREE.Mesh(geometry, material);
+			scene.add(mesh);
+
+			renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('shaderCanvas') });
+			renderer.setPixelRatio(window.devicePixelRatio);
+
+			onWindowResize();
+			window.addEventListener('resize', onWindowResize, false);
+			document.addEventListener('mousemove', onMouseMove, false);
+
+			document.getElementById('fileInput').addEventListener('change', handleFileInput);
+			
+			// Cargar la lista de videos desde el archivo JSON
+            loadPlaylist();
+
+			// Add event listener for video metadata loaded
+			videoElement.addEventListener('loadedmetadata', function() {
+				uniforms.u_videoResolution.value.x = this.videoWidth;
+				uniforms.u_videoResolution.value.y = this.videoHeight;
+				
+				// Calcular y pasar la relación de aspecto
+				const aspectRatio = this.videoWidth / this.videoHeight;
+				uniforms.u_aspectRatio.value.x = aspectRatio;
+				uniforms.u_aspectRatio.value.y = 1.0;
+			});
+
+			// Add event listeners for control buttons
+			document.getElementById('prevButton').addEventListener('click', playPreviousVideo);
+			document.getElementById('playPauseButton').addEventListener('click', togglePlayPause);
+			document.getElementById('nextButton').addEventListener('click', playNextVideo);
+			document.getElementById('loopButton').addEventListener('click', toggleLoop);
+			document.getElementById('continuousButton').addEventListener('click', toggleContinuous);
+
+			// Add event listener for video ended
+			videoElement.addEventListener('ended', handleVideoEnded);
+
+			updateButtonStates();
+		}
+		
+		function loadPlaylist() {
+            fetch('./media_files.json')
+                .then(response => response.json())
+                .then(data => {
+                    playlist = data.filter(item => item.type === 'video');
+                    uniforms.u_playlistSize.value = playlist.length;
+                    updatePlaylistUI();
+                    if (playlist.length > 0) {
+                        currentVideoIndex = 0;
+                        playVideo(playlist[0]);
+                    }
+                })
+                .catch(error => console.error('Error loading playlist:', error));
+        }
+
+
+        function onWindowResize() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            uniforms.u_resolution.value.x = renderer.domElement.width;
+            uniforms.u_resolution.value.y = renderer.domElement.height;
+        }
+
+        function onMouseMove(event) {
+            uniforms.u_mouse.value.x = event.clientX;
+            uniforms.u_mouse.value.y = window.innerHeight - event.clientY;
+        }
+		
+		function loadPlaylistFromFile(file) {
+			const reader = new FileReader();
+			reader.onload = function(event) {
+				try {
+					const json = JSON.parse(event.target.result);
+					console.log('Loaded JSON:', json); // Añadido para depuración
+					playlist = json.filter(item => item.type === 'video');
+					uniforms.u_playlistSize.value = playlist.length;
+					updatePlaylistUI();
+					if (playlist.length > 0) {
+						currentVideoIndex = 0;
+						playVideo(playlist[0]);
+					}
+				} catch (e) {
+					console.error('Error parsing JSON file:', e);
+				}
+			};
+			reader.readAsText(file);
+		}
+
+
+        function handleFileInput(event) {
+            const files = event.target.files;
+            playlist = Array.from(files).filter(file => file.type.startsWith('video/'));
+            uniforms.u_playlistSize.value = playlist.length;
+            updatePlaylistUI();
+            if(playlist.length > 0) {
+                currentVideoIndex = 0;
+                playVideo(playlist[0]);
+            }
+        }
+
+        function updatePlaylistUI() {
+            const playlistElement = document.getElementById('playlist');
+            playlistElement.innerHTML = '';
+            playlist.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item';
+                item.textContent = file.name;
+                item.onclick = () => {
+                    currentVideoIndex = index;
+                    playVideo(file.path); // Pasar la ruta al archivo
+                    updateActiveItem();
+                };
+                playlistElement.appendChild(item);
+            });
+
+            updateActiveItem();
+        }
+
+        function updateActiveItem() {
+            const items = document.getElementsByClassName('playlist-item');
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.remove('active');
+            }
+            if (items[currentVideoIndex]) {
+                items[currentVideoIndex].classList.add('active');
+            }
+        }
+
+        function playVideo(file) {
+            let videoURL;
+            if (typeof file === 'string') {
+                // Si 'file' es una ruta (string), úsala directamente
+                videoURL = file;
+            } else {
+                // Si 'file' es un objeto File, crea una URL temporal
+                videoURL = URL.createObjectURL(file);
+            }
+
+            videoElement.src = videoURL;
+            videoElement.play();
+            uniforms.u_currentVideo.value = currentVideoIndex;
+            updateActiveItem();
+        }
+
+
+        function playPreviousVideo() {
+            if (playlist.length > 0) {
+                currentVideoIndex = (currentVideoIndex - 1 + playlist.length) % playlist.length;
+                playVideo(playlist[currentVideoIndex]);
+            }
+        }
+
+        function playNextVideo() {
+            if (playlist.length > 0) {
+                currentVideoIndex = (currentVideoIndex + 1) % playlist.length;
+                playVideo(playlist[currentVideoIndex]);
+            }
+        }
+
+        function togglePlayPause() {
+            if (videoElement.paused) {
+                videoElement.play();
+            } else {
+                videoElement.pause();
+            }
+            updateButtonStates();
+        }
+
+        function toggleLoop() {
+            isLooping = !isLooping;
+            videoElement.loop = isLooping;
+            updateButtonStates();
+        }
+
+        function toggleContinuous() {
+            isContinuous = !isContinuous;
+            updateButtonStates();
+        }
+
+        function handleVideoEnded() {
+            if (isContinuous) {
+                playNextVideo();
+            } else if (!isLooping) {
+                videoElement.pause();
+                updateButtonStates();
+            }
+        }
+
+        function updateButtonStates() {
+            document.getElementById('playPauseButton').textContent = videoElement.paused ? 'Play' : 'Pause';
+            document.getElementById('loopButton').classList.toggle('active', isLooping);
+            document.getElementById('continuousButton').classList.toggle('active', isContinuous);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            uniforms.u_time.value += 0.05;
+            renderer.render(scene, camera);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
