@@ -23,15 +23,15 @@
             left: 10px;
             z-index: 10;
         }
-        #videoElement {
+        #videoElement, #audioElement {
             display: none;
         }
         #playlist {
             position: absolute;
-            top: 10%;
+            top: 20%;
             right: 0;
             width: 30%;
-            height: 80%;
+            height: 70%;
             overflow-y: auto;
             background-color: rgba(0, 0, 0, 0.5);
             color: #fff;
@@ -75,15 +75,42 @@
         #controls button.active {
             background-color: rgba(0, 255, 255, 1);
         }
+        #audioVideoToggle {
+            position: absolute;
+            top: 10%;
+            right: 0;
+            width: 30%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 10px;
+            box-sizing: border-box;
+            cursor: pointer;
+            text-align: center;
+            z-index: 10;
+        }
+        #toggleUI {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
     <canvas id="shaderCanvas"></canvas>
-    <input type="file" id="fileInput" multiple accept=".mp4,.webm,.ogg">
+    <input type="file" id="fileInput" multiple accept=".mp4,.webm,.ogg,.m4a,.mp3">
     <video id="videoElement" loop>
         <source src="" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+    <audio id="audioElement" loop>
+        <source src="" type="audio/m4a">
+        Your browser does not support the audio tag.
+    </audio>
     <div id="playlist"></div>
     <div id="controls">
         <button id="prevButton">Previous</button>
@@ -92,6 +119,8 @@
         <button id="loopButton">Loop</button>
         <button id="continuousButton">Continuous</button>
     </div>
+    <div id="audioVideoToggle">Show Audio & Video</div>
+    <div id="toggleUI">Minimize UI</div>
 
     <script id="vertexShader" type="x-shader/x-vertex">
         varying vec2 vUv;
@@ -226,93 +255,69 @@
     <script>
         let camera, scene, renderer, uniforms;
         let playlist = [];
-        let currentVideoIndex = 0;
-        let videoTexture, videoElement;
+        let currentMediaIndex = 0;
+        let videoTexture, videoElement, audioElement;
         let isLooping = true;
         let isContinuous = false;
+        let showAudioVideo = false;
 
         function init() {
-			camera = new THREE.Camera();
-			camera.position.z = 1;
+            camera = new THREE.Camera();
+            camera.position.z = 1;
 
-			scene = new THREE.Scene();
+            scene = new THREE.Scene();
 
-			const geometry = new THREE.PlaneBufferGeometry(2, 2);
+            const geometry = new THREE.PlaneBufferGeometry(2, 2);
 
-			videoElement = document.getElementById('videoElement');
-			videoTexture = new THREE.VideoTexture(videoElement);
+            videoElement = document.getElementById('videoElement');
+            audioElement = document.getElementById('audioElement');
+            videoTexture = new THREE.VideoTexture(videoElement);
 
-			uniforms = {
-				u_time: { type: "f", value: 1.0 },
-				u_resolution: { type: "v2", value: new THREE.Vector2() },
-				u_mouse: { type: "v2", value: new THREE.Vector2() },
-				u_videoTexture: { type: "t", value: videoTexture },
-				u_videoResolution: { type: "v2", value: new THREE.Vector2(1, 1) },
-				u_aspectRatio: { type: "v2", value: new THREE.Vector2(1, 1) },
-				u_playlistSize: { type: "i", value: 0 },
-				u_currentVideo: { type: "i", value: 0 }
-			};
+            uniforms = {
+                u_time: { type: "f", value: 1.0 },
+                u_resolution: { type: "v2", value: new THREE.Vector2() },
+                u_videoTexture: { type: "t", value: videoTexture },
+                u_videoResolution: { type: "v2", value: new THREE.Vector2(1, 1) },
+                u_containerAspect: { type: "v2", value: new THREE.Vector2(1, 1) }
+            };
 
-			const material = new THREE.ShaderMaterial({
-				uniforms: uniforms,
-				vertexShader: document.getElementById('vertexShader').textContent,
-				fragmentShader: document.getElementById('fragmentShader').textContent
-			});
+            const material = new THREE.ShaderMaterial({
+                uniforms: uniforms,
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragmentShader').textContent
+            });
 
-			const mesh = new THREE.Mesh(geometry, material);
-			scene.add(mesh);
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
 
-			renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('shaderCanvas') });
-			renderer.setPixelRatio(window.devicePixelRatio);
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('shaderCanvas') });
+            renderer.setPixelRatio(window.devicePixelRatio);
 
-			onWindowResize();
-			window.addEventListener('resize', onWindowResize, false);
-			document.addEventListener('mousemove', onMouseMove, false);
+            onWindowResize();
+            window.addEventListener('resize', onWindowResize, false);
 
-			document.getElementById('fileInput').addEventListener('change', handleFileInput);
-			
-			// Cargar la lista de videos desde el archivo JSON
-            loadPlaylist();
+            document.getElementById('fileInput').addEventListener('change', handleFileInput);
 
-			// Add event listener for video metadata loaded
-			videoElement.addEventListener('loadedmetadata', function() {
-				uniforms.u_videoResolution.value.x = this.videoWidth;
-				uniforms.u_videoResolution.value.y = this.videoHeight;
-				
-				// Calcular y pasar la relación de aspecto
-				const aspectRatio = this.videoWidth / this.videoHeight;
-				uniforms.u_aspectRatio.value.x = aspectRatio;
-				uniforms.u_aspectRatio.value.y = 1.0;
-			});
+            videoElement.addEventListener('loadedmetadata', function() {
+                uniforms.u_videoResolution.value.x = this.videoWidth;
+                uniforms.u_videoResolution.value.y = this.videoHeight;
+            });
 
-			// Add event listeners for control buttons
-			document.getElementById('prevButton').addEventListener('click', playPreviousVideo);
-			document.getElementById('playPauseButton').addEventListener('click', togglePlayPause);
-			document.getElementById('nextButton').addEventListener('click', playNextVideo);
-			document.getElementById('loopButton').addEventListener('click', toggleLoop);
-			document.getElementById('continuousButton').addEventListener('click', toggleContinuous);
+            videoElement.addEventListener('ended', handleMediaEnded);
+            audioElement.addEventListener('ended', handleMediaEnded);
 
-			// Add event listener for video ended
-			videoElement.addEventListener('ended', handleVideoEnded);
+            document.getElementById('audioVideoToggle').addEventListener('click', toggleAudioVideo);
+            document.getElementById('toggleUI').addEventListener('click', toggleUI);
 
-			updateButtonStates();
-		}
-		
-		function loadPlaylist() {
-            fetch('./media_files.json')
-                .then(response => response.json())
-                .then(data => {
-                    playlist = data.filter(item => item.type === 'video');
-                    uniforms.u_playlistSize.value = playlist.length;
-                    updatePlaylistUI();
-                    if (playlist.length > 0) {
-                        currentVideoIndex = 0;
-                        playVideo(playlist[0]);
-                    }
-                })
-                .catch(error => console.error('Error loading playlist:', error));
+            document.getElementById('prevButton').addEventListener('click', playPreviousMedia);
+            document.getElementById('playPauseButton').addEventListener('click', togglePlayPause);
+            document.getElementById('nextButton').addEventListener('click', playNextMedia);
+            document.getElementById('loopButton').addEventListener('click', toggleLoop);
+            document.getElementById('continuousButton').addEventListener('click', toggleContinuous);
+
+            activateUI();
+            loadPlaylistFromJSON();
         }
-
 
         function onWindowResize() {
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -320,135 +325,196 @@
             uniforms.u_resolution.value.y = renderer.domElement.height;
         }
 
-        function onMouseMove(event) {
-            uniforms.u_mouse.value.x = event.clientX;
-            uniforms.u_mouse.value.y = window.innerHeight - event.clientY;
+        function activateUI() {
+            document.getElementById('fileInput').style.display = 'block';
+            document.getElementById('playlist').style.display = 'block';
+            document.getElementById('controls').style.display = 'flex';
+            document.getElementById('audioVideoToggle').style.display = 'block';
+            document.getElementById('toggleUI').style.display = 'block';
         }
-		
-		function loadPlaylistFromFile(file) {
-			const reader = new FileReader();
-			reader.onload = function(event) {
-				try {
-					const json = JSON.parse(event.target.result);
-					console.log('Loaded JSON:', json); // Añadido para depuración
-					playlist = json.filter(item => item.type === 'video');
-					uniforms.u_playlistSize.value = playlist.length;
-					updatePlaylistUI();
-					if (playlist.length > 0) {
-						currentVideoIndex = 0;
-						playVideo(playlist[0]);
-					}
-				} catch (e) {
-					console.error('Error parsing JSON file:', e);
-				}
-			};
-			reader.readAsText(file);
-		}
 
+        function toggleUI() {
+            const display = document.getElementById('playlist').style.display === 'none' ? 'block' : 'none';
+            document.getElementById('playlist').style.display = display;
+            document.getElementById('controls').style.display = display === 'none' ? 'none' : 'flex';
+            document.getElementById('audioVideoToggle').style.display = display;
+            document.getElementById('fileInput').style.display = display;
+        }
 
         function handleFileInput(event) {
             const files = event.target.files;
-            playlist = Array.from(files).filter(file => file.type.startsWith('video/'));
-            uniforms.u_playlistSize.value = playlist.length;
-            updatePlaylistUI();
-            if(playlist.length > 0) {
-                currentVideoIndex = 0;
-                playVideo(playlist[0]);
-            }
+            const mediaFiles = Array.from(files).map(file => {
+                const fileType = file.type.startsWith('video') ? 'video' : 'audio';
+                return { name: file.name, path: URL.createObjectURL(file), type: fileType };
+            });
+            playlist = mediaFiles;
+            currentMediaIndex = 0; // Reset to the first item when loading new files
+    
+            renderPlaylist();
         }
 
-        function updatePlaylistUI() {
+        function loadPlaylistFromJSON() {
+            fetch('./media_files.json')
+                .then(response => response.json())
+                .then(data => {
+                    playlist = data;
+                    currentMediaIndex = 0; // Reset to the first item when loading from JSON
+            
+                    renderPlaylist();
+                })
+                .catch(error => console.error('Error loading playlist:', error));
+        }
+
+        function renderPlaylist() {
             const playlistElement = document.getElementById('playlist');
             playlistElement.innerHTML = '';
-            playlist.forEach((file, index) => {
-                const item = document.createElement('div');
-                item.className = 'playlist-item';
-                item.textContent = file.name;
-                item.onclick = () => {
-                    currentVideoIndex = index;
-                    playVideo(file.path); // Pasar la ruta al archivo
-                    updateActiveItem();
-                };
-                playlistElement.appendChild(item);
+            playlist.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.textContent = item.name;
+                div.className = 'playlist-item';
+                if (index === currentMediaIndex) {
+                    div.classList.add('active');
+                }
+                div.addEventListener('click', () => {
+                    currentMediaIndex = index;
+                    playMedia();
+                });
+                playlistElement.appendChild(div);
+            });
+        }
+
+        function toggleAudioVideo() {
+            showAudioVideo = !showAudioVideo;
+            const text = showAudioVideo ? 'Show Only Video' : 'Show Audio & Video';
+            document.getElementById('audioVideoToggle').textContent = text;
+
+            const filteredPlaylist = playlist.filter(item => {
+                return showAudioVideo ? true : item.type === 'video';
             });
 
-            updateActiveItem();
+            renderFilteredPlaylist(filteredPlaylist);
         }
 
-        function updateActiveItem() {
-            const items = document.getElementsByClassName('playlist-item');
-            for (let i = 0; i < items.length; i++) {
-                items[i].classList.remove('active');
-            }
-            if (items[currentVideoIndex]) {
-                items[currentVideoIndex].classList.add('active');
-            }
+        function renderFilteredPlaylist(filteredPlaylist) {
+            const playlistElement = document.getElementById('playlist');
+            playlistElement.innerHTML = '';
+            filteredPlaylist.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.textContent = item.name;
+                div.className = 'playlist-item';
+                if (index === currentMediaIndex) {
+                    div.classList.add('active');
+                }
+                div.addEventListener('click', () => {
+                    currentMediaIndex = playlist.findIndex(p => p.name === item.name);
+                    playMedia();
+                });
+                playlistElement.appendChild(div);
+            });
         }
 
-        function playVideo(file) {
-            let videoURL;
-            if (typeof file === 'string') {
-                // Si 'file' es una ruta (string), úsala directamente
-                videoURL = file;
-            } else {
-                // Si 'file' es un objeto File, crea una URL temporal
-                videoURL = URL.createObjectURL(file);
-            }
+        
 
-            videoElement.src = videoURL;
-            videoElement.play();
-            uniforms.u_currentVideo.value = currentVideoIndex;
-            updateActiveItem();
+        function updateButtonStates() {
+            const isPaused = (videoElement.style.display === 'block' && videoElement.paused) ||
+                            (audioElement.style.display === 'block' && audioElement.paused);
+
+            document.getElementById('playPauseButton').textContent = isPaused ? 'Play' : 'Pause';
+            document.getElementById('loopButton').classList.toggle('active', isLooping);
+            document.getElementById('continuousButton').classList.toggle('active', isContinuous);
         }
 
+        // Initialize media elements and add event listeners only after ensuring they are defined
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoElement = document.getElementById('videoElement');
+            const audioElement = document.getElementById('audioElement');
 
-        function playPreviousVideo() {
-            if (playlist.length > 0) {
-                currentVideoIndex = (currentVideoIndex - 1 + playlist.length) % playlist.length;
-                playVideo(playlist[currentVideoIndex]);
-            }
-        }
+            // Add event listeners to handle the end of the media
+            videoElement.addEventListener('ended', handleMediaEnded);
+            audioElement.addEventListener('ended', handleMediaEnded);
+        });
 
-        function playNextVideo() {
-            if (playlist.length > 0) {
-                currentVideoIndex = (currentVideoIndex + 1) % playlist.length;
-                playVideo(playlist[currentVideoIndex]);
-            }
-        }
-
-        function togglePlayPause() {
-            if (videoElement.paused) {
-                videoElement.play();
-            } else {
-                videoElement.pause();
-            }
-            updateButtonStates();
-        }
-
-        function toggleLoop() {
-            isLooping = !isLooping;
-            videoElement.loop = isLooping;
-            updateButtonStates();
-        }
-
-        function toggleContinuous() {
-            isContinuous = !isContinuous;
-            updateButtonStates();
-        }
-
-        function handleVideoEnded() {
+        function handleMediaEnded() {
             if (isContinuous) {
-                playNextVideo();
-            } else if (!isLooping) {
-                videoElement.pause();
+                // Avanza al siguiente medio
+                playNextMedia();
+            } else if (isLooping) {
+                // Reinicia el medio actual
+                playMedia();
+            } else {
+                // Detiene la reproducción si no hay bucle o reproducción continua
+                if (videoElement.style.display === 'block') {
+                    videoElement.pause();
+                } else {
+                    audioElement.pause();
+                }
                 updateButtonStates();
             }
         }
 
-        function updateButtonStates() {
-            document.getElementById('playPauseButton').textContent = videoElement.paused ? 'Play' : 'Pause';
+        function playMedia() {
+            const media = playlist[currentMediaIndex];
+            const isVideo = media.type === 'video';
+
+            // Marca el medio actual en la lista de reproducción
+            document.querySelectorAll('.playlist-item').forEach((item, index) => {
+                item.classList.toggle('active', index === currentMediaIndex);
+            });
+
+            if (isVideo) {
+                audioElement.pause();
+                audioElement.style.display = 'none';
+                videoElement.style.display = 'block';
+                videoElement.src = media.path;
+                videoElement.play();
+            } else {
+                videoElement.pause();
+                videoElement.style.display = 'none';
+                audioElement.style.display = 'block';
+                audioElement.src = media.path;
+                audioElement.play();
+            }
+
+            // Asegúrate de que las opciones de bucle estén configuradas correctamente
+            videoElement.loop = isLooping;
+            audioElement.loop = isLooping;
+        }
+
+        function playPreviousMedia() {
+            currentMediaIndex = (currentMediaIndex - 1 + playlist.length) % playlist.length;
+            playMedia();
+        }
+
+        function playNextMedia() {
+            currentMediaIndex = (currentMediaIndex + 1) % playlist.length;
+            playMedia();
+        }
+
+        function togglePlayPause() {
+            if (videoElement.style.display === 'block') {
+                if (videoElement.paused) {
+                    videoElement.play();
+                } else {
+                    videoElement.pause();
+                }
+            } else {
+                if (audioElement.paused) {
+                    audioElement.play();
+                } else {
+                    audioElement.pause();
+                }
+            }
+        }
+
+        function toggleLoop() {
+            isLooping = !isLooping;
             document.getElementById('loopButton').classList.toggle('active', isLooping);
-            document.getElementById('continuousButton').classList.toggle('active', isContinuous);
+        }
+
+        // Existing functions to update
+        function toggleContinuous() {
+            isContinuous = !isContinuous;
+            updateButtonStates();
         }
 
         function animate() {
