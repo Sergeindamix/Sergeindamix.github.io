@@ -1,0 +1,269 @@
+<html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+                font-family: 'Arial', sans-serif;
+                background-color: black;
+            }
+            #title {
+                position: absolute;
+                top: 20px;
+                left: 0;
+                right: 0;
+                text-align: center;
+                font-size: 200%;
+                color: #00ffff;
+                text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+                z-index: 1000;
+            }
+            #video-container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 60vw;
+                height: 60vh;
+                z-index: 100;
+                overflow: hidden;
+                border-radius: 20px;
+                box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+            }
+            #video-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border: 4px solid #00ffff;
+                border-radius: 20px;
+                box-shadow: inset 0 0 20px #00ffff;
+                pointer-events: none;
+            }
+            #video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            #video-input {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1000;
+                background-color: rgba(0, 255, 255, 0.2);
+                color: #00ffff;
+                border: 2px solid #00ffff;
+                border-radius: 10px;
+                padding: 10px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            #video-input:hover {
+                background-color: rgba(0, 255, 255, 0.4);
+            }
+            #canvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+            }
+        </style>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var title = document.createElement('div');
+            title.id = 'title';
+            title.innerHTML = 'PRODU SERGE';
+            document.body.appendChild(title);
+
+            var videoContainer = document.createElement('div');
+            videoContainer.id = 'video-container';
+            document.body.appendChild(videoContainer);
+
+            var video = document.createElement('video');
+            video.id = 'video';
+            video.crossOrigin = 'anonymous';
+            video.loop = true;
+            video.muted = false;
+            videoContainer.appendChild(video);
+
+            var videoOverlay = document.createElement('div');
+            videoOverlay.id = 'video-overlay';
+            videoContainer.appendChild(videoOverlay);
+
+            var videoInput = document.createElement('input');
+            videoInput.id = 'video-input';
+            videoInput.type = 'file';
+            videoInput.accept = 'video/*';
+            document.body.appendChild(videoInput);
+
+            var canvas = document.createElement('canvas');
+            canvas.id = 'canvas';
+            document.body.appendChild(canvas);
+            var gl = canvas.getContext('webgl');
+
+            var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(vertexShader, `
+              attribute vec2 position;
+              varying vec2 uv;
+              void main() {
+                uv = position.xy * 0.5 + 0.5;
+                gl_Position = vec4(position, 0, 1);
+              }
+            `);
+            gl.compileShader(vertexShader);
+
+            var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(fragmentShader, `
+              precision highp float;
+              uniform vec2 resolution;
+              uniform float time;
+              
+              #define PI 3.14159265359
+              
+              float random(vec2 st) {
+                  return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+              }
+              
+              vec2 rotate(vec2 uv, float angle) {
+                  mat2 rotation = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+                  return uv * rotation;
+              }
+              
+              vec3 neonPalette(float t) {
+                  vec3 a = vec3(0.5, 0.5, 0.5);
+                  vec3 b = vec3(0.5, 0.5, 0.5);
+                  vec3 c = vec3(1.0, 1.0, 1.0);
+                  vec3 d = vec3(0.0, 0.33, 0.67);
+                  return a + b * cos(6.28318 * (c * t + d));
+              }
+              
+              float neonPattern(vec2 uv, float scale) {
+                  uv *= scale;
+                  vec2 gv = fract(uv) - 0.5;
+                  vec2 id = floor(uv);
+                  
+                  float n = random(id);
+                  float t = time * (0.2 + 0.3 * n);
+                  
+                  float shape = 0.0;
+                  if (n < 0.33) {
+                      shape = length(gv) - 0.3;
+                  } else if (n < 0.66) {
+                      shape = max(abs(gv.x), abs(gv.y)) - 0.3;
+                  } else {
+                      shape = abs(gv.x) + abs(gv.y) - 0.4;
+                  }
+                  
+                  shape += sin(t * PI * 2.0) * 0.1;
+                  
+                  return smoothstep(0.01, 0.0, shape);
+              }
+              
+              void main() {
+                  vec2 uv = gl_FragCoord.xy / resolution.xy;
+                  uv = uv * 2.0 - 1.0;
+                  uv.x *= resolution.x / resolution.y;
+                  
+                  // Create perspective effect
+                  float z = 0.1 / (uv.y + 1.5);
+                  vec2 perspectiveUV = vec2(uv.x * z, 1.0 - z);
+                  
+                  // Video player (back wall)
+                  vec2 videoUV = perspectiveUV * vec2(0.8, 0.6) + vec2(0.1, 0.2);
+                  float videoMask = step(0.0, videoUV.x) * step(videoUV.x, 1.0) * 
+                                    step(0.0, videoUV.y) * step(videoUV.y, 1.0);
+                  
+                  // Side walls
+                  float leftWall = smoothstep(0.0, 0.02, perspectiveUV.x + 1.0);
+                  float rightWall = smoothstep(0.0, 0.02, 1.0 - perspectiveUV.x);
+                  
+                  // Floor and ceiling
+                  float floor = smoothstep(0.0, 0.02, perspectiveUV.y);
+                  float ceiling = smoothstep(0.0, 0.02, 1.0 - perspectiveUV.y);
+                  
+                  // Neon patterns
+                  vec3 leftColor = neonPalette(time * 0.1) * neonPattern(vec2(perspectiveUV.y, uv.y) + time * 0.1, 5.0);
+                  vec3 rightColor = neonPalette(time * 0.15) * neonPattern(vec2(perspectiveUV.y, -uv.y) + time * 0.12, 5.0);
+                  vec3 floorColor = neonPalette(time * 0.2) * neonPattern(perspectiveUV * 0.5 + time * 0.05, 10.0);
+                  vec3 ceilingColor = neonPalette(time * 0.25) * neonPattern(perspectiveUV * 0.5 - time * 0.05, 10.0);
+                  
+                  // Combine all elements
+                  vec3 finalColor = leftColor * leftWall + 
+                                    rightColor * rightWall + 
+                                    floorColor * floor +
+                                    ceilingColor * ceiling;
+                  
+                  // Add video player outline
+                  finalColor += vec3(0.0, 1.0, 1.0) * smoothstep(0.99, 1.0, videoMask) * 2.0;
+                  
+                  // Add some ambient light
+                  finalColor += vec3(0.1, 0.1, 0.2);
+                  
+                  // Vignette effect
+                  float vignette = smoothstep(1.2, 0.5, length(uv));
+                  //finalColor *= vignette;
+                  
+                  gl_FragColor = vec4(finalColor, 1.0 - videoMask);
+              }
+            `);
+            gl.compileShader(fragmentShader);
+
+            var program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            gl.useProgram(program);
+
+            var positionLocation = gl.getAttribLocation(program, 'position');
+            var resolutionLocation = gl.getUniformLocation(program, 'resolution');
+            var timeLocation = gl.getUniformLocation(program, 'time');
+            var buffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+              -1.0, -1.0,
+              1.0, -1.0,
+              -1.0, 1.0,
+              -1.0, 1.0,
+              1.0, -1.0,
+              1.0, 1.0
+            ]), gl.STATIC_DRAW);
+            gl.enableVertexAttribArray(positionLocation);
+            gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+            var startTime = Date.now();
+
+            videoInput.onchange = function(e) {
+              var file = e.target.files[0];
+              var url = URL.createObjectURL(file);
+              video.src = url;
+              video.play();
+            };
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                gl.viewport(0, 0, canvas.width, canvas.height);
+                gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function render() {
+              var now = Date.now();
+              gl.uniform1f(timeLocation, (now - startTime) * 0.001);
+
+              gl.clear(gl.COLOR_BUFFER_BIT);
+              gl.drawArrays(gl.TRIANGLES, 0, 6);
+              requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
+        });
+        </script>
+    </head>
+    <body></body>
+</html>
