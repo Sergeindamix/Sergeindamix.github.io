@@ -139,7 +139,8 @@
 		uniform vec2 u_containerAspect;   // Aspecto del contenedor (canvas)
         uniform int u_playlistSize;
         uniform int u_currentVideo;
-        varying vec2 vUv;
+        varying vec2 vUv;		
+		uniform float u_particleVisibility;
 
         const float noiseIntensity = 2.8;
         const float noiseDefinition = 0.6;
@@ -191,7 +192,7 @@
 			rz *= dot(bp * intensity, bp) + 1.2;
 
 			vec3 col = vec3(0.01, 0.16, 0.42) / (0.1 - rz);
-			return sqrt(abs(col));
+			return sqrt(abs(col)) * u_particleVisibility; // Multiplicamos por u_particleVisibility
 		}
 
 		float rectangle(vec2 uv, vec2 pos, float width, float height, float blur) {
@@ -212,10 +213,10 @@
 			float containerAspect = u_containerAspect.x / u_containerAspect.y;
 
 			if (videoAspect > containerAspect) {
-				float scale = 1.0; //containerAspect / videoAspect;
+				float scale = containerAspect / videoAspect;
 				aspectCorrectedUV.y = (aspectCorrectedUV.y - 0.5) * scale + 0.5;
 			} else {
-				float scale = 1.0; //videoAspect / containerAspect;
+				float scale = videoAspect / containerAspect;
 				aspectCorrectedUV.x = (aspectCorrectedUV.x - 0.5) / scale + 0.5;
 			}
 
@@ -245,10 +246,15 @@
 				uvRot = rotate2d(i + u_time / 2.0) * uvRot;
 				uvRot += pos.xy + pos.z / 2.0;
 				float rect = rectangle(uvRot, pos.xy, pos.z, pos.z, (maxSize + minSize - pos.z) / 2.0);
-				color += vec3(0.01, 0.26, 0.57) * rect * pos.z / maxSize;
-			}
+				
+				// Multiplicamos el color de las partículas por u_particleVisibility
+				color += vec3(0.01, 0.26, 0.57) * rect * pos.z / maxSize * u_particleVisibility;
 
-			gl_FragColor = vec4(color + videoColor.rgb, 1.0);
+			}
+		// Mezclamos el color del fondo y las partículas con el color del video
+			vec3 finalColor = mix(videoColor.rgb, color, u_particleVisibility * 0.7);
+			gl_FragColor = vec4(finalColor, 1.0);
+			
 		}
     </script>
 
@@ -278,7 +284,8 @@
                 u_resolution: { type: "v2", value: new THREE.Vector2() },
                 u_videoTexture: { type: "t", value: videoTexture },
                 u_videoResolution: { type: "v2", value: new THREE.Vector2(1, 1) },
-                u_containerAspect: { type: "v2", value: new THREE.Vector2(1, 1) }
+                u_containerAspect: { type: "v2", value: new THREE.Vector2(1, 1) },
+				u_particleVisibility: { type: "f", value: 1.0 }
             };
 
             const material = new THREE.ShaderMaterial({
@@ -339,7 +346,28 @@
             document.getElementById('controls').style.display = display === 'none' ? 'none' : 'flex';
             document.getElementById('audioVideoToggle').style.display = display;
             document.getElementById('fileInput').style.display = display;
+			// Toggle particle visibility
+			uniforms.u_particleVisibility.value = display === 'none' ? 0.0 : 1.0;
+			
+			// Update button text
+			document.getElementById('toggleUI').textContent = display === 'none' ? 'Restore UI' : 'Minimize UI';
+
         }
+		
+		function toggleUIAndAnimation() {
+			const display = document.getElementById('playlist').style.display === 'none' ? 'block' : 'none';
+			document.getElementById('playlist').style.display = display;
+			document.getElementById('controls').style.display = display === 'none' ? 'none' : 'flex';
+			document.getElementById('audioVideoToggle').style.display = display;
+			document.getElementById('fileInput').style.display = display;
+
+			// Toggle particle visibility
+			uniforms.u_particleVisibility.value = display === 'none' ? 0.0 : 1.0;
+			
+			// Update button text
+			document.getElementById('toggleUI').textContent = display === 'none' ? 'Restore UI' : 'Minimize UI';
+		}
+
 
         function handleFileInput(event) {
             const files = event.target.files;
@@ -520,7 +548,11 @@
         function animate() {
             requestAnimationFrame(animate);
             uniforms.u_time.value += 0.05;
-            renderer.render(scene, camera);
+            if (videoElement.readyState === videoElement.HAVE_ENOUGH_DATA) {
+				videoTexture.needsUpdate = true;
+			}
+
+			renderer.render(scene, camera);
         }
 
         init();
