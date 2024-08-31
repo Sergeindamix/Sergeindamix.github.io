@@ -349,24 +349,51 @@
 			// Toggle particle visibility
 			uniforms.u_particleVisibility.value = display === 'none' ? 0.0 : 1.0;
 			
+			// Toggle fullscreen
+			if (display === 'none') {
+				openFullscreen(document.documentElement);
+			} else {
+				closeFullscreen();
+			}
+			
 			// Update button text
 			document.getElementById('toggleUI').textContent = display === 'none' ? 'Restore UI' : 'Minimize UI';
 
         }
 		
-		function toggleUIAndAnimation() {
-			const display = document.getElementById('playlist').style.display === 'none' ? 'block' : 'none';
-			document.getElementById('playlist').style.display = display;
-			document.getElementById('controls').style.display = display === 'none' ? 'none' : 'flex';
-			document.getElementById('audioVideoToggle').style.display = display;
-			document.getElementById('fileInput').style.display = display;
-
-			// Toggle particle visibility
-			uniforms.u_particleVisibility.value = display === 'none' ? 0.0 : 1.0;
-			
-			// Update button text
-			document.getElementById('toggleUI').textContent = display === 'none' ? 'Restore UI' : 'Minimize UI';
+		function openFullscreen(elem) {
+			if (elem.requestFullscreen) {
+				elem.requestFullscreen();
+			} else if (elem.webkitRequestFullscreen) { /* Safari */
+				elem.webkitRequestFullscreen();
+			} else if (elem.msRequestFullscreen) { /* IE11 */
+				elem.msRequestFullscreen();
+			}
 		}
+
+		function closeFullscreen() {
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+			} else if (document.webkitExitFullscreen) { /* Safari */
+				document.webkitExitFullscreen();
+			} else if (document.msExitFullscreen) { /* IE11 */
+				document.msExitFullscreen();
+			}
+		}
+		
+		// Añade un event listener para manejar los cambios de pantalla completa
+		document.addEventListener('fullscreenchange', function() {
+			if (!document.fullscreenElement) {
+				// Si salimos de pantalla completa sin usar el botón, restauramos la UI
+				document.getElementById('playlist').style.display = 'block';
+				document.getElementById('controls').style.display = 'flex';
+				document.getElementById('audioVideoToggle').style.display = 'block';
+				document.getElementById('fileInput').style.display = 'block';
+				uniforms.u_particleVisibility.value = 1.0;
+				document.getElementById('toggleUI').textContent = 'Minimize UI';
+			}
+		});
+
 
 
         function handleFileInput(event) {
