@@ -39,13 +39,13 @@
             cursor: pointer;
             position: relative;
             transform-style: preserve-3d;
-            transition: all 0.5s ease;
+            transition: all 1s ease;
         }
         .dvd:hover {
             transform: rotateY(-15deg) translateZ(20px);
         }
         .dvd.selected {
-            transform: rotateY(-60deg) translateZ(40px) translateX(-20px) scale(3);
+            transform: rotateY(-60deg) translateZ(40px) translateX(-20px);
         }
         .dvd-spine {
             position: absolute;
@@ -99,6 +99,32 @@
             max-height: 160px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
         }
+        .play-icon {
+            display: none;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            background-image: url('https://icon-library.com/images/play-button-icon-png/play-button-icon-png-13.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            z-index: 999;
+        }
+        .dvd.selected .play-icon {
+            display: block;
+        }
+        .dvd-collection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            max-width: 100%;
+        }
+
         .video-preview {
             position: fixed;
             top: 50%;
@@ -165,6 +191,17 @@
             font-size: 14px;
             color: #ccc;
         }
+        @media (max-width: 600px) {
+            .dvd {
+                width: 30px;
+                height: 120px;
+            }
+            .dvd-cover {
+                width: 90px;
+                height: 120px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -207,9 +244,23 @@
             coverElement.className = 'dvd-cover';
             coverElement.style.backgroundImage = `url(${video['tvg-logo']})`;
             
-            spineElement.appendChild(titleElement);
+            const playIcon = document.createElement('div');
+            playIcon.className = 'play-icon';
+            
+            playIcon.addEventListener('click', (event) => {
+                event.stopPropagation(); // Para evitar que se deseleccione el DVD
+                previewVideo.src = video.url;
+                videoTitle.textContent = video['tvg-name'];
+                videoDescription.textContent = `Grupo: ${video['group-title']}`;
+                videoPreview.style.display = 'block';
+                setTimeout(() => videoPreview.classList.add('active'), 10);
+                previewVideo.play();
+            });
+
             dvdElement.appendChild(spineElement);
+            spineElement.appendChild(titleElement);
             dvdElement.appendChild(coverElement);
+            dvdElement.appendChild(playIcon);
 
             dvdElement.addEventListener('click', () => {
                 if (selectedDVD && selectedDVD !== dvdElement) {
@@ -218,13 +269,7 @@
                 dvdElement.classList.toggle('selected');
                 selectedDVD = dvdElement.classList.contains('selected') ? dvdElement : null;
 
-                if (selectedDVD) {
-                    previewVideo.src = video.url;
-                    videoTitle.textContent = video['tvg-name'];
-                    videoDescription.textContent = `Grupo: ${video['group-title']}`;
-                    videoPreview.style.display = 'block';
-                    setTimeout(() => videoPreview.classList.add('active'), 10);
-                } else {
+                if (!selectedDVD) {
                     closeVideoPreview();
                 }
             });
