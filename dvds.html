@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estantería 3D de DVDs con Preview Popup</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            perspective: 1000px;
+        }
+        .shelf {
+            background: linear-gradient(to bottom, #4a3728, #2c1e15);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        h2 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .dvd-collection {
+            display: flex;
+            gap: 8px;
+        }
+        .dvd {
+            width: 40px;
+            height: 180px;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        .dvd:hover {
+            transform: rotateY(-15deg) translateZ(20px);
+        }
+        .dvd.selected {
+            transform: rotateY(-60deg) translateZ(40px) translateX(-20px) scale(3);
+        }
+        .dvd-spine {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            border-radius: 3px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+            overflow: hidden;
+            backface-visibility: hidden;
+        }
+        .dvd-spine::before, .dvd-spine::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            right: 5px;
+            height: 1px;
+            background: rgba(255,255,255,0.3);
+        }
+        .dvd-spine::before { top: 10px; }
+        .dvd-spine::after { bottom: 10px; }
+        .dvd-cover {
+            position: absolute;
+            width: 120px;
+            height: 180px;
+            left: 40px;
+            top: 0;
+            background-size: cover;
+            background-position: center;
+            transform: rotateY(90deg);
+            transform-origin: left;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+        }
+        .dvd.selected .dvd-cover {
+            opacity: 1;
+        }
+        .dvd span {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 160px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+        .video-preview {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 80vw;
+            max-width: 800px;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.7);
+            display: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .video-preview.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .close-preview {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255,255,255,0.3);
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        .close-preview:hover {
+            background-color: rgba(255,255,255,0.5);
+        }
+        .video-info {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .video-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .video-description {
+            font-size: 14px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="shelf">
+        <h2>Mi Colección de Series</h2>
+        <div class="dvd-collection" id="dvdCollection"></div>
+    </div>
+
+    <div class="video-preview" id="videoPreview">
+        <div class="video-container">
+            <video id="previewVideo" controls></video>
+        </div>
+        <div class="video-info">
+            <div class="video-title" id="videoTitle"></div>
+            <div class="video-description" id="videoDescription"></div>
+        </div>
+        <button class="close-preview" id="closePreview" aria-label="Cerrar preview">&times;</button>
+    </div>
+
+    <script>
+        let selectedDVD = null;
+        const videoPreview = document.getElementById('videoPreview');
+        const previewVideo = document.getElementById('previewVideo');
+        const closePreview = document.getElementById('closePreview');
+        const videoTitle = document.getElementById('videoTitle');
+        const videoDescription = document.getElementById('videoDescription');
+
+        function createDVDElement(video) {
+            const dvdElement = document.createElement('div');
+            dvdElement.className = 'dvd';
+            
+            const spineElement = document.createElement('div');
+            spineElement.className = 'dvd-spine';
+            spineElement.style.backgroundColor = getRandomColor();
+            
+            const titleElement = document.createElement('span');
+            titleElement.textContent = video['tvg-name'].split('S')[0].trim();
+            
+            const coverElement = document.createElement('div');
+            coverElement.className = 'dvd-cover';
+            coverElement.style.backgroundImage = `url(${video['tvg-logo']})`;
+            
+            spineElement.appendChild(titleElement);
+            dvdElement.appendChild(spineElement);
+            dvdElement.appendChild(coverElement);
+
+            dvdElement.addEventListener('click', () => {
+                if (selectedDVD && selectedDVD !== dvdElement) {
+                    selectedDVD.classList.remove('selected');
+                }
+                dvdElement.classList.toggle('selected');
+                selectedDVD = dvdElement.classList.contains('selected') ? dvdElement : null;
+
+                if (selectedDVD) {
+                    previewVideo.src = video.url;
+                    videoTitle.textContent = video['tvg-name'];
+                    videoDescription.textContent = `Grupo: ${video['group-title']}`;
+                    videoPreview.style.display = 'block';
+                    setTimeout(() => videoPreview.classList.add('active'), 10);
+                } else {
+                    closeVideoPreview();
+                }
+            });
+
+            return dvdElement;
+        }
+
+        function getRandomColor() {
+            const hue = Math.floor(Math.random() * 360);
+            return `hsl(${hue}, 70%, 50%)`;
+        }
+
+        function closeVideoPreview() {
+            videoPreview.classList.remove('active');
+            setTimeout(() => {
+                videoPreview.style.display = 'none';
+                previewVideo.pause();
+            }, 300);
+            if (selectedDVD) {
+                selectedDVD.classList.remove('selected');
+                selectedDVD = null;
+            }
+        }
+
+        closePreview.addEventListener('click', closeVideoPreview);
+
+        fetch('0.json')
+            .then(response => response.json())
+            .then(data => {
+                const dvdCollection = document.getElementById('dvdCollection');
+                data.forEach(video => {
+                    const dvdElement = createDVDElement(video);
+                    dvdCollection.appendChild(dvdElement);
+                });
+            })
+            .catch(error => console.error('Error loading video data:', error));
+    </script>
+</body>
+</html>
