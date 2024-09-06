@@ -105,43 +105,40 @@
         }
 
         .video-preview {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            width: 80vw;
-            max-width: 800px;
-            background-color: rgba(0, 0, 0, 0.9);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(0,0,0,0.7);
             display: none;
+            position: fixed;
             z-index: 1000;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        .video-preview.active {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-        }
-        
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-        }
-        .video-container video {
-            position: absolute;
-            top: 0;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            background-color: rgba(0,0,0,0.9);
+            overflow: hidden;
+        }
+        .video-content {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .video-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .video-container video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
         .close-preview {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 20px;
+            right: 20px;
             background-color: rgba(255,255,255,0.3);
             border: none;
             color: white;
@@ -154,6 +151,7 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s ease;
+            z-index: 1001;
         }
         .close-preview:hover {
             background-color: rgba(255,255,255,0.5);
@@ -185,7 +183,7 @@
 </head>
 <body>
     <div class="shelf">
-        <h2>Mi Colección de dvdz</h2>
+        <h2>Mi Colección de Series</h2>
         <select id="jsonSelect">
             <option value="">Seleccione un archivo JSON</option>
         </select>
@@ -193,14 +191,16 @@
     </div>
 
     <div class="video-preview" id="videoPreview">
-        <div class="video-container">
-            <video id="previewVideo" controls></video>
+        <div class="video-content">
+            <div class="video-container">
+                <video id="previewVideo" controls></video>
+            </div>
+            <div class="video-info">
+                <div class="video-title" id="videoTitle"></div>
+                <div class="video-description" id="videoDescription"></div>
+            </div>
+            <button class="close-preview" id="closePreview" aria-label="Cerrar preview">&times;</button>
         </div>
-        <div class="video-info">
-            <div class="video-title" id="videoTitle"></div>
-            <div class="video-description" id="videoDescription"></div>
-        </div>
-        <button class="close-preview" id="closePreview" aria-label="Cerrar preview">&times;</button>
     </div>
 
     <script>
@@ -248,19 +248,23 @@
             videoTitle.textContent = video['tvg-name'];
             videoDescription.textContent = `Grupo: ${video['group-title']}`;
             videoPreview.style.display = 'block';
-            setTimeout(() => videoPreview.classList.add('active'), 10);
+            document.body.style.overflow = 'block'; // Prevent scrolling
             previewVideo.play();
         }
 
         function closeVideoPreview() {
-            videoPreview.classList.remove('active');
-            setTimeout(() => {
-                videoPreview.style.display = 'none';
-                previewVideo.pause();
-            }, 300);
+            videoPreview.style.display = 'none';
+            document.body.style.overflow = ''; // Re-enable scrolling
+            previewVideo.pause();
         }
 
         closePreview.addEventListener('click', closeVideoPreview);
+
+        window.addEventListener('click', function(event) {
+            if (event.target === videoPreview) {
+                closeVideoPreview();
+            }
+        });
 
         async function loadJSONFiles() {
             const response = await fetch('list_files.json');
