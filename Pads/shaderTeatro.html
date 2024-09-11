@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Cube Shader with Video</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+        #webpages, #videoContainer { 
+            position: absolute; 
+            top: -9999px; 
+            left: -9999px; 
+        }
+    </style>
+</head>
+<body>
+    <div id="webpages">
+        <iframe id="webpage1" src="page1.html"></iframe>
+        <iframe id="webpage3" src="page3.html"></iframe>
+    </div>
+    <div id="videoContainer">
+        <video id="videoTexture" src="1.mp4" loop></video>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        uniform vec2 iResolution;
+        uniform float iTime;
+        uniform sampler2D iChannel0;
+        uniform sampler2D iChannel1;
+        uniform sampler2D webTexture1;
+        uniform sampler2D webTexture2;
+        uniform sampler2D webTexture3;
+        
+        #define PI			3.141592653589793
+        #define SQRT2		1.414213562373095
+        #define INVSQRT2	0.707106781186548
+        
+        #define VARY_LIGHT_INTENSITY 0
+        #define HDR_DETECTOR 0
+        #define HDR_MAX 7.0
+        
+        struct Material
+        {
+            float roughness;
+            float tailamount;
+            float tailtheta;
+            float F0;
+            vec3 basecolor;
+              vec3 specularcolor;
+        };
+        
+        struct RectLight
+        {
+            vec3 position;
+            mat3 basis;
+            vec2 size;
+            vec3 intensity;
+            float attenuation;
+        };
+        
+        const vec3 roomsize = vec3(15.0, 6.0, 15.0);
+            
+        Material mat = Material(
+            0.163,
+            0.577,
+            PI/2.0/3.0,
+            0.0205,
+            vec3(1.00),
+               vec3(0.45)
+        );
+        
+        RectLight light = RectLight(
+             vec3(0.0, 6.0, -15.0),
+             mat3(
+                1.0, 0.0, 0.0,
+                0.0, 1.0, 0.0,
+                0.0, 0.0, 1.0
+            ),
+             vec2(15.0, 0.6),
+            vec3(42.0),
+            2.13
+        );
+        
+        float sqr(float x) { return x*x; }
+        
+        float RectLight_calcWeight(in vec3 P, in vec3 R, in RectLight light, float theta)
+        {
+            float RoPlN = dot(R, light.basis[2]);
+            float d = dot(light.basis[2], light.position - P) / RoPlN;
+            if (d < 0.0 || RoPlN > 0.0) {
+                return 0.0;
+            }
+            vec3 PlC = P + d*R - light.position;
+            vec2 PlUV = vec2(dot(PlC, light.basis[0]), dot(PlC, light.basis[1]));
+            float r = d * tan(theta);
+            vec2 s = max(light.size - 0.5*r, vec2(0.0));
+            float h = length(max(abs(PlUV) - s, vec2(0.0)));
+            float sr = 2.0*PI * (1.0 - cos(theta));
+            return exp(-sqr((3.0*INVSQRT2/2.0) * (h/r))) / (light.attenuation + sqr(d)*sr);
+        }
+        
+        vec3 RectLight_shade(in RectLight light, in Material material, in vec3 P, in vec3 N, in vec3 R, float NoR, vec3 test)
+        {
+            float Fr = material.F0 + (1.0-material.F0) * pow(1.2 - NoR, 4.);
+            float theta = mix(PI*0.003, PI/2.0/3.0, material.roughness);
+            float Cs = RectLight_calcWeight(P, R, light, theta);
+            float Cst = RectLight_calcWeight(P, R, light, material.tailtheta);
+            vec3 W = normalize(N - light.basis[2]);
+            float Cd = RectLight_calcWeight(P, W, light, PI/4.0);
+            
+            return light.intensity * mix(
+                (Cd * max(dot(N, W), 0.0)) * material.basecolor,
+                (mix(Cs, Cst, material.tailamount) * NoR) * material.specularcolor,
+                Fr) * test * 8.0;
+        }
+        
+        vec3 ToneMap(in vec3 c, float maxc)
+        {
+        #if HDR_DETECTOR
+            if (c.r > maxc || c.g > maxc || c.b > maxc) {
+                return vec3(1.0, 0.0, 0.0);
+            } else if (c.r < 0.0 || c.g < 0.0 || c.b < 0.0) {
+                return vec3(0.0, 1.0, 0.0);
+            }
+        #endif
+               float v = max(c.r, max(c.g, c.b));
+            return c / (1.0 + v / maxc);
+        }
+        
+        vec3 Tex3D(in vec3 P, in vec3 N, float s)
+        {
+            P *= s;
+            mat3 tc = mat3(
+                texture(iChannel0, P.yz).rgb,
+                texture(iChannel0, P.xz).rgb,
+                texture(iChannel0, P.xy).rgb
+            );
+            N = pow(abs(N), vec3(16.0));
+            N = N / (N.x+N.y+N.z);
+            return pow(tc*N, vec3(2.2));
+        }
+
+        vec3 sampleTexture(vec3 R) {
+            vec3 test;
+            if (abs(R.x) > abs(R.y) && abs(R.x) > abs(R.z)) {
+                test = texture(webTexture1, R.yz).xyz;
+            } else if (abs(R.y) > abs(R.z)) {
+                // Use the video texture for the second condition
+                test = texture(webTexture2, R.xz).xyz;
+            } else {
+                test = texture(webTexture3, R.xy).xyz;
+            }
+            return test;
+        }
+        
+        float Map(in vec3 P)
+        {
+            vec3 t = roomsize - abs(vec3(P.x, P.y - roomsize.y, P.z));
+            float d = min(t.x, min(t.y, t.z));
+            
+            P.xz = mod(P.xz  + vec2(0., -0.75), 4.0);
+               P.y += 1.6;
+            d = min(d, length(P - vec3(2.0, 3.25, 2.0)) - .7) ;
+            
+            P.xz = mod(P.xz  + vec2(0., -0.75), 4.0);
+               P.y += 1.6;
+            float d2 = min(d, length(P - vec3(2.0, 3.5, 2.0)) - 1.2 ) ;
+            
+            d = min(d,d2);
+            
+            P.xz = mod(P.xz  + vec2(0., -0.75), 4.0);
+               P.y += 1.6;
+            float d3 = min(d, length(P - vec3(2.0, 2.8, 1.0)) - 2.5) ;
+            d = min(d,d3);
+            
+            P.xz = mod(P.xz  + vec2(0., -0.75), 4.0);
+            P.x-=0.1;
+            float d4 = min(d, length(P - vec3(2.3, 3.5, 3.0)) - 1.6) ;
+            d = min(d,d4);
+            
+            return d;
+        }
+        
+        vec3 Gradient(in vec3 P)
+        {
+            const vec3 d = vec3(0.05, 0.0, 0.0);
+            return vec3(
+                Map(P + d.xyy) - Map(P - d.xyy),
+                Map(P + d.yxy) - Map(P - d.yxy),
+                Map(P + d.yyx) - Map(P - d.yyx)
+            );
+        }
+        
+        float March(in vec3 P, in vec3 D)
+        {
+            float t = 0.01;
+            float m = 0.0;
+            for (int i = 0; i < 72; ++i) {
+                float d = Map(P + D*t);
+                if (d <= 0.008) {
+                    break;
+                }
+                t += d + 0.004;
+            }
+            return t;
+        }
+        
+        mat3 LookAt(in vec3 P, in vec3 focusP)
+        {
+            vec3 up = vec3(0.0, 1.0, 0.0);
+            vec3 dir = normalize(P - focusP);
+            vec3 left = normalize(cross(up, dir));
+            up = cross(dir, left);
+            return mat3(left, up, dir);
+        }
+        
+        void mainImage(out vec4 fragColor, in vec2 fragCoord)
+        {
+            vec2 uv = (2.0*fragCoord.xy - iResolution.xy) / iResolution.xx;
+            float t = iTime;
+            
+            light.size.x = 0.1 + 14.6*(0.5+0.5);
+            light.size.y = 0.1 + 5.6*(0.5+0.5);
+            
+        #if VARY_LIGHT_INTENSITY
+            light.intensity *= light.size.x*light.size.y / (13.0*4.0);
+        #endif
+        
+            vec2 a = vec2(0.0, 0.0);
+        
+            a.x -= 0.1;
+            a.y += .9;
+            vec3 camP = vec3(14.0*sin(a.x), roomsize.y * (1.0 + 0.5*a.y), 24.0*sqr(cos(a.x)) - 11.0);
+            mat3 camM = LookAt(camP, vec3(0.0, roomsize.y, 1.0-roomsize.z));
+            
+            vec3 D = INVSQRT2*(uv.x*camM[0] + uv.y*camM[1]) - camM[2];
+            vec3 P = camP + D;
+            D = normalize(D);
+            float vignette = 0.77 + 0.23*sqr(D.z);
+        
+            float res = March(P, D);
+            P = P + res * D;
+            
+            vec3 N = normalize(Gradient(P));
+            float NoR = -dot(N, D);
+            vec3 R = D + (2.0*NoR)*N;
+            NoR = max(NoR, 0.0);
+            R.x +=.44;
+            R.y +=0.3;
+            R.xy*=2.2;
+            R.x*=0.48;
+           
+            vec3 test = sampleTexture(R);
+            if (abs(R.x) > abs(R.y) && abs(R.x) > abs(R.z)) {
+                test = texture(webTexture2, R.yz).xyz;
+            } else if (abs(R.y) > abs(R.z)) {
+                test = texture(webTexture2, R.xz).xyz;
+            } else {
+                test = texture(webTexture2, R.xy).xyz;
+            }
+        
+            vec3 texColor = Tex3D(P, N, 0.35);
+            float maxv = max(texColor.r, max(texColor.g, texColor.b));
+            mat.basecolor = min(0.33+maxv, 1.0) * vec3(1.0, 0.53, 0.32);
+            
+            vec3 C = vec3(0.0);
+            if (P.z <= -roomsize.z+0.15) {
+                if (abs(P.y-light.position.y) < light.size.y
+                        && abs(P.x-light.position.x) < light.size.x) {
+                    C = vec3(HDR_MAX);
+                } else {
+                    C = vec3(0.0);
+                }
+            } else {
+                C = RectLight_shade(light, mat, P, N, R, NoR, test);
+            }
+            
+            C = C * vignette;
+            C = ToneMap(C, HDR_MAX) * test;
+            C = pow(C, vec3(0.5+test*0.1));
+            fragColor = vec4(C*0.25, 1.0);
+        }
+        
+        void main() {
+            vec4 fragColor;
+            mainImage(fragColor, gl_FragCoord.xy);
+            gl_FragColor = 1.0*fragColor;
+        }
+    </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        void main() {
+            gl_Position = vec4(position, 1.0);
+        }
+        </script>
+        <script>
+        let scene, camera, renderer, shaderMaterial;
+        const loader = new THREE.TextureLoader();
+    
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+    
+            const plane = new THREE.PlaneBufferGeometry(2, 2);
+    
+            const videoElement = document.getElementById('videoTexture');
+            const videoTexture = new THREE.VideoTexture(videoElement);
+            videoTexture.minFilter = THREE.LinearFilter;
+            videoTexture.magFilter = THREE.LinearFilter;
+            videoTexture.format = THREE.RGBFormat;
+    
+            const uniforms = {
+                iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                iTime: { value: 0 },
+                iChannel0: { value: loader.load('texture1.jpg') },
+                iChannel1: { value: loader.load('texture2.jpg') },
+                webTexture1: { value: createWebTexture('webpage1') },
+                webTexture2: { value: videoTexture },
+                webTexture3: { value: createWebTexture('webpage3') }
+            };
+    
+            shaderMaterial = new THREE.ShaderMaterial({
+                uniforms: uniforms,
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragmentShader').textContent
+            });
+    
+            const mesh = new THREE.Mesh(plane, shaderMaterial);
+            scene.add(mesh);
+    
+            videoElement.play();
+        }
+    
+        function createWebTexture(iframeId) {
+            const iframe = document.getElementById(iframeId);
+            const texture = new THREE.Texture();
+            
+            function updateTexture() {
+                html2canvas(iframe.contentDocument.body).then(canvas => {
+                    texture.image = canvas;
+                    texture.needsUpdate = true;
+                }).catch(error => console.error('Error capturing iframe content:', error));
+            }
+            
+            iframe.addEventListener('load', updateTexture);
+            setInterval(updateTexture, 5000); // Update every 5 seconds
+            
+            return texture;
+        }
+    
+        function animate(time) {
+            requestAnimationFrame(animate);
+            shaderMaterial.uniforms.iTime.value = time * 0.001;
+            renderer.render(scene, camera);
+        }
+    
+        init();
+        animate(0);
+    
+        window.addEventListener('resize', function() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            shaderMaterial.uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
+        });
+        </script>
+    </body>
+    </html>
