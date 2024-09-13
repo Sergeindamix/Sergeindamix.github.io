@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Cube Shader with Video</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+        #webpages, #videoContainer { 
+            position: absolute; 
+            top: -9999px; 
+            left: -9999px; 
+        }
+    </style>
+</head>
+<body>
+    <div id="webpages">
+        <iframe id="webpage1" src="1.html"></iframe>
+        <iframe id="webpage3" src="3.html"></iframe>
+    </div>
+    <div id="videoContainer">
+    <video id="videoTexture" crossorigin="anonymous"></video>
+	</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        uniform vec2 iResolution;
+        uniform float iTime;
+        uniform sampler2D iChannel0;
+        uniform sampler2D iChannel1;
+        uniform sampler2D webTexture1;
+        uniform sampler2D webTexture2;
+        uniform sampler2D webTexture3;
+        const float PI2 = acos(-1.) * 2.;
+        const float scale = 0.3;
+
+        float hash1D(in float p)
+        {
+            return fract(sin(p) * 6124.7621);
+        }
+
+        vec2 hash21(in float p)
+        {
+            return fract(sin(vec2(p, p*1.4217)) * 6124.7621);
+        }
+
+        float hash2D(in vec2 p)
+        {
+            vec2 v = vec2(162.1732, 116.1734);
+            return fract(sin(dot(p, v)) * 6124.7621);
+        }
+
+        float hash3D(in vec3 p)
+        {
+            vec3 v = vec3(123.4116, 162.3271, 137.1618);
+            return fract(sin(dot(p, v)) * 6124.7621);
+        }
+
+        float noise3D(in vec3 p)
+        {
+            vec3 i = floor(p);
+            vec3 f = fract(p);
+            f = f * f * (3. - 2. * f);
+            vec3 b = vec3(156, 12, 5);
+            float n = dot(i, b);
+            return mix(	mix(	mix(hash1D(n), hash1D(n + b.x), f.x),
+                                mix(hash1D(n + b.y), hash1D(n + b.x + b.y), f.x),
+                                f.y),
+                        mix(	mix(hash1D(n + b.z), hash1D(n + b.x + b.z), f.x),
+                                mix(hash1D(n + b.y + b.z), hash1D(n + b.x + b.y + b.z), f.x),
+                                f.y),
+                        f.z);
+        }
+
+        float sdSeg(in vec2 p)
+        {
+            p = abs(p);
+            return max(p.x - scale / 3., p.x + p.y - scale);
+        }
+
+        float sd0(in vec2 p)
+        {
+            p = abs(p);
+            p.y -= scale;
+            if(p.y > p.x) {
+                p = p.yx;
+            }
+            p.x -= scale;
+            return sdSeg(p);
+        }
+
+        float sd1(in vec2 p)
+        {
+            p.y = abs(p.y);
+            p -= scale;
+            return sdSeg(p);
+        }
+            
+        float sd2(in vec2 p)
+        {
+            if(p.y < 0.) {
+                p *= -1.;
+            }
+            p.y = abs(p.y - scale);
+            if(p.y > p.x) {
+                p = p.yx;
+            }
+            p.x -= scale;
+            return sdSeg(p);
+        }
+
+        float sd3(in vec2 p)
+        {
+            p.y = abs(abs(p.y) - scale);
+            if(p.y > p.x) {
+                p = p.yx;
+            }
+            p.x -= scale;
+            return sdSeg(p);
+        }
+
+        float sd4(in vec2 p)
+        {
+            float d = sdSeg(p - vec2(-scale, scale));
+            p.y = abs(p.y) - scale;
+            if(p.y < -p.x) {
+                p = -p.yx;
+            }
+            p.x -= scale;
+            return min(d, sdSeg(p));
+        }
+
+        float sd5(in vec2 p)
+        {
+            if(p.y < 0.) {
+                p *= -1.;
+            }
+            p.y = abs(p.y - scale);
+            if(p.y > -p.x) {
+                p = -p.yx;
+            }
+            p.x += scale;
+            return sdSeg(p);
+        }
+
+        float sd6(in vec2 p)
+        {
+            float d = sdSeg(p - vec2(scale, scale));
+            p = abs(p);
+            p.y = abs(p.y - scale);
+            if(p.y > p.x) {
+                p = p.yx;
+            }
+            p.x -= scale;
+            return max(-d, sdSeg(p));
+        }
+
+        float sd7(in vec2 p)
+        {
+            float d = sdSeg(p - vec2(scale, -scale));
+            p.y -= scale;
+            if(p.y > p.x) {
+                p = p.yx;
+            }
+            p.x -= scale;
+            return min(d, sdSeg(p));
+        }
+
+        float sd8(in vec2 p)
+        {
+            p = abs(p);
+            p.y = abs(p.y - scale);
+            if(p.y > p.x) {
+                p = p.yx;
+            }
+            p.x -= scale;
+            return sdSeg(p);
+        }
+
+        float sd9(in vec2 p)
+        {
+            float d = sdSeg(p - vec2(-scale, -scale));
+            p = abs(p);
+            p.y = abs(p.y - scale);
+            if(p.y > p.x) {
+                p = p.yx;
+            }
+            p.x -= scale;
+            return max(-d, sdSeg(p));
+        }
+
+        void mainImage( out vec4 fragColor, in vec2 fragCoord )
+        {
+            vec2 p = (fragCoord * 2. - iResolution.xy)/min(iResolution.x, iResolution.y);
+            vec3 col = vec3(0);
+            vec2 interval = vec2(3., 1.7);
+            
+            for(float i=0.; i<20.; i++) {
+                float L = 1. - fract(iTime) + i;
+                vec2 q = p / atan(.001, L) / 500.;
+                
+                L = dot(q,q) * 2. + L * L;
+                float I = ceil(iTime) + i;
+                q += hash21(I) * interval;
+                
+                vec3 ID = vec3(ceil(q / interval), I);
+                q = mod(q, interval) - interval * .5;
+                float n = hash3D(ID + ceil(iTime * 3.) * 1.3834);
+                ID.y += ceil(iTime * 10. + hash2D(vec2(ID.x, I)));
+                float n2 = noise3D(ID * .316572);
+                
+                float d = 0.;
+                float N = 10.;
+                if(n < 1. / N) {
+                    d = sd0(q);
+                } else if(n < 2. / N) {
+                    d = sd1(q);
+                } else if(n < 3. / N) {
+                    d = sd2(q);
+                } else if(n < 4. / N) {
+                    d = sd3(q);
+                } else if(n < 5. / N) {
+                    d = sd4(q);
+                } else if(n < 6. / N) {
+                    d = sd5(q);
+                } else if(n < 7. / N) {
+                    d = sd6(q);
+                } else if(n < 8. / N) {
+                    d = sd7(q);
+                } else if(n < 9. / N) {
+                    d = sd8(q);
+                } else {
+                    d = sd9(q);
+                }
+                
+                float temp = col.g;
+                if(-scale * .27 < d && d < -scale * .067 && n2 < .5) {
+                    if(temp == 0.) {
+                        col += vec3(.3, 1, .4) * exp(-L * .002);
+                    }
+                    col += step(temp, .7) * pow(hash1D(n2), 32.);
+                }
+            }
+
+            fragColor = vec4(col, 1.0);
+        }
+        
+        void main() {
+            vec4 fragColor;
+            mainImage(fragColor, gl_FragCoord.xy);
+            gl_FragColor = 1.0*fragColor;
+        }
+    </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        void main() {
+            gl_Position = vec4(position, 1.0);
+        }
+        </script>
+        <script>
+            let scene, camera, renderer, shaderMaterial;
+            const loader = new THREE.TextureLoader();
+        
+            let playlist = [];
+            let currentVideoIndex = 0;
+        
+            function loadPlaylist() {
+                fetch('0.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        playlist = data;
+                        loadNextVideo();
+                    })
+                    .catch(error => console.error('Error loading playlist:', error));
+            }
+        
+            function loadNextVideo() {
+                if (currentVideoIndex >= playlist.length) {
+                    currentVideoIndex = 0;
+                }
+                const videoElement = document.getElementById('videoTexture');
+                videoElement.src = playlist[currentVideoIndex];
+                videoElement.play();
+                currentVideoIndex++;
+            }
+        
+            function createWebTexture(iframeId) {
+                const iframe = document.getElementById(iframeId);
+                const texture = new THREE.Texture();
+                
+                function updateTexture() {
+                    html2canvas(iframe.contentDocument.body).then(canvas => {
+                        texture.image = canvas;
+                        texture.needsUpdate = true;
+                    }).catch(error => console.error('Error capturing iframe content:', error));
+                }
+                
+                iframe.addEventListener('load', updateTexture);
+                setInterval(updateTexture, 5000); // Update every 5 seconds
+                
+                return texture;
+            }
+        
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+                renderer = new THREE.WebGLRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+        
+                const plane = new THREE.PlaneBufferGeometry(2, 2);
+        
+                const videoElement = document.getElementById('videoTexture');
+                const videoTexture = new THREE.VideoTexture(videoElement);
+                videoTexture.minFilter = THREE.LinearFilter;
+                videoTexture.magFilter = THREE.LinearFilter;
+                videoTexture.format = THREE.RGBFormat;
+        
+                // Add event to load the next video when the current one ends
+                videoElement.addEventListener('ended', loadNextVideo);
+        
+                const uniforms = {
+                    iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                    iTime: { value: 0 },
+                    iChannel0: { value: loader.load('cartoon24.jpg') },
+                    iChannel1: { value: loader.load('cartoon25.jpg') },
+                    webTexture1: { value: createWebTexture('webpage1') },
+                    webTexture2: { value: videoTexture },
+                    webTexture3: { value: createWebTexture('webpage3') }
+                };
+        
+                shaderMaterial = new THREE.ShaderMaterial({
+                    uniforms: uniforms,
+                    vertexShader: document.getElementById('vertexShader').textContent,
+                    fragmentShader: document.getElementById('fragmentShader').textContent
+                });
+        
+                const mesh = new THREE.Mesh(plane, shaderMaterial);
+                scene.add(mesh);
+        
+                // Load the playlist instead of starting the video directly
+                loadPlaylist();
+            }
+        
+            function animate(time) {
+                requestAnimationFrame(animate);
+                shaderMaterial.uniforms.iTime.value = time * 0.001;
+                renderer.render(scene, camera);
+            }
+        
+            init();
+            animate(0);
+        
+            window.addEventListener('resize', function() {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                shaderMaterial.uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
+            });
+        </script>
+		
+    </body>
+    </html>
