@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Cube Shader with Video</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+        #webpages, #videoContainer { 
+            position: absolute; 
+            top: -9999px; 
+            left: -9999px; 
+        }
+    </style>
+</head>
+<body>
+    <div id="webpages">
+        <iframe id="webpage1" src="1.html"></iframe>
+        <iframe id="webpage3" src="3.html"></iframe>
+    </div>
+    <div id="videoContainer">
+    <video id="videoTexture" crossorigin="anonymous"></video>
+	</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        uniform vec2 iResolution;
+        uniform float iTime;
+        uniform sampler2D iChannel0;
+        uniform sampler2D iChannel1;
+        uniform sampler2D webTexture1;
+        uniform sampler2D webTexture2;
+        uniform sampler2D webTexture3;
+        #define time iTime
+        float slope(float x, float m, float b) {
+            return m*x + b;
+
+        }
+
+
+        float noise(vec2 uv) {
+        return fract(sin(dot(uv.xy ,vec2(532.1231,1378.3453))) * 53211.1223);
+        }
+
+        void mainImage( out vec4 fragColor, in vec2 fragCoord )
+        {
+            float aspect = iResolution.x/iResolution.y;
+            vec2 uv = fragCoord.xy / iResolution.xy;
+            vec3 col = vec3(0.);
+            vec3 topred_col = vec3(.96, 0.26, 0.25);
+            vec3 bigpurp_col = vec3(0.58, .2, .72);
+
+            vec3 midred_col = vec3(.96, 0.3, 0.38);
+            vec3 botred_col = vec3(.95, .33, 0.4);
+            vec3 bg_col = vec3(0.41, .17, .5);
+            vec3 almost_bg_col = vec3(0.48, .16, .58);
+
+            vec3 cyan_col = vec3(.93, .78, 1.0);
+            vec3 whiteish_col = vec3(.95, .84, 1.0);
+            
+            float topred_mover = cos(time)/30.-.02;
+            float bigpurp_mover = cos(time)/100.-.02;
+
+            float bigpurp =smoothstep(1., 1.0001, abs(uv.y-slope(uv.x, -2., .5+bigpurp_mover)));
+            float topred =  smoothstep(1.01, 1.0, abs(uv.y - slope(uv.x, -5.2, .4+topred_mover)));
+            float midred =  smoothstep(2.5, 2.49, abs(uv.y - slope(uv.x, 17., -1.8)));
+            float botred =smoothstep(1.21, 1.2, abs(uv.y - slope(uv.x, 7., -.5)));
+            float bg = smoothstep(1., 1.01, abs(uv.y-slope(uv.x, 2., 1.)));
+            float cyan = smoothstep(2.001, 2., abs(uv.y-slope(uv.x, 3., 1.312)));
+            float white = smoothstep(2.008, 2., abs(uv.y-slope(uv.x, 2.3, 1.49)));
+            float almost_bg = smoothstep(2.01, 2., abs(uv.y-slope(uv.x, 1.8, 1.61)));
+            
+            float t = .0026;
+            float h = .013;
+            float y = .923*aspect;
+            float line =  step(length(uv.y - .13+t), t*aspect);
+            float line2 = step(length(uv.x -.923), t);
+        /*
+            float hz =.908;
+            float vz = .1;
+            if (uv.x > hz && uv.x < hz+.03 && uv.y > vz && uv.y < vz+.03*aspect)
+                col -= max(line, line2)*vec3(1., 0., .0);
+
+            float circle = smoothstep(.1, .09, length(vec2(uv.x*aspect, uv.y) - vec2(.923*aspect, .13)));
+            float circle_shadow = smoothstep(.12, .07, length(vec2(uv.x*aspect, uv.y) - vec2(.923*aspect, .121)))/6.;
+            */
+            float bigpurp_shadow = smoothstep(.14+bigpurp_mover, .0, abs(uv.y-slope(uv.x, -2., 1.49-bigpurp_mover)))/13.;
+            float topred_shadow = smoothstep(.2-topred_mover, .0, abs(uv.y-slope(uv.x, -5.2,1.3-topred_mover)))/2.;
+            float midred_shadow = smoothstep(.06, .0, abs(uv.y-slope(uv.x, 17.,-4.32)))/3.;
+            float botred_shadow = smoothstep(.04, .0, abs(uv.y-slope(uv.x, 7.,-1.7)))/3.;
+            float cyan_shadow = smoothstep(.01, .0, abs(uv.y-slope(uv.x, 3.,-.699)))/3.;
+            float almost_bg_shadow = smoothstep(.02, .0, abs(uv.y-slope(uv.x, 1.8,-.39)))/3.;
+
+        
+            col += bigpurp_col * bigpurp;
+            col += topred_col * topred;
+                float f = .5;
+
+            //col += vec3(1., -.1, -.5)*circle;                          	
+            //if (circle < f)
+            //  col -= circle_shadow;
+
+            if (bigpurp < f && topred < f) {
+                
+                col -= topred_shadow;
+                col -= bigpurp_shadow;
+                col += midred_col * midred;
+                if (midred < f) {
+                    
+                    col -= midred_shadow;
+                    col -= bigpurp_shadow;
+                    col += botred_col * botred;
+                    if (botred < f) {
+                        col-=botred_shadow;
+                        col += cyan_col * cyan;
+                        if (cyan < f) {
+                            col -= cyan_shadow;
+                            col += whiteish_col * white;
+                            if (white < f){
+                                col += almost_bg_col * almost_bg;
+                                if (almost_bg < f) {
+                                    col -= almost_bg_shadow;
+                                    col += bg_col * bg;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+                    col += noise(uv)/18.;
+
+            fragColor = vec4(col,1.0);
+        }
+        
+        void main() {
+            vec4 fragColor;
+            mainImage(fragColor, gl_FragCoord.xy);
+            gl_FragColor = 1.0*fragColor;
+        }
+    </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        void main() {
+            gl_Position = vec4(position, 1.0);
+        }
+        </script>
+        <script>
+            let scene, camera, renderer, shaderMaterial;
+            const loader = new THREE.TextureLoader();
+        
+            let playlist = [];
+            let currentVideoIndex = 0;
+        
+            function loadPlaylist() {
+                fetch('0.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        playlist = data;
+                        loadNextVideo();
+                    })
+                    .catch(error => console.error('Error loading playlist:', error));
+            }
+        
+            function loadNextVideo() {
+                if (currentVideoIndex >= playlist.length) {
+                    currentVideoIndex = 0;
+                }
+                const videoElement = document.getElementById('videoTexture');
+                videoElement.src = playlist[currentVideoIndex];
+                videoElement.play();
+                currentVideoIndex++;
+            }
+        
+            function createWebTexture(iframeId) {
+                const iframe = document.getElementById(iframeId);
+                const texture = new THREE.Texture();
+                
+                function updateTexture() {
+                    html2canvas(iframe.contentDocument.body).then(canvas => {
+                        texture.image = canvas;
+                        texture.needsUpdate = true;
+                    }).catch(error => console.error('Error capturing iframe content:', error));
+                }
+                
+                iframe.addEventListener('load', updateTexture);
+                setInterval(updateTexture, 5000); // Update every 5 seconds
+                
+                return texture;
+            }
+        
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+                renderer = new THREE.WebGLRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+        
+                const plane = new THREE.PlaneBufferGeometry(2, 2);
+        
+                const videoElement = document.getElementById('videoTexture');
+                const videoTexture = new THREE.VideoTexture(videoElement);
+                videoTexture.minFilter = THREE.LinearFilter;
+                videoTexture.magFilter = THREE.LinearFilter;
+                videoTexture.format = THREE.RGBFormat;
+        
+                // Add event to load the next video when the current one ends
+                videoElement.addEventListener('ended', loadNextVideo);
+        
+                const uniforms = {
+                    iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                    iTime: { value: 0 },
+                    iChannel0: { value: loader.load('cartoon24.jpg') },
+                    iChannel1: { value: loader.load('cartoon25.jpg') },
+                    webTexture1: { value: createWebTexture('webpage1') },
+                    webTexture2: { value: videoTexture },
+                    webTexture3: { value: createWebTexture('webpage3') }
+                };
+        
+                shaderMaterial = new THREE.ShaderMaterial({
+                    uniforms: uniforms,
+                    vertexShader: document.getElementById('vertexShader').textContent,
+                    fragmentShader: document.getElementById('fragmentShader').textContent
+                });
+        
+                const mesh = new THREE.Mesh(plane, shaderMaterial);
+                scene.add(mesh);
+        
+                // Load the playlist instead of starting the video directly
+                loadPlaylist();
+            }
+        
+            function animate(time) {
+                requestAnimationFrame(animate);
+                shaderMaterial.uniforms.iTime.value = time * 0.001;
+                renderer.render(scene, camera);
+            }
+        
+            init();
+            animate(0);
+        
+            window.addEventListener('resize', function() {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                shaderMaterial.uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
+            });
+        </script>
+		
+    </body>
+    </html>
