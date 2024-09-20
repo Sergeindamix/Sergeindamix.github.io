@@ -53,7 +53,6 @@
             /* El valor 'right' será manejado dinámicamente con JavaScript */
         }
 
-
         .mirror {
             position: absolute;
             width: 256px;
@@ -71,6 +70,12 @@
             -webkit-user-select: none; /* Safari */
             -ms-user-select: none; /* IE 10+/Edge */
             user-select: none; /* Standard */
+            cursor: pointer; /* Cambia el cursor para indicar interactividad */
+            transition: transform 0.3s ease; /* Suaviza la transformación al hacer hover */
+        }
+
+        .mirror:hover {
+            transform: scale(1.05); /* Aumenta ligeramente el tamaño al hacer hover */
         }
 
         .marquee {
@@ -135,6 +140,59 @@
             pointer-events: none; /* Evita que interfiera con otras interacciones */
             display: none;
         }
+
+        /* Estilos para .box .inner */
+        .box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            position: absolute; /* Para posicionarlo sobre la escena */
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centrar */
+            z-index: 999; /* Asegurar que esté sobre otros elementos */
+        }
+
+        .box .inner {
+            width: 400px;
+            height: 200px;
+            line-height: 200px;
+            font-size: 4em;
+            font-family: sans-serif;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+        .box .inner:first-child {
+            transform-origin: right;
+            transform: perspective(100px) rotateY(-15deg);
+        }
+
+        .box .inner:last-child {
+            transform-origin: left;
+            transform: perspective(100px) rotateY(15deg);
+        }
+
+        .box .inner span {
+            position: absolute;
+            animation: marquee 5s linear infinite;
+        }
+
+        .box .inner:first-child span {
+            animation-delay: 2.5s;
+            left: -100%;
+        }
+
+        /* Definir la animación marquee */
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body>
@@ -150,6 +208,18 @@
             <div class="wall wall--right" id="rightWall"></div>
         </div>
     </div>
+
+    <!-- Nuevo contenedor .box -->
+    <div class="box">
+        <div class="inner">
+            <span>⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️</span>
+        </div>
+        <div class="inner">
+            <span>🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟</span>
+        </div>
+    </div>
+
+
     <div class="instructions">
         Mueve el ratón para mirar alrededor.
     </div>
@@ -159,10 +229,13 @@
         const leftWall = document.getElementById('leftWall');
         const rightWall = document.getElementById('rightWall');
         const rotationDisplay = document.getElementById('rotationDisplay');
+        const boxInnerElements = document.querySelectorAll('.box .inner span'); // Seleccionar los spans dentro de .box .inner
         let isDragging = false;
         let previousMousePosition = { x: 0, y: 0 };
         let rotation = { x: 10, y: 90 }; // Ajustado para coincidir con CSS inicial
         let mirrorOffset = 0;
+        let autoRotate = true; // Bandera para controlar la rotación automática
+        let scrollTimeout; // Timeout para reanudar la rotación automática
 
         // Función para crear espejos
         function createMirrors(wall, images) {
@@ -170,6 +243,10 @@
                 const mirror = document.createElement('div');
                 mirror.className = 'mirror';
                 mirror.style.backgroundImage = `url(${imageData['tvg-logo']})`;
+
+                // Agregar atributos de datos para identificar el mirror
+                mirror.setAttribute('data-name', imageData['tvg-name']);
+                mirror.setAttribute('data-description', imageData['tvg-description'] || 'Sin descripción');
 
                 // Añadir la marquesina
                 const marquee = document.createElement('div');
@@ -221,10 +298,12 @@
         function handleMouseDown(e) {
             isDragging = true;
             previousMousePosition = { x: e.clientX, y: e.clientY };
+            autoRotate = false; // Desactivar la rotación automática al iniciar la interacción
         }
 
         function handleMouseUp() {
             isDragging = false;
+            autoRotate = true; // Reactivar la rotación automática al finalizar la interacción
         }
 
         function handleMouseMove(e) {
@@ -328,11 +407,11 @@
                 mirror.style.transform = `translateZ(${z}px) translateX(${x})`;
             });
 
-            // Opcional: Mostrar la rotación actual al hacer scroll
+            // Mostrar la rotación actual al hacer scroll
             rotationDisplay.style.display = 'block';
             updateRotationDisplay();
 
-            // Opcional: Ocultar la visualización después de un tiempo
+            // Ocultar la visualización después de un tiempo
             clearTimeout(window.hideRotationTimeout);
             window.hideRotationTimeout = setTimeout(() => {
                 rotationDisplay.style.display = 'none';
@@ -346,6 +425,42 @@
         document.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mouseup', handleMouseUp);
         document.addEventListener('mousemove', handleMouseMove);
+
+        // Delegación de eventos para manejar hover sobre mirrors
+        function handleMirrorHover(event) {
+            const target = event.target.closest('.mirror');
+            if (!target) return;
+
+            if (event.type === 'mouseover') {
+                // Obtener información del mirror
+                const name = target.getAttribute('data-name') || 'Sin nombre';
+                const description = target.getAttribute('data-description') || 'Sin descripción';
+
+                // Actualizar los textos de las cajas .inner
+                boxInnerElements.forEach((span, index) => {
+                    if (index === 0) {
+                        span.textContent = `🎬 ${name} 🎬`;
+                    } else {
+                        span.textContent = `✨ ${name} ✨`;
+                    }
+                });
+            } else if (event.type === 'mouseout') {
+                // Restaurar los textos originales de las cajas .inner
+                boxInnerElements.forEach((span, index) => {
+                    if (index === 0) {
+                        span.textContent = '✨✨✨✨✨✨✨✨✨✨';
+                    } else {
+                        span.textContent = '✨✨✨✨✨✨✨✨✨✨';
+                    }
+                });
+            }
+        }
+
+        // Agregar delegación de eventos a ambos muros
+        leftWall.addEventListener('mouseover', handleMirrorHover);
+        leftWall.addEventListener('mouseout', handleMirrorHover);
+        rightWall.addEventListener('mouseover', handleMirrorHover);
+        rightWall.addEventListener('mouseout', handleMirrorHover);
 
         // Iniciar la animación de los mirrors
         animateMirrors();
