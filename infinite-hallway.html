@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasillo de Fotos Infinito con Letreros de Cine y Marquesina</title>
+    <style>
+        /* Deshabilitar la selección de texto en todo el documento */
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+/Edge */
+            user-select: none; /* Standard */
+        }
+
+        .scene {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            perspective-origin: 50% 50%;
+        }
+
+        .hallway {
+            width: 1000px;
+            height: 600px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(10deg) rotateY(90deg); /* Ángulo inicial de 90 grados en Y */
+            transition: transform 0.1s linear;
+        }
+
+        .wall {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .wall--left {
+            transform: rotateY(-90deg) translateZ(-500px);
+            left: -500px;
+        }
+
+        .wall--right {
+            transform: rotateY(90deg) translateZ(-500px);
+            /* El valor 'right' será manejado dinámicamente con JavaScript */
+        }
+
+
+        .mirror {
+            position: absolute;
+            width: 256px;
+            height: 512px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 5px solid #e6e600; /* Borde dorado */
+            border-radius: 10px; /* Bordes redondeados */
+            box-shadow: 
+                0 0 15px rgba(255, 255, 0, 0.8), /* Luz amarilla alrededor */
+                0 0 30px rgba(255, 255, 0, 0.6), /* Luz más difuminada */
+                0 5px 15px rgba(0, 0, 0, 0.5); /* Sombra para profundidad */
+            overflow: hidden; /* Oculta el desbordamiento */
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+/Edge */
+            user-select: none; /* Standard */
+        }
+
+        .marquee {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px; /* Reducido para no ocupar demasiado espacio */
+            border-top: 3px solid gray;
+            border-bottom: 3px solid gray;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro para mejor visibilidad */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            pointer-events: none; /* Evita interacciones con la marquesina */
+        }
+
+        .marquee__content {
+            display: flex;
+            list-style: none;
+            white-space: nowrap; /* Asegura que el contenido esté en una sola línea */
+            animation: scrolling 20s linear infinite;
+        }
+
+        .marquee__item {
+            font-size: 20px; /* Reducido para adaptarse mejor al espacio */
+            color: #fff; /* Texto blanco */
+            margin-right: 50px; /* Espacio entre elementos */
+        }
+
+        @keyframes scrolling {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+/Edge */
+            user-select: none; /* Standard */
+        }
+
+        /* Estilo para la superposición de rotación */
+        .rotation-display {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: 'Courier New', Courier, monospace;
+            z-index: 1000;
+            pointer-events: none; /* Evita que interfiera con otras interacciones */
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor para mostrar la rotación -->
+    <div class="rotation-display" id="rotationDisplay">
+        Rotación X: 0°<br>
+        Rotación Y: 0°
+    </div>
+
+    <div class="scene">
+        <div class="hallway">
+            <div class="wall wall--left" id="leftWall"></div>
+            <div class="wall wall--right" id="rightWall"></div>
+        </div>
+    </div>
+    <div class="instructions">
+        Mueve el ratón para mirar alrededor.
+    </div>
+
+    <script>
+        const hallway = document.querySelector('.hallway');
+        const leftWall = document.getElementById('leftWall');
+        const rightWall = document.getElementById('rightWall');
+        const rotationDisplay = document.getElementById('rotationDisplay');
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        let rotation = { x: -10, y: 0 };
+        let mirrorOffset = 0;
+
+        // Función para crear espejos
+        function createMirrors(wall, images) {
+            images.forEach((imageData, i) => {
+                const mirror = document.createElement('div');
+                mirror.className = 'mirror';
+                mirror.style.backgroundImage = `url(${imageData['tvg-logo']})`;
+
+                // Añadir la marquesina
+                const marquee = document.createElement('div');
+                marquee.className = 'marquee';
+
+                const marqueeContent = document.createElement('div');
+                marqueeContent.className = 'marquee__content';
+
+                // Duplicar el contenido para una animación continua
+                marqueeContent.innerHTML = `
+                    <div class="marquee__item">🎬 ${imageData['tvg-name']} 🎬</div>
+                    <div class="marquee__item">🎬 ${imageData['tvg-name']} 🎬</div>
+                `;
+
+                marquee.appendChild(marqueeContent);
+                mirror.appendChild(marquee);
+
+                mirror.style.transform = `translateZ(${i * -2048}px) translateX(${wall === leftWall ? '-128px' : '128px'})`;
+                wall.appendChild(mirror);
+            });
+        }
+
+        // Función para cargar el archivo JSON
+        async function loadImagesFromJson() {
+            try {
+                const response = await fetch('0.json'); // Ruta al archivo JSON
+                const images = await response.json();
+
+                // Crea los espejos en ambos muros usando las imágenes del JSON
+                createMirrors(leftWall, images);  
+                createMirrors(rightWall, images);
+
+                // Calcular y establecer el valor de 'right' dinámicamente
+                const numberOfPosters = images.length;
+                const rightValue = -1000 * numberOfPosters;
+                rightWall.style.right = `${rightValue}px`;
+
+                // Actualizar la propiedad 'right' de la rotación inicial si es necesario
+                updateRotationDisplay();
+            } catch (error) {
+                console.error('Error al cargar el archivo JSON:', error);
+            }
+        }
+
+        // Llama a la función para cargar imágenes
+        loadImagesFromJson();
+
+        // Funciones de interacción con el ratón
+        function handleMouseDown(e) {
+            isDragging = true;
+            previousMousePosition = { x: e.clientX, y: e.clientY };
+        }
+
+        function handleMouseUp() {
+            isDragging = false;
+        }
+
+        function handleMouseMove(e) {
+            if (!isDragging) return;
+
+            const deltaX = e.clientX - previousMousePosition.x;
+            const deltaY = e.clientY - previousMousePosition.y;
+
+            rotation.x -= deltaY * 0.5;
+            rotation.y += deltaX * 0.5;
+
+            // Limitar la rotación X entre -45 y 45 grados
+            rotation.x = Math.max(-45, Math.min(45, rotation.x));
+
+            updateHallwayTransform();
+            updateRotationDisplay();
+
+            previousMousePosition = { x: e.clientX, y: e.clientY };
+        }
+
+        function updateHallwayTransform() {
+            hallway.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
+        }
+
+        // Función para actualizar la superposición de rotación
+        function updateRotationDisplay() {
+            rotationDisplay.innerHTML = `
+                Rotación X: ${rotation.x.toFixed(1)}°<br>
+                Rotación Y: ${rotation.y.toFixed(1)}°
+            `;
+        }
+
+        function animateMirrors() {
+            mirrorOffset += 2;
+            if (mirrorOffset >= 512) {
+                mirrorOffset = 0;
+                leftWall.appendChild(leftWall.firstElementChild);
+                rightWall.appendChild(rightWall.firstElementChild);
+            }
+            
+            const mirrors = document.querySelectorAll('.mirror');
+            mirrors.forEach((mirror, index) => {
+                const z = index * -512 + mirrorOffset;
+                const x = mirror.parentElement === leftWall ? '-128px' : '128px';
+                mirror.style.transform = `translateZ(${z}px) translateX(${x})`;
+            });
+
+            requestAnimationFrame(animateMirrors);
+        }
+
+        document.addEventListener('mousedown', handleMouseDown);
+        document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('mousemove', handleMouseMove);
+
+        animateMirrors();
+    </script>
+</body>
+</html>
