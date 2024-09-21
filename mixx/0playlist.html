@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Audio Cyberpunk</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* Tu CSS personalizado */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); }
+            60% { transform: translate(5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+            100% { transform: translate(0); }
+        }
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 22%, 24%, 55% { opacity: 0.5; }
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Courier New', monospace;
+            color: #0ff;
+            background-color: #000;
+            overflow: hidden;
+        }
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        h1 {
+            text-align: center;
+            color: #f0f;
+            text-shadow: 0 0 10px #f0f, 0 0 20px #f0f, 0 0 30px #f0f;
+            animation: glitch 1s infinite, flicker 2s infinite;
+        }
+        #playlist {
+            flex-grow: 1;
+            overflow-y: auto;
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        #playlist li {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: rgba(0, 255, 255, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #playlist li:hover {
+            background-color: rgba(255, 0, 255, 0.3);
+        }
+        #playlist li.active {
+            background-color: rgba(255, 0, 255, 0.5);
+            box-shadow: 0 0 10px #f0f;
+        }
+        #player {
+            width: 100%;
+            background-color: rgba(0, 255, 255, 0.2);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #progress {
+            width: 100%;
+            height: 5px;
+            background-color: #000;
+            margin-top: 10px;
+        }
+        #progress-bar {
+            width: 0;
+            height: 100%;
+            background-color: #f0f;
+            box-shadow: 0 0 10px #f0f;
+        }
+        #status {
+            text-align: center;
+            margin-top: 10px;
+            color: #f0f;
+            text-shadow: 0 0 5px #f0f;
+            animation: flicker 3s infinite;
+        }
+        .neon-text {
+            animation: flicker 3s infinite;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="container">
+        <h1>Reproductor de Audio Cyberpunk</h1>
+        <ul id="playlist"></ul>
+        <audio id="player" controls></audio>
+        <div id="progress"><div id="progress-bar"></div></div>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        // Shader de fondo
+        const vertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 p = -1.0 + 2.0 * vUv;
+                float a = time * 40.0;
+                float d, e, f, g = 1.0 / 40.0 ,h ,i ,r ,q;
+                e = 400.0 * ( p.x * 0.5 + 0.5 );
+                f = 400.0 * ( p.y * 0.5 + 0.5 );
+                i = 200.0 + sin( e * g + a / 150.0 ) * 20.0;
+                d = 200.0 + cos( f * g / 2.0 ) * 18.0 + cos( e * g ) * 7.0;
+                r = sqrt( pow( abs( i - e ), 2.0 ) + pow( abs( d - f ), 2.0 ) );
+                q = f / r;
+                e = ( r * cos( q ) ) - a / 2.0;
+                f = ( r * sin( q ) ) - a / 2.0;
+                d = sin( e * g ) * 176.0 + sin( e * g ) * 164.0 + r;
+                h = ( ( f + d ) + a / 2.0 ) * g;
+                i = cos( h + r * p.x / 1.3 ) * ( e + e + a ) + cos( q * g * 6.0 ) * ( r + h / 3.0 );
+                h = sin( f * g ) * 144.0 - sin( e * g ) * 212.0 * p.x;
+                h = ( h + ( f - e ) * q + sin( r - ( a + h ) / 7.0 ) * 10.0 + i / 4.0 ) * g;
+                i += cos( h * 2.3 * sin( a / 350.0 - q ) ) * 184.0 * sin( q - ( r * 4.3 + a / 12.0 ) * g ) + tan( r * g + h ) * 184.0 * cos( r * g + h );
+                i = mod( i / 5.6, 256.0 ) / 64.0;
+                if ( i < 0.0 ) i += 4.0;
+                if ( i >= 2.0 ) i = 4.0 - i;
+                d = r / 350.0;
+                d += sin( d * d * 8.0 ) * 0.52;
+                f = ( sin( a * g ) + 1.0 ) / 2.0;
+                gl_FragColor = vec4( vec3( f * i / 1.6, i / 2.0 + d / 13.0, i ) * d * p.x + vec3( i / 1.3 + d / 8.0, i / 2.0 + d / 18.0, i ) * d * ( 1.0 - p.x ), 1.0 );
+            }
+        `;
+
+        // Configuración de Three.js
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas') });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const uniforms = {
+            time: { value: 0 }
+        };
+
+        const material = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader
+        });
+
+        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+        scene.add(mesh);
+
+        function animate(time) {
+            uniforms.time.value = time / 1000;
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Reproductor de audio
+        const playlist = document.getElementById('playlist');
+        const player = document.getElementById('player');
+        const progressBar = document.getElementById('progress-bar');
+        const statusElement = document.getElementById('status');
+        let audioFiles = [];
+        let currentTrack = 0;
+
+        // Función para cargar la lista de reproducción desde playlist.json
+        async function loadPlaylistFromJSON() {
+            try {
+                statusElement.textContent = 'Cargando lista de reproducción...';
+                const response = await fetch('0playlist.json');
+                if (!response.ok) {
+                    throw new Error(`Error al cargar playlist.json: ${response.status}`);
+                }
+                const data = await response.json();
+                audioFiles = data.audioFiles;
+                updatePlaylist();
+                statusElement.textContent = 'Lista de reproducción cargada.';
+                statusElement.classList.add('neon-text');
+            } catch (error) {
+                console.error('Error al cargar la lista de reproducción:', error);
+                statusElement.textContent = 'Error al cargar la lista de reproducción. Por favor, recarga la página.';
+                statusElement.classList.add('neon-text');
+            }
+        }
+
+        // Función para actualizar la lista de reproducción en la interfaz
+        function updatePlaylist() {
+            playlist.innerHTML = '';
+            audioFiles.forEach((file, index) => {
+                const li = document.createElement('li');
+                li.textContent = decodeURIComponent(file.split('/').pop());
+                li.addEventListener('click', () => playAudio(index));
+                if (index === currentTrack) {
+                    li.classList.add('active');
+                }
+                playlist.appendChild(li);
+            });
+        }
+
+        // Función para reproducir un archivo de audio
+        function playAudio(index) {
+            currentTrack = index;
+            player.src = audioFiles[index];
+            player.play();
+            updatePlaylist();
+        }
+
+        // Evento para actualizar la barra de progreso
+        player.addEventListener('timeupdate', () => {
+            const progress = (player.currentTime / player.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+        });
+
+        // Evento para reproducir la siguiente pista cuando termine la actual
+        player.addEventListener('ended', () => {
+            currentTrack = (currentTrack + 1) % audioFiles.length;
+            playAudio(currentTrack);
+        });
+
+        // Iniciar la carga de la lista de reproducción
+        loadPlaylistFromJSON();
+    </script>
+</body>
+</html>
