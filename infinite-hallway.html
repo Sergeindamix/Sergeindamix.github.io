@@ -16,7 +16,22 @@
             -ms-user-select: none; /* IE 10+/Edge */
             user-select: none; /* Standard */
         }
-
+        /* Fondo de pantalla completa */
+        body {
+            background: url('material-design-background.jpg') no-repeat center center fixed;
+            background-size: cover; /* Esto asegura que el fondo ocupe toda la pantalla */
+        }
+        /* Estilo para el iframe de fondo */
+        .background-iframe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: -1; /* Mantenerlo detrás del contenido principal */
+            opacity: 1;  /* Asegura que el iframe sea visible */
+        }
         .scene {
             width: 100%;
             height: 100%;
@@ -148,15 +163,16 @@
             align-items: center;
             height: 100%;
             position: absolute; /* Para posicionarlo sobre la escena */
-            top: 80%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%); /* Centrar */
             z-index: 999; /* Asegurar que esté sobre otros elementos */
         }
 
         .box .inner {
+            display: none;
             width: 400px;
-            height: 200px;
+            height: 600px;
             line-height: 200px;
             font-size: 4em;
             font-family: sans-serif;
@@ -166,7 +182,21 @@
             position: relative;
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
+            /* Inicialmente, sin background-image; se agregará dinámicamente */
+            background-image: linear-gradient(
+                transparent, 
+                rgba(0, 0, 0, 0.5) 20%, 
+                transparent 20%, 
+                transparent 20%, 
+                rgba(0, 0, 0, 0.5) 80%
+            );
+            background-size: 100% 10px; /* Tamaño de las scanlines */
+            background-repeat: repeat;
+            animation: scanlines 0.5s linear infinite;
+            transition: background-image 0.3s ease; /* Suavizar la transición al cambiar la imagen */
         }
+
+
 
         .box .inner:first-child {
             transform-origin: right;
@@ -195,7 +225,8 @@
         }
 
         /* Clase renombrada de .tv-screen a .hologram-screen */
-        .hologram-screen {            
+        .hologram-screen {  
+            display: none;          
             position: relative;
             width: 250px; /* Ajusta según sea necesario */
             height: 350x; /* Ajusta según sea necesario */
@@ -219,12 +250,14 @@
             background-position: 0;
             }
             to {
-            background-position: 0 10px; /* Mueve las scanlines */
+            background-position: 0 20px; /* Mueve las scanlines */
             }
         }
     </style>
 </head>
-<body>    
+<body> 
+    <!-- Iframe de fondo -->
+    <iframe src="fuji.html" class="background-iframe"></iframe>   
     <!-- Contenedor para mostrar la rotación -->
     <div class="rotation-display" id="rotationDisplay">
         Rotación X: 0°<br>
@@ -245,10 +278,6 @@
         </div>
         <div class="inner">
             <span>🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟</span>
-        </div>
-        <!-- Renombrado de .tv-screen a .hologram-screen -->
-        <div class="hologram-screen">
-            <img src="cartoon24.jpg" alt="Imagen Holográfica" class="image">
         </div>
     </div>   
     
@@ -475,10 +504,10 @@
                 if (imageUrl) {
                     imageUrl = imageUrl.slice(5, -2); // Remover "url()" de la cadena
                 } else {
-                    imageUrl = 'cartoon24.jpg'; // Imagen por defecto si no hay backgroundImage
+                    imageUrl = 'default-image.jpg'; // Imagen por defecto si no hay backgroundImage
                 }
 
-                // Actualizar los textos de las cajas .inner
+                // Actualizar los textos de los spans en .inner
                 boxInnerElements.forEach((span, index) => {
                     if (index === 0) {
                         span.textContent = `🎬 ${name} 🎬`;
@@ -487,10 +516,26 @@
                     }
                 });
 
+                // Aplicar la imagen como background de .box .inner manteniendo scanlines
+                document.querySelectorAll('.box .inner').forEach(inner => {
+                    
+                    inner.style.backgroundImage = `linear-gradient(
+                        transparent, 
+                        rgba(0, 0, 0, 0.5) 20%, 
+                        transparent 20%, 
+                        transparent 80%, 
+                        rgba(0, 0, 0, 0.5) 80%
+                    ), url(${imageUrl})`;
+                    inner.style.backgroundSize = '100% 10px, cover'; // Mantener scanlines y ajustar la imagen
+                    inner.style.backgroundPosition = 'center, center';
+                    inner.style.backgroundRepeat = 'repeat, no-repeat';
+                });
+
                 // Inyectar la imagen en .hologram-screen y hacerla visible
                 hologramImage.src = imageUrl;
                 hologramImage.alt = `Imagen Holográfica de ${name}`;
                 hologramImage.style.display = 'block'; // Mostrar la imagen
+                hologramImage.style.animation = 'scanlinesOverlay 0.5s linear infinite'; // Aplicar animación de scanlines
             } else if (event.type === 'mouseout') {
                 // Restaurar los textos originales de las cajas .inner
                 boxInnerElements.forEach((span, index) => {
@@ -501,14 +546,27 @@
                     }
                 });
 
+                // Quitar el background-image de .box .inner pero mantener scanlines
+                document.querySelectorAll('.box .inner').forEach(inner => {
+                    inner.style.backgroundImage = `linear-gradient(
+                        transparent, 
+                        rgba(0, 0, 0, 0.5) 20%, 
+                        transparent 20%, 
+                        transparent 80%, 
+                        rgba(0, 0, 0, 0.5) 80%
+                    )`;
+                    inner.style.backgroundSize = '100% 10px'; // Solo scanlines
+                    inner.style.backgroundPosition = 'center';
+                    inner.style.backgroundRepeat = 'repeat';
+                });
+
                 // Restaurar la imagen por defecto en .hologram-screen y ocultarla
-                hologramImage.src = 'cartoon24.jpg'; // Imagen por defecto
+                hologramImage.src = 'default-image.jpg'; // Asegúrate de tener una imagen por defecto
                 hologramImage.alt = 'Imagen Holográfica';
                 hologramImage.style.display = 'none'; // Ocultar la imagen
+                hologramImage.style.animation = 'none'; // Detener la animación de scanlines
             }
         }
-
-
 
         // Agregar delegación de eventos a ambos muros
         leftWall.addEventListener('mouseover', handleMirrorHover);
