@@ -193,9 +193,38 @@
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
+
+        /* Clase renombrada de .tv-screen a .hologram-screen */
+        .hologram-screen {            
+            position: relative;
+            width: 250px; /* Ajusta según sea necesario */
+            height: 350x; /* Ajusta según sea necesario */
+            overflow: hidden;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.5) 20%, transparent 20%, transparent 80%, rgba(0, 0, 0, 0.5) 80%);
+            background-size: 100% 10px; /* Ajusta el tamaño de las scanlines */
+            animation: scanlines 0.5s linear infinite;
+            transform: translate(-0%, -75%); /* Centrar */
+            left: -45%;
+        }
+        
+        .image {
+            width: 100%;
+            height: auto;
+            opacity: 0.17; /* Disminuir alfa para ver la imagen */
+            filter: blur(0px); /* Efecto de desenfoque si es necesario */
+        }
+        
+        @keyframes scanlines {
+            from {
+            background-position: 0;
+            }
+            to {
+            background-position: 0 10px; /* Mueve las scanlines */
+            }
+        }
     </style>
 </head>
-<body>
+<body>    
     <!-- Contenedor para mostrar la rotación -->
     <div class="rotation-display" id="rotationDisplay">
         Rotación X: 0°<br>
@@ -210,16 +239,19 @@
     </div>
 
     <!-- Nuevo contenedor .box -->
-    <div class="box">
+    <div class="box">        
         <div class="inner">
             <span>⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️</span>
         </div>
         <div class="inner">
             <span>🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟</span>
         </div>
-    </div>
-
-
+        <!-- Renombrado de .tv-screen a .hologram-screen -->
+        <div class="hologram-screen">
+            <img src="cartoon24.jpg" alt="Imagen Holográfica" class="image">
+        </div>
+    </div>   
+    
     <div class="instructions">
         Mueve el ratón para mirar alrededor.
     </div>
@@ -230,6 +262,7 @@
         const rightWall = document.getElementById('rightWall');
         const rotationDisplay = document.getElementById('rotationDisplay');
         const boxInnerElements = document.querySelectorAll('.box .inner span'); // Seleccionar los spans dentro de .box .inner
+        const hologramImage = document.querySelector('.hologram-screen .image'); // Seleccionar la imagen dentro de .hologram-screen
         let isDragging = false;
         let previousMousePosition = { x: 0, y: 0 };
         let rotation = { x: 10, y: 90 }; // Ajustado para coincidir con CSS inicial
@@ -247,6 +280,7 @@
                 // Agregar atributos de datos para identificar el mirror
                 mirror.setAttribute('data-name', imageData['tvg-name']);
                 mirror.setAttribute('data-description', imageData['tvg-description'] || 'Sin descripción');
+                mirror.setAttribute('data-image-url', imageData['image-url'] || 'cartoon24.jpg'); // Añadir URL de la imagen
 
                 // Añadir la marquesina
                 const marquee = document.createElement('div');
@@ -436,6 +470,14 @@
                 const name = target.getAttribute('data-name') || 'Sin nombre';
                 const description = target.getAttribute('data-description') || 'Sin descripción';
 
+                // Obtener la URL de la imagen de mirror.style.backgroundImage
+                let imageUrl = target.style.backgroundImage;
+                if (imageUrl) {
+                    imageUrl = imageUrl.slice(5, -2); // Remover "url()" de la cadena
+                } else {
+                    imageUrl = 'cartoon24.jpg'; // Imagen por defecto si no hay backgroundImage
+                }
+
                 // Actualizar los textos de las cajas .inner
                 boxInnerElements.forEach((span, index) => {
                     if (index === 0) {
@@ -444,6 +486,11 @@
                         span.textContent = `✨ ${name} ✨`;
                     }
                 });
+
+                // Inyectar la imagen en .hologram-screen y hacerla visible
+                hologramImage.src = imageUrl;
+                hologramImage.alt = `Imagen Holográfica de ${name}`;
+                hologramImage.style.display = 'block'; // Mostrar la imagen
             } else if (event.type === 'mouseout') {
                 // Restaurar los textos originales de las cajas .inner
                 boxInnerElements.forEach((span, index) => {
@@ -453,8 +500,15 @@
                         span.textContent = '✨✨✨✨✨✨✨✨✨✨';
                     }
                 });
+
+                // Restaurar la imagen por defecto en .hologram-screen y ocultarla
+                hologramImage.src = 'cartoon24.jpg'; // Imagen por defecto
+                hologramImage.alt = 'Imagen Holográfica';
+                hologramImage.style.display = 'none'; // Ocultar la imagen
             }
         }
+
+
 
         // Agregar delegación de eventos a ambos muros
         leftWall.addEventListener('mouseover', handleMirrorHover);
