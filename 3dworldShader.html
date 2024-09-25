@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Artistic Shader Scene</title>
+    <title>Shader Scene with Faster Rotation</title>
     <style>
         body { margin: 0; overflow: hidden; }
         canvas { display: block; }
@@ -22,6 +22,7 @@
         uniform float iTime;
         uniform vec2 iResolution;
         uniform vec2 iMouse;
+        uniform float zoom;
         varying vec2 vUv;
 
         float sdSphere(vec3 p, float s) {
@@ -35,6 +36,11 @@
 
         float sdPlane(vec3 p, vec3 n, float h) {
             return dot(p, n) + h;
+        }
+
+        mat2 Rot(float a) {
+            float c = cos(a), s = sin(a);
+            return mat2(c, -s, s, c);
         }
 
         vec2 map(vec3 p) {
@@ -63,20 +69,30 @@
 
         void mainImage(out vec4 fragColor, in vec2 fragCoord) {
             vec2 uv = (fragCoord - 0.5 * iResolution.xy) / iResolution.y;
-            vec3 ro = vec3(0.0, 3.0, -5.0);
+
+            // Parámetros de interacción del mouse
+            vec2 m = iMouse / iResolution.xy - 0.5;
+
+            // Posición inicial de la cámara
+            vec3 ro = vec3(0.0, 3.0, -10.0 * zoom);
+
+            // Aplicar rotación en el eje Y e YZ según el mouse
+            ro.yz *= Rot(-m.y * 3.14 + 1.0);  // Rotación en el eje Y
+            ro.xz *= Rot(-m.x * 6.2831);      // Rotación en el eje X
+
             vec3 rd = normalize(vec3(uv, 1.0));
 
             float d = 0.0;
-            float m = -1.0;
-            
+            float mDist = -1.0;
+
             for(int i = 0; i < 100; i++) {
                 vec3 p = ro + rd * d;
                 vec2 res = map(p);
                 if(res.x < 0.001 || d > 20.0) break;
                 d += res.x;
-                m = res.y;
+                mDist = res.y;
             }
-            
+
             vec3 col = vec3(0.0);
             
             if(d < 20.0) {
@@ -85,9 +101,9 @@
                 vec3 light = normalize(vec3(1.0, 2.0, 3.0));
                 float dif = dot(n, light) * 0.5 + 0.5;
                 
-                if(m == 1.0) col = vec3(1.0, 0.2, 0.2) * dif; // Red sphere
-                else if(m == 2.0) col = vec3(0.2, 0.2, 1.0) * dif; // Blue box
-                else if(m == 3.0) { // Checkered floor
+                if(mDist == 1.0) col = vec3(1.0, 0.2, 0.2) * dif; // Red sphere
+                else if(mDist == 2.0) col = vec3(0.2, 0.2, 1.0) * dif; // Blue box
+                else if(mDist == 3.0) { // Checkered floor
                     float f = mod(floor(p.x) + floor(p.z), 2.0);
                     col = (f * vec3(0.3) + (1.0 - f) * vec3(0.5)) * dif;
                 }
@@ -96,7 +112,7 @@
                 float t = 0.5 * (rd.y + 1.0);
                 col = mix(vec3(1.0), vec3(0.5, 0.7, 1.0), t);
             }
-            
+
             fragColor = vec4(col, 1.0);
         }
 
@@ -107,11 +123,15 @@
     <script>
         let camera, scene, renderer, material;
         let mouseX = 0, mouseY = 0;
+        let isDragging = false;
+        let zoom = 1.0;
+        let lastMouseX = 0, lastMouseY = 0;
 
         init();
         animate();
 
         function init() {
+            // Usando una cámara ortográfica para el plano de la geometría
             camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
             scene = new THREE.Scene();
 
@@ -120,7 +140,8 @@
                 uniforms: {
                     iTime: { value: 0 },
                     iResolution: { value: new THREE.Vector2() },
-                    iMouse: { value: new THREE.Vector2() }
+                    iMouse: { value: new THREE.Vector2() },
+                    zoom: { value: zoom }
                 },
                 vertexShader: document.getElementById('vertexShader').textContent,
                 fragmentShader: document.getElementById('fragmentShader').textContent
@@ -135,7 +156,10 @@
 
             onWindowResize();
             window.addEventListener('resize', onWindowResize, false);
+            document.addEventListener('mousedown', onMouseDown, false);
+            document.addEventListener('mouseup', onMouseUp, false);
             document.addEventListener('mousemove', onDocumentMouseMove, false);
+            document.addEventListener('wheel', onMouseWheel, false);
         }
 
         function onWindowResize() {
@@ -143,9 +167,36 @@
             material.uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
         }
 
+        function onMouseDown(event) {
+            isDragging = true;
+            lastMouseX = event.clientX;
+            lastMouseY = event.clientY;
+        }
+
+        function onMouseUp() {
+            isDragging = false;
+        }
+
         function onDocumentMouseMove(event) {
-            mouseX = event.clientX;
-            mouseY = event.clientY;
+            if (isDragging) {
+                let deltaX = event.clientX - lastMouseX;
+                let deltaY = event.clientY - lastMouseY;
+
+                // Aumentar los multiplicadores para una rotación más rápida
+                mouseX += deltaX * 0.2;  // Aumenté de 0.01 a 0.02
+                mouseY += deltaY * 0.2;
+
+                lastMouseX = event.clientX;
+                lastMouseY = event.clientY;
+            }
+
+            material.uniforms.iMouse.value.set(mouseX, mouseY);
+        }
+
+        function onMouseWheel(event) {
+            zoom += event.deltaY * -0.001;
+            zoom = Math.min(Math.max(0.5, zoom), 3.0);
+            material.uniforms.zoom.value = zoom;
         }
 
         function animate() {
@@ -155,7 +206,6 @@
 
         function render() {
             material.uniforms.iTime.value = performance.now() / 1000;
-            material.uniforms.iMouse.value.set(mouseX, mouseY);
             renderer.render(scene, camera);
         }
     </script>
