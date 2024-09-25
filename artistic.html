@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotating Shapes</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom right, #6366f1, #8b5cf6);
+    }
+
+    .container {
+      position: relative;
+      width: 80vmin;
+      height: 80vmin;
+    }
+
+    /* Círculo central */
+    .circle {
+      position: absolute;
+      inset: 25%;
+      background-color: rgba(252, 211, 77, 0.75);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Cuadrado rotante */
+    .rotating-square {
+      position: absolute;
+      inset: 0;
+      border: 8px solid rgba(255, 255, 255, 0.5);
+    }
+
+    /* Triángulos */
+    .triangle1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 40vmin solid transparent;
+      border-bottom: 40vmin solid #f472b6;
+    }
+
+    .triangle2 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-right: 40vmin solid transparent;
+      border-top: 40vmin solid #22d3ee;
+    }
+
+    /* Rectángulos superpuestos */
+    .rectangle1 {
+      position: absolute;
+      top: 25%;
+      left: 25%;
+      width: 50%;
+      height: 50%;
+      background-color: rgba(34, 197, 94, 0.6);
+      transform: rotate(45deg);
+    }
+
+    .rectangle2 {
+      position: absolute;
+      top: 33%;
+      left: 33%;
+      width: 33%;
+      height: 33%;
+      background-color: rgba(56, 189, 248, 0.6);
+      transform: rotate(-45deg);
+    }
+
+    /* Círculos pequeños */
+    .small-circle1 {
+      position: absolute;
+      top: 16.67%;
+      right: 16.67%;
+      width: 10vmin;
+      height: 10vmin;
+      background-color: #f87171;
+      border-radius: 50%;
+      animation: bounce 2s infinite;
+    }
+
+    .small-circle2 {
+      position: absolute;
+      bottom: 16.67%;
+      left: 16.67%;
+      width: 8vmin;
+      height: 8vmin;
+      background-color: #fb923c;
+      border-radius: 50%;
+      animation: ping 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes ping {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+
+    /* Líneas */
+    .line1 {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 2px;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: translateX(-50%);
+    }
+
+    .line2 {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Círculo central -->
+    <div class="circle"></div>
+
+    <!-- Cuadrado rotante -->
+    <div class="rotating-square" id="rotatingSquare"></div>
+
+    <!-- Triángulos -->
+    <div class="triangle1"></div>
+    <div class="triangle2"></div>
+
+    <!-- Rectángulos superpuestos -->
+    <div class="rectangle1"></div>
+    <div class="rectangle2"></div>
+
+    <!-- Círculos pequeños -->
+    <div class="small-circle1"></div>
+    <div class="small-circle2"></div>
+
+    <!-- Líneas -->
+    <div class="line1"></div>
+    <div class="line2"></div>
+  </div>
+
+  <script>
+    let rotation = 0;
+
+    function rotateSquare() {
+      const square = document.getElementById('rotatingSquare');
+      rotation = (rotation + 1) % 360;
+      square.style.transform = `rotate(${rotation}deg)`;
+    }
+
+    setInterval(rotateSquare, 50);
+  </script>
+</body>
+</html>

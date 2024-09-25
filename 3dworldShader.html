@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Artistic Shader Scene</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        uniform float iTime;
+        uniform vec2 iResolution;
+        uniform vec2 iMouse;
+        varying vec2 vUv;
+
+        float sdSphere(vec3 p, float s) {
+            return length(p) - s;
+        }
+
+        float sdBox(vec3 p, vec3 b) {
+            vec3 q = abs(p) - b;
+            return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0);
+        }
+
+        float sdPlane(vec3 p, vec3 n, float h) {
+            return dot(p, n) + h;
+        }
+
+        vec2 map(vec3 p) {
+            float d1 = sdSphere(p - vec3(0.0, 1.0, 0.0), 1.0);
+            float d2 = sdBox(p - vec3(2.0, 0.5, 0.0), vec3(0.5));
+            float d3 = sdPlane(p, vec3(0.0, 1.0, 0.0), 0.0);
+            
+            float d = min(min(d1, d2), d3);
+            float m = 0.0;
+            
+            if (d == d1) m = 1.0; // Sphere
+            else if (d == d2) m = 2.0; // Box
+            else if (d == d3) m = 3.0; // Plane
+            
+            return vec2(d, m);
+        }
+
+        vec3 calcNormal(in vec3 p) {
+            const float h = 0.0001;
+            const vec2 k = vec2(1, -1);
+            return normalize(k.xyy * map(p + k.xyy * h).x +
+                             k.yyx * map(p + k.yyx * h).x +
+                             k.yxy * map(p + k.yxy * h).x +
+                             k.xxx * map(p + k.xxx * h).x);
+        }
+
+        void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+            vec2 uv = (fragCoord - 0.5 * iResolution.xy) / iResolution.y;
+            vec3 ro = vec3(0.0, 3.0, -5.0);
+            vec3 rd = normalize(vec3(uv, 1.0));
+
+            float d = 0.0;
+            float m = -1.0;
+            
+            for(int i = 0; i < 100; i++) {
+                vec3 p = ro + rd * d;
+                vec2 res = map(p);
+                if(res.x < 0.001 || d > 20.0) break;
+                d += res.x;
+                m = res.y;
+            }
+            
+            vec3 col = vec3(0.0);
+            
+            if(d < 20.0) {
+                vec3 p = ro + rd * d;
+                vec3 n = calcNormal(p);
+                vec3 light = normalize(vec3(1.0, 2.0, 3.0));
+                float dif = dot(n, light) * 0.5 + 0.5;
+                
+                if(m == 1.0) col = vec3(1.0, 0.2, 0.2) * dif; // Red sphere
+                else if(m == 2.0) col = vec3(0.2, 0.2, 1.0) * dif; // Blue box
+                else if(m == 3.0) { // Checkered floor
+                    float f = mod(floor(p.x) + floor(p.z), 2.0);
+                    col = (f * vec3(0.3) + (1.0 - f) * vec3(0.5)) * dif;
+                }
+            } else {
+                // Sky gradient
+                float t = 0.5 * (rd.y + 1.0);
+                col = mix(vec3(1.0), vec3(0.5, 0.7, 1.0), t);
+            }
+            
+            fragColor = vec4(col, 1.0);
+        }
+
+        void main() {
+            mainImage(gl_FragColor, gl_FragCoord.xy);
+        }
+    </script>
+    <script>
+        let camera, scene, renderer, material;
+        let mouseX = 0, mouseY = 0;
+
+        init();
+        animate();
+
+        function init() {
+            camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+            scene = new THREE.Scene();
+
+            const geometry = new THREE.PlaneGeometry(2, 2);
+            material = new THREE.ShaderMaterial({
+                uniforms: {
+                    iTime: { value: 0 },
+                    iResolution: { value: new THREE.Vector2() },
+                    iMouse: { value: new THREE.Vector2() }
+                },
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragmentShader').textContent
+            });
+
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            onWindowResize();
+            window.addEventListener('resize', onWindowResize, false);
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+        }
+
+        function onWindowResize() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            material.uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+        }
+
+        function render() {
+            material.uniforms.iTime.value = performance.now() / 1000;
+            material.uniforms.iMouse.value.set(mouseX, mouseY);
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
