@@ -21,6 +21,8 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            max-width: 90vw;
+            width: 100%;
         }
         h2 {
             text-align: center;
@@ -31,7 +33,12 @@
         }
         .dvd-collection {
             display: flex;
+            flex-wrap: wrap;
             gap: 8px;
+            justify-content: center;
+            max-width: 100%;
+            height: 70vh;
+            overflow-y: auto;
         }
         .dvd {
             width: 40px;
@@ -80,6 +87,8 @@
             opacity: 0;
             transition: opacity 0.5s ease;
             box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            overflow: hidden;
         }
         .dvd:hover .dvd-cover {
             opacity: 1;
@@ -96,111 +105,125 @@
             max-height: 160px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
         }
-        .dvd-collection {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-            max-width: 100%;
-        }
-
-        .video-preview {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
+        .yugioh-frame {
+            position: absolute;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.9);
+            border: 4px solid #D4AF37;
+            box-sizing: border-box;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            z-index: 1;
+        }
+        .yugioh-image {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #8B4513;
+        }
+        .yugioh-title {
+            position: absolute;
+            top: 120px;
+            left: 10px;
+            right: 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+            background: #FFD700;
+            padding: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .yugioh-description {
+            position: absolute;
+            top: 145px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            font-size: 8px;
+            color: #000;
+            background: #FFF;
+            padding: 4px;
             overflow: hidden;
         }
-        .video-content {
-            position: absolute;
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
             left: 0;
             top: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .modal-content {
+            background-color: #fff;
+            width: 90%;
+            height: 90%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .post-video {
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
         }
-        .video-container {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .video-container video {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        .close-preview {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: rgba(255,255,255,0.3);
+        #loadMoreBtn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #ffd700;
+            color: #1a1a1a;
             border: none;
-            color: white;
-            font-size: 24px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            border-radius: 5px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s ease;
-            z-index: 1001;
-        }
-        .close-preview:hover {
-            background-color: rgba(255,255,255,0.5);
-        }
-        .video-info {
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-        .video-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
         }
-        .video-description {
-            font-size: 14px;
-            color: #ccc;
-        }
-        @media (max-width: 600px) {
-            .dvd {
-                width: 30px;
-                height: 120px;
-            }
-            .dvd-cover {
-                width: 90px;
-                height: 120px;
-            }
+        #loadMoreBtn:hover {
+            background-color: #ffea00;
         }
     </style>
 </head>
 <body>
+    <div class="modal" id="videoPreview">
+        <div class="modal-content">
+            <span class="close" id="closePreview">×</span>
+            <video id="previewVideo" class="post-video" controls>
+                <source id="videoSource" type="video/mp4">
+                Tu navegador no soporta la etiqueta de video.
+            </video>
+            <div id="videoTitle"></div>
+            <div id="videoDescription"></div>
+        </div>
+    </div>
     <div class="shelf">
-        <h2>Mi Colección de Series</h2>
+        <h2>Mi Colección de DVDs</h2>
         <select id="jsonSelect">
             <option value="">Seleccione un archivo JSON</option>
         </select>
         <div class="dvd-collection" id="dvdCollection"></div>
-    </div>
-
-    <div class="video-preview" id="videoPreview">
-        <div class="video-content">
-            <div class="video-container">
-                <video id="previewVideo" controls></video>
-            </div>
-            <div class="video-info">
-                <div class="video-title" id="videoTitle"></div>
-                <div class="video-description" id="videoDescription"></div>
-            </div>
-            <button class="close-preview" id="closePreview" aria-label="Cerrar preview">&times;</button>
-        </div>
+        <button id="loadMoreBtn" style="display: none;">Cargar más DVDs</button>
     </div>
 
     <script>
@@ -211,6 +234,11 @@
         const videoDescription = document.getElementById('videoDescription');
         const jsonSelect = document.getElementById('jsonSelect');
         const dvdCollection = document.getElementById('dvdCollection');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+        let allVideos = [];
+        let currentIndex = 0;
+        const itemsPerLoad = 100;
 
         function createDVDElement(video) {
             const dvdElement = document.createElement('div');
@@ -225,7 +253,26 @@
             
             const coverElement = document.createElement('div');
             coverElement.className = 'dvd-cover';
-            coverElement.style.backgroundImage = `url(${video['tvg-logo']})`;
+            
+            const yugiohFrame = document.createElement('div');
+            yugiohFrame.className = 'yugioh-frame';
+            
+            const yugiohImage = document.createElement('div');
+            yugiohImage.className = 'yugioh-image';
+            yugiohImage.style.backgroundImage = `url(${video['tvg-logo']})`;
+            
+            const yugiohTitle = document.createElement('div');
+            yugiohTitle.className = 'yugioh-title';
+            yugiohTitle.textContent = video['tvg-name'].split('S')[0].trim();
+            
+            const yugiohDescription = document.createElement('div');
+            yugiohDescription.className = 'yugioh-description';
+            yugiohDescription.textContent = `Grupo: ${video['group-title']}`;
+            
+            yugiohFrame.appendChild(yugiohImage);
+            yugiohFrame.appendChild(yugiohTitle);
+            yugiohFrame.appendChild(yugiohDescription);
+            coverElement.appendChild(yugiohFrame);
             
             dvdElement.appendChild(spineElement);
             spineElement.appendChild(titleElement);
@@ -247,15 +294,15 @@
             previewVideo.src = video.url;
             videoTitle.textContent = video['tvg-name'];
             videoDescription.textContent = `Grupo: ${video['group-title']}`;
-            videoPreview.style.display = 'block';
-            document.body.style.overflow = 'block'; // Prevent scrolling
+            videoPreview.style.display = 'flex';
+            window.scrollTo(0, 0);
             previewVideo.play();
         }
 
         function closeVideoPreview() {
             videoPreview.style.display = 'none';
-            document.body.style.overflow = ''; // Re-enable scrolling
             previewVideo.pause();
+            previewVideo.currentTime = 0;
         }
 
         closePreview.addEventListener('click', closeVideoPreview);
@@ -277,21 +324,40 @@
             });
         }
 
-        jsonSelect.addEventListener('change', (event) => {
+        function loadMoreDVDs() {
+            const fragment = document.createDocumentFragment();
+            const endIndex = Math.min(currentIndex + itemsPerLoad, allVideos.length);
+            
+            for (let i = currentIndex; i < endIndex; i++) {
+                const dvdElement = createDVDElement(allVideos[i]);
+                fragment.appendChild(dvdElement);
+            }
+            
+            dvdCollection.appendChild(fragment);
+            currentIndex = endIndex;
+            
+            if (currentIndex >= allVideos.length) {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        jsonSelect.addEventListener('change', async (event) => {
             const selectedFile = event.target.value;
             if (selectedFile) {
-                fetch(selectedFile)
-                    .then(response => response.json())
-                    .then(data => {
-                        dvdCollection.innerHTML = '';
-                        data.forEach(video => {
-                            const dvdElement = createDVDElement(video);
-                            dvdCollection.appendChild(dvdElement);
-                        });
-                    })
-                    .catch(error => console.error('Error cargando datos del video:', error));
+                try {
+                    const response = await fetch(selectedFile);
+                    allVideos = await response.json();
+                    dvdCollection.innerHTML = '';
+                    currentIndex = 0;
+                    loadMoreDVDs();
+                    loadMoreBtn.style.display = 'block';
+                } catch (error) {
+                    console.error('Error cargando datos del video:', error);
+                }
             }
         });
+
+        loadMoreBtn.addEventListener('click', loadMoreDVDs);
 
         loadJSONFiles().catch(error => console.error('Error cargando lista de archivos JSON:', error));
     </script>
