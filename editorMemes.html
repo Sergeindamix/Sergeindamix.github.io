@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Memes con Estilo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4a5568;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4a5568;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2d3748;
+        }
+        canvas {
+            max-width: 100%;
+            border: 2px solid #4a5568;
+            border-radius: 4px;
+        }
+        #fontPreview {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Editor de Memes con Estilo</h1>
+        <div class="input-group">
+            <label for="imageUpload">Selecciona una imagen:</label>
+            <input type="file" id="imageUpload" accept="image/*">
+        </div>
+        <div class="input-group">
+            <label for="topText">Texto Superior:</label>
+            <input type="text" id="topText" placeholder="Texto Superior">
+        </div>
+        <div class="input-group">
+            <label for="bottomText">Texto Inferior:</label>
+            <input type="text" id="bottomText" placeholder="Texto Inferior">
+        </div>
+        <div class="input-group">
+            <label for="fontSize">Tamaño de Fuente: <span id="fontSizeValue">30</span>px</label>
+            <input type="range" id="fontSize" min="20" max="60" value="30">
+        </div>
+        <div class="input-group">
+            <label for="outlineWidth">Grosor del Delineado: <span id="outlineWidthValue">4</span>px</label>
+            <input type="range" id="outlineWidth" min="1" max="8" value="4">
+        </div>
+        <div class="input-group">
+            <label for="fontFamily">Fuente:</label>
+            <select id="fontFamily"></select>
+            <div id="fontPreview">Vista previa de la fuente</div>
+        </div>
+        <button id="downloadBtn" disabled>Descargar Meme</button>
+        <canvas id="memeCanvas"></canvas>
+    </div>
+
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const topText = document.getElementById('topText');
+        const bottomText = document.getElementById('bottomText');
+        const fontSize = document.getElementById('fontSize');
+        const fontSizeValue = document.getElementById('fontSizeValue');
+        const outlineWidth = document.getElementById('outlineWidth');
+        const outlineWidthValue = document.getElementById('outlineWidthValue');
+        const fontFamily = document.getElementById('fontFamily');
+        const fontPreview = document.getElementById('fontPreview');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const canvas = document.getElementById('memeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let image = null;
+
+        const fonts = [
+            'Arial', 'Helvetica', 'Times New Roman', 'Courier', 'Verdana', 'Georgia', 'Palatino', 
+            'Garamond', 'Bookman', 'Comic Sans MS', 'Trebuchet MS', 'Arial Black', 'Impact',
+            'Abril Fatface', 'Acme', 'Alegreya', 'Alegreya Sans', 'Alegreya Sans SC', 'Alegreya SC',
+            'Alex Brush', 'Alfa Slab One', 'Alice', 'Alike', 'Alike Angular', 'Allan', 'Allerta',
+            'Allerta Stencil', 'Allura', 'Almendra', 'Almendra Display', 'Almendra SC', 'Amarante',
+            'Amaranth', 'Amatic SC', 'Amethysta', 'Amiri', 'Amita', 'Anaheim', 'Andada', 'Andika',
+            'Angkor', 'Annie Use Your Telescope', 'Anonymous Pro', 'Antic', 'Antic Didone', 'Antic Slab',
+            'Anton', 'Arapey', 'Arbutus', 'Arbutus Slab', 'Architects Daughter', 'Archivo', 'Archivo Black',
+            'Archivo Narrow', 'Aref Ruqaa', 'Arima Madurai', 'Arimo', 'Arizonia', 'Armata', 'Arsenal',
+            'Artifika', 'Arvo', 'Arya', 'Asap', 'Asap Condensed', 'Asar', 'Asset', 'Assistant', 'Astloch',
+            'Asul', 'Athiti', 'Atma', 'Atomic Age', 'Aubrey', 'Audiowide', 'Autour One', 'Average',
+            'Average Sans', 'Averia Gruesa Libre', 'Averia Libre', 'Averia Sans Libre', 'Averia Serif Libre',
+            'Bad Script', 'Bahiana', 'Baloo', 'Baloo Bhai', 'Baloo Bhaijaan', 'Baloo Bhaina', 'Baloo Chettan',
+            'Baloo Da', 'Baloo Paaji', 'Baloo Tamma', 'Baloo Tammudu', 'Baloo Thambi', 'Balthazar', 'Bangers',
+            'Barlow', 'Barlow Condensed', 'Barlow Semi Condensed', 'Barrio', 'Basic', 'Battambang', 'Baumans',
+            'Bayon', 'Belgrano', 'Bellefair', 'Belleza', 'BenchNine', 'Bentham', 'Berkshire Swash', 'Bevan',
+            'Bigelow Rules', 'Bigshot One', 'Bilbo', 'Bilbo Swash Caps', 'BioRhyme', 'BioRhyme Expanded',
+            'Biryani', 'Bitter', 'Black And White Picture', 'Black Han Sans', 'Black Ops One', 'Bokor',
+            'Bonbon', 'Boogaloo', 'Bowlby One', 'Bowlby One SC', 'Brawler', 'Bree Serif', 'Bubblegum Sans',
+            'Bubbler One', 'Buda', 'Buenard', 'Bungee', 'Bungee Hairline', 'Bungee Inline', 'Bungee Outline',
+            'Bungee Shade', 'Butcherman', 'Butterfly Kids', 'Cabin', 'Cabin Condensed', 'Cabin Sketch',
+            'Caesar Dressing', 'Cagliostro', 'Cairo', 'Calligraffitti', 'Cambay', 'Cambo', 'Candal',
+            'Cantarell', 'Cantata One', 'Cantora One', 'Capriola', 'Cardo', 'Carme', 'Carrois Gothic',
+            'Carrois Gothic SC', 'Carter One', 'Catamaran', 'Caudex', 'Caveat', 'Caveat Brush',
+            'Cedarville Cursive', 'Ceviche One', 'Changa', 'Changa One', 'Chango', 'Chathura',
+            'Chau Philomene One', 'Chela One', 'Chelsea Market', 'Chenla', 'Cherry Cream Soda',
+            'Cherry Swash', 'Chewy', 'Chicle', 'Chivo', 'Chonburi', 'Cinzel', 'Cinzel Decorative',
+            'Clicker Script', 'Coda', 'Coda Caption', 'Codystar', 'Coiny', 'Combo', 'Comfortaa',
+            'Coming Soon', 'Concert One', 'Condiment', 'Content', 'Contrail One', 'Convergence',
+            'Cookie', 'Copse', 'Corben', 'Cormorant', 'Cormorant Garamond', 'Cormorant Infant',
+            'Cormorant SC', 'Cormorant Unicase', 'Cormorant Upright', 'Courgette', 'Cousine',
+            'Coustard', 'Covered By Your Grace', 'Crafty Girls', 'Creepster', 'Crete Round',
+            'Crimson Text', 'Croissant One', 'Crushed', 'Cuprum', 'Cutive', 'Cutive Mono', 'Damion',
+            'Dancing Script', 'Dangrek', 'David Libre', 'Dawning of a New Day', 'Days One', 'Dekko',
+            'Delius', 'Delius Swash Caps', 'Delius Unicase', 'Della Respira', 'Denk One', 'Devonshire',
+            'Dhurjati', 'Didact Gothic', 'Diplomata', 'Diplomata SC', 'Domine', 'Donegal One',
+            'Doppio One', 'Dorsa', 'Dosis', 'Dr Sugiyama', 'Droid Sans', 'Droid Sans Mono',
+            'Droid Serif', 'Duru Sans', 'Dynalight', 'EB Garamond', 'Eagle Lake', 'Eater',
+            'Economica', 'Eczar', 'El Messiri', 'Electrolize', 'Elsie', 'Elsie Swash Caps',
+            'Emblema One', 'Emilys Candy', 'Engagement', 'Englebert', 'Enriqueta', 'Erica One',
+            'Esteban', 'Euphoria Script', 'Ewert', 'Exo', 'Exo 2', 'Expletus Sans', 'Fanwood Text',
+            'Farsan', 'Fascinate', 'Fascinate Inline', 'Faster One', 'Fasthand', 'Fauna One',
+            'Faustina', 'Federant', 'Federo', 'Felipa', 'Fenix', 'Finger Paint', 'Fira Mono',
+            'Fira Sans', 'Fira Sans Condensed', 'Fira Sans Extra Condensed', 'Fjalla One',
+            'Fjord One', 'Flamenco', 'Flavors', 'Fondamento', 'Fontdiner Swanky', 'Forum',
+            'Francois One', 'Frank Ruhl Libre', 'Freckle Face', 'Fredericka the Great', 'Fredoka One',
+            'Freehand', 'Fresca', 'Frijole', 'Fruktur', 'Fugaz One', 'GFS Didot', 'GFS Neohellenic',
+            'Gabriela', 'Gafata', 'Galada', 'Galdeano', 'Galindo', 'Gentium Basic', 'Gentium Book Basic',
+            'Geo', 'Geostar', 'Geostar Fill', 'Germania One', 'Gidugu', 'Gilda Display',
+            'Give You Glory', 'Glass Antiqua', 'Glegoo', 'Gloria Hallelujah', 'Goblin One',
+            'Gochi Hand', 'Gorditas', 'Goudy Bookletter 1911', 'Graduate', 'Grand Hotel',
+            'Gravitas One', 'Great Vibes', 'Griffy', 'Gruppo', 'Gudea', 'Gurajada', 'Habibi',
+            'Halant', 'Hammersmith One', 'Hanalei', 'Hanalei Fill', 'Handlee', 'Hanuman',
+            'Happy Monkey', 'Harmattan', 'Headland One', 'Heebo', 'Henny Penny',
+            'Herr Von Muellerhoff', 'Hind', 'Hind Guntur', 'Hind Madurai', 'Hind Siliguri',
+            'Hind Vadodara', 'Holtwood One SC', 'Homemade Apple', 'Homenaje', 'IBM Plex Sans', 'Lobster'
+        ];
+
+        // Agregar opciones de fuentes al select
+        fonts.forEach(font => {
+            const option = document.createElement('option');
+            option.value = font;
+            option.textContent = font;
+            fontFamily.appendChild(option);
+        });
+
+        function loadFont(font) {
+            return new Promise((resolve, reject) => {
+                const link = document.createElement('link');
+                link.href = `https://fonts.googleapis.com/css?family=${font.replace(/ /g, '+')}`;
+                link.rel = 'stylesheet';
+                link.onload = () => resolve();
+                link.onerror = () => reject();
+                document.head.appendChild(link);
+            });
+        }
+
+        imageUpload.addEventListener('change', handleImageUpload);
+        topText.addEventListener('input', drawMeme);
+        bottomText.addEventListener('input', drawMeme);
+        fontSize.addEventListener('input', updateFontSize);
+        outlineWidth.addEventListener('input', updateOutlineWidth);
+        fontFamily.addEventListener('change', updateFontFamily);
+        downloadBtn.addEventListener('click', downloadMeme);
+
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    image = new Image();
+                    image.onload = function() {
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        drawMeme();
+                        downloadBtn.disabled = false;
+                    }
+                    image.src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function updateFontSize() {
+            fontSizeValue.textContent = fontSize.value;
+            drawMeme();
+        }
+
+        function updateOutlineWidth() {
+            outlineWidthValue.textContent = outlineWidth.value;
+            drawMeme();
+        }
+
+        async function updateFontFamily() {
+            const selectedFont = fontFamily.value;
+            try {
+                await loadFont(selectedFont);
+                fontPreview.style.fontFamily = selectedFont;
+                fontPreview.textContent = `Vista previa de ${selectedFont}`;
+                drawMeme();
+            } catch (error) {
+                console.error('Error al cargar la fuente:', error);
+                alert('No se pudo cargar la fuente seleccionada. Por favor, intente con otra.');
+            }
+        }
+
+        function drawMeme() {
+            if (!image) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+            const size = parseInt(fontSize.value);
+            const outline = parseInt(outlineWidth.value);
+            const font = fontFamily.value;
+
+            ctx.font = `bold ${size}px "${font}"`;
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = outline;
+            ctx.textAlign = 'center';
+
+            drawText(topText.value, canvas.width / 2, size + 10);
+            drawText(bottomText.value, canvas.width / 2, canvas.height - 10);
+        }
+
+        function drawText(text, x, y) {
+            ctx.strokeText(text, x, y);
+            ctx.fillText(text, x, y);
+        }
+
+        function downloadMeme() {
+            const link = document.createElement('a');
+            link.download = 'meme.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        // Inicializar con la primera fuente
+        updateFontFamily();
+    </script>
+</body>
+</html>
