@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticiero</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .news-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .background-video video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .news-header {
+            color: white;
+            text-align: center;
+        }
+
+        .next {
+            font-size: 2rem;
+            font-weight: bold;
+            background: #e00707;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+        .news-logo {
+            font-size: 7rem;
+            font-weight: bold;
+            color: #e00707;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .news-title {
+            font-size: 3rem;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 20px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .news-anchor {
+            font-size: 1.5rem;
+            background: rgba(255, 0, 0, 0.7);
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+
+        #anchor-name {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Estilos para la marquesina */
+        .marquee-container {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: hidden;
+            height: 100px; /* Altura de la marquesina */
+            border: 1px solid #444; /* Borde de la marquesina */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Brillo del celuloide */
+            z-index: 10; /* Asegúrate de que esté por encima del video */
+        }
+
+        .marquee {
+            display: flex;
+            white-space: nowrap;
+            animation: marquee 15s linear infinite; /* Duplicar velocidad */
+            position: relative; /* Para el efecto de perforaciones */
+        }
+
+        .marquee::before,
+        .marquee::after {
+            content: '';
+            position: absolute;
+            top: 0; /* Ajusta la posición de las perforaciones en la parte superior */
+            left: 0;
+            right: 0;
+            height: 10px; /* Altura de las perforaciones */
+            background: repeating-linear-gradient(
+                to right,
+                transparent 0%,
+                transparent 90%,
+                #444 90%,
+                #444 100%
+            );
+            background-size: 20px 10px; /* Tamaño del patrón de perforación */
+            z-index: -1; /* Colocar detrás del contenido de la marquesina */
+        }
+
+        .marquee::after {
+            top: auto; /* Ajusta la posición de las perforaciones en la parte inferior */
+            bottom: -10px; /* Se mueve a la parte inferior */
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            margin: 0 20px;
+            cursor: pointer; /* Cambiar el cursor al pasar por encima */
+        }
+
+        .marquee-item img {
+            height: 80px;
+            margin-right: 15px;
+            border-radius: 5px;
+            border: 2px solid #fff;
+            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5)); /* Sombra para las imágenes */
+        }
+
+        .marquee-title {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="news-container">
+        <div class="background-video">
+            <video autoplay muted loop id="video-background">
+                <source src="1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="overlay">
+            <div class="news-header">
+                <div class="next">SERGE</div>
+                <div class="news-logo">IN</div>
+                <div class="news-title">DAMIX CENTER</div>
+                <div class="news-anchor">with <span id="anchor-name"></span></div>
+            </div>
+        </div>
+        <!-- Marquesina en el pie de la página -->
+        <div class="marquee-container">
+            <div id="marquee-content" class="marquee"></div>
+        </div>
+    </div>
+
+    <script>
+        // Función para cargar el archivo JSON
+        fetch('./0.json')
+            .then(response => response.json())
+            .then(data => {
+                const jsonData = data;
+
+                // Mostrar el nombre del primer programa
+                document.getElementById('anchor-name').innerText = jsonData[0]["tvg-name"];
+
+                // Crear contenido de la marquesina con los pósteres
+                const marqueeContent = document.getElementById('marquee-content');
+                const itemsPerBlock = 3;  // Número de elementos por bloque
+                let currentIndex = 0;
+
+                function updateMarquee() {
+                    // Limpiar contenido anterior
+                    marqueeContent.innerHTML = '';
+
+                    // Obtener los elementos del bloque actual
+                    const block = jsonData.slice(currentIndex, currentIndex + itemsPerBlock);
+                    
+                    block.forEach(item => {
+                        const marqueeItem = document.createElement('div');
+                        marqueeItem.classList.add('marquee-item');
+                        
+                        const img = document.createElement('img');
+                        img.src = item["tvg-logo"];
+                        img.alt = item["tvg-name"];
+                        
+                        const title = document.createElement('span');
+                        title.classList.add('marquee-title');
+                        title.innerText = item["tvg-name"];
+                        
+                        // Agregar evento de clic para cambiar el video de fondo
+                        marqueeItem.addEventListener('click', () => {
+                            const video = document.getElementById('video-background');
+                            video.src = item["url"]; // Actualiza el src del video
+                            video.load(); // Carga el nuevo video
+                            video.play(); // Reproduce el nuevo video
+                        });
+
+                        marqueeItem.appendChild(img);
+                        marqueeItem.appendChild(title);
+                        marqueeContent.appendChild(marqueeItem);
+                    });
+
+                    // Actualizar el índice para mostrar el siguiente bloque
+                    currentIndex += itemsPerBlock;
+                    if (currentIndex >= jsonData.length) {
+                        currentIndex = 0;  // Reiniciar si llegamos al final
+                    }
+
+                    // Reiniciar la animación de la marquesina
+                    marqueeContent.style.animation = 'none'; // Pausar animación
+                    marqueeContent.offsetHeight; // Trigger reflow
+                    marqueeContent.style.animation = ''; // Reiniciar animación
+                }
+
+                // Actualizar la marquesina cada 15 segundos
+                setInterval(updateMarquee, 15000); // Cambiar el bloque de la marquesina
+                updateMarquee(); // Inicializar la marquesina
+            })
+            .catch(error => console.error('Error al cargar el JSON:', error));
+    </script>
+</body>
+</html>
