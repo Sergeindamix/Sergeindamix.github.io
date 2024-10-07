@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartelera de Cine - El Diario Cinematográfico</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f2eecb;
+            color: #2c2c2c;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff9e6;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .newspaper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(to right, #00000005 1px, transparent 1px),
+                linear-gradient(to bottom, #00000005 1px, transparent 1px);
+            background-size: 15px 15px;
+            pointer-events: none;
+        }
+        header {
+            text-align: center;
+            border-bottom: 2px solid #2c2c2c;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .date {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .movie-card {
+            background-color: #fff;
+            border: 1px solid #2c2c2c;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 3px 3px 0 #2c2c2c;
+        }
+        .movie-card img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            filter: grayscale(100%) sepia(20%);
+        }
+        .movie-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .movie-category {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .movie-link {
+            display: inline-block;
+            background-color: #2c2c2c;
+            color: #fff;
+            padding: 5px 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .movie-link:hover {
+            background-color: #4a4a4a;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            border-top: 1px solid #2c2c2c;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <header>
+            <h1>El Diario Cinematográfico</h1>
+            <p class="date">Domingo, 1 de Octubre de 2024</p>
+        </header>
+        <main>
+            <h2>Cartelera de Cine</h2>
+            <div id="movieGrid" class="movie-grid"></div>
+        </main>
+        <footer>
+            <p>El Diario Cinematográfico - Todos los derechos reservados &copy; 1950</p>
+        </footer>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('0.json')
+                .then(response => response.json())
+                .then(data => {
+                    const movieGrid = document.getElementById('movieGrid');
+                    const fragment = document.createDocumentFragment();
+                    
+                    data.forEach(movie => {
+                        const movieCard = document.createElement('div');
+                        movieCard.className = 'movie-card';
+                        movieCard.innerHTML = `
+                            <img src="${movie['tvg-logo']}" alt="${movie['tvg-name']}" loading="lazy">
+                            <div class="movie-title">${movie['tvg-name']}</div>
+                            <div class="movie-category">${movie['group-title']}</div>
+                            <a href="${movie.url}" class="movie-link" target="_blank" rel="noopener noreferrer">Ver Película</a>
+                        `;
+                        fragment.appendChild(movieCard);
+                    });
+                    
+                    movieGrid.appendChild(fragment);
+                })
+                .catch(error => console.error('Error cargando los datos de las películas:', error));
+        });
+    </script>
+</body>
+</html>
