@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz de Programación TV</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .container {
+            display: flex;
+            height: 100%;
+            position: relative;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #8B0000;
+            padding: 20px;
+            color: white;
+            z-index: 10;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: none;  /* Para Firefox */
+            -ms-overflow-style: none;  /* Para Internet Explorer y Edge */
+        }
+        .sidebar::-webkit-scrollbar {
+            width: 0px;  /* Para Chrome, Safari y Opera */
+            background: transparent;
+        }
+        .program-row {
+            display: flex;
+            align-items: center;
+            height: 87px; /* Fixed height: 67px (video preview) + 20px (margin-bottom) */
+            margin-bottom: 20px;
+        }
+        .video-preview {
+            width: 120px;
+            height: 67px;
+            background-color: #333;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+        }
+        .schedule-container {
+            position: absolute;
+            left: 240px;
+            top: 0;
+            bottom: 0;
+            width: 150px;
+            overflow-y: scroll;
+            z-index: 20;
+            scrollbar-width: none;  /* Para Firefox */
+            -ms-overflow-style: none;  /* Para Internet Explorer y Edge */
+        }
+        .schedule-container::-webkit-scrollbar {
+            width: 0px;  /* Para Chrome, Safari y Opera */
+            background: transparent;
+        }
+        .schedule-item {
+            color: #fff;
+            transition: opacity 0.3s ease;
+            height: 87px; /* Same as program-row */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .schedule-item .time {
+            background-color: #FF0000;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        .schedule-item .program {
+            opacity: 0.7;
+        }
+        .schedule-item.active .program {
+            opacity: 1;
+        }
+        .main-content {
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        #background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .clock {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: white;
+            z-index: 30;
+        }
+        .floating-bar {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: transform 5s ease-in-out;
+        }
+        .floating-bar.main {
+            right: 0;
+            width: 300px;
+        }
+        .floating-bar.thin {
+            width: 2px;
+            overflow: hidden;
+            transition: width 0.5s ease-in-out;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .floating-bar.thin::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            filter: url('#refractionFilter');
+        }
+        .fullscreen-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            color: #000;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 50;
+            border-radius: 5px;
+        }
+
+        .schedule-item.clicked .program {
+            opacity: 1; /* Mantener opacidad después de hacer clic */
+        }
+    </style>
+</head>
+<body>
+    <!-- El resto del HTML permanece igual -->
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <!-- Program rows will be dynamically added here -->
+        </div>
+        <div class="schedule-container" id="schedule-container">
+            <!-- Schedule items will be dynamically added here -->
+        </div>
+        <div class="main-content">
+            <video id="background-video" autoplay loop muted>
+                <source src="1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="fullscreen-button" id="fullscreen-btn">Fullscreen</button>
+            <div class="overlay"></div>
+            <div class="clock" id="clock"></div>
+            <div class="floating-bar main" id="main-bar"></div>
+        </div>
+    </div>
+
+    <!-- Añadir filtro SVG para efecto de refracción -->
+    <svg style="display: none;">
+        <filter id="refractionFilter">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+            <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+        </filter>
+    </svg>
+
+    <script>
+        // El JavaScript permanece igual
+        let programData = [];
+
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}`;
+        }
+
+        function generateProgramRowsAndSchedule() {
+            const sidebar = document.getElementById('sidebar');
+            const scheduleContainer = document.getElementById('schedule-container');
+            
+            programData.forEach((program, index) => {
+                const row = document.createElement('div');
+                row.className = 'program-row';
+                row.innerHTML = `
+                    <div class="video-preview" style="background-image: url('${program['tvg-logo']}')"></div>
+                `;
+                sidebar.appendChild(row);
+
+                const scheduleItem = document.createElement('div');
+                scheduleItem.className = 'schedule-item';
+                scheduleItem.innerHTML = `
+                    <div class="time">${program.time || '00:00'}</div>
+                    <div class="program">${program['tvg-name']}</div>
+                `;
+                scheduleContainer.appendChild(scheduleItem);
+
+                const videoPreview = row.querySelector('.video-preview');
+
+                videoPreview.addEventListener('mouseover', () => {
+                    scheduleItem.classList.add('active');
+                });
+                videoPreview.addEventListener('mouseout', () => {
+                    scheduleItem.classList.remove('active');
+                });
+                videoPreview.addEventListener('click', () => {
+                    document.getElementById('background-video').src = program.url;
+                });
+            });
+
+            // Synchronize scrolling
+            sidebar.addEventListener('scroll', () => {
+                scheduleContainer.scrollTop = sidebar.scrollTop;
+            });
+
+            scheduleContainer.addEventListener('scroll', () => {
+                sidebar.scrollTop = scheduleContainer.scrollTop;
+            });
+        }
+
+        function createFloatingBars() {
+            const mainContent = document.querySelector('.main-content');
+            const mainBar = document.getElementById('main-bar');
+            const sidebarWidth = 240; // sidebar width + padding
+
+            function animateBar(bar, amplitude) {
+                const randomOffset = Math.random() * amplitude - amplitude / 2;
+                bar.style.transform = `translateX(${randomOffset}px)`;
+            }
+
+            function animateWidth(bar) {
+                const maxWidth = 50; // Máximo ancho en píxeles
+                const newWidth = 2 + Math.random() * maxWidth;
+                bar.style.width = `${newWidth}px`;
+            }
+
+            // Animate main bar
+            setInterval(() => animateBar(mainBar, 50), 5000);
+
+            // Create and animate thin bars
+            for (let i = 0; i < 5; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'floating-bar thin';
+                bar.style.left = `${sidebarWidth + Math.random() * (window.innerWidth - sidebarWidth - 300)}px`;
+                mainContent.appendChild(bar);
+
+                setInterval(() => {
+                    animateBar(bar, 20);
+                    animateWidth(bar);
+                }, 3000 + i * 500);
+            }
+        }
+
+        function fetchProgramData() {
+            fetch('0.json')
+                .then(response => response.json())
+                .then(data => {
+                    programData = data;
+                    generateProgramRowsAndSchedule();
+                })
+                .catch(error => console.error('Error fetching program data:', error));
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+        fetchProgramData();
+        createFloatingBars();
+    </script>
+    <script>
+        // Al hacer clic en un elemento del horario, mantener la opacidad
+        document.querySelectorAll('.schedule-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.schedule-item').forEach(i => i.classList.remove('clicked'));
+                this.classList.add('clicked');
+            });
+        });
+
+        // Botón para activar pantalla completa y manejar el sonido
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const backgroundVideo = document.getElementById('background-video');
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (backgroundVideo.requestFullscreen) {
+                backgroundVideo.requestFullscreen();
+            } else if (backgroundVideo.webkitRequestFullscreen) { // Safari
+                backgroundVideo.webkitRequestFullscreen();
+            } else if (backgroundVideo.msRequestFullscreen) { // IE11
+                backgroundVideo.msRequestFullscreen();
+            }
+        });
+
+        // Activa sonido en fullscreen y desactiva sonido al salir de fullscreen
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                backgroundVideo.muted = false;  // Activar sonido
+            } else {
+                backgroundVideo.muted = true;   // Desactivar sonido
+            }
+        });
+    </script>
+</body>
+</html>
