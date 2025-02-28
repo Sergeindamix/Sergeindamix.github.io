@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Cambio de Válvula</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Solicitud de Cambio de Válvula de Cisterna</h2>
+
+    <label for="nombreEncargado">Nombre del Encargado de Mantenimiento:</label>
+    <input type="text" id="nombreEncargado" placeholder="Ingrese el nombre">
+
+    <label for="nombreModelo">Nombre y modelo de la válvula requerida:</label>
+    <input type="text" id="nombreModelo" placeholder="Ej: Válvula XYZ 123">
+
+    <label for="precio">Precio estimado de la pieza:</label>
+    <input type="text" id="precio" placeholder="Ej: $50.00">
+
+    <label for="empresaCotizacion">Nombre de la empresa donde se cotiza:</label>
+    <input type="text" id="empresaCotizacion" placeholder="Ej: Ferretería Los Andes">
+
+    <label for="telefonoEmpresa">Número telefónico de la empresa:</label>
+    <input type="text" id="telefonoEmpresa" placeholder="Ej: +502 1234-5678">
+
+    <label for="motivoCambio">Motivo del cambio:</label>
+    <textarea id="motivoCambio" rows="4" placeholder="Describa el motivo"></textarea>
+
+    <label for="montoMantenimiento">Monto acumulado para mantenimiento:</label>
+    <input type="text" id="montoMantenimiento" placeholder="Ej: $500.00">
+
+    <button onclick="generarPDF()">Guardar y Descargar PDF</button>
+</div>
+
+<script>
+    function generarPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const nombreEncargado = document.getElementById("nombreEncargado").value;
+        const nombreModelo = document.getElementById("nombreModelo").value;
+        const precio = document.getElementById("precio").value;
+        const empresaCotizacion = document.getElementById("empresaCotizacion").value;
+        const telefonoEmpresa = document.getElementById("telefonoEmpresa").value;
+        const motivoCambio = document.getElementById("motivoCambio").value;
+        const montoMantenimiento = document.getElementById("montoMantenimiento").value;
+
+        doc.setFont("helvetica", "bold");
+        doc.text("Solicitud de Cambio de Válvula de Cisterna", 20, 20);
+
+        doc.setFont("helvetica", "normal");
+        doc.text(`Nombre del Encargado: ${nombreEncargado}`, 20, 40);
+        doc.text(`Nombre y Modelo: ${nombreModelo}`, 20, 50);
+        doc.text(`Precio Estimado: ${precio}`, 20, 60);
+        doc.text(`Empresa de Cotización: ${empresaCotizacion}`, 20, 70);
+        doc.text(`Teléfono de la Empresa: ${telefonoEmpresa}`, 20, 80);
+        doc.text("Motivo del Cambio:", 20, 90);
+        doc.text(motivoCambio, 20, 100, { maxWidth: 170 });
+        doc.text(`Monto Acumulado para Mantenimiento: ${montoMantenimiento}`, 20, 130);
+
+        doc.save("solicitud_cambio_valvula.pdf");
+    }
+</script>
+
+</body>
+</html>
