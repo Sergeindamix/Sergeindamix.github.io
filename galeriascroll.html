@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Túnel infinito — focus + play</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background: radial-gradient(ellipse at center, #07101a 0%, #000 70%);
+    font-family: "Montserrat", Arial, sans-serif;
+    overflow:hidden;
+    perspective:1600px;
+    -webkit-font-smoothing:antialiased;
+    color:#ddd;
+  }
+
+  .stage{ width:100vw; height:100vh; position:relative; transform-style:preserve-3d; }
+  #camera{ width:100%; height:100%; position:absolute; left:50%; top:50%; transform-style:preserve-3d; transform: translate(-50%,-50%) translateZ(0px); will-change:transform; pointer-events:none; }
+
+  .poster{
+    position:absolute;
+    width:220px;
+    height:330px;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,0.7), 0 2px 6px rgba(0,0,0,0.6) inset;
+    background:#111;
+    transform-style:preserve-3d;
+    backface-visibility:hidden;
+    transition: box-shadow .18s ease;
+    left:50%;
+    top:50%;
+    cursor:pointer;
+    pointer-events:auto;
+  }
+  .poster img{ width:100%; height:100%; object-fit:cover; display:block; transform: translateZ(1px); }
+  .poster.hovered { transform: scale(1.12); }
+  .caption{ position:absolute; left:0; right:0; bottom:6px; text-align:center; color:#fff; font-size:13px; padding:6px 8px; background:linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.55) 100%); pointer-events:none; }
+
+  .tip{ position:fixed; left:0; right:0; bottom:30px; text-align:center; font-family:monospace; color:#99a; opacity:.95; letter-spacing:.06em; z-index:99999; }
+
+  .rail { position:absolute; left:50%; top:64%; width:3000px; height:2px; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03)); transform:translateX(-50%); pointer-events:none; }
+
+  /* overlay que aplica blur a lo de atrás (y recibe clicks para cerrar) */
+  #overlay { position:fixed; inset:0; background: rgba(0,0,0,0.35); backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); opacity: 0; pointer-events: none; transition: opacity 240ms ease, backdrop-filter 240ms ease; z-index: 8000; }
+  #overlay.visible { opacity: 1; pointer-events: auto; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
+  /* clon centrado: ahora contiene una .poster-inner que gira; el play-btn queda por encima */
+.focus-clone {
+  position: fixed;
+  transform-origin: center center;
+  will-change: transform, left, top;
+  z-index: 9000;
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: visible;
+  pointer-events: auto;
+}
+
+/* la cara que gira (imagen + caption): rotamos ESTA cuando hacemos el efecto */
+.focus-clone .poster-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 2000ms cubic-bezier(.16,.86,.24,1);
+}
+
+/* el play button queda fuera de la capa rotada y siempre por delante */
+.focus-clone .play-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  cursor:pointer;
+  transition: transform .18s ease, background .18s ease;
+  z-index: 9010; /* alto para que siempre quede por delante */
+  pointer-events: auto;
+}
+
+
+  /* player modal */
+  #playerModal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10010;
+    pointer-events: none;
+  }
+  .playerContent {
+    width: min(1200px, 92vw);
+    height: min(720px, 78vh);
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 40px 140px rgba(0,0,0,0.9);
+    position: relative;
+    pointer-events: auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .playerClose {
+    position:absolute;
+    right:12px;
+    top:12px;
+    z-index: 10100;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    color: #fff;
+    padding:8px 12px;
+    border-radius: 8px;
+    cursor:pointer;
+  }
+  video { width:100%; height:100%; background:#000; display:block; }
+  iframe { width:100%; height:100%; border:0; display:block; }
+
+  /* responsive */
+  @media (max-width:900px){
+    .poster{ width:160px; height:240px; }
+    .play-btn{ width:60px; height:60px; }
+    .play-btn svg { width:28px; height:28px; }
+    .playerContent{ height:64vh; }
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div id="camera"></div>
+    <div class="rail"></div>
+  </div>
+
+  <div id="overlay" aria-hidden="true"></div>
+
+  <!-- player modal (hidden until used) -->
+  <div id="playerModal" aria-hidden="true" style="display:none;">
+    <div class="playerContent" role="dialog" aria-modal="true">
+      <button class="playerClose" aria-label="Cerrar player">✕</button>
+      <!-- dinámicamente se insertará <video> o <iframe> aquí -->
+    </div>
+  </div>
+
+  <div class="tip">🖱 Haz click en un póster para centrarlo; luego presiona ▶ Play para reproducir la URL asociada (desde 0.json)</div>
+
+<script>
+/* ========== CONFIG ========== */
+const gapZ = 520;
+const lateralX = 520;
+const copies = 4;
+const initialZOffset = 400;
+const scrollFactor = 0.6;
+const ease = 0.18;
+/* ============================ */
+
+const camera = document.getElementById('camera');
+const overlay = document.getElementById('overlay');
+const playerModal = document.getElementById('playerModal');
+const playerContent = playerModal.querySelector('.playerContent');
+const playerCloseBtn = playerModal.querySelector('.playerClose');
+
+let items = [];
+let rafId = null;
+let cameraZ = 0;
+let targetCameraZ = 0;
+
+/* focus state */
+let focusedItem = null;   // item object
+let cloneEl = null;
+let storedListeners = []; // para limpiar listeners del clone
+
+/* fallback posters */
+const fallbackPosters = [
+  { title: "Inception", img: "https://m.media-amazon.com/images/I/81p+xe8cbnL._AC_SL1500_.jpg" },
+  { title: "Interstellar", img: "https://m.media-amazon.com/images/I/71n58Y8M7EL._AC_SL1500_.jpg" },
+  { title: "The Dark Knight", img: "https://m.media-amazon.com/images/I/51EbJjlY67L._AC_.jpg" },
+  { title: "Dune", img: "https://m.media-amazon.com/images/I/81xVzeZzQxL._AC_SL1500_.jpg" },
+  { title: "Blade Runner 2049", img: "https://m.media-amazon.com/images/I/81S8I5FBFPL._AC_SL1500_.jpg" },
+  { title: "Tenet", img: "https://m.media-amazon.com/images/I/81yA4I9u9nL._AC_SL1500_.jpg" },
+  { title: "The Matrix", img: "https://m.media-amazon.com/images/I/51EG732BV3L.jpg" },
+  { title: "Avatar", img: "https://m.media-amazon.com/images/I/81ZC5A6hCNL._AC_SL1500_.jpg" }
+];
+
+/* ---------- create posters from data ---------- */
+function createPostersFromData(postersData){
+  camera.innerHTML = '';
+  items = [];
+
+  const raw = [];
+  for(let c=0;c<copies;c++){
+    for(let i=0;i<postersData.length;i++){
+      raw.push({side:'left', idx:i, data:postersData[i], copy:c});
+      raw.push({side:'right', idx:i, data:postersData[i], copy:c});
+    }
+  }
+
+  raw.forEach((it, idx) => {
+    const el = document.createElement('div');
+    el.className = 'poster';
+    const img = document.createElement('img');
+    img.src = it.data.img || '';
+    img.loading = 'lazy';
+    img.alt = it.data.title || it.data['tvg-name'] || '';
+    const caption = document.createElement('div');
+    caption.className = 'caption';
+    caption.textContent = it.data.title || it.data['tvg-name'] || '';
+
+    el.appendChild(img);
+    el.appendChild(caption);
+
+    const pairIndex = Math.floor(idx/2);
+    const baseZ = pairIndex * gapZ + initialZOffset;
+    const x = (it.side === 'left') ? -lateralX : lateralX;
+
+    el.dataset.baseZ = baseZ;
+    el.dataset.x = x;
+    el.dataset.pairIndex = pairIndex;
+
+    el.addEventListener('mouseenter', () => el.classList.add('hovered'));
+    el.addEventListener('mouseleave', () => el.classList.remove('hovered'));
+
+    // click para focus
+    el.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      toggleFocusOnPoster(el);
+    });
+
+    camera.appendChild(el);
+    items.push({el, baseZ, x, pairIndex, data: it.data});
+  });
+}
+
+/* ---------- helpers for images preload ---------- */
+function waitForImagesToLoad(timeout = 8000){
+  const imgs = Array.from(camera.querySelectorAll('img'));
+  if(imgs.length === 0) return Promise.resolve();
+
+  const promises = imgs.map(img => {
+    return new Promise(resolve => {
+      if(img.complete && img.naturalWidth !== 0){
+        return resolve({status:'loaded', img});
+      }
+      const onLoad = () => { cleanup(); resolve({status:'loaded', img}); };
+      const onErr = () => { cleanup(); resolve({status:'error', img}); };
+      const cleanup = () => { img.removeEventListener('load', onLoad); img.removeEventListener('error', onErr); };
+      img.addEventListener('load', onLoad);
+      img.addEventListener('error', onErr);
+    });
+  });
+
+  const timer = new Promise(resolve => setTimeout(() => resolve('timeout'), timeout));
+  return Promise.race([ Promise.all(promises), timer ]);
+}
+
+/* ---------- vertical align & cycle ---------- */
+let cycleLength = 1000;
+let halfCycle = 500;
+
+function alignVertical(){
+  if(items.length === 0) return;
+  const sample = items[0].el;
+  const posterRect = sample.getBoundingClientRect();
+  const posterHeight = posterRect.height || 330;
+  const available = window.innerHeight;
+  const approxRows = Math.floor(available / (posterHeight * 0.9));
+  let rowsCount = Math.max(2, Math.min(4, approxRows));
+  const rowSpacing = posterHeight * 0.95;
+  const centerOffset = ((rowsCount - 1) / 2) * rowSpacing;
+
+  items.forEach(item => {
+    const rowIndex = item.pairIndex % rowsCount;
+    const y = (rowIndex * rowSpacing) - centerOffset;
+    item.y = y;
+    item.el.style.transform = `translate3d(${item.x}px, ${y}px, ${item.baseZ}px) translate(-50%,-50%)`;
+    item.el.style.setProperty('--x', item.x + 'px');
+    item.el.style.setProperty('--y', y + 'px');
+    item.el.style.setProperty('--z', item.baseZ + 'px');
+  });
+
+  recalcCycle();
+}
+
+function recalcCycle(){
+  const totalPairs = Math.ceil(items.length/2);
+  cycleLength = totalPairs * gapZ;
+  halfCycle = cycleLength / 2;
+}
+
+/* ---------- RAF animate loop (pausable) ---------- */
+function animate(){
+  cameraZ += (targetCameraZ - cameraZ) * ease;
+
+  if(Math.abs(cameraZ) > 1e7){
+    const n = Math.floor(cameraZ / cycleLength);
+    cameraZ -= n * cycleLength;
+    targetCameraZ -= n * cycleLength;
+  }
+
+  items.forEach(item => {
+    if(focusedItem && focusedItem.el === item.el) return;
+    const displayedZ = item.baseZ - cameraZ;
+    let wrapped = ((displayedZ + halfCycle) % cycleLength + cycleLength) % cycleLength - halfCycle;
+    const isHover = item.el.classList.contains('hovered');
+    const scale = isHover ? 1.12 : 1.0;
+    const distanceFromCamera = Math.abs(wrapped);
+    const zindex = Math.round(10000 - distanceFromCamera);
+    item.el.style.transform = `translate3d(${item.x}px, ${item.y}px, ${wrapped}px) translate(-50%,-50%) scale(${scale})`;
+    item.el.style.zIndex = zindex;
+    item.el.style.boxShadow = isHover
+      ? '0 18px 40px rgba(0,0,0,0.85), 0 6px 16px rgba(255,255,255,0.02)'
+      : '0 10px 30px rgba(0,0,0,0.7), 0 2px 6px rgba(0,0,0,0.6) inset';
+  });
+
+  rafId = window.requestAnimationFrame(animate);
+}
+
+function startAnimation(){
+  if(!rafId) animate();
+}
+function stopAnimation(){
+  if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
+}
+
+/* ---------- input handlers ---------- */
+window.addEventListener('wheel', (e) => {
+  const delta = e.deltaY * scrollFactor;
+  targetCameraZ += delta;
+  if(!rafId) animate();
+  e.preventDefault();
+},{passive:false});
+window.addEventListener('keydown', (ev)=>{
+  if(ev.key === 'ArrowDown'){ targetCameraZ += gapZ * 0.6; if(!rafId) animate(); }
+  if(ev.key === 'ArrowUp'){ targetCameraZ -= gapZ * 0.6; if(!rafId) animate(); }
+});
+
+function toggleFocusOnPoster(originalEl){
+  // Si ya está enfocado el mismo, se cierra
+  if(focusedItem && focusedItem.el === originalEl){
+    closeFocus();
+    return;
+  }
+  if(focusedItem) closeFocus();
+
+  const itemObj = items.find(it => it.el === originalEl);
+  if(!itemObj) return;
+
+  // bounding rect del original
+  const rect = originalEl.getBoundingClientRect();
+
+  // crear clon contenedor
+  const clon = document.createElement('div');
+  clon.className = 'focus-clone';
+  clon.style.width = rect.width + 'px';
+  clon.style.height = rect.height + 'px';
+  clon.style.left = rect.left + 'px';
+  clon.style.top = rect.top + 'px';
+  clon.style.transform = 'none';
+  // transición para transform/left/top
+  clon.style.transition = 'transform 1000ms cubic-bezier(.16,.86,.24,1), left 1000ms cubic-bezier(.16,.86,.24,1), top 1000ms cubic-bezier(.16,.86,.24,1)';
+  clon.style.cursor = 'default';
+
+  // poster-inner que GIRARÁ
+  const inner = document.createElement('div');
+  inner.className = 'poster-inner';
+  const imgOrig = originalEl.querySelector('img');
+  const capOrig = originalEl.querySelector('.caption');
+  if(imgOrig){
+    const imgClone = imgOrig.cloneNode(true);
+    imgClone.style.width = '100%';
+    imgClone.style.height = '100%';
+    imgClone.style.objectFit = 'cover';
+    inner.appendChild(imgClone);
+  }
+  if(capOrig){
+    const capClone = capOrig.cloneNode(true);
+    inner.appendChild(capClone);
+  }
+  clon.appendChild(inner);
+
+  // determinar URL y crear botón Play si existe
+  const url = itemObj.data && (itemObj.data.url || itemObj.data.href || itemObj.data.link) ? (itemObj.data.url || itemObj.data.href || itemObj.data.link) : '';
+  const hasUrl = Boolean(url && url.trim() !== '');
+
+  if(hasUrl){
+    const playBtn = document.createElement('div');
+    playBtn.className = 'play-btn';
+    playBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
+    // evitar que el click en el botón propague al clon (que cierra)
+    playBtn.addEventListener('click', (ev) => { ev.stopPropagation(); openPlayer(url); });
+    clon.appendChild(playBtn);
+    storedListeners.push({el: playBtn, ev: 'click', fn: openPlayer}); // guardamos referencia (nota: remover manualmente más abajo)
+  }
+
+  // append clon al body y ocultar original
+  document.body.appendChild(clon);
+  originalEl.style.visibility = 'hidden';
+  focusedItem = itemObj;
+  cloneEl = clon;
+
+  // mostrar overlay + pausar animación
+  overlay.classList.add('visible');
+  stopAnimation();
+
+  // animar clon a centro; la rotación la aplicamos SOLO a poster-inner
+  requestAnimationFrame(() => {
+    clon.style.left = '50%';
+    clon.style.top = '50%';
+    clon.style.transform = 'translate(-50%,-50%) scale(1.12)';
+    // rotación Y en inner (duración = 1s en este ejemplo; puedes ajustar)
+    inner.style.transition = 'transform 1000ms cubic-bezier(.16,.86,.24,1)';
+    inner.style.transform = 'rotateY(360deg)';
+  });
+
+  // cerrar si el usuario hace click en overlay o en el clon (pero no en el playBtn)
+  const onOverlayClick = (e) => { e.stopPropagation(); closeFocus(); };
+  const onCloneClick = (e) => { e.stopPropagation(); closeFocus(); };
+  overlay.addEventListener('click', onOverlayClick);
+  clon.addEventListener('click', onCloneClick);
+
+  // guardar listeners para limpiar después
+  storedListeners.push({el: overlay, ev: 'click', fn: onOverlayClick});
+  storedListeners.push({el: clon, ev: 'click', fn: onCloneClick});
+
+  // cerrar con ESC
+  const onEsc = (ev) => { if(ev.key === 'Escape') closeFocus(); };
+  window.addEventListener('keydown', onEsc);
+  storedListeners.push({el: window, ev: 'keydown', fn: onEsc});
+}
+
+function closeFocus(){
+  if(!focusedItem) return;
+  const originalEl = focusedItem.el;
+
+  // quitar overlay blur visualmente
+  overlay.classList.remove('visible');
+
+  // si no hay clon, solo restaurar y salir
+  if(!cloneEl){
+    originalEl.style.visibility = '';
+    focusedItem = null;
+    startAnimation();
+    // remover posibles listeners guardados
+    storedListeners.forEach(s => { try{ s.el.removeEventListener(s.ev, s.fn); }catch(e){} });
+    storedListeners = [];
+    return;
+  }
+
+  // antes de animar de regreso, asegurar que la cara está frontal (sin rotación)
+  const inner = cloneEl.querySelector('.poster-inner');
+  if(inner){
+    inner.style.transform = 'none';
+  }
+
+  // animar clon de vuelta a la posición del original
+  const rect = originalEl.getBoundingClientRect();
+  // restauramos transición si fue modificada
+  cloneEl.style.transition = 'transform 800ms cubic-bezier(.22,.8,.33,1), left 800ms cubic-bezier(.22,.8,.33,1), top 800ms cubic-bezier(.22,.8,.33,1)';
+  cloneEl.style.left = rect.left + 'px';
+  cloneEl.style.top = rect.top + 'px';
+  cloneEl.style.transform = 'none';
+
+  // cleanup function que elimina clon y restaura original
+  const cleanup = () => {
+    try{ if(cloneEl && cloneEl.parentNode) cloneEl.parentNode.removeChild(cloneEl); }catch(e){}
+    try{ originalEl.style.visibility = ''; }catch(e){}
+    cloneEl = null;
+    focusedItem = null;
+    // quitar todos los listeners guardados
+    storedListeners.forEach(s => { try{ s.el.removeEventListener(s.ev, s.fn); }catch(e){} });
+    storedListeners = [];
+    startAnimation();
+  };
+
+  // esperar transitionend del clon; fallback con timeout
+  const onTransitionEnd = (ev) => {
+    // sólo limpiar cuando termine la transición del clon (no de hijos)
+    if(ev.target === ev.currentTarget){
+      cleanup();
+      cloneEl.removeEventListener('transitionend', onTransitionEnd);
+    }
+  };
+  cloneEl.addEventListener('transitionend', onTransitionEnd);
+
+  // fallback: si no llega transitionend en 1200ms limpiamos
+  setTimeout(() => {
+    if(cloneEl) cleanup();
+  }, 1300);
+}
+
+/* ---------- player modal logic ---------- */
+function clearPlayerContent(){
+  // stop any video playback and remove elements
+  const vid = playerContent.querySelector('video');
+  if(vid){
+    try{ vid.pause(); vid.src = ''; } catch(e){}
+    vid.remove();
+  }
+  const ifr = playerContent.querySelector('iframe');
+  if(ifr) ifr.remove();
+}
+
+function openPlayer(url){
+  if(!url || !url.trim()){
+    alert('No hay URL disponible para reproducir.');
+    return;
+  }
+
+  // pause animation already stopped at focus; ensure it remains stopped
+  stopAnimation();
+
+  // clear previous player content
+  clearPlayerContent();
+
+  const isYouTube = /youtube\.com|youtu\.be/.test(url);
+  const isVimeo = /vimeo\.com/.test(url);
+  const videoExt = /\.(mp4|webm|ogg|m3u8|mov|mkv|mp3|wav)(\?.*)?$/i.test(url);
+
+  if(isYouTube || isVimeo || (!videoExt && !url.startsWith('data:'))){
+    // embed via iframe
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+    iframe.src = url;
+    playerContent.insertBefore(iframe, playerCloseBtn);
+  } else {
+    // use native video element
+    const video = document.createElement('video');
+    video.controls = true;
+    video.autoplay = true;
+    video.playsInline = true;
+    video.src = url;
+    video.style.background = '#000';
+    playerContent.insertBefore(video, playerCloseBtn);
+
+    // try autoplay (some browsers block); show controls anyway
+    video.addEventListener('error', (e) => {
+      console.warn('Error al cargar el video:', e);
+    });
+  }
+
+  // show modal
+  playerModal.style.display = 'flex';
+  playerModal.setAttribute('aria-hidden', 'false');
+  // overlay already visible from focus; ensure pointer events go to modal
+  playerContent.focus && playerContent.focus();
+
+  // close logic bound to close button and clicking outside content
+  playerCloseBtn.onclick = closePlayer;
+  // clicking overlay should close player too (but not close focus clone)
+  const overlayClick = (ev) => {
+    // if player open and click overlay -> close player
+    if(playerModal.style.display !== 'none') closePlayer();
+  };
+  overlay.addEventListener('click', overlayClick);
+  storedListeners.push({el: overlay, ev: 'click', fn: overlayClick});
+}
+
+function closePlayer(){
+  clearPlayerContent();
+  playerModal.style.display = 'none';
+  playerModal.setAttribute('aria-hidden', 'true');
+
+  // remove overlay clicks bound by openPlayer (we keep overlay active for focus)
+  storedListeners = storedListeners.filter(s => {
+    if(s.el === overlay && s.ev === 'click'){
+      overlay.removeEventListener('click', s.fn);
+      return false;
+    }
+    return true;
+  });
+
+  // resume animation (focus still active; background will resume movement behind clone)
+  startAnimation();
+}
+
+/* ---------- start: fetch 0.json and mount posters ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('0.json')
+    .then(r => { if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(data => {
+      if(!Array.isArray(data) || data.length === 0){
+        createPostersFromData(fallbackPosters);
+      } else {
+        const mapped = data.map(m => ({
+          title: m['tvg-name'] || m['title'] || '',
+          img: m['tvg-logo'] || m['poster'] || m.url || '',
+          url: m.url || '',
+          group: m['group-title'] || ''
+        }));
+        const filtered = mapped.filter(m => m.img && m.img.trim() !== '');
+        createPostersFromData(filtered.length ? filtered : mapped);
+      }
+      waitForImagesToLoad(9000).then(() => { alignVertical(); recalcCycle(); startAnimation(); });
+    })
+    .catch(err => {
+      console.error('Error cargando 0.json:', err);
+      createPostersFromData(fallbackPosters);
+      waitForImagesToLoad(3000).then(() => { alignVertical(); recalcCycle(); startAnimation(); });
+    });
+});
+
+/* cerrar foco + player con ESC */
+window.addEventListener('keydown', (ev) => {
+  if(ev.key === 'Escape'){
+    // if player open -> close player first
+    if(playerModal.style.display !== 'none' && playerModal.style.display !== '') {
+      closePlayer();
+      return;
+    }
+    closeFocus();
+  }
+});
+</script>
+</body>
+</html>
