@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentación Cinematográfica</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #slideshow-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Marco polaroid ahora entra desde abajo */
+    .slide-wrapper {
+      position: absolute;
+      width: 85%;
+      height: 85%;
+      background: white;
+      padding: 20px;
+      padding-bottom: 60px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.6s ease-out, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .slide-wrapper {
+      transform: translateY(100%);
+    }
+
+    .slide-wrapper.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .slide-wrapper.exiting {
+      opacity: 1;
+      transform: translateY(-100%);
+    }
+
+    .slide {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* Info overlay */
+    #info-overlay {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    #info-overlay.show {
+      opacity: 1;
+    }
+
+    #info-overlay h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    #info-overlay p {
+      font-size: 1.2em;
+      color: #ccc;
+    }
+
+    /* Controls */
+    #controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 20;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      backdrop-filter: blur(10px);
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* Progress bar */
+    #progress-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.8);
+      width: 0%;
+      transition: width 0.3s linear;
+      z-index: 15;
+    }
+
+    /* Agregando estilos para el reproductor de video flotante con marco polaroid */
+    #video-player-container {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 400px;
+      background: white;
+      padding: 15px;
+      padding-bottom: 50px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.3);
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(150%) rotate(-3deg);
+      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+
+    #video-player-container.visible {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+      pointer-events: all;
+    }
+
+    #video-player-container video {
+      width: 100%;
+      height: auto;
+      display: block;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    #video-close-btn {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 35px;
+      height: 35px;
+      background: rgba(255,255,255,0.95);
+      border: 2px solid #333;
+      border-radius: 50%;
+      color: #333;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: all 0.2s;
+    }
+
+    #video-close-btn:hover {
+      background: #f0f0f0;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="slideshow-container"></div>
+  
+  <div id="info-overlay">
+    <h2 id="slide-title"></h2>
+    <p id="slide-group"></p>
+  </div>
+
+  <div id="controls">
+    <button class="btn" id="prevBtn">◀ Anterior</button>
+    <button class="btn" id="playPauseBtn">⏸ Pausar</button>
+    <button class="btn" id="nextBtn">Siguiente ▶</button>
+  </div>
+
+  <div id="progress-bar"></div>
+
+  <!-- Agregando reproductor de video flotante con estilo polaroid -->
+  <div id="video-player-container">
+    <button id="video-close-btn">×</button>
+    <video id="video-player" controls autoplay></video>
+  </div>
+
+  <script>
+    let slides = [];
+    let currentIndex = 0;
+    let isPlaying = true;
+    let slideTimer = null;
+    let progressTimer = null;
+    let panTimer = null;
+    const slideDuration = 8000;
+    const panInterval = 600;
+
+    const cinematicMoves = {
+      zoomIn: () => {
+        const scale = 1.3 + Math.random() * 0.4;
+        const x = (Math.random() - 0.5) * 15;
+        const y = (Math.random() - 0.5) * 15;
+        const rotate = (Math.random() - 0.5) * 3;
+        return `translateY(0) scale(${scale}) translate(${x}%, ${y}%) rotate(${rotate}deg)`;
+      },
+      
+      panHorizontal: () => {
+        const scale = 1.2 + Math.random() * 0.3;
+        const x = (Math.random() > 0.5 ? 1 : -1) * (10 + Math.random() * 15);
+        const y = (Math.random() - 0.5) * 5;
+        const rotate = (Math.random() - 0.5) * 2;
+        return `translateY(0) scale(${scale}) translate(${x}%, ${y}%) rotate(${rotate}deg)`;
+      },
+      
+      panVertical: () => {
+        const scale = 1.25 + Math.random() * 0.35;
+        const x = (Math.random() - 0.5) * 5;
+        const y = (Math.random() > 0.5 ? 1 : -1) * (10 + Math.random() * 15);
+        const rotate = (Math.random() - 0.5) * 2;
+        return `translateY(0) scale(${scale}) translate(${x}%, ${y}%) rotate(${rotate}deg)`;
+      },
+      
+      diagonal: () => {
+        const scale = 1.3 + Math.random() * 0.4;
+        const direction = Math.random() > 0.5 ? 1 : -1;
+        const x = direction * (8 + Math.random() * 12);
+        const y = direction * (8 + Math.random() * 12);
+        const rotate = direction * (1 + Math.random() * 2);
+        return `translateY(0) scale(${scale}) translate(${x}%, ${y}%) rotate(${rotate}deg)`;
+      },
+      
+      closeUp: () => {
+        const scale = 1.5 + Math.random() * 0.5;
+        const x = (Math.random() - 0.5) * 20;
+        const y = (Math.random() - 0.5) * 20;
+        const rotate = (Math.random() - 0.5) * 4;
+        return `translateY(0) scale(${scale}) translate(${x}%, ${y}%) rotate(${rotate}deg)`;
+      },
+      
+      wideShot: () => {
+        const scale = 1.1 + Math.random() * 0.2;
+        const x = (Math.random() - 0.5) * 8;
+        const y = (Math.random() - 0.5) * 8;
+        const rotate = (Math.random() - 0.5) * 1.5;
+        return `translateY(0) scale(${scale}) translate(${x}%, ${y}%) rotate(${rotate}deg)`;
+      },
+      
+      dutchAngle: () => {
+        const scale = 1.25 + Math.random() * 0.3;
+        const x = (Math.random() - 0.5) * 10;
+        const y = (Math.random() - 0.5) * 10;
+        const rotate = (Math.random() > 0.5 ? 1 : -1) * (3 + Math.random() * 5);
+        return `translateY(0) scale(${scale}) translate(${x}%, ${y}%) rotate(${rotate}deg)`;
+      },
+      
+      tracking: () => {
+        const scale = 1.2 + Math.random() * 0.25;
+        const x = (Math.random() - 0.5) * 18;
+        const y = (Math.random() - 0.5) * 8;
+        const rotate = (Math.random() - 0.5) * 2;
+        return `translateY(0) scale(${scale}) translate(${x}%, ${y}%) rotate(${rotate}deg)`;
+      }
+    };
+
+    const moveTypes = Object.keys(cinematicMoves);
+
+    function getRandomCinematicMove() {
+      const randomMoveType = moveTypes[Math.floor(Math.random() * moveTypes.length)];
+      return cinematicMoves[randomMoveType]();
+    }
+
+    // Cargar datos desde 0.json
+    fetch('0.json')
+      .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(data => {
+        if (!Array.isArray(data) || data.length === 0) {
+          slides = getFallbackSlides();
+        } else {
+          slides = data
+            .map(m => ({
+              title: m['tvg-name'] || m['title'] || 'Sin título',
+              img: m['tvg-logo'] || m['poster'] || m.url || '',
+              url: m.url || '',
+              group: m['group-title'] || ''
+            }))
+            .filter(m => m.img && m.img.trim() !== '');
+          
+          if (slides.length === 0) {
+            slides = getFallbackSlides();
+          }
+        }
+        
+        initSlideshow();
+      })
+      .catch(err => {
+        console.error('Error cargando 0.json:', err);
+        slides = getFallbackSlides();
+        initSlideshow();
+      });
+
+    function getFallbackSlides() {
+      return [
+        {
+          title: 'Imagen de ejemplo 1',
+          img: 'https://picsum.photos/1920/1080?random=1',
+          group: 'Naturaleza'
+        },
+        {
+          title: 'Imagen de ejemplo 2',
+          img: 'https://picsum.photos/1920/1080?random=2',
+          group: 'Paisajes'
+        },
+        {
+          title: 'Imagen de ejemplo 3',
+          img: 'https://picsum.photos/1920/1080?random=3',
+          group: 'Arquitectura'
+        }
+      ];
+    }
+
+    function initSlideshow() {
+      const container = document.getElementById('slideshow-container');
+      
+      slides.forEach((slide, index) => {
+        const wrapperEl = document.createElement('div');
+        wrapperEl.className = 'slide-wrapper';
+        wrapperEl.dataset.index = index;
+        
+        const slideEl = document.createElement('div');
+        slideEl.className = 'slide';
+        slideEl.style.backgroundImage = `url('${slide.img}')`;
+        
+        wrapperEl.appendChild(slideEl);
+        container.appendChild(wrapperEl);
+      });
+
+      showSlide(0);
+      setupControls();
+    }
+
+    function startRandomPanning(wrapperElement) {
+      if (panTimer) {
+        clearInterval(panTimer);
+      }
+
+      wrapperElement.style.transform = getRandomCinematicMove();
+
+      panTimer = setInterval(() => {
+        if (isPlaying) {
+          const activeWrapper = document.querySelector('.slide-wrapper.active');
+          if (activeWrapper === wrapperElement) {
+            wrapperElement.style.transform = getRandomCinematicMove();
+          }
+        }
+      }, panInterval);
+    }
+
+    function showSlide(index) {
+      const container = document.getElementById('slideshow-container');
+      const allWrappers = container.querySelectorAll('.slide-wrapper');
+      
+      if (panTimer) {
+        clearInterval(panTimer);
+      }
+
+      const currentActive = document.querySelector('.slide-wrapper.active');
+      if (currentActive) {
+        currentActive.classList.remove('active');
+        currentActive.classList.add('exiting');
+      }
+
+      allWrappers.forEach(w => {
+        if (w !== currentActive) {
+          w.classList.remove('active', 'exiting');
+          w.style.transform = 'translateY(100%)';
+        }
+      });
+
+      currentIndex = index;
+      const currentWrapper = allWrappers[index];
+      
+      setTimeout(() => {
+        currentWrapper.classList.remove('exiting');
+        currentWrapper.classList.add('active');
+        
+        setTimeout(() => {
+          if (currentActive) {
+            currentActive.classList.remove('exiting');
+            currentActive.style.transform = 'translateY(100%)';
+          }
+        }, 800);
+        
+        setTimeout(() => {
+          startRandomPanning(currentWrapper);
+        }, 800);
+      }, 50);
+
+      updateInfo(slides[index]);
+
+      resetProgress();
+
+      if (isPlaying) {
+        clearTimeout(slideTimer);
+        slideTimer = setTimeout(() => {
+          nextSlide();
+        }, slideDuration);
+      }
+    }
+
+    function updateInfo(slide) {
+      const overlay = document.getElementById('info-overlay');
+      const title = document.getElementById('slide-title');
+      const group = document.getElementById('slide-group');
+      
+      title.textContent = slide.title;
+      group.textContent = slide.group;
+      
+      overlay.classList.remove('show');
+      setTimeout(() => overlay.classList.add('show'), 500);
+      setTimeout(() => overlay.classList.remove('show'), slideDuration - 2000);
+    }
+
+    function resetProgress() {
+      const progressBar = document.getElementById('progress-bar');
+      progressBar.style.width = '0%';
+      
+      clearInterval(progressTimer);
+      
+      if (isPlaying) {
+        let progress = 0;
+        progressTimer = setInterval(() => {
+          progress += (100 / (slideDuration / 100));
+          progressBar.style.width = Math.min(progress, 100) + '%';
+          
+          if (progress >= 100) {
+            clearInterval(progressTimer);
+          }
+        }, 100);
+      }
+    }
+
+    function nextSlide() {
+      const nextIndex = (currentIndex + 1) % slides.length;
+      showSlide(nextIndex);
+    }
+
+    function prevSlide() {
+      const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+      showSlide(prevIndex);
+    }
+
+    function togglePlayPause() {
+      isPlaying = !isPlaying;
+      const btn = document.getElementById('playPauseBtn');
+      
+      if (isPlaying) {
+        btn.textContent = '⏸ Pausar';
+        hideVideoPlayer();
+        showSlide(currentIndex);
+      } else {
+        btn.textContent = '▶ Reproducir';
+        clearTimeout(slideTimer);
+        clearInterval(progressTimer);
+        if (panTimer) {
+          clearInterval(panTimer);
+        }
+        showVideoPlayer();
+      }
+    }
+
+    function showVideoPlayer() {
+      const videoContainer = document.getElementById('video-player-container');
+      const videoPlayer = document.getElementById('video-player');
+      const currentSlide = slides[currentIndex];
+      
+      if (currentSlide && currentSlide.url) {
+        videoPlayer.src = currentSlide.url;
+        videoContainer.classList.add('visible');
+      }
+    }
+
+    function hideVideoPlayer() {
+      const videoContainer = document.getElementById('video-player-container');
+      const videoPlayer = document.getElementById('video-player');
+      
+      videoContainer.classList.remove('visible');
+      videoPlayer.pause();
+      videoPlayer.src = '';
+    }
+
+    function setupControls() {
+      document.getElementById('nextBtn').addEventListener('click', nextSlide);
+      document.getElementById('prevBtn').addEventListener('click', prevSlide);
+      document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
+      
+      document.getElementById('video-close-btn').addEventListener('click', () => {
+        hideVideoPlayer();
+        if (!isPlaying) {
+          togglePlayPause();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowUp') nextSlide();
+        if (e.key === 'ArrowDown') prevSlide();
+        if (e.key === ' ') {
+          e.preventDefault();
+          togglePlayPause();
+        }
+      });
+    }
+  </script>
+</body>
+</html>
