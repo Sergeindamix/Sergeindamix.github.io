@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberPlayer 3000</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/7.14.3/video.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Orbitron', sans-serif;
+            background: #000;
+            color: #0ff;
+            overflow: hidden;
+            position: fixed;
+        }
+        #device {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            border: 2px solid #0ff;
+            box-shadow: 0 0 20px #0ff, inset 0 0 10px #0ff;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        #deviceHeader {
+            height: 40px;
+            min-height: 40px;
+            background: linear-gradient(90deg, #0ff, #00f);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-weight: bold;
+            text-shadow: 0 0 5px #fff;
+            font-size: 14px;
+        }
+        #vcontainer {
+            display: flex;
+            flex: 1;
+            height: calc(100% - 40px);
+            flex-direction: row;
+        }
+        #vplayer {
+            flex: 1;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #0ff;
+            position: relative;
+            min-width: 0;
+        }
+        .video-js {
+            width: 100% !important;
+            flex: 1 !important;
+            height: auto !important;
+            background-color: #000;
+        }
+        .video-js .vjs-control-bar {
+            background-color: rgba(0, 255, 255, 0.3);
+        }
+        .video-js .vjs-big-play-button {
+            background-color: rgba(0, 255, 255, 0.6);
+            border-color: #0ff;
+        }
+        #movieTitle {
+            padding: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #0ff;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            border-top: 2px solid #0ff;
+            text-shadow: 0 0 5px #0ff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #playlistContainer {
+            width: 320px;
+            min-width: 250px;
+            background: rgba(0, 0, 0, 0.85);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        #fileInput {
+            margin: 10px;
+            padding: 8px;
+            background: #0ff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+        }
+        #vplaylist {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+        #vplaylist::-webkit-scrollbar {
+            width: 5px;
+        }
+        #vplaylist::-webkit-scrollbar-thumb {
+            background: #0ff;
+        }
+        #vplaylist li {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        #vplaylist li a {
+            text-decoration: none;
+            color: #0ff;
+            font-size: 13px;
+            display: block;
+            word-break: break-word;
+        }
+        #vplaylist li:hover, #vplaylist li:active {
+            background: rgba(0, 255, 255, 0.2);
+        }
+        #vplaylist .active {
+            background: rgba(0, 255, 255, 0.35);
+        }
+        .neon-effect {
+            animation: neon 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes neon {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #0ff;
+            }
+            to {
+                text-shadow: 0 0 2.5px #fff, 0 0 5px #fff, 0 0 7.5px #fff, 0 0 10px #0ff;
+            }
+        }
+        /* Responsivo para dispositivos móviles y tablets (iPad / Android) */
+        @media (max-width: 768px) {
+            #vcontainer {
+                flex-direction: column;
+            }
+            #vplayer {
+                height: 50%;
+                border-right: none;
+                border-bottom: 2px solid #0ff;
+            }
+            #playlistContainer {
+                width: 100%;
+                flex: 1;
+            }
+            body, html {
+                overflow: auto;
+                position: static;
+            }
+            #device {
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="device">
+        <div id="deviceHeader">
+            <span class="neon-effect">CyberPlayer 3000</span>
+        </div>
+        <div id="vcontainer">
+            <div id="vplayer">
+                <video id='video' class="video-js vjs-default-skin vjs-fluid" controls preload="auto" playsinline webkit-playsinline>
+                    <source src="" type="application/x-mpegURL">
+                </video>
+                <div id="movieTitle" class="neon-effect">Selecciona un video ►</div>
+            </div>
+            <div id="playlistContainer">
+                <input type="file" id="fileInput" multiple accept=".mkv,.mp4">
+                <ul id="vplaylist">
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415828.m3u8">HND: TSI</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415822.m3u8">HND: TSI 02</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/435650.m3u8">HND: TSI 03 HD </a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415820.m3u8">HND: Canal 5</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415807.m3u8">HND: HON_CANAL 5</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415815.m3u8">HND: CANAL 5 HD</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415848.m3u8">HND: TELECADENA HD</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415825.m3u8">HND: TELECADENA</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415804.m3u8">HND: HON_TELECADENA</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415806.m3u8">HND: HCH</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415819.m3u8">HND: HCH TV</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415799.m3u8">HND: TEN TV CANAL 10</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415797.m3u8">HND: TVC Deportes</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415798.m3u8">HND: TVC Deportes OP 2</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/429065.m3u8">HND: TVC Deportes OP 3</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/429068.m3u8">HND: TVC Deportes OP 4</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415801.m3u8">¥¡go sports honduras</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415827.m3u8">HND: TODO DEPORTE TDTV+</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/435653.m3u8">HND: HONDURED HN </a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/435656.m3u8">HND: SULA TV HD </a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415808.m3u8">HND: CANAL 11 HD*</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415830.m3u8">HND: Canal 11 SD</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415811.m3u8">HND: CANAL 6 HD</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415826.m3u8">HND: Telemas HD*</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415800.m3u8">HND: HON-Mas Noticias TV</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/435659.m3u8">HND: TV COPAN</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415818.m3u8">HND: METRO TV HD</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415821.m3u8">HND: MEGA TV</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415823.m3u8">HND: 29 TELECEIBA</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415803.m3u8">HND: TELESISTEMA</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415831.m3u8">HND: Canal 30 Olanchana HD</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415835.m3u8">HND: TELECEIBA</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415837.m3u8">HND: Canal RCV</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415839.m3u8">HND: CANAL 51 (HD)</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415840.m3u8">HND: TV Vision CANAL 36</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415841.m3u8">HND: WALDIVISION INTERNACIONAL</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415842.m3u8">HND: TV CENTRO 27.2</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415843.m3u8">HND: UNE TV HD </a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415845.m3u8">HND: LTV HD</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415846.m3u8">HND: Q HUBO TV </a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415796.m3u8">HND: HON-TELECEIBA</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415824.m3u8">HND: TELEPROGRESO HD</a></li>
+                    <li><a href="http://mundo2.pro/live/ClienteKelvin1m10m/Sms8as7/415809.m3u8">HND: Honduras || FM</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' type='text/javascript'></script>
+    <script src="https://vjs.zencdn.net/7.14.3/video.js"></script>
+    <script>
+    var videoPlayer = videojs('video', {
+        html5: {
+            hls: {
+                overrideNative: true
+            }
+        }
+    });
+    var vplaylist, vtracks, vcurrent, movieTitle;
+    
+    $(document).ready(function() {
+        initvideo();
+    });
+
+    function initvideo() {
+        vcurrent = 0;
+        vplaylist = $('#vplaylist');
+        vtracks = vplaylist.find('li a');
+        movieTitle = $('#movieTitle');
+
+        vtracks.click(function(e) {
+            e.preventDefault();
+            var link = $(this);
+            vcurrent = link.parent().index();
+            runvideo(link);
+        });
+    }
+
+    function runvideo(link) {
+        var videoUrl = link.attr('href');
+        var videoName = link.text();
+        
+        videoPlayer.src({
+            type: 'application/x-mpegURL',
+            src: videoUrl
+        });
+        
+        videoPlayer.play().catch(function(error) {
+            console.log("Reproducción bloqueada o error:", error);
+        });
+        
+        movieTitle.text(videoName);
+        link.parent().addClass('active').siblings().removeClass('active');
+    }
+    </script>
+</body>
+</html>
