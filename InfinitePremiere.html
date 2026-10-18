@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#080407">
+<title>Infinite Premiere Vault — Catálogo JSON</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#080407;
+  --ink:#f5eee4;
+  --muted:#a99ba0;
+  --cyan:#8adfe0;
+  --pink:#c9193b;
+  --yellow:#f1d58a;
+  --gold:#d9ad59;
+  --gold-light:#ffe8a6;
+  --gold-deep:#68431c;
+  --display:'Orbitron','Arial Black',system-ui,sans-serif;
+  --mono:'Share Tech Mono',ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--black);color:var(--ink);font:400 14px/1.5 var(--mono);overflow:hidden;overscroll-behavior:none;isolation:isolate}
+button,input{font:inherit;color:inherit}
+
+/* grano cinematográfico discreto: evita el aspecto de videojuego retro plano */
+body::after{content:"";position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:.26;
+  background:linear-gradient(rgba(255,255,255,0) 50%,rgba(0,0,0,.12) 50%),linear-gradient(90deg,rgba(255,30,60,.018),rgba(255,220,160,.012),rgba(0,0,0,.02));
+  background-size:100% 4px,4px 100%;mix-blend-mode:soft-light}
+body::before{content:"";position:fixed;inset:0;z-index:5;pointer-events:none;opacity:.16;
+  background:repeating-radial-gradient(circle at 17% 32%,rgba(255,255,255,.14) 0 0.5px,transparent .7px 3px);mix-blend-mode:screen}
+
+/* ---------- escena ---------- */
+#scene{position:fixed;inset:0;overflow:hidden;touch-action:none;cursor:grab;background:#080407}
+#scene.drag{cursor:grabbing}
+#stage{position:absolute;inset:0;width:100%;height:100%;display:block;filter:saturate(.92) contrast(1.06)}
+#posters{position:absolute;inset:0;pointer-events:none;isolation:isolate}
+.vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,transparent 20%,rgba(8,0,5,.25) 57%,rgba(0,0,0,.82) 100%),linear-gradient(180deg,rgba(0,0,0,.3),transparent 28%,transparent 76%,rgba(0,0,0,.56))}
+
+/* ---------- carteles ---------- */
+.poster{position:absolute;left:0;top:0;width:220px;display:flex;flex-direction:column;align-items:center;
+  transform-origin:50% 100%;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:center;cursor:pointer;
+  opacity:0;pointer-events:none;will-change:transform,opacity}
+.poster.live{pointer-events:auto}
+.poster:focus-visible{outline:none}
+.poster:focus-visible .p-frame{outline:3px solid var(--cyan);outline-offset:4px}
+.p-frame{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:#050508;
+  border:4px solid #b9893d;
+  box-shadow:0 0 0 1px rgba(0,0,0,.9),0 8px 18px rgba(0,0,0,.62),0 0 24px var(--glow,rgba(255,0,127,.26)),inset 0 0 0 1px rgba(255,244,209,.32),inset 0 0 18px rgba(0,0,0,.18);
+  transition:border-color .28s,box-shadow .28s,filter .28s;transform:translateZ(0)}
+.p-frame::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(112deg,rgba(255,255,255,.16),transparent 18%,transparent 66%,rgba(255,226,170,.08)),linear-gradient(180deg,rgba(0,0,0,.02),transparent 42%,rgba(0,0,0,.24));box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.poster:hover .p-frame{border-color:#ffe4a0;box-shadow:0 0 0 1px rgba(0,0,0,.8),0 0 36px rgba(226,177,90,.55),0 16px 24px rgba(0,0,0,.72),inset 0 0 0 1px rgba(255,255,255,.26);filter:brightness(1.08)}
+.p-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.94) contrast(1.04)}
+.p-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:18px;
+  font:700 15px/1.3 var(--display);letter-spacing:.04em;color:var(--gold-light);text-wrap:balance;
+  background:radial-gradient(ellipse at 50% 25%,#57202a,#180b11 58%,#050406);text-shadow:0 2px 12px rgba(0,0,0,.8)}
+.p-fallback[hidden]{display:none}
+.p-shine{position:absolute;inset:0;pointer-events:none;background:linear-gradient(112deg,transparent 26%,rgba(255,255,255,.11) 36%,rgba(255,255,255,.02) 43%,transparent 52%);mix-blend-mode:screen}
+.p-plate{width:94%;margin-top:-1px;padding:8px 8px 7px;background:linear-gradient(180deg,#fae5a8 0%,#d2a34d 28%,#976326 100%);border:1px solid #6b4a0f;color:#211308;
+  box-shadow:0 4px 0 #39200f,0 10px 18px rgba(0,0,0,.68),inset 0 1px 0 rgba(255,255,255,.68);position:relative}
+.p-plate::before{content:"";position:absolute;left:6px;right:6px;top:3px;height:1px;background:rgba(255,255,255,.38)}
+.p-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  font:800 11px/1.25 var(--display);letter-spacing:.035em;text-wrap:balance;text-shadow:0 1px rgba(255,255,255,.25)}
+.p-award{display:block;margin-top:4px;font:400 9px/1.2 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:#523719}
+.p-stand{position:relative;width:100%;height:36px;filter:drop-shadow(0 7px 7px rgba(0,0,0,.42))}
+.p-stand::before{content:"";position:absolute;left:50%;top:0;width:13px;height:27px;transform:translateX(-50%);
+  background:linear-gradient(90deg,#3a2414,#b07c34 28%,#ffe8a6 48%,#8b5b23 75%,#2d1a10);border-left:1px solid rgba(255,235,183,.5);border-right:1px solid rgba(0,0,0,.6)}
+.p-stand::after{content:"";position:absolute;left:50%;bottom:0;width:112px;height:12px;transform:translateX(-50%);border-radius:50%;
+  background:radial-gradient(ellipse at 50% 18%,#fff0b8 0%,#c18a3d 25%,#563719 72%,#0c0908 100%);box-shadow:0 6px 14px rgba(0,0,0,.8),0 0 9px rgba(232,183,93,.16)}
+.poster.pop .p-frame{animation:pop .5s ease-out}
+@keyframes pop{0%{filter:brightness(2.6) saturate(1.4)}100%{filter:none}}
+
+/* ---------- HUD superior ---------- */
+.hud-top{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none;
+  padding:calc(17px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 38px max(16px,env(safe-area-inset-left,0px));
+  background:linear-gradient(to bottom,rgba(6,3,5,.94),rgba(8,3,6,.72) 57%,transparent);border-top:1px solid rgba(224,184,110,.24)}
+h1{margin:0;text-align:center;font:800 clamp(1.1rem,3.6vw,2.2rem)/1.15 var(--display);letter-spacing:.14em;text-wrap:balance;
+  color:transparent;background:linear-gradient(180deg,#fff4cb 0%,#e9c06c 38%,#ac702b 68%,#f8e2a1 100%);-webkit-background-clip:text;background-clip:text;
+  filter:drop-shadow(0 3px 9px rgba(190,36,57,.32));text-shadow:0 0 1px rgba(255,255,255,.2)}
+h1::after{content:"";display:block;width:min(240px,42vw);height:1px;margin:8px auto 0;background:linear-gradient(90deg,transparent,#f0cc7f,transparent);opacity:.72}
+.sub{margin:0;text-align:center;font-size:clamp(10px,2.4vw,12px);letter-spacing:.22em;text-transform:uppercase;color:rgba(245,216,159,.78)}
+.search{pointer-events:auto;width:min(92vw,420px);margin-top:6px}
+.search input{width:100%;background:linear-gradient(180deg,rgba(18,9,12,.93),rgba(5,4,6,.88));border:1px solid rgba(220,171,89,.57);border-radius:3px;padding:11px 15px;
+  font-size:12px;letter-spacing:.11em;text-align:center;color:#ffe5ad;box-shadow:0 7px 22px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.04);transition:border-color .2s,box-shadow .2s}
+.search input::placeholder{color:rgba(236,204,143,.45)}
+.search input:focus{outline:none;border-color:#f4d18a;box-shadow:0 0 0 1px rgba(244,209,138,.38),0 0 22px rgba(218,166,74,.16)}
+.filter-row{display:flex;justify-content:center;align-items:center;gap:8px;width:min(94vw,650px);pointer-events:auto;flex-wrap:wrap}
+.filter-row .search{flex:1 1 280px;width:auto;min-width:0}
+.select-wrap{display:block;pointer-events:auto;width:min(92vw,300px);margin-top:6px}
+.select-wrap select{width:100%;background:linear-gradient(180deg,rgba(18,9,12,.96),rgba(5,4,6,.92));border:1px solid rgba(220,171,89,.57);border-radius:3px;padding:11px 32px 11px 12px;font-size:11px;letter-spacing:.08em;color:#ffe5ad;box-shadow:0 7px 22px rgba(0,0,0,.24);outline:none}
+.select-wrap select:focus{border-color:#f4d18a;box-shadow:0 0 0 1px rgba(244,209,138,.38)}
+.note{margin:0;min-height:1.4em;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#e0bd77;text-align:center;max-width:min(94vw,900px)}
+
+/* ---------- HUD inferior ---------- */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 18px;pointer-events:none;
+  padding:40px max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  background:linear-gradient(to top,rgba(5,2,4,.97),rgba(8,3,6,.72) 59%,transparent);border-bottom:1px solid rgba(224,184,110,.2)}
+.dock>*{pointer-events:auto}
+.btn{appearance:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;
+  background:linear-gradient(180deg,rgba(28,15,17,.88),rgba(5,4,6,.94));border:1px solid rgba(222,178,103,.44);border-radius:3px;color:#f1dba9;
+  font:400 12px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;padding:11px 14px;white-space:nowrap;
+  box-shadow:0 5px 16px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.045);transition:border-color .2s,color .2s,background .2s,box-shadow .2s,transform .2s}
+.btn:hover{border-color:#f5d99a;color:#fff1cb;box-shadow:0 0 18px rgba(214,166,83,.16),inset 0 1px 0 rgba(255,255,255,.08);transform:translateY(-1px)}
+.btn:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.btn[aria-pressed="true"]{background:linear-gradient(180deg,rgba(171,37,53,.46),rgba(47,9,17,.78));border-color:#e0b66f;color:#ffe9b0}
+.btn.gold{background:linear-gradient(180deg,#ffe7a0 0%,#d7a34a 46%,#976127 100%);border-color:#70471d;color:#261405;font-weight:700;box-shadow:0 5px 16px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.55)}
+.btn.gold:hover{filter:brightness(1.08);color:#261405;border-color:#f1d08a}
+.group{display:inline-flex}
+.group .btn+.btn{margin-left:-1px}
+.found{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+.found b{color:var(--gold-light);font-weight:400}
+.mini-progress{display:block;width:74px;height:5px;overflow:hidden;background:rgba(233,185,73,.16);border:1px solid rgba(233,185,73,.25)}
+.mini-progress i{display:block;width:0;height:100%;background:linear-gradient(90deg,#a72a3b,#ffe8a6);box-shadow:0 0 8px rgba(233,185,73,.5);transition:width .2s}
+.ticks{display:flex;gap:3px}
+.tick{width:9px;height:14px;border:1px solid rgba(233,185,73,.4);transition:background .3s,box-shadow .3s}
+.tick.on{background:var(--gold);box-shadow:0 0 8px rgba(233,185,73,.7)}
+.hint{flex-basis:100%;text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(235,199,132,.58);pointer-events:none}
+
+/* ---------- ficha ---------- */
+.modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;background:rgba(2,2,6,.84);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.modal[hidden]{display:none}
+.sheet{position:relative;width:min(100%,780px);max-height:100%;overflow:auto;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:28px;align-items:center;
+  padding:26px;background:radial-gradient(ellipse at 10% 0%,rgba(100,26,38,.26),transparent 42%),linear-gradient(145deg,#171014,#080709 72%);border:1px solid #dcb263;box-shadow:0 0 0 1px rgba(255,255,255,.04),0 0 80px -22px rgba(232,177,88,.6),0 30px 80px rgba(0,0,0,.65);animation:rise .3s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.97)}}
+.s-cover{position:relative;aspect-ratio:4/5;overflow:hidden;border:4px solid #c79549;background:#050508;box-shadow:0 0 36px rgba(183,37,62,.3),0 16px 35px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.14)}
+.s-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.s-info{min-width:0;display:flex;flex-direction:column;gap:14px}
+.s-award{display:inline-flex;align-self:flex-start;gap:8px;padding:5px 10px;border:1px solid rgba(233,185,73,.55);color:var(--gold-light);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.s-info h2{margin:0;font:800 clamp(1.3rem,3.6vw,2rem)/1.15 var(--display);color:#fff1d3;text-wrap:balance;text-shadow:0 2px 22px rgba(218,169,92,.14)}
+.s-meta{margin:0;color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.s-actions{display:flex;flex-wrap:wrap;gap:10px}
+.s-actions .btn{padding:13px 16px}
+.x{position:absolute;top:10px;right:10px;padding:8px 11px}
+
+@media (max-width:640px){
+  .sheet{grid-template-columns:minmax(0,1fr);gap:18px;padding:16px}
+  .s-cover{width:min(100%,260px);justify-self:center}
+  .hint,.found .ticks{display:none}
+  .filter-row{gap:5px}
+  .filter-row .search,.select-wrap{flex-basis:100%;width:100%;max-width:420px}
+  .btn{padding:10px 12px;font-size:11px}
+}
+@media (max-height:520px){.sub,.note{display:none}.hud-top{padding-bottom:18px}}
+@media (prefers-reduced-motion:reduce){
+  .sheet{animation:none}
+  .poster.pop .p-frame{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div id="scene">
+  <canvas id="stage" aria-hidden="true"></canvas>
+  <div id="posters"></div>
+  <div class="vignette"></div>
+</div>
+
+<header class="hud-top">
+  <h1>INFINITE PREMIERE // VAULT</h1>
+  <p class="sub">Gala cinematográfica · catálogo dinámico desde 0.json</p>
+  <div class="filter-row">
+    <label class="search">
+      <input type="search" id="searchInput" placeholder="BUSCAR TÍTULO..." autocomplete="off" aria-label="Buscar títulos del catálogo">
+    </label>
+    <label class="select-wrap" aria-label="Filtrar por categoría">
+      <select id="groupFilter"><option value="">TODAS LAS CATEGORÍAS</option></select>
+    </label>
+  </div>
+  <p class="note" id="note" aria-live="polite">Cargando catálogo...</p>
+</header>
+
+<div class="dock">
+  <button class="btn" type="button" id="playBtn" aria-pressed="false">&#10074;&#10074; Pausar</button>
+  <div class="group" role="group" aria-label="Velocidad">
+    <button class="btn" type="button" data-speed="0.5" aria-pressed="false">Lento</button>
+    <button class="btn" type="button" data-speed="1" aria-pressed="true">Normal</button>
+    <button class="btn" type="button" data-speed="2" aria-pressed="false">Rápido</button>
+  </div>
+  <button class="btn" type="button" id="shuffleBtn">Mezclar</button>
+  <button class="btn" type="button" id="loadJsonBtn">Cargar JSON</button>
+  <input type="file" id="jsonFileInput" accept=".json,application/json" hidden>
+  <div class="found" aria-live="polite">
+    <span>Descubiertas <b id="foundCount">0</b>/<span id="foundTotal">0</span></span>
+    <span class="mini-progress" aria-hidden="true"><i id="progressFill"></i></span>
+  </div>
+  <p class="hint">Desliza para recorrer la gala · selecciona una portada para abrir su ficha</p>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" hidden>
+  <div class="sheet">
+    <button class="btn x" type="button" id="mClose" aria-label="Cerrar ficha">Cerrar</button>
+    <div class="s-cover">
+      <img id="mImg" alt="" referrerpolicy="no-referrer" decoding="async">
+      <div class="p-fallback" id="mFallback" hidden></div>
+    </div>
+    <div class="s-info">
+      <span class="s-award"><span aria-hidden="true">&#9733;</span><span id="mAward"></span></span>
+      <h2 id="mTitle"></h2>
+      <p class="s-meta" id="mMeta"></p>
+      <div class="s-actions">
+        <a class="btn gold" id="mStore" href="#" target="_blank" rel="noopener noreferrer">Abrir contenido &#8599;</a>
+        <button class="btn" type="button" id="mContinue">Volver a la galería</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ================= catálogo externo ================= */
+// Cada objeto en 0.json usa los campos: tvg-name, tvg-logo, group-title y url.
+let GAMES = [];
+
+/* ================= utilidades ================= */
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = function(s,r){return (r||document).querySelector(s)};
+const rnd = Math.random;
+const clamp = function(v,a,b){return Math.max(a,Math.min(b,v))};
+const norm = function(s){return s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase()};
+const GLOWS = ['rgba(190,38,61,.36)','rgba(224,177,98,.34)','rgba(255,220,165,.24)'];
+
+/* ================= estado ================= */
+const canvas = $('#stage'), ctx = canvas.getContext('2d');
+const postersEl = $('#posters');
+let W=0,H=0,dpr=1,cx=0,hy=0,f=600,m=1,Wc=230;
+const G = 220;            // altura de la cámara sobre el suelo (unidades del mundo)
+const SP = 330;           // separación media entre carteles
+const N = 15;             // carteles activos a la vez
+const ANG = 22;           // giro de los carteles hacia la alfombra
+let DN=300, DF=6000;      // rango visible en profundidad
+let cam = 0;
+let running = !reduce, hoverPause = false, modalOpen = false, speedMult = 1;
+const BASE_SPEED = 165;
+let pool = [];
+let bag = [];
+let lastGame = -1;
+let lastSide = 1;
+const seen = new Set();
+const items = [];
+const flashes = [];
+let nextFlash = 0;
+
+/* ================= selección aleatoria sin repetir seguido ================= */
+function refillBag(){
+  bag = pool.slice();
+  for(let i=bag.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));const t=bag[i];bag[i]=bag[j];bag[j]=t}
+}
+function nextGame(){
+  if(!pool.length) return null;
+  if(!bag.length) refillBag();
+  if(bag.length>1 && bag[bag.length-1].id===lastGame){bag.unshift(bag.pop())}
+  const g = bag.pop();
+  if(!g) return null;
+  lastGame = g.id;
+  return g;
+}
+
+/* ================= carteles (DOM) ================= */
+function makeItem(){
+  const el = document.createElement('button');
+  el.type='button'; el.className='poster';
+  el.innerHTML =
+    '<span class="p-frame">'+
+      '<img alt="" referrerpolicy="no-referrer" decoding="async" draggable="false">'+
+      '<span class="p-fallback" hidden></span>'+
+      '<span class="p-shine"></span>'+
+    '</span>'+
+    '<span class="p-plate"><span class="p-title"></span><span class="p-award"></span></span>'+
+    '<span class="p-stand"></span>';
+  const it = {el:el, img:$('img',el), fb:$('.p-fallback',el), title:$('.p-title',el), award:$('.p-award',el),
+              z:0, side:1, u:0, k:1, game:null, flashed:false, counted:false, glow:0};
+  it.img.addEventListener('load',function(){it.img.hidden=false;it.fb.hidden=true});
+  it.img.addEventListener('error',function(){it.img.hidden=true;it.fb.hidden=false});
+  el.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse')hoverPause=true});
+  el.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse')hoverPause=false});
+  el.addEventListener('click',function(){if(it.game)openModal(it.game)});
+  postersEl.appendChild(el);
+  return it;
+}
+function setGame(it,g){
+  if(!g){it.game=null;it.el.style.opacity='0';it.el.classList.remove('live');return;}
+  const same = it.game && it.game.id===g.id && it.game.coverUrl===g.coverUrl;
+  it.game = g;
+  it.title.textContent = g.title;
+  it.award.textContent = '★ '+g.award;
+  it.fb.textContent = g.title;
+  it.img.alt = 'Póster de '+g.title;
+  it.el.setAttribute('aria-label','Ver detalles de '+g.title);
+  if(!same){
+    it.img.removeAttribute('src');
+    if(g.coverUrl){it.img.hidden=false;it.fb.hidden=true;it.img.src=g.coverUrl;}
+    else {it.img.hidden=true;it.fb.hidden=false;}
+  }
+}
+function place(it,z){
+  it.z = z;
+  lastSide = (rnd()<.7) ? -lastSide : lastSide;
+  it.side = lastSide;
+  it.u = rnd();
+  it.k = .92 + rnd()*.22;
+  it.glow = Math.floor(rnd()*GLOWS.length);
+  it.el.style.setProperty('--glow',GLOWS[it.glow]);
+  it.flashed=false; it.counted=false;
+  setGame(it,nextGame());
+}
+
+/* ================= tamaño y proyección ================= */
+function resize(){
+  W = window.innerWidth; H = window.innerHeight;
+  dpr = Math.min(window.devicePixelRatio||1,2);
+  canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr);
+  cx = W/2; hy = H*.4;
+  f = clamp(W*.64,320,1000);
+  m = clamp(W/900,.62,1);
+  Wc = 230*m;
+  DN = f*.45; DF = DN + N*SP;
+}
+function proj(X,Y,d){const s=f/d;return {x:cx+X*s,y:hy+Y*s,s:s}}
+
+/* ================= dibujo del escenario ================= */
+const sparks = [];
+for(let i=0;i<40;i++) sparks.push({x:rnd(),y:rnd(),sp:.01+rnd()*.03,ph:rnd()*6.28,r:.6+rnd()*1.6});
+
+function drawScene(t){
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.globalCompositeOperation='source-over';
+  ctx.globalAlpha=1;
+
+  // Sala de gala: sombras profundas, paredes de terciopelo y halo cálido de escenario.
+  let g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#050407');
+  g.addColorStop(.34,'#16080f');
+  g.addColorStop(.56,'#1a080e');
+  g.addColorStop(1,'#020203');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+  g=ctx.createRadialGradient(cx,hy*.96,0,cx,hy,Math.max(W,H)*.62);
+  g.addColorStop(0,'rgba(255,190,111,.18)');
+  g.addColorStop(.22,'rgba(151,20,46,.22)');
+  g.addColorStop(.62,'rgba(69,5,24,.08)');
+  g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+  // Cortinajes laterales: pliegues verticales y pequeños brillos de terciopelo.
+  const curtainW=Math.min(W*.19,230);
+  [0,1].forEach(function(side){
+    const x=side?W-curtainW:0;
+    const cg=ctx.createLinearGradient(x,0,x+curtainW,0);
+    if(!side){cg.addColorStop(0,'#020203');cg.addColorStop(.18,'#210710');cg.addColorStop(.43,'#4b101e');cg.addColorStop(.61,'#19060e');cg.addColorStop(.82,'#390c19');cg.addColorStop(1,'rgba(10,3,6,0)')}
+    else{cg.addColorStop(0,'rgba(10,3,6,0)');cg.addColorStop(.18,'#390c19');cg.addColorStop(.39,'#19060e');cg.addColorStop(.61,'#4b101e');cg.addColorStop(.82,'#210710');cg.addColorStop(1,'#020203')}
+    ctx.fillStyle=cg;ctx.fillRect(x,0,curtainW,H);
+    for(let j=0;j<9;j++){
+      const fx=x+(j/8)*curtainW+(side?-2:2);
+      const fg=ctx.createLinearGradient(fx-8,0,fx+8,0);
+      fg.addColorStop(0,'rgba(0,0,0,.35)');fg.addColorStop(.45,'rgba(255,196,135,.09)');fg.addColorStop(1,'rgba(0,0,0,.27)');
+      ctx.fillStyle=fg;ctx.fillRect(fx-8,0,16,H);
+    }
+    const edgeX=side?W-curtainW*.16:curtainW*.16;
+    const eg=ctx.createLinearGradient(edgeX-5,0,edgeX+5,0);
+    eg.addColorStop(0,'rgba(0,0,0,0)');eg.addColorStop(.5,'rgba(230,177,94,.24)');eg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=eg;ctx.fillRect(edgeX-5,0,10,H);
+  });
+
+  // Moldura de luz superior y bombillas de tungsteno.
+  const rigY=Math.max(54,H*.105);
+  g=ctx.createLinearGradient(0,rigY-12,0,rigY+18);
+  g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.42,'rgba(184,123,55,.20)');g.addColorStop(.5,'rgba(255,219,154,.5)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(W*.1,rigY-12,W*.8,30);
+  for(let i=0;i<17;i++){
+    const x=W*(.13+i*.046);
+    const pulse=reduce?0:(.78+.22*Math.sin(t*.003+i*1.7));
+    const r=1.3+(i%3)*.4;
+    const lg=ctx.createRadialGradient(x,rigY+2,0,x,rigY+2,11);
+    lg.addColorStop(0,'rgba(255,239,190,'+(.9*pulse)+')');lg.addColorStop(.23,'rgba(255,191,103,'+(.45*pulse)+')');lg.addColorStop(1,'rgba(255,156,68,0)');
+    ctx.fillStyle=lg;ctx.beginPath();ctx.arc(x,rigY+2,11,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(255,238,190,'+pulse+')';ctx.beginPath();ctx.arc(x,rigY+2,r,0,Math.PI*2);ctx.fill();
+  }
+
+  // Humo y haces de luz: abanicos suaves desde el techo al pasillo.
+  ctx.save();
+  ctx.globalCompositeOperation='screen';
+  const beams=[
+    {x:W*.12,ex:W*.37,c:'255,208,145',a:.075},
+    {x:W*.31,ex:W*.44,c:'255,239,207',a:.052},
+    {x:W*.69,ex:W*.56,c:'255,220,170',a:.057},
+    {x:W*.88,ex:W*.63,c:'255,188,145',a:.075}
+  ];
+  beams.forEach(function(b,i){
+    const sway=reduce?0:Math.sin(t*.00042+i*1.8)*W*.018;
+    const ex=b.ex+sway, ey=H*.82;
+    const bg=ctx.createLinearGradient(b.x,rigY,ex,ey);
+    bg.addColorStop(0,'rgba('+b.c+','+(b.a*1.45)+')');bg.addColorStop(.52,'rgba('+b.c+','+(b.a*.65)+')');bg.addColorStop(1,'rgba('+b.c+',0)');
+    ctx.fillStyle=bg;ctx.beginPath();ctx.moveTo(b.x-4,rigY);ctx.lineTo(b.x+4,rigY);ctx.lineTo(ex+W*.105,ey);ctx.lineTo(ex-W*.105,ey);ctx.closePath();ctx.fill();
+  });
+  ctx.restore();
+
+  const dFar=f*9,dNear=f*.3;
+
+  // Suelo de mármol oscuro: reflejos y juntas en perspectiva.
+  const floorY=hy+G*f/dFar;
+  g=ctx.createLinearGradient(0,floorY,0,H);
+  g.addColorStop(0,'rgba(24,9,15,.25)');g.addColorStop(.24,'rgba(10,7,10,.9)');g.addColorStop(1,'#030304');
+  ctx.fillStyle=g;ctx.fillRect(0,floorY,W,H-floorY);
+  ctx.lineWidth=1;
+  for(let row=0;row<9;row++){
+    const d=f*1.1+row*f*.78;
+    const yy=hy+G*f/d;
+    ctx.strokeStyle='rgba(206,159,91,'+(.035+row*.003)+')';ctx.beginPath();ctx.moveTo(0,yy);ctx.lineTo(W,yy);ctx.stroke();
+  }
+  for(let n=-8;n<=8;n++){
+    ctx.strokeStyle='rgba(208,166,107,.035)';ctx.beginPath();ctx.moveTo(cx+n*W*.05,hy+G*f/(f*9));ctx.lineTo(cx+n*W*.15,H);ctx.stroke();
+  }
+  // Reflejos bajos de las luminarias sobre el suelo pulido.
+  for(let i=0;i<4;i++){
+    const x=W*(.15+i*.23)+(reduce?0:Math.sin(t*.0004+i)*W*.012);
+    const rg=ctx.createRadialGradient(x,H*.81,0,x,H*.81,W*.13);
+    rg.addColorStop(0,'rgba(207,130,79,.095)');rg.addColorStop(1,'rgba(207,130,79,0)');
+    ctx.fillStyle=rg;ctx.fillRect(x-W*.15,H*.65,W*.3,H*.35);
+  }
+
+  // Alfombra roja de terciopelo con volumen, fibras y pliegues en perspectiva.
+  const lf=proj(-Wc,G,dFar),rf=proj(Wc,G,dFar),ln=proj(-Wc,G,dNear),rn=proj(Wc,G,dNear);
+  ctx.save();ctx.beginPath();ctx.moveTo(lf.x,lf.y);ctx.lineTo(rf.x,rf.y);ctx.lineTo(rn.x,rn.y);ctx.lineTo(ln.x,ln.y);ctx.closePath();ctx.clip();
+  g=ctx.createLinearGradient(0,hy,0,H);
+  g.addColorStop(0,'#32050d');g.addColorStop(.12,'#650b1b');g.addColorStop(.42,'#870e24');g.addColorStop(.72,'#660817');g.addColorStop(1,'#39040d');
+  ctx.fillStyle=g;ctx.fillRect(0,hy,W,H-hy);
+  // brillo satinado central
+  g=ctx.createLinearGradient(cx-W*.34,0,cx+W*.34,0);
+  g.addColorStop(0,'rgba(0,0,0,.4)');g.addColorStop(.25,'rgba(255,99,104,.035)');g.addColorStop(.5,'rgba(255,176,145,.18)');g.addColorStop(.72,'rgba(255,81,95,.045)');g.addColorStop(1,'rgba(0,0,0,.45)');
+  ctx.fillStyle=g;ctx.fillRect(0,hy,W,H-hy);
+  // bandas suaves de terciopelo que avanzan con la cámara
+  const BS=255,bph=((cam%(2*BS))+2*BS)%(2*BS);
+  for(let d1=-bph;d1<dFar;d1+=BS){
+    const yy=hy+G*f/Math.max(dNear,d1+BS*.4);
+    const a=clamp((yy-hy)/(H-hy),0,1);
+    ctx.fillStyle='rgba(255,179,155,'+(0.012+a*.027)+')';ctx.fillRect(0,yy,W,Math.max(1,2+a*8));
+  }
+  // fibras finas, estáticas, para sugerir tejido y no una superficie plástica
+  for(let i=0;i<150;i++){
+    const d=dNear+((i*47+cam)%(f*8));
+    const xN=((i*73)%101)/100*2-1;
+    const p=proj(xN*Wc*.92,G,d);
+    const len=Math.max(.5,Math.min(14,p.s*5));
+    ctx.strokeStyle=(i%4===0)?'rgba(255,207,183,.075)':'rgba(15,0,4,.10)';
+    ctx.lineWidth=Math.max(.45,p.s*.6);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+len,p.y+len*.14);ctx.stroke();
+  }
+  // pequeños reflejos largos como luz sobre terciopelo
+  for(let i=0;i<5;i++){
+    const y=hy+(H-hy)*(.28+i*.135);
+    const alpha=.026+(i%2)*.012;
+    g=ctx.createLinearGradient(cx-W*.36,y,cx+W*.36,y+H*.04);
+    g.addColorStop(0,'rgba(255,194,160,0)');g.addColorStop(.5,'rgba(255,194,160,'+alpha+')');g.addColorStop(1,'rgba(255,194,160,0)');
+    ctx.fillStyle=g;ctx.fillRect(cx-W*.4,y,W*.8,H*.04);
+  }
+  ctx.restore();
+
+  // Ribetes dobles en hilo dorado, siguiendo exactamente la perspectiva.
+  ctx.lineCap='round';
+  [[-1,3,'rgba(240,202,125,.95)',1],[1,3,'rgba(240,202,125,.95)',1],[-1,1.1,'rgba(255,226,169,.52)',.955],[1,1.1,'rgba(255,226,169,.52)',.955]].forEach(function(e){
+    const a=proj(e[0]*Wc*e[3],G,dFar),b=proj(e[0]*Wc*e[3],G,dNear);
+    ctx.strokeStyle=e[2];ctx.lineWidth=e[1];ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+  });
+  // Medallones decorativos muy sutiles, integrados en la alfombra.
+  for(let d=cam%520+120;d<dFar;d+=520){
+    if(d<dNear)continue;
+    const p=proj(0,G,d),w=Math.max(1,Wc*p.s*.27),h=Math.max(1,w*.17);
+    ctx.save();ctx.globalAlpha=clamp(1.2-d/dFar,0,.11);ctx.strokeStyle='#f1c779';ctx.lineWidth=Math.max(.6,p.s*1.2);
+    ctx.beginPath();ctx.ellipse(p.x,p.y,w,h,0,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.ellipse(p.x,p.y,w*.56,h*.56,0,0,Math.PI*2);ctx.stroke();ctx.restore();
+  }
+
+  // Público y fotógrafos a ambos lados; siluetas difusas bajo la luz del evento.
+  for(let side of [-1,1]){
+    for(let i=0;i<24;i++){
+      const yy=hy+H*(.08+(i%12)*.038)+(Math.floor(i/12)*H*.045);
+      const edge=cx+side*(Wc*(yy-hy)/G+20+((i*29)%55));
+      const xx=edge+side*(12+((i*17)%80));
+      if(xx<-26||xx>W+26)continue;
+      const sc=.28+(yy-hy)/H*1.7;
+      const head=2.5*sc+(i%3)*.45;
+      ctx.fillStyle=(i%4===0)?'rgba(36,17,20,.94)':'rgba(7,5,7,.96)';
+      ctx.beginPath();ctx.arc(xx,yy-head*2.2,head,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.moveTo(xx-head*1.1,yy-head);ctx.quadraticCurveTo(xx-head*2.8,yy+head*2,xx-head*2.5,yy+head*5);ctx.lineTo(xx+head*2.5,yy+head*5);ctx.quadraticCurveTo(xx+head*2.8,yy+head*2,xx+head*1.1,yy-head);ctx.closePath();ctx.fill();
+      if(i%5===0){ctx.fillStyle='rgba(255,211,152,.28)';ctx.fillRect(xx-head*.5,yy-head*1.5,Math.max(1,head),Math.max(1,head*.45));}
+    }
+  }
+
+  // Postes de latón pulido y cordones de terciopelo rojo.
+  const PS=300,pph=((cam%PS)+PS)%PS,RX=Wc+28*m,PH=100,ds=[];
+  for(let d=-pph;d<f*8;d+=PS){if(d>=dNear)ds.push(d)}
+  for(let i=ds.length-1;i>=0;i--){
+    const d=ds[i];
+    [-1,1].forEach(function(sd){
+      const base=proj(sd*RX,G,d),top=proj(sd*RX,G-PH,d),ss=base.s;
+      const dn=d+PS,top2=proj(sd*RX,G-PH+10,dn),top1=proj(sd*RX,G-PH+10,d);
+      ctx.strokeStyle='rgba(70,5,18,.95)';ctx.lineWidth=Math.max(2,8*ss);
+      ctx.beginPath();ctx.moveTo(top1.x,top1.y);ctx.quadraticCurveTo((top1.x+top2.x)/2,(top1.y+top2.y)/2+24*(ss+top2.s)/2,top2.x,top2.y);ctx.stroke();
+      ctx.strokeStyle='rgba(215,34,62,.72)';ctx.lineWidth=Math.max(.8,2.2*ss);ctx.beginPath();ctx.moveTo(top1.x,top1.y-1*ss);ctx.quadraticCurveTo((top1.x+top2.x)/2,(top1.y+top2.y)/2+20*(ss+top2.s)/2,top2.x,top2.y-1*ss);ctx.stroke();
+      const metal=ctx.createLinearGradient(base.x-6*ss,0,base.x+6*ss,0);metal.addColorStop(0,'#3d2410');metal.addColorStop(.22,'#976a31');metal.addColorStop(.48,'#ffe3a0');metal.addColorStop(.68,'#a27036');metal.addColorStop(1,'#27180e');
+      ctx.strokeStyle=metal;ctx.lineWidth=Math.max(1.3,6*ss);ctx.beginPath();ctx.moveTo(base.x,base.y);ctx.lineTo(top.x,top.y);ctx.stroke();
+      ctx.fillStyle='#29180f';ctx.beginPath();ctx.ellipse(base.x,base.y,16*ss,5.6*ss,0,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#bf8f4a';ctx.beginPath();ctx.ellipse(base.x,base.y-1*ss,12*ss,3.2*ss,0,0,Math.PI*2);ctx.fill();
+      const bulb=ctx.createRadialGradient(top.x,top.y,0,top.x,top.y,Math.max(2,10*ss));bulb.addColorStop(0,'#fff4cb');bulb.addColorStop(.25,'#e6b461');bulb.addColorStop(1,'rgba(211,148,69,0)');
+      ctx.fillStyle=bulb;ctx.beginPath();ctx.arc(top.x,top.y,Math.max(2,10*ss),0,Math.PI*2);ctx.fill();
+    });
+  }
+
+  // Motas en el aire y reflejo de los flashes de fotógrafos.
+  ctx.globalCompositeOperation='screen';
+  for(let i=0;i<sparks.length;i++){
+    const sp=sparks[i];if(!reduce){sp.y-=sp.sp*.012;if(sp.y<-.02){sp.y=1.02;sp.x=rnd()}}
+    ctx.globalAlpha=.12+.3*Math.abs(Math.sin(t*.0017+sp.ph));ctx.fillStyle=i%4===0?'#f4dba9':'#cf9e71';
+    ctx.beginPath();ctx.arc(sp.x*W,sp.y*H,sp.r*.7,0,Math.PI*2);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  const now=performance.now();
+  for(let i=flashes.length-1;i>=0;i--){
+    const fl=flashes[i],p=(now-fl.t0)/fl.dur;if(p>=1){flashes.splice(i,1);continue}
+    const a=Math.pow(1-p,2)*.72,r=fl.r*(.6+p*.6);
+    const rg=ctx.createRadialGradient(fl.x,fl.y,0,fl.x,fl.y,r);
+    rg.addColorStop(0,'rgba(255,250,232,'+a+')');rg.addColorStop(.28,'rgba(255,220,171,'+(a*.45)+')');rg.addColorStop(1,'rgba(255,220,171,0)');
+    ctx.fillStyle=rg;ctx.beginPath();ctx.arc(fl.x,fl.y,r,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='rgba(255,247,224,'+(a*.6)+')';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(fl.x-r*1.1,fl.y);ctx.lineTo(fl.x+r*1.1,fl.y);ctx.moveTo(fl.x,fl.y-r*1.1);ctx.lineTo(fl.x,fl.y+r*1.1);ctx.stroke();
+  }
+  ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;
+}
+function addFlash(x,y,r){flashes.push({x:x,y:y,r:r,t0:performance.now(),dur:260+rnd()*140})}
+
+/* ================= carteles: movimiento y reciclaje ================= */
+function updateItems(){
+  if(!GAMES.length || !pool.length){
+    for(const it of items){it.el.style.opacity='0';it.el.classList.remove('live');}
+    return;
+  }
+  let minZ=Infinity, maxZ=-Infinity;
+  for(const it of items){ if(it.z<minZ)minZ=it.z; if(it.z>maxZ)maxZ=it.z; }
+  for(const it of items){
+    let d = it.z-cam;
+    if(d<DN){
+      it.z = maxZ + SP*(.8+rnd()*.4); maxZ = it.z; place(it,it.z); d = it.z-cam;
+    } else if(d>DF+SP){
+      const nz = minZ - SP*(.8+rnd()*.4);
+      if(nz-cam>=DN){ it.z=nz; minZ=nz; place(it,nz); d=it.z-cam; }
+    }
+    const s = f/d;
+    const x = it.side*(Wc+135+it.u*(120+260*m));
+    const sx = cx + x*s, sy = hy + G*s;
+    const fade = clamp((DF-d)/1100,0,1);
+    const el = it.el;
+    el.style.opacity = fade.toFixed(3);
+    el.classList.toggle('live',fade>.5);
+    el.style.zIndex = Math.round(100000-d);
+    el.style.transform = 'translate3d('+sx.toFixed(1)+'px,'+sy.toFixed(1)+'px,0) translate(-50%,-100%) scale('+(s*it.k).toFixed(4)+') perspective(900px) rotateY('+(it.side<0?ANG:-ANG)+'deg)';
+    if(!it.flashed && d<f*2.2 && fade>.9){
+      it.flashed=true;
+      el.classList.remove('pop'); void el.offsetWidth; if(!reduce) el.classList.add('pop');
+      if(!reduce) addFlash(sx,sy-150*s*it.k,60+90*s);
+    }
+    if(!it.counted && d<f*2.4 && fade>.9){ it.counted=true; markSeen(it.game.id); }
+  }
+}
+
+/* ================= progreso ================= */
+const foundCount=$('#foundCount'), foundTotal=$('#foundTotal'), progressFill=$('#progressFill');
+function refreshProgress(){
+  foundCount.textContent=seen.size.toLocaleString('es-MX');
+  foundTotal.textContent=GAMES.length.toLocaleString('es-MX');
+  progressFill.style.width=(GAMES.length ? Math.min(100,seen.size/GAMES.length*100) : 0)+'%';
+}
+function markSeen(id){
+  if(seen.has(id)) return;
+  seen.add(id);
+  refreshProgress();
+}
+
+/* ================= bucle ================= */
+let last=performance.now();
+function frame(now){
+  const dt=Math.min(.05,(now-last)/1000); last=now;
+  if(running && !hoverPause && !modalOpen && !document.hidden) cam += BASE_SPEED*speedMult*dt;
+  if(!reduce && now>nextFlash){
+    const left=rnd()<.5;
+    addFlash(left?W*(.04+.2*rnd()):W*(.76+.2*rnd()), hy+(H-hy)*(.1+.55*rnd()), 36+rnd()*60);
+    nextFlash = now+380+rnd()*950;
+  }
+  drawScene(now);
+  updateItems();
+  requestAnimationFrame(frame);
+}
+
+/* ================= entradas: rueda, arrastre, teclado ================= */
+const scene=$('#scene');
+window.addEventListener('wheel',function(e){if(modalOpen)return;cam+=clamp(e.deltaY,-200,200)*.8},{passive:true});
+let dragging=false, dragY=0;
+scene.addEventListener('pointerdown',function(e){
+  if(modalOpen||e.target.closest('.poster'))return;
+  dragging=true; dragY=e.clientY; scene.classList.add('drag');
+});
+window.addEventListener('pointermove',function(e){
+  if(!dragging)return;
+  cam += -(e.clientY-dragY)*2.4; dragY=e.clientY;
+});
+function endDrag(){dragging=false;scene.classList.remove('drag')}
+window.addEventListener('pointerup',endDrag);
+window.addEventListener('pointercancel',endDrag);
+
+const playBtn=$('#playBtn');
+function setRunning(on){
+  running=on;
+  playBtn.setAttribute('aria-pressed',on?'false':'true');
+  playBtn.innerHTML = on ? '&#10074;&#10074; Pausar' : '&#9654; Avanzar';
+}
+playBtn.addEventListener('click',function(){setRunning(!running)});
+setRunning(running);
+document.querySelectorAll('[data-speed]').forEach(function(b){
+  b.addEventListener('click',function(){
+    speedMult=parseFloat(b.dataset.speed);
+    document.querySelectorAll('[data-speed]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+    if(!running) setRunning(true);
+  });
+});
+$('#shuffleBtn').addEventListener('click',function(){
+  lastSide = rnd()<.5?1:-1; refillBag();
+  items.forEach(function(it){place(it,it.z)});
+});
+
+/* ================= búsqueda y filtros ================= */
+const searchInput=$('#searchInput'), note=$('#note'), groupFilter=$('#groupFilter');
+function applyFilters(){
+  const q=norm(searchInput.value.trim());
+  const group=groupFilter.value;
+  pool=GAMES.filter(function(g){
+    const matchesText=!q || norm(g.title+' '+g.groupTitle).indexOf(q)>=0;
+    const matchesGroup=!group || g.groupTitle===group;
+    return matchesText && matchesGroup;
+  });
+  refillBag();
+  if(!pool.length){
+    note.textContent='Sin coincidencias · modifica la búsqueda o la categoría';
+    items.forEach(function(it){it.el.style.opacity='0';it.el.classList.remove('live');});
+    return;
+  }
+  const source=loadedSource ? ' · fuente: '+loadedSource : '';
+  note.textContent=pool.length.toLocaleString('es-MX')+' resultados de '+GAMES.length.toLocaleString('es-MX')+source;
+  items.forEach(function(it){it.counted=false;place(it,it.z);});
+}
+searchInput.addEventListener('input',applyFilters);
+groupFilter.addEventListener('change',applyFilters);
+
+/* ================= ficha ================= */
+const modal=$('#modal'), mImg=$('#mImg'), mFb=$('#mFallback');
+let opener=null;
+mImg.addEventListener('load',function(){mImg.hidden=false;mFb.hidden=true});
+mImg.addEventListener('error',function(){mImg.hidden=true;mFb.hidden=false});
+function openModal(g){
+  opener=document.activeElement; modalOpen=true; hoverPause=false;
+  mFb.textContent=g.title; mImg.alt='Póster de '+g.title; mImg.hidden=false; mFb.hidden=true; mImg.removeAttribute('src'); if(g.coverUrl)mImg.src=g.coverUrl;else{mImg.hidden=true;mFb.hidden=false;}
+  $('#mAward').textContent=g.groupTitle || g.award; $('#mTitle').textContent=g.title;
+  $('#mMeta').textContent=(g.groupTitle || 'SIN CATEGORÍA')+' // registro del catálogo';
+  const openLink=$('#mStore'); openLink.href=g.storeUrl || '#'; openLink.hidden=!g.storeUrl; openLink.textContent='Abrir contenido ↗';
+  modal.hidden=false; $('#mClose').focus();
+}
+function closeModal(){
+  modal.hidden=true; modalOpen=false;
+  if(opener&&opener.focus&&document.contains(opener))opener.focus();
+}
+$('#mClose').addEventListener('click',closeModal);
+$('#mContinue').addEventListener('click',closeModal);
+modal.addEventListener('click',function(e){if(e.target===modal)closeModal()});
+document.addEventListener('keydown',function(e){
+  if(modalOpen){
+    if(e.key==='Escape'){e.preventDefault();closeModal()}
+    else if(e.key==='Tab'){
+      const fs=Array.prototype.slice.call(modal.querySelectorAll('button,a[href]'));
+      const a=fs[0], b=fs[fs.length-1];
+      if(e.shiftKey&&document.activeElement===a){e.preventDefault();b.focus()}
+      else if(!e.shiftKey&&document.activeElement===b){e.preventDefault();a.focus()}
+    }
+    return;
+  }
+  const tag=(document.activeElement&&document.activeElement.tagName)||'';
+  if(tag==='INPUT')return;
+  if(e.key===' '&&tag!=='BUTTON'&&tag!=='A'){e.preventDefault();setRunning(!running)}
+  else if(e.key==='ArrowUp'||e.key==='ArrowRight'){cam+=170}
+  else if(e.key==='ArrowDown'||e.key==='ArrowLeft'){cam-=170}
+});
+
+/* ================= carga del catálogo JSON ================= */
+let loadedSource='';
+const jsonInput=$('#jsonFileInput');
+$('#loadJsonBtn').addEventListener('click',function(){jsonInput.click();});
+
+function safeHttpUrl(value){
+  try{const u=new URL(String(value||'').trim());return (u.protocol==='http:'||u.protocol==='https:')?u.href:'';}
+  catch(_){return '';}
+}
+function normalizeRecords(records){
+  if(!Array.isArray(records)) throw new Error('La raíz del JSON debe ser una lista de objetos.');
+  const mapped=records.map(function(record,index){
+    if(!record || typeof record!=='object') return null;
+    const title=String(record['tvg-name']||'').trim();
+    if(!title) return null;
+    const groupTitle=String(record['group-title']||'Sin categoría').trim()||'Sin categoría';
+    return {
+      id:index,
+      title:title,
+      coverUrl:safeHttpUrl(record['tvg-logo']),
+      groupTitle:groupTitle,
+      award:groupTitle,
+      platform:'CATÁLOGO',
+      storeUrl:safeHttpUrl(record.url),
+      sourceRecord:record
+    };
+  }).filter(Boolean);
+  if(!mapped.length) throw new Error('No encontré registros con el campo "tvg-name".');
+  return mapped;
+}
+function fillGroupOptions(){
+  const selected=groupFilter.value;
+  groupFilter.innerHTML='';
+  const all=document.createElement('option');all.value='';all.textContent='TODAS LAS CATEGORÍAS';groupFilter.appendChild(all);
+  const groups=Array.from(new Set(GAMES.map(function(g){return g.groupTitle;}))).sort(function(a,b){return a.localeCompare(b,'es');});
+  groups.forEach(function(group){const option=document.createElement('option');option.value=group;option.textContent=group;groupFilter.appendChild(option);});
+  if(groups.indexOf(selected)>=0)groupFilter.value=selected;
+}
+function initializeCatalog(records,sourceName){
+  GAMES=normalizeRecords(records);
+  loadedSource=sourceName || '0.json';
+  seen.clear();
+  foundCount.textContent='0';
+  fillGroupOptions();
+  pool=GAMES.slice();
+  refillBag();
+  if(items.length===0){
+    for(let i=0;i<N;i++){
+      const it=makeItem();items.push(it);
+      place(it,cam+DN+i*SP*(.85+rnd()*.3)+rnd()*80);
+    }
+  }else{
+    items.forEach(function(it,index){it.counted=false;place(it,cam+DN+index*SP*(.85+rnd()*.3)+rnd()*80);});
+  }
+  refreshProgress();
+  searchInput.value='';
+  groupFilter.value='';
+  note.textContent=GAMES.length.toLocaleString('es-MX')+' títulos cargados desde '+loadedSource+' · '+(groupFilter.options.length-1)+' categorías';
+}
+async function loadDefaultJson(){
+  try{
+    const response=await fetch('./0.json',{cache:'no-store'});
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    const records=await response.json();
+    initializeCatalog(records,'0.json');
+  }catch(error){
+    note.textContent='No se pudo abrir 0.json automáticamente · pulsa CARGAR JSON para elegir el archivo';
+  }
+}
+jsonInput.addEventListener('change',async function(){
+  const file=jsonInput.files && jsonInput.files[0];
+  if(!file)return;
+  try{
+    const text=await file.text();
+    const records=JSON.parse(text);
+    initializeCatalog(records,file.name);
+  }catch(error){
+    note.textContent='No se pudo leer el JSON: '+(error && error.message ? error.message : 'formato inválido');
+  }finally{jsonInput.value='';}
+});
+
+/* ================= arranque ================= */
+resize();
+window.addEventListener('resize',resize);
+document.addEventListener('visibilitychange',function(){last=performance.now()});
+requestAnimationFrame(frame);
+loadDefaultJson();
+})();
+</script>
+</body>
+</html>
